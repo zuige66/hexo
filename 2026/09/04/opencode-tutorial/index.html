@@ -27,7 +27,7 @@
 <meta property="og:description" content="前言OpenCode 是一个基于命令行的 AI 编程助手，支持代码生成、调试、重构、项目搭建等场景。本文介绍从环境配置到实际使用的完整流程。 环境准备启动命令行Windows 下启动终端的几种方式：    方式 操作    快捷键 Win + R → 输入 cmd → 回车   开始菜单 搜索”命令提示符”或”PowerShell”   右键菜单 在文件资源管理器空白处右键 → “在终端中打开”">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-09-03T16:00:00.000Z">
-<meta property="article:modified_time" content="2026-09-03T15:25:55.040Z">
+<meta property="article:modified_time" content="2026-09-03T15:58:14.328Z">
 <meta property="article:author" content="zuige66">
 <meta property="article:tag" content="AI">
 <meta property="article:tag" content="OpenCode">
@@ -328,7 +328,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.7k 字
+          1.2k 字
         
       </span>
     
@@ -339,7 +339,7 @@
         
         
         
-          15 分钟
+          11 分钟
         
       </span>
     
@@ -421,16 +421,9 @@
 <p>验证安装：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">opencode --version<br></code></pre></td></tr></table></figure>
 
-<h2 id="模型配置"><a href="#模型配置" class="headerlink" title="模型配置"></a>模型配置</h2><h3 id="获取-API-密钥"><a href="#获取-API-密钥" class="headerlink" title="获取 API 密钥"></a>获取 API 密钥</h3><p>OpenCode 通过 OpenRouter 调用模型。前往 <a target="_blank" rel="noopener" href="https://openrouter.ai/">https://openrouter.ai</a> 注册账号并创建 API Key。</p>
-<h3 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h3><p>配置文件路径：</p>
-<ul>
-<li>Windows：<code>%USERPROFILE%\.config\opencode\config.json</code></li>
-<li>Mac&#x2F;Linux：<code>~/.config/opencode/config.json</code></li>
-</ul>
-<p>首次运行 OpenCode 会自动生成，手动编辑即可：</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;provider&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;openrouter&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>      <span class="hljs-attr">&quot;apiKey&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;sk-or-v1-xxxxxxxx&quot;</span><br>    <span class="hljs-punctuation">&#125;</span><br>  <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;model&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;big&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;openrouter/google/gemini-2.5-flash&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;small&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;openrouter/google/gemini-2.5-flash&quot;</span><br>  <span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
-
-<h3 id="免费模型"><a href="#免费模型" class="headerlink" title="免费模型"></a>免费模型</h3><table>
+<h2 id="模型切换"><a href="#模型切换" class="headerlink" title="模型切换"></a>模型切换</h2><p>OpenCode 内置免费模型，无需配置 API Key，开箱即用。</p>
+<p>启动后按 <code>Shift + Tab</code> 可切换模型，常用免费模型：</p>
+<table>
 <thead>
 <tr>
 <th>模型</th>
@@ -438,19 +431,18 @@
 </tr>
 </thead>
 <tbody><tr>
-<td><code>google/gemini-2.5-flash</code></td>
-<td>响应快，免费额度充足</td>
+<td>Gemini 2.5 Flash</td>
+<td>响应快，推荐日常使用</td>
 </tr>
 <tr>
-<td><code>google/gemini-2.5-pro</code></td>
-<td>能力强，免费额度有限</td>
+<td>Gemini 2.5 Pro</td>
+<td>推理能力强，适合复杂任务</td>
 </tr>
 <tr>
-<td><code>meta-llama/llama-4-maverick</code></td>
-<td>开源模型，完全免费</td>
+<td>Llama 4 Maverick</td>
+<td>Meta 开源模型</td>
 </tr>
 </tbody></table>
-<p>运行时按 <code>Shift + Tab</code> 可实时切换模型。</p>
 <h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h3 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">opencode<br></code></pre></td></tr></table></figure>
 
 <h3 id="快捷键"><a href="#快捷键" class="headerlink" title="快捷键"></a>快捷键</h3><table>
