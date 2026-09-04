@@ -147,6 +147,7 @@
     canvas.style.width = '100%';
     canvas.style.height = '100%';
     canvas.style.zIndex = '0';
+    canvas.style.filter = 'brightness(1.3)';
     banner.style.position = 'relative';
     banner.style.background = '#000';
     banner.insertBefore(canvas, banner.firstChild);
