@@ -160,7 +160,7 @@
       glitchColors: ['#2b4539', '#61dca3', '#61b3dc'],
       glitchSpeed: 50,
       smooth: true,
-      outerVignette: false,
+      outerVignette: true,
       centerVignette: true
     }).start();
   }
