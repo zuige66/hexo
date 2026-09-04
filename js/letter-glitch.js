@@ -150,7 +150,7 @@
     if (existingCanvas) return;
 
     var canvas = document.createElement('canvas');
-    canvas.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;z-index:0;filter:brightness(1.3);';
+    canvas.style.cssText = 'position:absolute;top:0;left:0;width:120%;height:120%;left:-10%;top:-10%;z-index:0;filter:brightness(1.8) contrast(1.1);';
     banner.insertBefore(canvas, banner.firstChild);
 
     var glitchInstance = LetterGlitch(canvas, {
