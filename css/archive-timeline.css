@@ -1,0 +1,159 @@
+/* 归档页时间轴样式 */
+.archive .list-group {
+  position: relative;
+  padding-left: 30px;
+}
+
+/* 竖线 */
+.archive .list-group::before {
+  content: '';
+  position: absolute;
+  left: 8px;
+  top: 60px;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, #3498db, #e0e0e0);
+}
+
+/* 年份标题 */
+.archive .list-group > .h5 {
+  position: relative;
+  color: #3498db;
+  font-weight: 700;
+  font-size: 1.3em;
+  margin: 25px 0 15px;
+  padding-left: 20px;
+}
+
+/* 年份圆点 */
+.archive .list-group > .h5::before {
+  content: '';
+  position: absolute;
+  left: -26px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 14px;
+  height: 14px;
+  background: #3498db;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px #3498db;
+}
+
+/* 文章条目 */
+.archive .list-group-item {
+  position: relative;
+  border: none;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  padding: 14px 18px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.archive .list-group-item:hover {
+  transform: translateX(5px);
+  box-shadow: 0 4px 15px rgba(52, 152, 219, 0.15);
+}
+
+/* 连接线 */
+.archive .list-group-item::before {
+  content: '';
+  position: absolute;
+  left: -22px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 8px;
+  height: 8px;
+  background: #fff;
+  border: 2px solid #3498db;
+  border-radius: 50%;
+}
+
+.archive .list-group-item::after {
+  content: '';
+  position: absolute;
+  left: -14px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 14px;
+  height: 2px;
+  background: #3498db;
+}
+
+/* 日期 */
+.archive .list-group-item time {
+  color: #7f8c8d;
+  font-size: 0.85em;
+  white-space: nowrap;
+  min-width: 50px;
+}
+
+/* 文章标题 */
+.archive .list-group-item-title {
+  color: #2c3e50;
+  font-weight: 500;
+  flex: 1;
+}
+
+.archive .list-group-item:hover .list-group-item-title {
+  color: #3498db;
+}
+
+/* 统计文字 */
+.archive .list-group > p.h4 {
+  color: #555;
+  font-weight: 600;
+}
+
+/* 分隔线 */
+.archive .list-group > hr {
+  border-color: #e0e0e0;
+  margin: 15px 0;
+}
+
+/* 暗色模式适配 */
+[data-user-color-scheme="dark"] .archive .list-group-item {
+  background: #252d38;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+[data-user-color-scheme="dark"] .archive .list-group-item:hover {
+  box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+}
+
+[data-user-color-scheme="dark"] .archive .list-group-item::before {
+  background: #252d38;
+  border-color: #3498db;
+}
+
+[data-user-color-scheme="dark"] .archive .list-group > .h5 {
+  color: #5dade2;
+}
+
+[data-user-color-scheme="dark"] .archive .list-group-item-title {
+  color: #c4c6c9;
+}
+
+[data-user-color-scheme="dark"] .archive .list-group-item:hover .list-group-item-title {
+  color: #5dade2;
+}
+
+[data-user-color-scheme="dark"] .archive .list-group::before {
+  background: linear-gradient(to bottom, #3498db, #435266);
+}
+
+/* 响应式 */
+@media (max-width: 768px) {
+  .archive .list-group {
+    padding-left: 25px;
+  }
+
+  .archive .list-group-item {
+    padding: 12px 14px;
+  }
+}
