@@ -161,8 +161,18 @@
       glitchSpeed: 50,
       smooth: true,
       outerVignette: true,
-      centerVignette: true
+      centerVignette: false
     }).start();
+
+    // 文字区域半透明遮罩
+    var textOverlay = document.createElement('div');
+    textOverlay.style.cssText = 'position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:60%;height:40%;background:radial-gradient(ellipse at center,rgba(0,0,0,0.55) 0%,rgba(0,0,0,0.25) 50%,transparent 80%);pointer-events:none;z-index:1;';
+    banner.appendChild(textOverlay);
+
+    // 四角暗角
+    var outerVignette = document.createElement('div');
+    outerVignette.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:2;background:radial-gradient(ellipse at center,rgba(0,0,0,0) 40%,rgba(0,0,0,0.85) 100%);';
+    banner.appendChild(outerVignette);
   }
 
   if (document.readyState === 'loading') {
