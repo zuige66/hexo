@@ -19,27 +19,25 @@
   <meta name="author" content="zuige">
   <meta name="keywords" content="hexo, blog">
   
-    <meta name="description" content="Markdown 语法入门指南一、标题 (Heading)使用 # 符号创建标题，# 的数量决定标题级别： 123456# 一级标题 (H1)## 二级标题 (H2)### 三级标题 (H3)#### 四级标题 (H4)##### 五级标题 (H5)###### 六级标题 (H6)  效果： 一级标题二级标题三级标题 二、文本样式粗体 (Bold)使用 **文本** 或 __文本__： 12**这">
+    <meta name="description" content="前言静态博客没有后端，评论数据无处存储。Giscus 基于 GitHub Discussions，免费、稳定、支持 Markdown，是 Hexo 博客的最佳评论方案之一。 本文记录从零接入 Giscus 的完整流程，包括踩坑点。 一、GitHub 仓库准备1.1 开启 Discussions进入博客 GitHub 仓库 → Settings → Features → 勾选 Discussions">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Markdown 语法入门指南">
-<meta property="og:url" content="https://zuige.cc.cd/2026/09/04/markdown-guide/index.html">
+<meta property="og:title" content="Hexo 博客接入 Giscus 评论系统完整指南">
+<meta property="og:url" content="https://zuige.cc.cd/2026/09/04/hexo-giscus-guide/index.html">
 <meta property="og:site_name" content="zuige&#39;s blog">
-<meta property="og:description" content="Markdown 语法入门指南一、标题 (Heading)使用 # 符号创建标题，# 的数量决定标题级别： 123456# 一级标题 (H1)## 二级标题 (H2)### 三级标题 (H3)#### 四级标题 (H4)##### 五级标题 (H5)###### 六级标题 (H6)  效果： 一级标题二级标题三级标题 二、文本样式粗体 (Bold)使用 **文本** 或 __文本__： 12**这">
+<meta property="og:description" content="前言静态博客没有后端，评论数据无处存储。Giscus 基于 GitHub Discussions，免费、稳定、支持 Markdown，是 Hexo 博客的最佳评论方案之一。 本文记录从零接入 Giscus 的完整流程，包括踩坑点。 一、GitHub 仓库准备1.1 开启 Discussions进入博客 GitHub 仓库 → Settings → Features → 勾选 Discussions">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://picsum.photos/200/100">
 <meta property="article:published_time" content="2026-09-03T16:00:00.000Z">
-<meta property="article:modified_time" content="2026-09-04T02:42:18.413Z">
+<meta property="article:modified_time" content="2026-09-04T04:28:31.340Z">
 <meta property="article:author" content="zuige">
-<meta property="article:tag" content="学习">
-<meta property="article:tag" content="笔记">
-<meta property="article:tag" content="Markdown">
-<meta property="article:tag" content="写作">
+<meta property="article:tag" content="Hexo">
+<meta property="article:tag" content="Giscus">
+<meta property="article:tag" content="评论系统">
+<meta property="article:tag" content="教程">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://picsum.photos/200/100">
   
   
   
-  <title>Markdown 语法入门指南 - zuige&#39;s blog</title>
+  <title>Hexo 博客接入 Giscus 评论系统完整指南 - zuige&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -308,7 +306,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Markdown 语法入门指南"></span>
+            <span id="subtitle" data-typed-text="Hexo 博客接入 Giscus 评论系统完整指南"></span>
           
         </div>
 
@@ -331,7 +329,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.9k 字
+          2.7k 字
         
       </span>
     
@@ -342,7 +340,7 @@
         
         
         
-          17 分钟
+          23 分钟
         
       </span>
     
@@ -381,207 +379,138 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Markdown 语法入门指南</h1>
+            <h1 id="seo-header">Hexo 博客接入 Giscus 评论系统完整指南</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="Markdown-语法入门指南"><a href="#Markdown-语法入门指南" class="headerlink" title="Markdown 语法入门指南"></a>Markdown 语法入门指南</h1><h2 id="一、标题-Heading"><a href="#一、标题-Heading" class="headerlink" title="一、标题 (Heading)"></a>一、标题 (Heading)</h2><p>使用 <code>#</code> 符号创建标题，<code>#</code> 的数量决定标题级别：</p>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs markdown"><span class="hljs-section"># 一级标题 (H1)</span><br><span class="hljs-section">## 二级标题 (H2)</span><br><span class="hljs-section">### 三级标题 (H3)</span><br><span class="hljs-section">#### 四级标题 (H4)</span><br><span class="hljs-section">##### 五级标题 (H5)</span><br><span class="hljs-section">###### 六级标题 (H6)</span><br></code></pre></td></tr></table></figure>
-
-<p><strong>效果：</strong></p>
-<h1 id="一级标题"><a href="#一级标题" class="headerlink" title="一级标题"></a>一级标题</h1><h2 id="二级标题"><a href="#二级标题" class="headerlink" title="二级标题"></a>二级标题</h2><h3 id="三级标题"><a href="#三级标题" class="headerlink" title="三级标题"></a>三级标题</h3><hr>
-<h2 id="二、文本样式"><a href="#二、文本样式" class="headerlink" title="二、文本样式"></a>二、文本样式</h2><h3 id="粗体-Bold"><a href="#粗体-Bold" class="headerlink" title="粗体 (Bold)"></a>粗体 (Bold)</h3><p>使用 <code>**文本**</code> 或 <code>__文本__</code>：</p>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs markdown"><span class="hljs-strong">**这是粗体文本**</span><br><span class="hljs-strong">__这也是粗体文本__</span><br></code></pre></td></tr></table></figure>
-
-<p><strong>效果：</strong> <strong>这是粗体文本</strong></p>
-<h3 id="斜体-Italic"><a href="#斜体-Italic" class="headerlink" title="斜体 (Italic)"></a>斜体 (Italic)</h3><p>使用 <code>*文本*</code> 或 <code>_文本_</code>：</p>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs markdown"><span class="hljs-emphasis">*这是斜体文本*</span><br><span class="hljs-emphasis">_这也是斜体文本_</span><br></code></pre></td></tr></table></figure>
-
-<p><strong>效果：</strong> <em>这是斜体文本</em></p>
-<h3 id="粗斜体-Bold-Italic"><a href="#粗斜体-Bold-Italic" class="headerlink" title="粗斜体 (Bold + Italic)"></a>粗斜体 (Bold + Italic)</h3><p>组合使用：</p>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs markdown"><span class="hljs-strong">**<span class="hljs-emphasis">*粗斜体文本*</span>**</span><br><span class="hljs-strong">__<span class="hljs-emphasis">_粗斜体文本_</span>__</span><br></code></pre></td></tr></table></figure>
-
-<p><strong>效果：</strong> <em><strong>粗斜体文本</strong></em></p>
-<h3 id="删除线-Strikethrough"><a href="#删除线-Strikethrough" class="headerlink" title="删除线 (Strikethrough)"></a>删除线 (Strikethrough)</h3><p>使用 <code>~~文本~~</code>：</p>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs markdown">~~这是被删除的文本~~<br></code></pre></td></tr></table></figure>
-
-<p><strong>效果：</strong> <del>这是被删除的文本</del></p>
-<hr>
-<h2 id="三、列表-List"><a href="#三、列表-List" class="headerlink" title="三、列表 (List)"></a>三、列表 (List)</h2><h3 id="无序列表-Unordered-List"><a href="#无序列表-Unordered-List" class="headerlink" title="无序列表 (Unordered List)"></a>无序列表 (Unordered List)</h3><p>使用 <code>-</code>、<code>*</code> 或 <code>+</code>：</p>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs markdown"><span class="hljs-bullet">-</span> 列表项1<br><span class="hljs-bullet">-</span> 列表项2<br><span class="hljs-bullet">-</span> 列表项3<br><span class="hljs-bullet">  -</span> 嵌套项3.1<br><span class="hljs-bullet">  -</span> 嵌套项3.2<br></code></pre></td></tr></table></figure>
-
-<p><strong>效果：</strong></p>
+                <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>静态博客没有后端，评论数据无处存储。Giscus 基于 GitHub Discussions，免费、稳定、支持 Markdown，是 Hexo 博客的最佳评论方案之一。</p>
+<p>本文记录从零接入 Giscus 的完整流程，包括踩坑点。</p>
+<h2 id="一、GitHub-仓库准备"><a href="#一、GitHub-仓库准备" class="headerlink" title="一、GitHub 仓库准备"></a>一、GitHub 仓库准备</h2><h3 id="1-1-开启-Discussions"><a href="#1-1-开启-Discussions" class="headerlink" title="1.1 开启 Discussions"></a>1.1 开启 Discussions</h3><p>进入博客 GitHub 仓库 → Settings → Features → 勾选 <strong>Discussions</strong>。</p>
+<h3 id="1-2-创建-Announcement-分类"><a href="#1-2-创建-Announcement-分类" class="headerlink" title="1.2 创建 Announcement 分类"></a>1.2 创建 Announcement 分类</h3><p>进入仓库 → Discussions → 右侧 <code>Edit categories</code> → <code>New category</code>：</p>
 <ul>
-<li>列表项1</li>
-<li>列表项2</li>
-<li>列表项3<ul>
-<li>嵌套项3.1</li>
-<li>嵌套项3.2</li>
+<li>名称：<code>Announcements</code></li>
+<li><strong>类型必须选 Announcement（公告）</strong></li>
 </ul>
-</li>
-</ul>
-<h3 id="有序列表-Ordered-List"><a href="#有序列表-Ordered-List" class="headerlink" title="有序列表 (Ordered List)"></a>有序列表 (Ordered List)</h3><p>使用 <code>数字.</code>：</p>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs markdown"><span class="hljs-bullet">1.</span> 第一项<br><span class="hljs-bullet">2.</span> 第二项<br><span class="hljs-bullet">3.</span> 第三项<br><span class="hljs-bullet">   1.</span> 子项3.1<br><span class="hljs-bullet">   2.</span> 子项3.2<br></code></pre></td></tr></table></figure>
-
-<p><strong>效果：</strong></p>
-<ol>
-<li>第一项</li>
-<li>第二项</li>
-<li>第三项<ol>
-<li>子项3.1</li>
-<li>子项3.2</li>
-</ol>
-</li>
-</ol>
-<h3 id="任务列表-Task-List"><a href="#任务列表-Task-List" class="headerlink" title="任务列表 (Task List)"></a>任务列表 (Task List)</h3><p>使用 <code>- [ ]</code> 和 <code>- [x]</code>：</p>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs markdown"><span class="hljs-bullet">-</span> [ ] 未完成任务<br><span class="hljs-bullet">-</span> [x] 已完成任务<br><span class="hljs-bullet">-</span> [ ] 待办事项<br></code></pre></td></tr></table></figure>
-
-<p><strong>效果：</strong></p>
+<blockquote>
+<p>这一步很关键。如果选成 General，访客可以在仓库里随意新建帖子，造成混乱。Announcement 类型下，只有 Giscus 机器人能创建主帖，访客只能回复。</p>
+</blockquote>
+<h3 id="1-3-安装-Giscus-应用"><a href="#1-3-安装-Giscus-应用" class="headerlink" title="1.3 安装 Giscus 应用"></a>1.3 安装 Giscus 应用</h3><p>访问 <a target="_blank" rel="noopener" href="https://github.com/apps/giscus">https://github.com/apps/giscus</a> ，点击 Install。</p>
 <ul>
-<li><input disabled="" type="checkbox"> 未完成任务</li>
-<li><input checked="" disabled="" type="checkbox"> 已完成任务</li>
-<li><input disabled="" type="checkbox"> 待办事项</li>
+<li>只授权你的博客仓库</li>
+<li>不要全仓库授权</li>
 </ul>
-<hr>
-<h2 id="四、链接-Link"><a href="#四、链接-Link" class="headerlink" title="四、链接 (Link)"></a>四、链接 (Link)</h2><h3 id="基础链接"><a href="#基础链接" class="headerlink" title="基础链接"></a>基础链接</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs markdown">[<span class="hljs-string">链接文本</span>](<span class="hljs-link">URL地址</span>)<br>[<span class="hljs-string">百度</span>](<span class="hljs-link">https://www.baidu.com</span>)<br></code></pre></td></tr></table></figure>
-
-<p><strong>效果：</strong> <a target="_blank" rel="noopener" href="https://www.baidu.com/">百度</a></p>
-<h3 id="带标题的链接"><a href="#带标题的链接" class="headerlink" title="带标题的链接"></a>带标题的链接</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs markdown">[<span class="hljs-string">链接文本</span>](<span class="hljs-link">URL地址 &quot;鼠标悬停提示&quot;</span>)<br>[<span class="hljs-string">Google</span>](<span class="hljs-link">https://www.google.com &quot;访问Google&quot;</span>)<br></code></pre></td></tr></table></figure>
-
-<p><strong>效果：</strong> <a target="_blank" rel="noopener" href="https://www.google.com/" title="访问Google">Google</a></p>
-<h3 id="引用式链接"><a href="#引用式链接" class="headerlink" title="引用式链接"></a>引用式链接</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs markdown">[<span class="hljs-string">链接文本</span>][<span class="hljs-symbol">引用标签</span>]<br><br>[<span class="hljs-symbol">引用标签</span>]: <span class="hljs-link">URL地址 &quot;可选标题&quot;</span><br><br>示例：<br>[<span class="hljs-string">GitHub</span>][<span class="hljs-symbol">1</span>]<br><br>[<span class="hljs-symbol">1</span>]: <span class="hljs-link">https://github.com &quot;GitHub官网&quot;</span><br></code></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="五、图片-Image"><a href="#五、图片-Image" class="headerlink" title="五、图片 (Image)"></a>五、图片 (Image)</h2><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs markdown">![<span class="hljs-string">替代文本</span>](<span class="hljs-link">图片URL</span>)<br>![<span class="hljs-string">示例图片</span>](<span class="hljs-link">https://picsum.photos/200/100</span>)<br></code></pre></td></tr></table></figure>
-
-<p><strong>效果：</strong><br><img src="https://picsum.photos/200/100" srcset="/img/loading.gif" lazyload alt="示例图片"></p>
-<p>带标题的图片：</p>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs markdown">![<span class="hljs-string">替代文本</span>](<span class="hljs-link">图片URL &quot;图片标题&quot;</span>)<br></code></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="六、代码-Code"><a href="#六、代码-Code" class="headerlink" title="六、代码 (Code)"></a>六、代码 (Code)</h2><h3 id="行内代码-Inline-Code"><a href="#行内代码-Inline-Code" class="headerlink" title="行内代码 (Inline Code)"></a>行内代码 (Inline Code)</h3><p>使用反引号 <code>`</code>：</p>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs markdown">使用 <span class="hljs-code">`console.log()`</span> 输出信息<br></code></pre></td></tr></table></figure>
-
-<p><strong>效果：</strong> 使用 <code>console.log()</code> 输出信息</p>
-<h3 id="代码块-Code-Block"><a href="#代码块-Code-Block" class="headerlink" title="代码块 (Code Block)"></a>代码块 (Code Block)</h3><p>使用三个反引号 &#96;&#96;&#96;，可指定语言高亮：</p>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs markdown"><span class="hljs-code">```javascript</span><br><span class="hljs-code">function hello() &#123;</span><br><span class="hljs-code">  console.log(&quot;Hello World!&quot;);</span><br><span class="hljs-code">&#125;</span><br></code></pre></td></tr></table></figure>
-<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs dns"><br>**效果：**<br>```javascript<br>function hello<span class="hljs-punctuation">(</span><span class="hljs-punctuation">)</span> &#123;<br>  console.log<span class="hljs-punctuation">(</span><span class="hljs-string">&quot;Hello World!&quot;</span><span class="hljs-punctuation">)</span><span class="hljs-comment">;</span><br>&#125;<br></code></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="七、表格-Table"><a href="#七、表格-Table" class="headerlink" title="七、表格 (Table)"></a>七、表格 (Table)</h2><p>使用 <code>|</code> 分隔列，<code>-</code> 分隔表头和内容：</p>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs markdown">| 姓名 | 年龄 | 城市 |<br>|------|------|------|<br>| 张三 | 25 | 北京 |<br>| 李四 | 30 | 上海 |<br>| 王五 | 28 | 广州 |<br></code></pre></td></tr></table></figure>
-
-<p><strong>效果：</strong></p>
-<table>
+<h2 id="二、Giscus-官网配置"><a href="#二、Giscus-官网配置" class="headerlink" title="二、Giscus 官网配置"></a>二、Giscus 官网配置</h2><p>访问 <a target="_blank" rel="noopener" href="https://giscus.app/zh-CN">https://giscus.app/zh-CN</a> ，按以下步骤配置：</p>
+<h3 id="2-1-仓库"><a href="#2-1-仓库" class="headerlink" title="2.1 仓库"></a>2.1 仓库</h3><p>填入：<code>用户名/仓库名</code>（如 <code>zuige66/hexo</code>）</p>
+<h3 id="2-2-映射方式"><a href="#2-2-映射方式" class="headerlink" title="2.2 映射方式"></a>2.2 映射方式</h3><p>选择：<strong>Discussion 的标题包含页面的 pathname</strong></p>
+<p>这种方式下，每篇文章的 URL 路径会作为 Discussion 的标题，一一对应。</p>
+<h3 id="2-3-Discussion-分类"><a href="#2-3-Discussion-分类" class="headerlink" title="2.3 Discussion 分类"></a>2.3 Discussion 分类</h3><p>选择：<code>Announcements</code></p>
+<h3 id="2-4-特性勾选"><a href="#2-4-特性勾选" class="headerlink" title="2.4 特性勾选"></a>2.4 特性勾选</h3><table>
 <thead>
 <tr>
-<th>姓名</th>
-<th>年龄</th>
-<th>城市</th>
+<th>选项</th>
+<th>建议</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>张三</td>
-<td>25</td>
-<td>北京</td>
+<td>启用主帖子上的反应</td>
+<td>✅ 勾选</td>
 </tr>
 <tr>
-<td>李四</td>
-<td>30</td>
-<td>上海</td>
+<td>将评论框放在评论上方</td>
+<td>✅ 勾选</td>
 </tr>
 <tr>
-<td>王五</td>
-<td>28</td>
-<td>广州</td>
+<td>懒加载评论</td>
+<td>✅ 勾选</td>
+</tr>
+<tr>
+<td>输出 discussion 的元数据</td>
+<td>☐ 不勾选</td>
 </tr>
 </tbody></table>
-<h3 id="对齐方式"><a href="#对齐方式" class="headerlink" title="对齐方式"></a>对齐方式</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs markdown">| 左对齐 | 居中对齐 | 右对齐 |<br>|:------|:-------:|------:|<br>| 内容 | 内容 | 内容 |<br></code></pre></td></tr></table></figure>
+<h3 id="2-5-主题配色"><a href="#2-5-主题配色" class="headerlink" title="2.5 主题配色"></a>2.5 主题配色</h3><p>选择：<strong>用户偏好的色彩方案</strong></p>
+<p>这样评论区会自动跟随博客的亮色&#x2F;暗色模式切换。</p>
+<h3 id="2-6-复制代码"><a href="#2-6-复制代码" class="headerlink" title="2.6 复制代码"></a>2.6 复制代码</h3><p>页面会生成一段 <code>&lt;script&gt;</code> 代码，类似：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://giscus.app/client.js&quot;</span></span><br><span class="hljs-tag">        <span class="hljs-attr">data-repo</span>=<span class="hljs-string">&quot;zuige66/hexo&quot;</span></span><br><span class="hljs-tag">        <span class="hljs-attr">data-repo-id</span>=<span class="hljs-string">&quot;R_kgDOUNLYKw&quot;</span></span><br><span class="hljs-tag">        <span class="hljs-attr">data-category</span>=<span class="hljs-string">&quot;Announcements&quot;</span></span><br><span class="hljs-tag">        <span class="hljs-attr">data-category-id</span>=<span class="hljs-string">&quot;DIC_kwDOUNLYK84DE1jw&quot;</span></span><br><span class="hljs-tag">        <span class="hljs-attr">data-mapping</span>=<span class="hljs-string">&quot;pathname&quot;</span></span><br><span class="hljs-tag">        <span class="hljs-attr">data-strict</span>=<span class="hljs-string">&quot;0&quot;</span></span><br><span class="hljs-tag">        <span class="hljs-attr">data-reactions-enabled</span>=<span class="hljs-string">&quot;1&quot;</span></span><br><span class="hljs-tag">        <span class="hljs-attr">data-emit-metadata</span>=<span class="hljs-string">&quot;0&quot;</span></span><br><span class="hljs-tag">        <span class="hljs-attr">data-input-position</span>=<span class="hljs-string">&quot;top&quot;</span></span><br><span class="hljs-tag">        <span class="hljs-attr">data-theme</span>=<span class="hljs-string">&quot;preferred_color_scheme&quot;</span></span><br><span class="hljs-tag">        <span class="hljs-attr">data-lang</span>=<span class="hljs-string">&quot;zh-CN&quot;</span></span><br><span class="hljs-tag">        <span class="hljs-attr">data-loading</span>=<span class="hljs-string">&quot;lazy&quot;</span></span><br><span class="hljs-tag">        <span class="hljs-attr">crossorigin</span>=<span class="hljs-string">&quot;anonymous&quot;</span></span><br><span class="hljs-tag">        <span class="hljs-attr">async</span>&gt;</span><span class="language-javascript"></span><br><span class="language-javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br></code></pre></td></tr></table></figure>
 
-<p><strong>效果：</strong></p>
-<table>
-<thead>
-<tr>
-<th align="left">左对齐</th>
-<th align="center">居中对齐</th>
-<th align="right">右对齐</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">内容</td>
-<td align="center">内容</td>
-<td align="right">内容</td>
-</tr>
-</tbody></table>
-<hr>
-<h2 id="八、引用-Blockquote"><a href="#八、引用-Blockquote" class="headerlink" title="八、引用 (Blockquote)"></a>八、引用 (Blockquote)</h2><p>使用 <code>&gt;</code> 符号：</p>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs markdown"><span class="hljs-quote">&gt; 这是一段引用文本</span><br><span class="hljs-quote">&gt; </span><br><span class="hljs-quote">&gt; 引用可以有多行</span><br><span class="hljs-quote">&gt; &gt; 嵌套引用</span><br></code></pre></td></tr></table></figure>
+<p>记住里面的 <code>repo-id</code> 和 <code>category-id</code>，下一步要用。</p>
+<h2 id="三、嵌入-Hexo-博客"><a href="#三、嵌入-Hexo-博客" class="headerlink" title="三、嵌入 Hexo 博客"></a>三、嵌入 Hexo 博客</h2><h3 id="3-1-编辑主题配置"><a href="#3-1-编辑主题配置" class="headerlink" title="3.1 编辑主题配置"></a>3.1 编辑主题配置</h3><p>打开 <code>_config.fluid.yml</code>，添加两处配置：</p>
+<p><strong>启用评论（在 post 段落内）：</strong></p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">post:</span><br>  <span class="hljs-comment"># ... 其他配置</span><br>  <span class="hljs-attr">comments:</span><br>    <span class="hljs-attr">enable:</span> <span class="hljs-literal">true</span><br>    <span class="hljs-attr">type:</span> <span class="hljs-string">giscus</span><br></code></pre></td></tr></table></figure>
 
-<p><strong>效果：</strong></p>
+<p><strong>Giscus 参数（文件末尾添加）：</strong></p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">giscus:</span><br>  <span class="hljs-attr">repo:</span> <span class="hljs-string">zuige66/hexo</span><br>  <span class="hljs-attr">repo-id:</span> <span class="hljs-string">R_kgDOUNLYKw</span><br>  <span class="hljs-attr">category:</span> <span class="hljs-string">Announcements</span><br>  <span class="hljs-attr">category-id:</span> <span class="hljs-string">DIC_kwDOUNLYK84DE1jw</span><br>  <span class="hljs-attr">mapping:</span> <span class="hljs-string">pathname</span><br>  <span class="hljs-attr">strict:</span> <span class="hljs-number">0</span><br>  <span class="hljs-attr">reactions-enabled:</span> <span class="hljs-number">1</span><br>  <span class="hljs-attr">emit-metadata:</span> <span class="hljs-number">0</span><br>  <span class="hljs-attr">input-position:</span> <span class="hljs-string">top</span><br>  <span class="hljs-attr">theme-light:</span> <span class="hljs-string">light</span><br>  <span class="hljs-attr">theme-dark:</span> <span class="hljs-string">dark</span><br>  <span class="hljs-attr">lang:</span> <span class="hljs-string">zh-CN</span><br></code></pre></td></tr></table></figure>
+
 <blockquote>
-<p>这是一段引用文本</p>
-<p>引用可以有多行</p>
-<blockquote>
-<p>嵌套引用</p>
+<p>注意：Fluid 主题要求 <code>theme-light</code> 和 <code>theme-dark</code> 两个字段，不要写成 <code>theme</code>。</p>
 </blockquote>
-</blockquote>
-<hr>
-<h2 id="九、水平线-Horizontal-Rule"><a href="#九、水平线-Horizontal-Rule" class="headerlink" title="九、水平线 (Horizontal Rule)"></a>九、水平线 (Horizontal Rule)</h2><p>使用 <code>---</code>、<code>***</code> 或 <code>___</code>：</p>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs markdown">---<br>***<br>___<br></code></pre></td></tr></table></figure>
+<h3 id="3-2-部署"><a href="#3-2-部署" class="headerlink" title="3.2 部署"></a>3.2 部署</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">hexo clean &amp;&amp; hexo deploy<br></code></pre></td></tr></table></figure>
 
-<h2 id="效果："><a href="#效果：" class="headerlink" title="效果："></a><strong>效果：</strong></h2><hr>
-<h2 id="十、脚注-Footnote"><a href="#十、脚注-Footnote" class="headerlink" title="十、脚注 (Footnote)"></a>十、脚注 (Footnote)</h2><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs markdown">这是带脚注的文本[^1]<br><br>[<span class="hljs-symbol">^1</span>]: <span class="hljs-link">这是脚注的内容</span><br></code></pre></td></tr></table></figure>
-
-<p><strong>效果：</strong><br>这是带脚注的文本<sup id="fnref:1" class="footnote-ref"><a href="#fn:1" rel="footnote"><span class="hint--top hint--rounded" aria-label="这是脚注的内容">[1]</span></a></sup></p>
-<hr>
-<h2 id="十一、表情符号-Emoji"><a href="#十一、表情符号-Emoji" class="headerlink" title="十一、表情符号 (Emoji)"></a>十一、表情符号 (Emoji)</h2><p>直接输入表情符号或使用代码：</p>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs markdown">:smile: :heart: :star: :rocket:<br></code></pre></td></tr></table></figure>
-
-<p><strong>效果：</strong> 😊 ❤️ ⭐ 🚀</p>
-<hr>
-<h2 id="常用快捷键"><a href="#常用快捷键" class="headerlink" title="常用快捷键"></a>常用快捷键</h2><table>
-<thead>
-<tr>
-<th>快捷键</th>
-<th>功能</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Ctrl+B</td>
-<td>粗体</td>
-</tr>
-<tr>
-<td>Ctrl+I</td>
-<td>斜体</td>
-</tr>
-<tr>
-<td>Ctrl+K</td>
-<td>插入链接</td>
-</tr>
-<tr>
-<td>Ctrl+Shift+C</td>
-<td>插入代码块</td>
-</tr>
-<tr>
-<td>Ctrl+L</td>
-<td>插入链接</td>
-</tr>
-</tbody></table>
-<hr>
-<h2 id="编写建议"><a href="#编写建议" class="headerlink" title="编写建议"></a>编写建议</h2><ol>
-<li><strong>保持简洁</strong>：使用合适的标题层级，避免过度嵌套</li>
-<li><strong>使用列表</strong>：长文本使用列表提高可读性</li>
-<li><strong>代码格式化</strong>：代码片段使用代码块包裹</li>
-<li><strong>表格对齐</strong>：使用对齐符号使表格更美观</li>
-<li><strong>预览检查</strong>：写完后预览确保格式正确</li>
+<h2 id="四、上线后验证"><a href="#四、上线后验证" class="headerlink" title="四、上线后验证"></a>四、上线后验证</h2><ol>
+<li>访问线上博客文章页面，滚动到底部</li>
+<li>首次访问某篇文章时，Giscus 机器人会自动在仓库 Announcements 分类下创建一条 Discussion 主帖（标题是文章路径）</li>
+<li>用 GitHub 账号登录后即可发表评论</li>
+<li>未登录的访客可以查看评论，登录后可回复</li>
 </ol>
-<hr>
 <blockquote>
-<p><strong>提示</strong>：不同的 Markdown 渲染器对语法的支持可能略有差异，以上是标准的 CommonMark 语法。</p>
+<p>本地 <code>hexo s</code> 预览只能看到评论区 UI 框架，不会真正创建 Discussion。必须部署到线上才能正常使用。</p>
 </blockquote>
-<section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span>这是脚注的内容
-<a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>
+<h2 id="五、工作原理"><a href="#五、工作原理" class="headerlink" title="五、工作原理"></a>五、工作原理</h2><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs dart">文章 URL: /<span class="hljs-number">2026</span>/<span class="hljs-number">09</span>/<span class="hljs-number">04</span>/my-post/<br>        ↓<br><span class="hljs-title class_">Giscus</span> 根据 pathname 查找对应的 <span class="hljs-title class_">Discussion</span><br>        ↓<br>找到 → 显示评论<br>没找到 → 自动创建新的 <span class="hljs-title class_">Discussion</span> 主帖<br>        ↓<br>评论存储在 <span class="hljs-title class_">GitHub</span> <span class="hljs-title class_">Discussions</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>每篇文章 &#x3D; 1 个 Discussion 主帖</li>
+<li>所有评论都是该主帖下的 Reply</li>
+<li>只要文章路径不变，修改标题不会丢失历史评论</li>
+</ul>
+<h2 id="六、常见问题"><a href="#六、常见问题" class="headerlink" title="六、常见问题"></a>六、常见问题</h2><h3 id="评论区不显示"><a href="#评论区不显示" class="headerlink" title="评论区不显示"></a>评论区不显示</h3><p>检查项：</p>
+<ul>
+<li>Discussions 是否已开启</li>
+<li>Announcement 分类类型是否正确</li>
+<li>Giscus 应用是否已授权仓库</li>
+<li><code>_config.fluid.yml</code> 中 <code>post.comments.enable</code> 是否为 <code>true</code></li>
+</ul>
+<h3 id="暗色模式下评论区白底"><a href="#暗色模式下评论区白底" class="headerlink" title="暗色模式下评论区白底"></a>暗色模式下评论区白底</h3><p>主题配色要选「用户偏好的色彩方案」，不要固定 GitHub Light。</p>
+<h3 id="本地预览看不到评论"><a href="#本地预览看不到评论" class="headerlink" title="本地预览看不到评论"></a>本地预览看不到评论</h3><p>正常现象。<code>hexo s</code> 只渲染 UI，Discussion 帐子只有部署线上后才会由 Giscus 机器人创建。</p>
+<h3 id="仓库里出现乱七八糟的帖子"><a href="#仓库里出现乱七八糟的帖子" class="headerlink" title="仓库里出现乱七八糟的帖子"></a>仓库里出现乱七八糟的帖子</h3><p>分类类型选错了。必须是 Announcement，不能是 General。Announcement 类型下只有 Giscus 能创建主帖。</p>
+<h2 id="七、进阶设置"><a href="#七、进阶设置" class="headerlink" title="七、进阶设置"></a>七、进阶设置</h2><h3 id="指定文章关闭评论"><a href="#指定文章关闭评论" class="headerlink" title="指定文章关闭评论"></a>指定文章关闭评论</h3><p>在文章 front-matter 中设置：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-meta">---</span><br><span class="hljs-attr">title:</span> <span class="hljs-string">某篇文章</span><br><span class="hljs-attr">comments:</span> <span class="hljs-literal">false</span><br><span class="hljs-meta">---</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="自定义评论区标题"><a href="#自定义评论区标题" class="headerlink" title="自定义评论区标题"></a>自定义评论区标题</h3><p>Giscus 默认用文章路径作为 Discussion 标题。如需自定义，可在 giscus.app 配置时修改映射方式。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>操作</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>仓库开启 Discussions</td>
+</tr>
+<tr>
+<td>2</td>
+<td>创建 Announcement 分类</td>
+</tr>
+<tr>
+<td>3</td>
+<td>安装 Giscus 应用并授权</td>
+</tr>
+<tr>
+<td>4</td>
+<td>giscus.app 配置并获取参数</td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>_config.fluid.yml</code> 添加 giscus 配置</td>
+</tr>
+<tr>
+<td>6</td>
+<td>部署上线验证</td>
+</tr>
+</tbody></table>
+<p>整个流程约 15 分钟完成，无需服务器，无需付费。</p>
+
                 
               </div>
             
@@ -599,7 +528,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/%E7%AC%94%E8%AE%B0/" class="category-chain-item">笔记</a>
+  <a href="/categories/%E6%8A%80%E6%9C%AF/" class="category-chain-item">技术</a>
   
   
 
@@ -614,13 +543,13 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E5%AD%A6%E4%B9%A0/" class="print-no-link">#学习</a>
+        <a href="/tags/Hexo/" class="print-no-link">#Hexo</a>
       
-        <a href="/tags/%E7%AC%94%E8%AE%B0/" class="print-no-link">#笔记</a>
+        <a href="/tags/Giscus/" class="print-no-link">#Giscus</a>
       
-        <a href="/tags/Markdown/" class="print-no-link">#Markdown</a>
+        <a href="/tags/%E8%AF%84%E8%AE%BA%E7%B3%BB%E7%BB%9F/" class="print-no-link">#评论系统</a>
       
-        <a href="/tags/%E5%86%99%E4%BD%9C/" class="print-no-link">#写作</a>
+        <a href="/tags/%E6%95%99%E7%A8%8B/" class="print-no-link">#教程</a>
       
     </div>
   
@@ -632,8 +561,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Markdown 语法入门指南</div>
-      <div>https://zuige.cc.cd/2026/09/04/markdown-guide/</div>
+      <div>Hexo 博客接入 Giscus 评论系统完整指南</div>
+      <div>https://zuige.cc.cd/2026/09/04/hexo-giscus-guide/</div>
     </div>
     <div class="license-meta">
       
@@ -677,18 +606,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2026/09/04/opencode-tutorial/" title="OpenCode 环境搭建与使用指南">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">OpenCode 环境搭建与使用指南</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2026/09/04/hexo-customize-guide/" title="Hexo + Fluid 博客管理指南：结构解析与自定义配置">
-                        <span class="hidden-mobile">Hexo + Fluid 博客管理指南：结构解析与自定义配置</span>
+                      <a href="/2026/09/04/opencode-tutorial/" title="OpenCode 环境搭建与使用指南">
+                        <span class="hidden-mobile">OpenCode 环境搭建与使用指南</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
