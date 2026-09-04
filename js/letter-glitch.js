@@ -222,16 +222,16 @@
 
     var theme = getTheme();
     applyTheme(banner, theme);
+    updateActiveState(theme);
 
     document.addEventListener('click', function (e) {
       var item = e.target.closest('.banner-theme-item');
-      if (item) {
-        e.preventDefault();
-        switchTheme(item.getAttribute('data-theme'));
-      }
-    });
-
-    updateActiveState(theme);
+      if (!item) return;
+      e.preventDefault();
+      e.stopPropagation();
+      var newTheme = item.getAttribute('data-theme');
+      if (newTheme) switchTheme(newTheme);
+    }, true);
   }
 
   if (document.readyState === 'loading') {
