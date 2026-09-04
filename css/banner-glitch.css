@@ -1,0 +1,26 @@
+/* LetterGlitch 封面样式 */
+#banner {
+  position: relative;
+  overflow: hidden;
+}
+
+#banner .full-bg-img {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+#banner .mask {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#banner .banner-text {
+  position: relative;
+  z-index: 2;
+}

@@ -148,7 +148,7 @@
     canvas.style.height = '100%';
     canvas.style.zIndex = '0';
     banner.style.position = 'relative';
-    banner.style.background = 'none';
+    banner.style.background = '#000';
     banner.insertBefore(canvas, banner.firstChild);
 
     if (mask) {
@@ -160,8 +160,8 @@
       glitchColors: ['#2b4539', '#61dca3', '#61b3dc'],
       glitchSpeed: 50,
       smooth: true,
-      outerVignette: true,
-      centerVignette: false
+      outerVignette: false,
+      centerVignette: true
     }).start();
   }
 
