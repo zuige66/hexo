@@ -19,24 +19,27 @@
   <meta name="author" content="zuige">
   <meta name="keywords" content="hexo, blog">
   
-    <meta name="description" content="前言花了几个小时搭建了这个博客，记录一下过程，也给想建博客的朋友一个参考。 为什么选 Hexo？对比了几种方案：    方案 优点 缺点    WordPress 功能强大、插件多 需要服务器、维护成本高   Hugo 速度快 主题生态不如 Hexo   Hexo 主题丰富、部署简单 需要 Node.js 环境   最终选了 Hexo，主要因为：  免费托管在 GitHub Pages，不用买服务">
+    <meta name="description" content="Markdown 语法入门指南一、标题 (Heading)使用 # 符号创建标题，# 的数量决定标题级别： 123456# 一级标题 (H1)## 二级标题 (H2)### 三级标题 (H3)#### 四级标题 (H4)##### 五级标题 (H5)###### 六级标题 (H6)  效果： 一级标题二级标题三级标题 二、文本样式粗体 (Bold)使用 **文本** 或 __文本__： 12**这">
 <meta property="og:type" content="article">
-<meta property="og:title" content="使用 Hexo + Fluid 搭建个人博客完整指南">
-<meta property="og:url" content="https://zuige66.github.io/hexo/2026/09/03/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/index.html">
+<meta property="og:title" content="Markdown 语法入门指南">
+<meta property="og:url" content="https://zuige66.github.io/hexo/2026/09/04/markdown-guide/index.html">
 <meta property="og:site_name" content="zuige&#39;s blog">
-<meta property="og:description" content="前言花了几个小时搭建了这个博客，记录一下过程，也给想建博客的朋友一个参考。 为什么选 Hexo？对比了几种方案：    方案 优点 缺点    WordPress 功能强大、插件多 需要服务器、维护成本高   Hugo 速度快 主题生态不如 Hexo   Hexo 主题丰富、部署简单 需要 Node.js 环境   最终选了 Hexo，主要因为：  免费托管在 GitHub Pages，不用买服务">
+<meta property="og:description" content="Markdown 语法入门指南一、标题 (Heading)使用 # 符号创建标题，# 的数量决定标题级别： 123456# 一级标题 (H1)## 二级标题 (H2)### 三级标题 (H3)#### 四级标题 (H4)##### 五级标题 (H5)###### 六级标题 (H6)  效果： 一级标题二级标题三级标题 二、文本样式粗体 (Bold)使用 **文本** 或 __文本__： 12**这">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2026-09-03T13:29:39.000Z">
-<meta property="article:modified_time" content="2026-09-03T14:53:35.210Z">
+<meta property="og:image" content="https://picsum.photos/200/100">
+<meta property="article:published_time" content="2026-09-03T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-09-04T02:42:18.413Z">
 <meta property="article:author" content="zuige">
-<meta property="article:tag" content="教程">
-<meta property="article:tag" content="Hexo">
-<meta property="article:tag" content="博客">
+<meta property="article:tag" content="学习">
+<meta property="article:tag" content="笔记">
+<meta property="article:tag" content="Markdown">
+<meta property="article:tag" content="写作">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://picsum.photos/200/100">
   
   
   
-  <title>使用 Hexo + Fluid 搭建个人博客完整指南 - zuige&#39;s blog</title>
+  <title>Markdown 语法入门指南 - zuige&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -305,7 +308,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="使用 Hexo + Fluid 搭建个人博客完整指南"></span>
+            <span id="subtitle" data-typed-text="Markdown 语法入门指南"></span>
           
         </div>
 
@@ -316,8 +319,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2026-09-03 21:29" pubdate>
-          2026年9月3日 晚上
+        <time datetime="2026-09-04 00:00" pubdate>
+          2026年9月4日 凌晨
         </time>
       </span>
     
@@ -328,7 +331,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.6k 字
+          1.9k 字
         
       </span>
     
@@ -339,7 +342,7 @@
         
         
         
-          22 分钟
+          17 分钟
         
       </span>
     
@@ -378,129 +381,207 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">使用 Hexo + Fluid 搭建个人博客完整指南</h1>
+            <h1 id="seo-header">Markdown 语法入门指南</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>花了几个小时搭建了这个博客，记录一下过程，也给想建博客的朋友一个参考。</p>
-<h2 id="为什么选-Hexo？"><a href="#为什么选-Hexo？" class="headerlink" title="为什么选 Hexo？"></a>为什么选 Hexo？</h2><p>对比了几种方案：</p>
+                <h1 id="Markdown-语法入门指南"><a href="#Markdown-语法入门指南" class="headerlink" title="Markdown 语法入门指南"></a>Markdown 语法入门指南</h1><h2 id="一、标题-Heading"><a href="#一、标题-Heading" class="headerlink" title="一、标题 (Heading)"></a>一、标题 (Heading)</h2><p>使用 <code>#</code> 符号创建标题，<code>#</code> 的数量决定标题级别：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs markdown"><span class="hljs-section"># 一级标题 (H1)</span><br><span class="hljs-section">## 二级标题 (H2)</span><br><span class="hljs-section">### 三级标题 (H3)</span><br><span class="hljs-section">#### 四级标题 (H4)</span><br><span class="hljs-section">##### 五级标题 (H5)</span><br><span class="hljs-section">###### 六级标题 (H6)</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>效果：</strong></p>
+<h1 id="一级标题"><a href="#一级标题" class="headerlink" title="一级标题"></a>一级标题</h1><h2 id="二级标题"><a href="#二级标题" class="headerlink" title="二级标题"></a>二级标题</h2><h3 id="三级标题"><a href="#三级标题" class="headerlink" title="三级标题"></a>三级标题</h3><hr>
+<h2 id="二、文本样式"><a href="#二、文本样式" class="headerlink" title="二、文本样式"></a>二、文本样式</h2><h3 id="粗体-Bold"><a href="#粗体-Bold" class="headerlink" title="粗体 (Bold)"></a>粗体 (Bold)</h3><p>使用 <code>**文本**</code> 或 <code>__文本__</code>：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs markdown"><span class="hljs-strong">**这是粗体文本**</span><br><span class="hljs-strong">__这也是粗体文本__</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>效果：</strong> <strong>这是粗体文本</strong></p>
+<h3 id="斜体-Italic"><a href="#斜体-Italic" class="headerlink" title="斜体 (Italic)"></a>斜体 (Italic)</h3><p>使用 <code>*文本*</code> 或 <code>_文本_</code>：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs markdown"><span class="hljs-emphasis">*这是斜体文本*</span><br><span class="hljs-emphasis">_这也是斜体文本_</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>效果：</strong> <em>这是斜体文本</em></p>
+<h3 id="粗斜体-Bold-Italic"><a href="#粗斜体-Bold-Italic" class="headerlink" title="粗斜体 (Bold + Italic)"></a>粗斜体 (Bold + Italic)</h3><p>组合使用：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs markdown"><span class="hljs-strong">**<span class="hljs-emphasis">*粗斜体文本*</span>**</span><br><span class="hljs-strong">__<span class="hljs-emphasis">_粗斜体文本_</span>__</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>效果：</strong> <em><strong>粗斜体文本</strong></em></p>
+<h3 id="删除线-Strikethrough"><a href="#删除线-Strikethrough" class="headerlink" title="删除线 (Strikethrough)"></a>删除线 (Strikethrough)</h3><p>使用 <code>~~文本~~</code>：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs markdown">~~这是被删除的文本~~<br></code></pre></td></tr></table></figure>
+
+<p><strong>效果：</strong> <del>这是被删除的文本</del></p>
+<hr>
+<h2 id="三、列表-List"><a href="#三、列表-List" class="headerlink" title="三、列表 (List)"></a>三、列表 (List)</h2><h3 id="无序列表-Unordered-List"><a href="#无序列表-Unordered-List" class="headerlink" title="无序列表 (Unordered List)"></a>无序列表 (Unordered List)</h3><p>使用 <code>-</code>、<code>*</code> 或 <code>+</code>：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs markdown"><span class="hljs-bullet">-</span> 列表项1<br><span class="hljs-bullet">-</span> 列表项2<br><span class="hljs-bullet">-</span> 列表项3<br><span class="hljs-bullet">  -</span> 嵌套项3.1<br><span class="hljs-bullet">  -</span> 嵌套项3.2<br></code></pre></td></tr></table></figure>
+
+<p><strong>效果：</strong></p>
+<ul>
+<li>列表项1</li>
+<li>列表项2</li>
+<li>列表项3<ul>
+<li>嵌套项3.1</li>
+<li>嵌套项3.2</li>
+</ul>
+</li>
+</ul>
+<h3 id="有序列表-Ordered-List"><a href="#有序列表-Ordered-List" class="headerlink" title="有序列表 (Ordered List)"></a>有序列表 (Ordered List)</h3><p>使用 <code>数字.</code>：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs markdown"><span class="hljs-bullet">1.</span> 第一项<br><span class="hljs-bullet">2.</span> 第二项<br><span class="hljs-bullet">3.</span> 第三项<br><span class="hljs-bullet">   1.</span> 子项3.1<br><span class="hljs-bullet">   2.</span> 子项3.2<br></code></pre></td></tr></table></figure>
+
+<p><strong>效果：</strong></p>
+<ol>
+<li>第一项</li>
+<li>第二项</li>
+<li>第三项<ol>
+<li>子项3.1</li>
+<li>子项3.2</li>
+</ol>
+</li>
+</ol>
+<h3 id="任务列表-Task-List"><a href="#任务列表-Task-List" class="headerlink" title="任务列表 (Task List)"></a>任务列表 (Task List)</h3><p>使用 <code>- [ ]</code> 和 <code>- [x]</code>：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs markdown"><span class="hljs-bullet">-</span> [ ] 未完成任务<br><span class="hljs-bullet">-</span> [x] 已完成任务<br><span class="hljs-bullet">-</span> [ ] 待办事项<br></code></pre></td></tr></table></figure>
+
+<p><strong>效果：</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> 未完成任务</li>
+<li><input checked="" disabled="" type="checkbox"> 已完成任务</li>
+<li><input disabled="" type="checkbox"> 待办事项</li>
+</ul>
+<hr>
+<h2 id="四、链接-Link"><a href="#四、链接-Link" class="headerlink" title="四、链接 (Link)"></a>四、链接 (Link)</h2><h3 id="基础链接"><a href="#基础链接" class="headerlink" title="基础链接"></a>基础链接</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs markdown">[<span class="hljs-string">链接文本</span>](<span class="hljs-link">URL地址</span>)<br>[<span class="hljs-string">百度</span>](<span class="hljs-link">https://www.baidu.com</span>)<br></code></pre></td></tr></table></figure>
+
+<p><strong>效果：</strong> <a target="_blank" rel="noopener" href="https://www.baidu.com/">百度</a></p>
+<h3 id="带标题的链接"><a href="#带标题的链接" class="headerlink" title="带标题的链接"></a>带标题的链接</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs markdown">[<span class="hljs-string">链接文本</span>](<span class="hljs-link">URL地址 &quot;鼠标悬停提示&quot;</span>)<br>[<span class="hljs-string">Google</span>](<span class="hljs-link">https://www.google.com &quot;访问Google&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<p><strong>效果：</strong> <a target="_blank" rel="noopener" href="https://www.google.com/" title="访问Google">Google</a></p>
+<h3 id="引用式链接"><a href="#引用式链接" class="headerlink" title="引用式链接"></a>引用式链接</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs markdown">[<span class="hljs-string">链接文本</span>][<span class="hljs-symbol">引用标签</span>]<br><br>[<span class="hljs-symbol">引用标签</span>]: <span class="hljs-link">URL地址 &quot;可选标题&quot;</span><br><br>示例：<br>[<span class="hljs-string">GitHub</span>][<span class="hljs-symbol">1</span>]<br><br>[<span class="hljs-symbol">1</span>]: <span class="hljs-link">https://github.com &quot;GitHub官网&quot;</span><br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="五、图片-Image"><a href="#五、图片-Image" class="headerlink" title="五、图片 (Image)"></a>五、图片 (Image)</h2><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs markdown">![<span class="hljs-string">替代文本</span>](<span class="hljs-link">图片URL</span>)<br>![<span class="hljs-string">示例图片</span>](<span class="hljs-link">https://picsum.photos/200/100</span>)<br></code></pre></td></tr></table></figure>
+
+<p><strong>效果：</strong><br><img src="https://picsum.photos/200/100" srcset="/hexo/img/loading.gif" lazyload alt="示例图片"></p>
+<p>带标题的图片：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs markdown">![<span class="hljs-string">替代文本</span>](<span class="hljs-link">图片URL &quot;图片标题&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="六、代码-Code"><a href="#六、代码-Code" class="headerlink" title="六、代码 (Code)"></a>六、代码 (Code)</h2><h3 id="行内代码-Inline-Code"><a href="#行内代码-Inline-Code" class="headerlink" title="行内代码 (Inline Code)"></a>行内代码 (Inline Code)</h3><p>使用反引号 <code>`</code>：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs markdown">使用 <span class="hljs-code">`console.log()`</span> 输出信息<br></code></pre></td></tr></table></figure>
+
+<p><strong>效果：</strong> 使用 <code>console.log()</code> 输出信息</p>
+<h3 id="代码块-Code-Block"><a href="#代码块-Code-Block" class="headerlink" title="代码块 (Code Block)"></a>代码块 (Code Block)</h3><p>使用三个反引号 &#96;&#96;&#96;，可指定语言高亮：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs markdown"><span class="hljs-code">```javascript</span><br><span class="hljs-code">function hello() &#123;</span><br><span class="hljs-code">  console.log(&quot;Hello World!&quot;);</span><br><span class="hljs-code">&#125;</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs dns"><br>**效果：**<br>```javascript<br>function hello<span class="hljs-punctuation">(</span><span class="hljs-punctuation">)</span> &#123;<br>  console.log<span class="hljs-punctuation">(</span><span class="hljs-string">&quot;Hello World!&quot;</span><span class="hljs-punctuation">)</span><span class="hljs-comment">;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="七、表格-Table"><a href="#七、表格-Table" class="headerlink" title="七、表格 (Table)"></a>七、表格 (Table)</h2><p>使用 <code>|</code> 分隔列，<code>-</code> 分隔表头和内容：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs markdown">| 姓名 | 年龄 | 城市 |<br>|------|------|------|<br>| 张三 | 25 | 北京 |<br>| 李四 | 30 | 上海 |<br>| 王五 | 28 | 广州 |<br></code></pre></td></tr></table></figure>
+
+<p><strong>效果：</strong></p>
 <table>
 <thead>
 <tr>
-<th>方案</th>
-<th>优点</th>
-<th>缺点</th>
+<th>姓名</th>
+<th>年龄</th>
+<th>城市</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>WordPress</td>
-<td>功能强大、插件多</td>
-<td>需要服务器、维护成本高</td>
+<td>张三</td>
+<td>25</td>
+<td>北京</td>
 </tr>
 <tr>
-<td>Hugo</td>
-<td>速度快</td>
-<td>主题生态不如 Hexo</td>
+<td>李四</td>
+<td>30</td>
+<td>上海</td>
 </tr>
 <tr>
-<td>Hexo</td>
-<td>主题丰富、部署简单</td>
-<td>需要 Node.js 环境</td>
+<td>王五</td>
+<td>28</td>
+<td>广州</td>
 </tr>
 </tbody></table>
-<p>最终选了 Hexo，主要因为：</p>
-<ul>
-<li>免费托管在 GitHub Pages，不用买服务器</li>
-<li>Fluid 主题颜值高、中文文档好</li>
-<li>Markdown 写文章很舒服</li>
-</ul>
-<h2 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h2><p>需要安装两个东西：</p>
-<p><strong>Node.js</strong> - 去官网下载安装即可，自带 npm</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 验证安装</span><br>node -v    <span class="hljs-comment"># v22.x.x</span><br>npm -v     <span class="hljs-comment"># 10.x.x</span><br></code></pre></td></tr></table></figure>
+<h3 id="对齐方式"><a href="#对齐方式" class="headerlink" title="对齐方式"></a>对齐方式</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs markdown">| 左对齐 | 居中对齐 | 右对齐 |<br>|:------|:-------:|------:|<br>| 内容 | 内容 | 内容 |<br></code></pre></td></tr></table></figure>
 
-<p><strong>Git</strong> - 用于版本管理和部署</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">git --version  <span class="hljs-comment"># 2.x.x</span><br></code></pre></td></tr></table></figure>
-
-<h2 id="安装-Hexo"><a href="#安装-Hexo" class="headerlink" title="安装 Hexo"></a>安装 Hexo</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 全局安装 Hexo CLI</span><br>npm install -g hexo-cli<br><br><span class="hljs-comment"># 初始化博客项目</span><br><span class="hljs-built_in">mkdir</span> my-blog &amp;&amp; <span class="hljs-built_in">cd</span> my-blog<br>hexo init .<br><br><span class="hljs-comment"># 安装依赖</span><br>npm install<br></code></pre></td></tr></table></figure>
-
-<p>初始化后的目录结构：</p>
-<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs nix">my-blog<span class="hljs-symbol">/</span><br>├── _config.yml    <span class="hljs-comment"># 主配置文件</span><br>├── package.json   <span class="hljs-comment"># 依赖管理</span><br>├── scaffolds<span class="hljs-symbol">/</span>     <span class="hljs-comment"># 文章模板</span><br>├── source<span class="hljs-symbol">/</span>        <span class="hljs-comment"># 文章和资源</span><br>│   └── _posts<span class="hljs-symbol">/</span>    <span class="hljs-comment"># 博客文章放这里</span><br>└── themes<span class="hljs-symbol">/</span>        <span class="hljs-comment"># 主题目录</span><br></code></pre></td></tr></table></figure>
-
-<h2 id="安装-Fluid-主题"><a href="#安装-Fluid-主题" class="headerlink" title="安装 Fluid 主题"></a>安装 Fluid 主题</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 在博客根目录执行</span><br>npm install hexo-theme-fluid --save<br></code></pre></td></tr></table></figure>
-
-<p>然后编辑根目录的 <code>_config.yml</code>，把主题改为 fluid：</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">theme:</span> <span class="hljs-string">fluid</span><br></code></pre></td></tr></table></figure>
-
-<p>创建主题配置文件 <code>_config.fluid.yml</code>（在根目录），基础配置：</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">navbar:</span><br>  <span class="hljs-attr">blog_title:</span> <span class="hljs-string">&quot;我的博客&quot;</span><br>  <span class="hljs-attr">menu:</span><br>    <span class="hljs-bullet">-</span> &#123; <span class="hljs-attr">key:</span> <span class="hljs-string">&quot;home&quot;</span>, <span class="hljs-attr">link:</span> <span class="hljs-string">&quot;/&quot;</span>, <span class="hljs-attr">icon:</span> <span class="hljs-string">&quot;iconfont icon-home-fill&quot;</span> &#125;<br>    <span class="hljs-bullet">-</span> &#123; <span class="hljs-attr">key:</span> <span class="hljs-string">&quot;archive&quot;</span>, <span class="hljs-attr">link:</span> <span class="hljs-string">&quot;/archives/&quot;</span>, <span class="hljs-attr">icon:</span> <span class="hljs-string">&quot;iconfont icon-archive-fill&quot;</span> &#125;<br>    <span class="hljs-bullet">-</span> &#123; <span class="hljs-attr">key:</span> <span class="hljs-string">&quot;category&quot;</span>, <span class="hljs-attr">link:</span> <span class="hljs-string">&quot;/categories/&quot;</span>, <span class="hljs-attr">icon:</span> <span class="hljs-string">&quot;iconfont icon-category-fill&quot;</span> &#125;<br>    <span class="hljs-bullet">-</span> &#123; <span class="hljs-attr">key:</span> <span class="hljs-string">&quot;tag&quot;</span>, <span class="hljs-attr">link:</span> <span class="hljs-string">&quot;/tags/&quot;</span>, <span class="hljs-attr">icon:</span> <span class="hljs-string">&quot;iconfont icon-tags-fill&quot;</span> &#125;<br>    <span class="hljs-bullet">-</span> &#123; <span class="hljs-attr">key:</span> <span class="hljs-string">&quot;about&quot;</span>, <span class="hljs-attr">link:</span> <span class="hljs-string">&quot;/about/&quot;</span>, <span class="hljs-attr">icon:</span> <span class="hljs-string">&quot;iconfont icon-user-fill&quot;</span> &#125;<br></code></pre></td></tr></table></figure>
-
-<h2 id="写第一篇文章"><a href="#写第一篇文章" class="headerlink" title="写第一篇文章"></a>写第一篇文章</h2><h3 id="方式一：命令行创建"><a href="#方式一：命令行创建" class="headerlink" title="方式一：命令行创建"></a>方式一：命令行创建</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">hexo new <span class="hljs-string">&quot;文章标题&quot;</span><br></code></pre></td></tr></table></figure>
-
-<p>会在 <code>source/_posts/</code> 下生成一个 <code>文章标题.md</code> 文件。</p>
-<h3 id="方式二：直接新建文件"><a href="#方式二：直接新建文件" class="headerlink" title="方式二：直接新建文件"></a>方式二：直接新建文件</h3><p>在 <code>source/_posts/</code> 下新建 <code>.md</code> 文件，文件名就是文章的 URL。</p>
-<h3 id="文章格式"><a href="#文章格式" class="headerlink" title="文章格式"></a>文章格式</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs markdown">---<br>title: 文章标题<br>date: 2026-09-03<br>tags:<br><span class="hljs-bullet">  -</span> 标签1<br><span class="hljs-bullet">  -</span> 标签2<br>categories:<br><span class="hljs-section">  - 分类</span><br><span class="hljs-section">---</span><br><br>这里是正文内容，使用 Markdown 语法。<br></code></pre></td></tr></table></figure>
-
-<h3 id="Markdown-常用语法"><a href="#Markdown-常用语法" class="headerlink" title="Markdown 常用语法"></a>Markdown 常用语法</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs markdown"><span class="hljs-section"># 一级标题</span><br><span class="hljs-section">## 二级标题</span><br><span class="hljs-section">### 三级标题</span><br><br><span class="hljs-strong">**加粗文字**</span><br><span class="hljs-emphasis">*斜体文字*</span><br>~~删除线~~<br><br><span class="hljs-bullet">-</span> 无序列表项<br><span class="hljs-bullet">1.</span> 有序列表项<br><br>[<span class="hljs-string">链接文字</span>](<span class="hljs-link">https://example.com</span>)<br>![<span class="hljs-string">图片描述</span>](<span class="hljs-link">图片URL</span>)<br><br><span class="hljs-quote">&gt; 引用内容</span><br><br><span class="hljs-code">`行内代码`</span><br><br>​<span class="hljs-code">```python</span><br><span class="hljs-code"># 代码块</span><br><span class="hljs-code">print(&quot;Hello World&quot;)</span><br><span class="hljs-code">​```</span><br><br>| 表头1 | 表头2 |<br>|-------|-------|<br>| 内容1 | 内容2 |<br></code></pre></td></tr></table></figure>
-
-<h2 id="部署到-GitHub"><a href="#部署到-GitHub" class="headerlink" title="部署到 GitHub"></a>部署到 GitHub</h2><h3 id="1-创建-GitHub-仓库"><a href="#1-创建-GitHub-仓库" class="headerlink" title="1. 创建 GitHub 仓库"></a>1. 创建 GitHub 仓库</h3><p>仓库名必须是 <code>用户名.github.io</code>（个人主页）或自定义名称（项目页面）。</p>
-<h3 id="2-配置-Git-SSH"><a href="#2-配置-Git-SSH" class="headerlink" title="2. 配置 Git SSH"></a>2. 配置 Git SSH</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 生成密钥</span><br>ssh-keygen -t ed25519 -C <span class="hljs-string">&quot;your_email@example.com&quot;</span><br><br><span class="hljs-comment"># 复制公钥添加到 GitHub</span><br><span class="hljs-built_in">cat</span> ~/.ssh/id_ed25519.pub<br></code></pre></td></tr></table></figure>
-
-<h3 id="3-配置部署"><a href="#3-配置部署" class="headerlink" title="3. 配置部署"></a>3. 配置部署</h3><p>编辑 <code>_config.yml</code>：</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">url:</span> <span class="hljs-string">https://zuige66.github.io/hexo</span><br><span class="hljs-attr">deploy:</span><br>  <span class="hljs-attr">type:</span> <span class="hljs-string">git</span><br>  <span class="hljs-attr">repo:</span> <span class="hljs-string">git@github.com:zuige66/hexo.git</span><br>  <span class="hljs-attr">branch:</span> <span class="hljs-string">gh-pages</span><br></code></pre></td></tr></table></figure>
-
-<p>安装部署插件：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">npm install hexo-deployer-git --save<br></code></pre></td></tr></table></figure>
-
-<h3 id="4-一键部署"><a href="#4-一键部署" class="headerlink" title="4. 一键部署"></a>4. 一键部署</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">hexo clean &amp;&amp; hexo deploy<br></code></pre></td></tr></table></figure>
-
-<h2 id="常用命令速查"><a href="#常用命令速查" class="headerlink" title="常用命令速查"></a>常用命令速查</h2><table>
+<p><strong>效果：</strong></p>
+<table>
 <thead>
 <tr>
-<th>命令</th>
-<th>说明</th>
+<th align="left">左对齐</th>
+<th align="center">居中对齐</th>
+<th align="right">右对齐</th>
 </tr>
 </thead>
 <tbody><tr>
-<td><code>hexo new &quot;标题&quot;</code></td>
-<td>新建文章</td>
-</tr>
-<tr>
-<td><code>hexo server</code></td>
-<td>本地预览（默认 <a href="http://localhost:4000）">http://localhost:4000）</a></td>
-</tr>
-<tr>
-<td><code>hexo generate</code></td>
-<td>生成静态文件</td>
-</tr>
-<tr>
-<td><code>hexo deploy</code></td>
-<td>部署到 GitHub</td>
-</tr>
-<tr>
-<td><code>hexo clean</code></td>
-<td>清除缓存和 public 目录</td>
-</tr>
-<tr>
-<td><code>hexo clean &amp;&amp; hexo deploy</code></td>
-<td>重新生成并部署（最常用）</td>
+<td align="left">内容</td>
+<td align="center">内容</td>
+<td align="right">内容</td>
 </tr>
 </tbody></table>
-<h2 id="目录结构说明"><a href="#目录结构说明" class="headerlink" title="目录结构说明"></a>目录结构说明</h2><figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs nix">source<span class="hljs-symbol">/</span><br>├── _posts<span class="hljs-symbol">/</span>          <span class="hljs-comment"># 博客文章</span><br>│   ├── hello-world.md<br>│   └── 我的第一篇博客.md<br>├── about<span class="hljs-symbol">/</span>           <span class="hljs-comment"># 关于页面</span><br>│   └── index.md<br>├── categories<span class="hljs-symbol">/</span>      <span class="hljs-comment"># 分类页面</span><br>│   └── index.md<br>├── tags<span class="hljs-symbol">/</span>            <span class="hljs-comment"># 标签页面</span><br>│   └── index.md<br>└── images<span class="hljs-symbol">/</span>          <span class="hljs-comment"># 图片资源</span><br>    └── zuige.jpg<br></code></pre></td></tr></table></figure>
+<hr>
+<h2 id="八、引用-Blockquote"><a href="#八、引用-Blockquote" class="headerlink" title="八、引用 (Blockquote)"></a>八、引用 (Blockquote)</h2><p>使用 <code>&gt;</code> 符号：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs markdown"><span class="hljs-quote">&gt; 这是一段引用文本</span><br><span class="hljs-quote">&gt; </span><br><span class="hljs-quote">&gt; 引用可以有多行</span><br><span class="hljs-quote">&gt; &gt; 嵌套引用</span><br></code></pre></td></tr></table></figure>
 
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>整个流程就是：</p>
-<ol>
-<li>安装 Node.js + Git</li>
-<li>安装 Hexo CLI</li>
-<li>初始化项目 + 安装主题</li>
-<li>写 Markdown 文章</li>
-<li><code>hexo deploy</code> 部署</li>
+<p><strong>效果：</strong></p>
+<blockquote>
+<p>这是一段引用文本</p>
+<p>引用可以有多行</p>
+<blockquote>
+<p>嵌套引用</p>
+</blockquote>
+</blockquote>
+<hr>
+<h2 id="九、水平线-Horizontal-Rule"><a href="#九、水平线-Horizontal-Rule" class="headerlink" title="九、水平线 (Horizontal Rule)"></a>九、水平线 (Horizontal Rule)</h2><p>使用 <code>---</code>、<code>***</code> 或 <code>___</code>：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs markdown">---<br>***<br>___<br></code></pre></td></tr></table></figure>
+
+<h2 id="效果："><a href="#效果：" class="headerlink" title="效果："></a><strong>效果：</strong></h2><hr>
+<h2 id="十、脚注-Footnote"><a href="#十、脚注-Footnote" class="headerlink" title="十、脚注 (Footnote)"></a>十、脚注 (Footnote)</h2><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs markdown">这是带脚注的文本[^1]<br><br>[<span class="hljs-symbol">^1</span>]: <span class="hljs-link">这是脚注的内容</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>效果：</strong><br>这是带脚注的文本<sup id="fnref:1" class="footnote-ref"><a href="#fn:1" rel="footnote"><span class="hint--top hint--rounded" aria-label="这是脚注的内容">[1]</span></a></sup></p>
+<hr>
+<h2 id="十一、表情符号-Emoji"><a href="#十一、表情符号-Emoji" class="headerlink" title="十一、表情符号 (Emoji)"></a>十一、表情符号 (Emoji)</h2><p>直接输入表情符号或使用代码：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs markdown">:smile: :heart: :star: :rocket:<br></code></pre></td></tr></table></figure>
+
+<p><strong>效果：</strong> 😊 ❤️ ⭐ 🚀</p>
+<hr>
+<h2 id="常用快捷键"><a href="#常用快捷键" class="headerlink" title="常用快捷键"></a>常用快捷键</h2><table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Ctrl+B</td>
+<td>粗体</td>
+</tr>
+<tr>
+<td>Ctrl+I</td>
+<td>斜体</td>
+</tr>
+<tr>
+<td>Ctrl+K</td>
+<td>插入链接</td>
+</tr>
+<tr>
+<td>Ctrl+Shift+C</td>
+<td>插入代码块</td>
+</tr>
+<tr>
+<td>Ctrl+L</td>
+<td>插入链接</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="编写建议"><a href="#编写建议" class="headerlink" title="编写建议"></a>编写建议</h2><ol>
+<li><strong>保持简洁</strong>：使用合适的标题层级，避免过度嵌套</li>
+<li><strong>使用列表</strong>：长文本使用列表提高可读性</li>
+<li><strong>代码格式化</strong>：代码片段使用代码块包裹</li>
+<li><strong>表格对齐</strong>：使用对齐符号使表格更美观</li>
+<li><strong>预览检查</strong>：写完后预览确保格式正确</li>
 </ol>
-<p>以后写新文章只需要：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">hexo new <span class="hljs-string">&quot;标题&quot;</span><br><span class="hljs-comment"># 编辑 md 文件</span><br>hexo clean &amp;&amp; hexo deploy<br></code></pre></td></tr></table></figure>
-
-<p>就这么简单，开始写博客吧！</p>
-
+<hr>
+<blockquote>
+<p><strong>提示</strong>：不同的 Markdown 渲染器对语法的支持可能略有差异，以上是标准的 CommonMark 语法。</p>
+</blockquote>
+<section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span>这是脚注的内容
+<a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>
                 
               </div>
             
@@ -518,7 +599,7 @@
     
       <span class="category-chain">
         
-  <a href="/hexo/categories/%E6%8A%80%E6%9C%AF/" class="category-chain-item">技术</a>
+  <a href="/hexo/categories/%E7%AC%94%E8%AE%B0/" class="category-chain-item">笔记</a>
   
   
 
@@ -533,11 +614,13 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/hexo/tags/%E6%95%99%E7%A8%8B/" class="print-no-link">#教程</a>
+        <a href="/hexo/tags/%E5%AD%A6%E4%B9%A0/" class="print-no-link">#学习</a>
       
-        <a href="/hexo/tags/Hexo/" class="print-no-link">#Hexo</a>
+        <a href="/hexo/tags/%E7%AC%94%E8%AE%B0/" class="print-no-link">#笔记</a>
       
-        <a href="/hexo/tags/%E5%8D%9A%E5%AE%A2/" class="print-no-link">#博客</a>
+        <a href="/hexo/tags/Markdown/" class="print-no-link">#Markdown</a>
+      
+        <a href="/hexo/tags/%E5%86%99%E4%BD%9C/" class="print-no-link">#写作</a>
       
     </div>
   
@@ -549,8 +632,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>使用 Hexo + Fluid 搭建个人博客完整指南</div>
-      <div>https://zuige66.github.io/hexo/2026/09/03/我的第一篇博客/</div>
+      <div>Markdown 语法入门指南</div>
+      <div>https://zuige66.github.io/hexo/2026/09/04/markdown-guide/</div>
     </div>
     <div class="license-meta">
       
@@ -562,7 +645,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2026年9月3日</div>
+          <div>2026年9月4日</div>
         </div>
       
       
@@ -594,9 +677,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/hexo/2026/09/04/markdown-guide/" title="Markdown 语法入门指南">
+                      <a href="/hexo/2026/09/04/hexo-customize-guide/" title="Hexo + Fluid 博客管理指南：结构解析与自定义配置">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Markdown 语法入门指南</span>
+                        <span class="hidden-mobile">Hexo + Fluid 博客管理指南：结构解析与自定义配置</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -604,8 +687,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/hexo/2026/09/03/hello-world/" title="Hello World">
-                        <span class="hidden-mobile">Hello World</span>
+                      <a href="/hexo/2026/09/03/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/" title="使用 Hexo + Fluid 搭建个人博客完整指南">
+                        <span class="hidden-mobile">使用 Hexo + Fluid 搭建个人博客完整指南</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
