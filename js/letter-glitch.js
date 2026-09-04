@@ -1,10 +1,10 @@
 (function () {
+  var BANNER_BG = '/img/default.png';
+
   function LetterGlitch(canvas, options) {
     var defaults = {
       glitchColors: ['#2b4539', '#61dca3', '#61b3dc'],
       glitchSpeed: 50,
-      centerVignette: false,
-      outerVignette: true,
       smooth: true,
       characters: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$&*()-_+=/[]{};:<>.,0123456789'
     };
@@ -116,21 +116,98 @@
       animFrame = requestAnimationFrame(animate);
     }
 
-    function start() {
-      resize();
-      animate();
-      var resizeTimer;
-      window.addEventListener('resize', function () {
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(function () {
-          cancelAnimationFrame(animFrame);
-          resize();
-          animate();
-        }, 100);
-      });
-    }
+    return {
+      start: function () {
+        resize();
+        animate();
+        var resizeTimer;
+        window.addEventListener('resize', function () {
+          clearTimeout(resizeTimer);
+          resizeTimer = setTimeout(function () {
+            cancelAnimationFrame(animFrame);
+            resize();
+            animate();
+          }, 100);
+        });
+      },
+      stop: function () {
+        cancelAnimationFrame(animFrame);
+      }
+    };
+  }
 
-    return { start: start };
+  function getTheme() {
+    return localStorage.getItem('banner-theme') || 'glitch';
+  }
+
+  function setTheme(theme) {
+    localStorage.setItem('banner-theme', theme);
+  }
+
+  function applyGlitch(banner) {
+    banner.style.background = '#000';
+    var existingCanvas = banner.querySelector('canvas');
+    if (existingCanvas) return;
+
+    var canvas = document.createElement('canvas');
+    canvas.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;z-index:0;filter:brightness(1.3);';
+    banner.insertBefore(canvas, banner.firstChild);
+
+    var glitchInstance = LetterGlitch(canvas, {
+      glitchColors: ['#2b4539', '#61dca3', '#61b3dc'],
+      glitchSpeed: 50,
+      smooth: true
+    });
+    glitchInstance.start();
+
+    var textOverlay = document.createElement('div');
+    textOverlay.className = 'banner-text-overlay';
+    textOverlay.style.cssText = 'position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:60%;height:40%;background:radial-gradient(ellipse at center,rgba(0,0,0,0.55) 0%,rgba(0,0,0,0.25) 50%,transparent 80%);pointer-events:none;z-index:1;';
+    banner.appendChild(textOverlay);
+
+    var outerVignette = document.createElement('div');
+    outerVignette.className = 'banner-outer-vignette';
+    outerVignette.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:2;background:radial-gradient(ellipse at center,rgba(0,0,0,0) 40%,rgba(0,0,0,0.85) 100%);';
+    banner.appendChild(outerVignette);
+  }
+
+  function applyImage(banner) {
+    var canvas = banner.querySelector('canvas');
+    if (canvas) canvas.remove();
+    var textOverlay = banner.querySelector('.banner-text-overlay');
+    if (textOverlay) textOverlay.remove();
+    var outerVignette = banner.querySelector('.banner-outer-vignette');
+    if (outerVignette) outerVignette.remove();
+    banner.style.background = "url('" + BANNER_BG + "') no-repeat center center";
+    banner.style.backgroundSize = 'cover';
+  }
+
+  function switchTheme(theme) {
+    var banner = document.getElementById('banner');
+    if (!banner) return;
+
+    setTheme(theme);
+    applyTheme(banner, theme);
+    updateActiveState(theme);
+  }
+
+  function applyTheme(banner, theme) {
+    if (theme === 'glitch') {
+      applyGlitch(banner);
+    } else {
+      applyImage(banner);
+    }
+  }
+
+  function updateActiveState(theme) {
+    var items = document.querySelectorAll('.banner-theme-item');
+    items.forEach(function (item) {
+      if (item.getAttribute('data-theme') === theme) {
+        item.classList.add('active');
+      } else {
+        item.classList.remove('active');
+      }
+    });
   }
 
   function init() {
@@ -138,42 +215,23 @@
     if (!banner) return;
 
     var mask = banner.querySelector('.mask');
-    if (!mask) return;
-
-    var canvas = document.createElement('canvas');
-    canvas.style.position = 'absolute';
-    canvas.style.top = '0';
-    canvas.style.left = '0';
-    canvas.style.width = '100%';
-    canvas.style.height = '100%';
-    canvas.style.zIndex = '0';
-    canvas.style.filter = 'brightness(1.3)';
-    banner.style.position = 'relative';
-    banner.style.background = '#000';
-    banner.insertBefore(canvas, banner.firstChild);
-
     if (mask) {
       mask.style.position = 'relative';
-      mask.style.zIndex = '1';
+      mask.style.zIndex = '3';
     }
 
-    LetterGlitch(canvas, {
-      glitchColors: ['#2b4539', '#61dca3', '#61b3dc'],
-      glitchSpeed: 50,
-      smooth: true,
-      outerVignette: true,
-      centerVignette: false
-    }).start();
+    var theme = getTheme();
+    applyTheme(banner, theme);
 
-    // 文字区域半透明遮罩
-    var textOverlay = document.createElement('div');
-    textOverlay.style.cssText = 'position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:60%;height:40%;background:radial-gradient(ellipse at center,rgba(0,0,0,0.55) 0%,rgba(0,0,0,0.25) 50%,transparent 80%);pointer-events:none;z-index:1;';
-    banner.appendChild(textOverlay);
+    document.addEventListener('click', function (e) {
+      var item = e.target.closest('.banner-theme-item');
+      if (item) {
+        e.preventDefault();
+        switchTheme(item.getAttribute('data-theme'));
+      }
+    });
 
-    // 四角暗角
-    var outerVignette = document.createElement('div');
-    outerVignette.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:2;background:radial-gradient(ellipse at center,rgba(0,0,0,0) 40%,rgba(0,0,0,0.85) 100%);';
-    banner.appendChild(outerVignette);
+    updateActiveState(theme);
   }
 
   if (document.readyState === 'loading') {

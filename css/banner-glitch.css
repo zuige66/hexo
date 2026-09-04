@@ -26,3 +26,43 @@
   color: #fff !important;
   text-shadow: 0 0 20px rgba(255,255,255,0.3);
 }
+
+/* Banner 主题切换下拉菜单 */
+#banner-theme-btn .dropdown-menu {
+  min-width: 140px;
+  padding: 6px 0;
+}
+
+#banner-theme-btn .dropdown-item {
+  padding: 6px 16px;
+  font-size: 0.88rem;
+  color: #333;
+}
+
+#banner-theme-btn .dropdown-item:hover {
+  background: #f0f0f0;
+}
+
+#banner-theme-btn .dropdown-item.active {
+  color: #3498db;
+  font-weight: 600;
+  background: rgba(52,152,219,0.08);
+}
+
+[data-user-color-scheme="dark"] #banner-theme-btn .dropdown-menu {
+  background: #1e2530;
+  border-color: #333;
+}
+
+[data-user-color-scheme="dark"] #banner-theme-btn .dropdown-item {
+  color: #c4c6c9;
+}
+
+[data-user-color-scheme="dark"] #banner-theme-btn .dropdown-item:hover {
+  background: #2a3340;
+}
+
+[data-user-color-scheme="dark"] #banner-theme-btn .dropdown-item.active {
+  color: #5dade2;
+  background: rgba(93,173,226,0.12);
+}
