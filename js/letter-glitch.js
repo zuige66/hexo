@@ -217,7 +217,8 @@
     var mask = banner.querySelector('.mask');
     if (mask) {
       mask.style.position = 'relative';
-      mask.style.zIndex = '3';
+      mask.style.zIndex = '5';
+      mask.style.backgroundColor = 'transparent';
     }
 
     var theme = getTheme();

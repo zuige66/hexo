@@ -18,6 +18,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: transparent !important;
+  z-index: 5;
 }
 
 #banner .banner-text {
@@ -25,6 +27,12 @@
   z-index: 10;
   color: #fff !important;
   text-shadow: 0 0 20px rgba(255,255,255,0.3);
+}
+
+/* 暗角在文字下面 */
+#banner .banner-text-overlay,
+#banner .banner-outer-vignette {
+  z-index: 2;
 }
 
 /* Banner 主题切换下拉菜单 */
