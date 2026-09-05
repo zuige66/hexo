@@ -126,39 +126,47 @@ function addIndexSidebar() {
 
 // 在文章页添加侧边栏
 function addPostSidebar() {
-  // 找到文章页的左侧边栏容器
-  const leftSideCol = document.querySelector('.side-col.d-none.d-lg-block.col-lg-2');
-  if (!leftSideCol) return;
+  // 找到文章内容区域
+  const boardCtn = document.getElementById('board-ctn');
+  if (!boardCtn) return;
   
   // 检查是否已添加
-  if (leftSideCol.querySelector('.sidebar-wrapper')) return;
+  if (boardCtn.querySelector('.sidebar-wrapper')) return;
   
-  // 创建左侧边栏容器
-  const leftColContainer = document.createElement('div');
-  leftColContainer.className = 'post-left-col';
+  // 找到右侧目录
+  const rightSideCol = document.querySelectorAll('.side-col.d-none.d-lg-block.col-lg-2')[1];
+  let tocDiv = null;
+  if (rightSideCol) {
+    tocDiv = rightSideCol.querySelector('#toc');
+  }
   
-  // 创建个人信息侧边栏
+  // 创建 flex 容器
+  const flexContainer = document.createElement('div');
+  flexContainer.className = 'post-flex';
+  
+  // 创建侧边栏
   const sidebar = document.createElement('div');
   sidebar.className = 'sidebar-wrapper';
   sidebar.innerHTML = createSidebarHTML();
-  leftColContainer.appendChild(sidebar);
+  flexContainer.appendChild(sidebar);
   
-  // 找到右侧目录并移动到左侧
-  const rightSideCol = document.querySelectorAll('.side-col.d-none.d-lg-block.col-lg-2')[1];
-  if (rightSideCol) {
-    const tocDiv = rightSideCol.querySelector('#toc');
-    if (tocDiv) {
-      // 克隆目录到左侧
-      const tocClone = tocDiv.cloneNode(true);
-      leftColContainer.appendChild(tocClone);
-      // 隐藏右侧目录
-      rightSideCol.style.display = 'none';
-    }
+  // 创建内容容器
+  const contentWrapper = document.createElement('div');
+  contentWrapper.className = 'post-content-wrapper';
+  
+  // 将原有内容移到内容容器
+  while (boardCtn.firstChild) {
+    contentWrapper.appendChild(boardCtn.firstChild);
   }
   
-  // 清空左侧栏并添加新内容
-  leftSideCol.innerHTML = '';
-  leftSideCol.appendChild(leftColContainer);
+  // 组装
+  flexContainer.appendChild(contentWrapper);
+  boardCtn.appendChild(flexContainer);
+  
+  // 如果有目录，隐藏右侧栏
+  if (rightSideCol) {
+    rightSideCol.style.display = 'none';
+  }
   
   // 计算运行天数
   calculateRunDays();

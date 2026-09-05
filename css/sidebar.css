@@ -205,8 +205,7 @@
   }
   
   .side-col {
-    padding: 20px;
-    flex-shrink: 0;
+    display: none !important;
   }
   
   .post-content {
@@ -214,31 +213,23 @@
   }
 }
 
-/* 文章页左侧边栏容器 */
-.post-left-col {
+/* 文章页 flex 布局 */
+.post-flex {
   display: flex;
-  flex-direction: column;
-  gap: 16px;
+  gap: 24px;
 }
 
-/* 文章页目录样式 */
-#toc {
-  background: var(--board-bg);
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-  position: static !important;
-  width: 100% !important;
-  max-height: none !important;
-  overflow-y: visible !important;
+.post-content-wrapper {
+  flex: 1;
+  min-width: 0;
 }
 
-#toc .toc-header {
-  font-size: 14px;
-  font-weight: 600;
-  margin-bottom: 12px;
-}
-
-#toc .toc-body {
-  position: static !important;
+@media (max-width: 991px) {
+  .post-flex {
+    flex-direction: column;
+  }
+  
+  .sidebar-wrapper {
+    display: none;
+  }
 }
