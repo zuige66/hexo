@@ -119,14 +119,12 @@ function addPostSidebar() {
   leftColContainer.appendChild(sidebar);
   
   // 找到右侧目录并移动到左侧
-  const rightSideCol = document.querySelectorAll('.side-col.d-none.d-lg-block.col-lg-2')[1];
+  const allSideCols = document.querySelectorAll('.side-col.d-none.d-lg-block.col-lg-2');
+  const rightSideCol = allSideCols.length > 1 ? allSideCols[1] : null;
   if (rightSideCol) {
     const tocDiv = rightSideCol.querySelector('#toc');
     if (tocDiv) {
-      // 克隆目录到左侧
-      const tocClone = tocDiv.cloneNode(true);
-      leftColContainer.appendChild(tocClone);
-      // 隐藏右侧目录
+      leftColContainer.appendChild(tocDiv);
       rightSideCol.style.display = 'none';
     }
   }

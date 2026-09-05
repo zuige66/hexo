@@ -253,20 +253,40 @@
     max-width: 1400px;
     margin: 0 auto;
   }
-  
-  .side-col {
-    padding: 20px;
-    flex-shrink: 0;
+
+  .post .row.nomargin-x {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
   }
-  
-  .col-lg-8 {
-    max-width: 100%;
-    flex: 0 0 100%;
+
+  .post .side-col {
+    width: 220px;
+    min-width: 220px;
+    flex: 0 0 220px;
+    padding: 0;
   }
-  
-  .post-content {
+
+  .post .col-lg-8 {
+    flex: 1;
+    min-width: 0;
+    max-width: none;
+  }
+
+  .post #board {
+    background: var(--board-bg);
+    border-radius: 16px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    padding: 32px;
+  }
+
+  .post .post-content {
     max-width: 100%;
-    margin: 0 auto;
+    margin: 0;
+  }
+
+  .post #board-ctn {
+    padding: 0;
   }
 }
 
