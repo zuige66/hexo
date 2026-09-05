@@ -197,9 +197,48 @@
   min-width: 0;
 }
 
-/* 文章页左侧边栏 */
+/* 文章页布局调整 */
 @media (min-width: 992px) {
+  .container-fluid.nopadding-x {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  
   .side-col {
     padding: 20px;
+    flex-shrink: 0;
   }
+  
+  .post-content {
+    max-width: 100%;
+  }
+}
+
+/* 文章页左侧边栏容器 */
+.post-left-col {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* 文章页目录样式覆盖 */
+.toc-widget {
+  position: static !important;
+  width: 100% !important;
+  max-height: none !important;
+  overflow-y: visible !important;
+  background: var(--board-bg);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+.toc-widget .toc-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.toc-widget .toc-list {
+  position: static !important;
 }

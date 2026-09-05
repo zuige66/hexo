@@ -133,18 +133,32 @@ function addPostSidebar() {
   // 检查是否已添加
   if (leftSideCol.querySelector('.sidebar-wrapper')) return;
   
-  // 创建侧边栏
+  // 创建左侧边栏容器
+  const leftColContainer = document.createElement('div');
+  leftColContainer.className = 'post-left-col';
+  
+  // 创建个人信息侧边栏
   const sidebar = document.createElement('div');
   sidebar.className = 'sidebar-wrapper';
   sidebar.innerHTML = createSidebarHTML();
+  leftColContainer.appendChild(sidebar);
   
-  leftSideCol.appendChild(sidebar);
-  
-  // 渲染热力图
-  const heatmapContainer = sidebar.querySelector('.heatmap-container');
-  if (heatmapContainer) {
-    renderHeatmap(heatmapContainer);
+  // 找到右侧目录并移动到左侧
+  const rightSideCol = document.querySelectorAll('.side-col.d-none.d-lg-block.col-lg-2')[1];
+  if (rightSideCol) {
+    const tocWidget = rightSideCol.querySelector('.toc-widget');
+    if (tocWidget) {
+      // 克隆目录到左侧
+      const tocClone = tocWidget.cloneNode(true);
+      leftColContainer.appendChild(tocClone);
+      // 隐藏右侧目录
+      rightSideCol.style.display = 'none';
+    }
   }
+  
+  // 清空左侧栏并添加新内容
+  leftSideCol.innerHTML = '';
+  leftSideCol.appendChild(leftColContainer);
   
   // 计算运行天数
   calculateRunDays();
