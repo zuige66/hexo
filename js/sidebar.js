@@ -17,25 +17,19 @@ function generateHeatmapData() {
 }
 
 // 渲染热力图
-function renderHeatmap(containerId) {
-  const container = document.getElementById(containerId);
-  if (!container) return;
-  
+function renderHeatmap(container) {
   const data = generateHeatmapData();
   const heatmap = container.querySelector('.heatmap');
   if (!heatmap) return;
   
-  // 清空现有内容
   heatmap.innerHTML = '';
   
-  // 渲染每个单元格
   data.forEach(item => {
     const cell = document.createElement('div');
     cell.className = 'heatmap-cell';
     cell.setAttribute('data-date', item.date);
     cell.setAttribute('data-count', item.count);
     
-    // 根据提交次数设置等级
     let level = 0;
     if (item.count > 0) level = 1;
     if (item.count >= 3) level = 2;
@@ -49,14 +43,9 @@ function renderHeatmap(containerId) {
   });
 }
 
-// 动态添加侧边栏内容
-function addSidebarContent() {
-  // 检查是否已经存在侧边栏
-  if (document.querySelector('.sidebar')) return;
-  
-  const sidebar = document.createElement('div');
-  sidebar.className = 'sidebar';
-  sidebar.innerHTML = `
+// 创建侧边栏 HTML
+function createSidebarHTML() {
+  return `
     <div class="sidebar-card">
       <img src="/images/zuige.jpg" alt="avatar" class="sidebar-avatar">
       <div class="sidebar-name">zuige</div>
@@ -111,11 +100,85 @@ function addSidebarContent() {
       </div>
     </div>
   `;
+}
+
+// 在首页添加侧边栏
+function addIndexSidebar() {
+  const board = document.getElementById('board');
+  if (!board) return;
   
-  document.body.appendChild(sidebar);
+  // 检查是否已添加
+  if (board.querySelector('.sidebar-wrapper')) return;
+  
+  // 创建 flex 容器
+  const flexContainer = document.createElement('div');
+  flexContainer.className = 'index-flex';
+  
+  // 创建侧边栏
+  const sidebar = document.createElement('div');
+  sidebar.className = 'sidebar-wrapper';
+  sidebar.innerHTML = createSidebarHTML();
+  
+  // 创建内容容器
+  const contentWrapper = document.createElement('div');
+  contentWrapper.className = 'index-content';
+  
+  // 将原有内容移到内容容器
+  while (board.firstChild) {
+    contentWrapper.appendChild(board.firstChild);
+  }
+  
+  // 组装
+  flexContainer.appendChild(sidebar);
+  flexContainer.appendChild(contentWrapper);
+  board.appendChild(flexContainer);
   
   // 渲染热力图
-  renderHeatmap('heatmap-container');
+  const heatmapContainer = sidebar.querySelector('.heatmap-container');
+  if (heatmapContainer) {
+    renderHeatmap(heatmapContainer);
+  }
+  
+  // 计算运行天数
+  calculateRunDays();
+}
+
+// 在文章页添加侧边栏
+function addPostSidebar() {
+  const postContent = document.querySelector('.post-content');
+  if (!postContent) return;
+  
+  // 检查是否已添加
+  if (postContent.querySelector('.sidebar-wrapper')) return;
+  
+  // 创建 flex 容器
+  const flexContainer = document.createElement('div');
+  flexContainer.className = 'post-flex';
+  
+  // 创建侧边栏
+  const sidebar = document.createElement('div');
+  sidebar.className = 'sidebar-wrapper';
+  sidebar.innerHTML = createSidebarHTML();
+  
+  // 创建内容容器
+  const contentWrapper = document.createElement('div');
+  contentWrapper.className = 'post-content-wrapper';
+  
+  // 将原有内容移到内容容器
+  while (postContent.firstChild) {
+    contentWrapper.appendChild(postContent.firstChild);
+  }
+  
+  // 组装
+  flexContainer.appendChild(sidebar);
+  flexContainer.appendChild(contentWrapper);
+  postContent.appendChild(flexContainer);
+  
+  // 渲染热力图
+  const heatmapContainer = sidebar.querySelector('.heatmap-container');
+  if (heatmapContainer) {
+    renderHeatmap(heatmapContainer);
+  }
   
   // 计算运行天数
   calculateRunDays();
@@ -123,18 +186,26 @@ function addSidebarContent() {
 
 // 计算博客运行天数
 function calculateRunDays() {
-  const startDate = new Date('2026-09-03'); // 博客创建日期
+  const startDate = new Date('2026-09-03');
   const today = new Date();
   const diffTime = Math.abs(today - startDate);
   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
   
-  const runDaysElement = document.getElementById('run-days');
-  if (runDaysElement) {
-    runDaysElement.textContent = diffDays;
-  }
+  const runDaysElements = document.querySelectorAll('#run-days');
+  runDaysElements.forEach(el => {
+    el.textContent = diffDays;
+  });
 }
 
 // 初始化
 document.addEventListener('DOMContentLoaded', function() {
-  addSidebarContent();
+  // 判断当前页面类型
+  const isPost = document.querySelector('.post-content');
+  const isIndex = document.getElementById('board') && !isPost;
+  
+  if (isIndex) {
+    addIndexSidebar();
+  } else if (isPost) {
+    addPostSidebar();
+  }
 });
