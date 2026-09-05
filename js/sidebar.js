@@ -17,12 +17,12 @@ function generateHeatmapData() {
 }
 
 // 渲染热力图
-function renderHeatmap(container) {
-  const data = generateHeatmapData();
-  const heatmap = container.querySelector('.heatmap');
-  if (!heatmap) return;
+function renderHeatmap() {
+  const container = document.getElementById('heatmap-grid');
+  if (!container) return;
   
-  heatmap.innerHTML = '';
+  const data = generateHeatmapData();
+  container.innerHTML = '';
   
   data.forEach(item => {
     const cell = document.createElement('div');
@@ -39,7 +39,7 @@ function renderHeatmap(container) {
     cell.setAttribute('data-level', level);
     cell.title = `${item.date}: ${item.count} 次更新`;
     
-    heatmap.appendChild(cell);
+    container.appendChild(cell);
   });
 }
 
@@ -60,25 +60,54 @@ function createSidebarHTML() {
       </div>
     </div>
     
-    <div class="sidebar-card">
-      <div class="site-stats">
-        <div class="stat-item">
-          <span class="stat-number" id="post-count">7</span>
-          <span class="stat-label">文章</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-number" id="category-count">3</span>
-          <span class="stat-label">分类</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-number" id="tag-count">10</span>
-          <span class="stat-label">标签</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-number" id="run-days">100</span>
-          <span class="stat-label">运行天数</span>
-        </div>
+    <div class="sidebar-module">
+      <div class="module-title">状态</div>
+      <ul class="status-list">
+        <li class="status-item">
+          <div class="status-icon"><i class="iconfont icon-articles"></i></div>
+          <div class="status-info">
+            <div class="status-label">文章总数</div>
+          </div>
+          <div class="status-value" id="post-count">7篇</div>
+        </li>
+        <li class="status-item">
+          <div class="status-icon"><i class="iconfont icon-tags"></i></div>
+          <div class="status-info">
+            <div class="status-label">总标签数</div>
+          </div>
+          <div class="status-value" id="tag-count">10个</div>
+        </li>
+        <li class="status-item">
+          <div class="status-icon"><i class="iconfont icon-clock-fill"></i></div>
+          <div class="status-info">
+            <div class="status-label">运行时长</div>
+          </div>
+          <div class="status-value" id="run-days">3天</div>
+        </li>
+      </ul>
+      <div class="activity-heatmap">
+        <div class="activity-title">活跃度</div>
+        <div class="heatmap-grid" id="heatmap-grid"></div>
       </div>
+    </div>
+    
+    <div class="sidebar-module">
+      <div class="module-title">分类</div>
+      <ul class="category-list">
+        <li class="category-item">
+          <span class="category-name">技术</span>
+          <span class="category-count">4</span>
+        </li>
+        <li class="category-item">
+          <span class="category-name">笔记</span>
+          <span class="category-count">1</span>
+        </li>
+        <li class="category-item">
+          <span class="category-name">杂记</span>
+          <span class="category-count">1</span>
+        </li>
+      </ul>
+      <a href="/categories/" class="category-more">...更多</a>
     </div>
   `;
 }
@@ -115,10 +144,7 @@ function addIndexSidebar() {
   board.appendChild(flexContainer);
   
   // 渲染热力图
-  const heatmapContainer = sidebar.querySelector('.heatmap-container');
-  if (heatmapContainer) {
-    renderHeatmap(heatmapContainer);
-  }
+  renderHeatmap();
   
   // 计算运行天数
   calculateRunDays();
@@ -160,6 +186,9 @@ function addPostSidebar() {
   leftSideCol.innerHTML = '';
   leftSideCol.appendChild(leftColContainer);
   
+  // 渲染热力图
+  renderHeatmap();
+  
   // 计算运行天数
   calculateRunDays();
 }
@@ -173,7 +202,7 @@ function calculateRunDays() {
   
   const runDaysElements = document.querySelectorAll('#run-days');
   runDaysElements.forEach(el => {
-    el.textContent = diffDays;
+    el.textContent = diffDays + '天';
   });
 }
 
