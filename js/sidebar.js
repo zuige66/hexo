@@ -1,48 +1,3 @@
-// 热力图数据生成（模拟过去一年的提交记录）
-function generateHeatmapData() {
-  const data = [];
-  const today = new Date();
-  const oneYearAgo = new Date(today);
-  oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
-  
-  // 生成过去一年的数据
-  for (let d = new Date(oneYearAgo); d <= today; d.setDate(d.getDate() + 1)) {
-    const dateStr = d.toISOString().split('T')[0];
-    // 随机生成提交次数（0-10次）
-    const count = Math.floor(Math.random() * 11);
-    data.push({ date: dateStr, count: count });
-  }
-  
-  return data;
-}
-
-// 渲染热力图
-function renderHeatmap() {
-  const container = document.getElementById('heatmap-grid');
-  if (!container) return;
-  
-  const data = generateHeatmapData();
-  container.innerHTML = '';
-  
-  data.forEach(item => {
-    const cell = document.createElement('div');
-    cell.className = 'heatmap-cell';
-    cell.setAttribute('data-date', item.date);
-    cell.setAttribute('data-count', item.count);
-    
-    let level = 0;
-    if (item.count > 0) level = 1;
-    if (item.count >= 3) level = 2;
-    if (item.count >= 6) level = 3;
-    if (item.count >= 9) level = 4;
-    
-    cell.setAttribute('data-level', level);
-    cell.title = `${item.date}: ${item.count} 次更新`;
-    
-    container.appendChild(cell);
-  });
-}
-
 // 创建侧边栏 HTML
 function createSidebarHTML() {
   return `
@@ -85,10 +40,7 @@ function createSidebarHTML() {
           <div class="status-value" id="run-days">3天</div>
         </li>
       </ul>
-      <div class="activity-heatmap">
-        <div class="activity-title">活跃度</div>
-        <div class="heatmap-grid" id="heatmap-grid"></div>
-      </div>
+
     </div>
     
     <div class="sidebar-module">
@@ -143,9 +95,6 @@ function addIndexSidebar() {
   flexContainer.appendChild(contentWrapper);
   board.appendChild(flexContainer);
   
-  // 渲染热力图
-  renderHeatmap();
-  
   // 计算运行天数
   calculateRunDays();
 }
@@ -170,14 +119,12 @@ function addPostSidebar() {
   leftColContainer.appendChild(sidebar);
   
   // 找到右侧目录并移动到左侧
-  const rightSideCol = document.querySelectorAll('.side-col.d-none.d-lg-block.col-lg-2')[1];
+  const allSideCols = document.querySelectorAll('.side-col.d-none.d-lg-block.col-lg-2');
+  const rightSideCol = allSideCols.length > 1 ? allSideCols[1] : null;
   if (rightSideCol) {
     const tocDiv = rightSideCol.querySelector('#toc');
     if (tocDiv) {
-      // 克隆目录到左侧
-      const tocClone = tocDiv.cloneNode(true);
-      leftColContainer.appendChild(tocClone);
-      // 隐藏右侧目录
+      leftColContainer.appendChild(tocDiv);
       rightSideCol.style.display = 'none';
     }
   }
@@ -185,9 +132,6 @@ function addPostSidebar() {
   // 清空左侧栏并添加新内容
   leftSideCol.innerHTML = '';
   leftSideCol.appendChild(leftColContainer);
-  
-  // 渲染热力图
-  renderHeatmap();
   
   // 计算运行天数
   calculateRunDays();
