@@ -1,0 +1,198 @@
+/* 左侧边栏样式 */
+.sidebar {
+  position: fixed;
+  left: 0;
+  top: 80px;
+  width: 280px;
+  height: calc(100vh - 80px);
+  overflow-y: auto;
+  padding: 20px;
+  background: var(--board-bg);
+  border-right: 1px solid var(--line-color);
+  z-index: 100;
+  transition: transform 0.3s ease;
+}
+
+@media (max-width: 991px) {
+  .sidebar {
+    display: none;
+  }
+}
+
+.sidebar-card {
+  background: var(--board-bg);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+.sidebar-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin: 0 auto 12px;
+  display: block;
+  object-fit: cover;
+}
+
+.sidebar-name {
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--text-color);
+}
+
+.sidebar-desc {
+  text-align: center;
+  font-size: 14px;
+  color: var(--sec-text-color);
+  margin-bottom: 16px;
+}
+
+.sidebar-icons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.sidebar-icons a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--link-hover-bg-color);
+  color: var(--text-color);
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.sidebar-icons a:hover {
+  background: var(--link-hover-color);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.sidebar-icons i {
+  font-size: 18px;
+}
+
+/* 站点统计 */
+.site-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.stat-item {
+  text-align: center;
+  padding: 12px 8px;
+  background: var(--link-hover-bg-color);
+  border-radius: 8px;
+}
+
+.stat-number {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--link-hover-color);
+  display: block;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: var(--sec-text-color);
+  margin-top: 4px;
+}
+
+/* 热力图 */
+.heatmap-container {
+  margin-top: 12px;
+}
+
+.heatmap-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--text-color);
+}
+
+.heatmap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+}
+
+.heatmap-cell {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  background: #ebedf0;
+  transition: transform 0.2s ease;
+}
+
+.heatmap-cell:hover {
+  transform: scale(1.3);
+}
+
+.heatmap-cell[data-level="1"] { background: #9be9a8; }
+.heatmap-cell[data-level="2"] { background: #40c463; }
+.heatmap-cell[data-level="3"] { background: #30a14e; }
+.heatmap-cell[data-level="4"] { background: #216e39; }
+
+.heatmap-legend {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--sec-text-color);
+}
+
+.heatmap-legend .heatmap-cell {
+  width: 10px;
+  height: 10px;
+}
+
+/* 首页布局调整 - 使用 padding-left 为侧边栏腾出空间 */
+body {
+  padding-left: 0;
+  transition: padding-left 0.3s ease;
+}
+
+@media (min-width: 992px) {
+  body {
+    padding-left: 300px;
+  }
+}
+
+/* 确保导航栏不受影响 */
+.navbar {
+  left: 0;
+  right: 0;
+}
+
+@media (min-width: 992px) {
+  .navbar {
+    padding-left: 300px;
+  }
+}
+
+/* 首页内容区域 */
+#board {
+  margin-left: 0;
+}
+
+@media (min-width: 992px) {
+  #board {
+    margin-left: 0;
+  }
+}
+
+/* 文章页布局调整 */
+.post-content {
+  max-width: 100%;
+}
