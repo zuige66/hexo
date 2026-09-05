@@ -89,22 +89,6 @@ function createSidebarHTML() {
         </div>
       </div>
     </div>
-    
-    <div class="sidebar-card">
-      <div class="heatmap-container">
-        <div class="heatmap-title">更新频率</div>
-        <div class="heatmap"></div>
-        <div class="heatmap-legend">
-          <span>少</span>
-          <div class="heatmap-cell" data-level="0"></div>
-          <div class="heatmap-cell" data-level="1"></div>
-          <div class="heatmap-cell" data-level="2"></div>
-          <div class="heatmap-cell" data-level="3"></div>
-          <div class="heatmap-cell" data-level="4"></div>
-          <span>多</span>
-        </div>
-      </div>
-    </div>
   `;
 }
 
