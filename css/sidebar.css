@@ -321,26 +321,50 @@
   min-width: 0;
 }
 
-/* 文章页布局调整 */
+/* 文章页布局调整 - 与首页一致 */
 @media (min-width: 992px) {
   .container-fluid.nopadding-x {
     max-width: 1400px;
     margin: 0 auto;
   }
   
+  .container-fluid.nopadding-x > .row.nomargin-x {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+  }
+  
   .side-col {
+    width: 280px;
+    min-width: 280px;
+    max-width: 280px;
+    flex: 0 0 280px;
     padding: 20px;
-    flex-shrink: 0;
   }
   
   .col-lg-8 {
-    max-width: 100%;
-    flex: 0 0 100%;
+    flex: 1;
+    min-width: 0;
+    max-width: none;
   }
   
   .post-content {
     max-width: 100%;
     margin: 0 auto;
+  }
+  
+  #board-ctn {
+    padding: 0;
+    max-width: none;
+    width: 100%;
+  }
+  
+  #board {
+    background-color: var(--board-bg);
+    border-radius: 16px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    padding: 32px;
+    margin-top: 0;
   }
 }
 
