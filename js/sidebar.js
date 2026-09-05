@@ -146,10 +146,10 @@ function addPostSidebar() {
   // 找到右侧目录并移动到左侧
   const rightSideCol = document.querySelectorAll('.side-col.d-none.d-lg-block.col-lg-2')[1];
   if (rightSideCol) {
-    const tocWidget = rightSideCol.querySelector('.toc-widget');
-    if (tocWidget) {
+    const tocDiv = rightSideCol.querySelector('#toc');
+    if (tocDiv) {
       // 克隆目录到左侧
-      const tocClone = tocWidget.cloneNode(true);
+      const tocClone = tocDiv.cloneNode(true);
       leftColContainer.appendChild(tocClone);
       // 隐藏右侧目录
       rightSideCol.style.display = 'none';

@@ -221,24 +221,24 @@
   gap: 16px;
 }
 
-/* 文章页目录样式覆盖 */
-.toc-widget {
-  position: static !important;
-  width: 100% !important;
-  max-height: none !important;
-  overflow-y: visible !important;
+/* 文章页目录样式 */
+#toc {
   background: var(--board-bg);
   border-radius: 12px;
   padding: 20px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  position: static !important;
+  width: 100% !important;
+  max-height: none !important;
+  overflow-y: visible !important;
 }
 
-.toc-widget .toc-title {
+#toc .toc-header {
   font-size: 14px;
   font-weight: 600;
   margin-bottom: 12px;
 }
 
-.toc-widget .toc-list {
+#toc .toc-body {
   position: static !important;
 }
