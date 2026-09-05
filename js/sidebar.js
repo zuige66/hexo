@@ -156,9 +156,10 @@ document.addEventListener('DOMContentLoaded', function() {
   const isPost = document.querySelector('.post-content');
   const isIndex = document.getElementById('board') && !isPost;
   
-  if (isIndex) {
-    addIndexSidebar();
-  } else if (isPost) {
+  if (isPost) {
+    document.body.classList.add('is-post');
     addPostSidebar();
+  } else if (isIndex) {
+    addIndexSidebar();
   }
 });
