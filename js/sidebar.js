@@ -50,15 +50,6 @@ function createSidebarHTML() {
       <img src="/images/zuige.jpg" alt="avatar" class="sidebar-avatar">
       <div class="sidebar-name">zuige</div>
       <div class="sidebar-desc">欢迎来到zuige's blog</div>
-      <div class="sidebar-about">
-        <p>这个博客主要记录：</p>
-        <ul>
-          <li>技术学习笔记</li>
-          <li>项目开发经验</li>
-          <li>生活感悟日记</li>
-        </ul>
-        <p>GitHub: <a href="https://github.com/zuige66" target="_blank">zuige66</a></p>
-      </div>
       <div class="sidebar-icons">
         <a href="https://github.com/zuige66" target="_blank" title="GitHub">
           <i class="iconfont icon-github-fill"></i>
