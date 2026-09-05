@@ -197,13 +197,9 @@
   min-width: 0;
 }
 
-/* 文章页布局 */
-.post-flex {
-  display: flex;
-  gap: 24px;
-}
-
-.post-content-wrapper {
-  flex: 1;
-  min-width: 0;
+/* 文章页左侧边栏 */
+@media (min-width: 992px) {
+  .side-col {
+    padding: 20px;
+  }
 }

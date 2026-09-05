@@ -151,34 +151,19 @@ function addIndexSidebar() {
 
 // 在文章页添加侧边栏
 function addPostSidebar() {
-  const postContent = document.querySelector('.post-content');
-  if (!postContent) return;
+  // 找到文章页的左侧边栏容器
+  const leftSideCol = document.querySelector('.side-col.d-none.d-lg-block.col-lg-2');
+  if (!leftSideCol) return;
   
   // 检查是否已添加
-  if (postContent.querySelector('.sidebar-wrapper')) return;
-  
-  // 创建 flex 容器
-  const flexContainer = document.createElement('div');
-  flexContainer.className = 'post-flex';
+  if (leftSideCol.querySelector('.sidebar-wrapper')) return;
   
   // 创建侧边栏
   const sidebar = document.createElement('div');
   sidebar.className = 'sidebar-wrapper';
   sidebar.innerHTML = createSidebarHTML();
   
-  // 创建内容容器
-  const contentWrapper = document.createElement('div');
-  contentWrapper.className = 'post-content-wrapper';
-  
-  // 将原有内容移到内容容器
-  while (postContent.firstChild) {
-    contentWrapper.appendChild(postContent.firstChild);
-  }
-  
-  // 组装
-  flexContainer.appendChild(sidebar);
-  flexContainer.appendChild(contentWrapper);
-  postContent.appendChild(flexContainer);
+  leftSideCol.appendChild(sidebar);
   
   // 渲染热力图
   const heatmapContainer = sidebar.querySelector('.heatmap-container');
