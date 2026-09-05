@@ -333,8 +333,14 @@
     flex-shrink: 0;
   }
   
+  .col-lg-8 {
+    max-width: 100%;
+    flex: 0 0 100%;
+  }
+  
   .post-content {
     max-width: 100%;
+    margin: 0 auto;
   }
 }
 
