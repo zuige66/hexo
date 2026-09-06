@@ -1,0 +1,55 @@
+home:
+  menu: 首页
+  title: 首页
+
+archive:
+  menu: 归档
+  title: 归档
+  subtitle: 归档
+  post_total: 共计 %d 篇文章
+
+category:
+  menu: 分类
+  title: 分类
+  subtitle: 分类
+  post_total: 共计 %d 篇文章
+  more: 更多...
+
+tag:
+  menu: 标签
+  title: 标签
+  subtitle: 标签
+  post_total: 共计 %d 篇文章
+
+about:
+  menu: 关于
+  title: 关于
+  subtitle: 关于
+
+links:
+  menu: 友链
+  title: 友链
+  subtitle: 友情链接
+
+page404:
+  menu: 页面不存在
+  title: 页面不存在
+  subtitle: 页面不存在
+
+post:
+  toc: 目录
+  prev_post: 上一篇
+  next_post: 下一篇
+  updated: 本文最后更新于 %s
+  meta:
+    wordcount: '%s 字'
+    min2read: '%s 分钟'
+    views: '{} 次'
+
+search:
+  title: 搜索
+  keyword: 关键词
+
+darkmode:
+  light: 开灯
+  dark: 关灯

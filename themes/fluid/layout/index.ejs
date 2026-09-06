@@ -1,0 +1,128 @@
+<%
+if (theme.index.slogan.enable) {
+  page.subtitle = theme.index.slogan.text || config.subtitle || ''
+}
+page.banner_img = theme.index.banner_img
+page.banner_img_height = theme.index.banner_img_height
+page.banner_mask_alpha = theme.index.banner_mask_alpha
+
+var sitePosts = site.posts.sort('-date').toArray()
+var totalWords = 0
+sitePosts.forEach(function(post) {
+  totalWords += strip_html(post.origin || post.content || '').replace(/[\s\r\n]/g, '').length
+})
+
+var siteStart = new Date(2026, 8, 3)
+var today = new Date()
+today.setHours(0, 0, 0, 0)
+var heatmapStart = new Date(today)
+heatmapStart.setDate(heatmapStart.getDate() - 364)
+var postCounts = {}
+sitePosts.forEach(function(post) {
+  var key = full_date(post.date, 'YYYY-MM-DD')
+  postCounts[key] = (postCounts[key] || 0) + 1
+})
+var heatmapDays = []
+for (var heatDate = new Date(heatmapStart); heatDate <= today; heatDate.setDate(heatDate.getDate() + 1)) {
+  var heatKey = heatDate.getFullYear() + '-' + String(heatDate.getMonth() + 1).padStart(2, '0') + '-' + String(heatDate.getDate()).padStart(2, '0')
+  heatmapDays.push({ date: heatKey, count: postCounts[heatKey] || 0 })
+}
+
+var categoryItems = site.categories.sort('length', -1).toArray()
+var tagItems = site.tags.sort('length', -1).toArray()
+var recentPosts = sitePosts.slice(0, 5)
+var elapsedDays = Math.max(1, Math.floor((today - siteStart) / 86400000) + 1)
+%>
+
+<h1 style="display: none"><%= config.title %></h1>
+<div class="home-with-sidebar">
+  <aside class="home-sidebar" aria-label="博客侧栏">
+    <section class="home-side-card home-profile-card">
+      <img class="home-avatar" src="<%= url_for('/img/avatar.jpg') %>" alt="zuige">
+      <h2>zuige</h2>
+      <div class="home-social-links">
+        <a href="https://github.com/zuige66" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub"><i class="iconfont icon-github-fill" aria-hidden="true"></i></a>
+        <a href="mailto:liruisen2007@163.com" aria-label="邮箱" title="邮箱"><i class="iconfont icon-mail" aria-hidden="true"></i></a>
+        <a href="https://user.qzone.qq.com/3575053735" target="_blank" rel="noopener" aria-label="QQ 空间" title="QQ 空间"><i class="iconfont icon-qq-fill" aria-hidden="true"></i></a>
+      </div>
+    </section>
+
+    <section class="home-side-card home-stats-card">
+      <div><strong><%= sitePosts.length %></strong><span>文章</span></div>
+      <div><strong><%= totalWords %></strong><span>字数</span></div>
+      <div><strong><%= elapsedDays %></strong><span>建站天数</span></div>
+    </section>
+
+    <section class="home-side-card home-heatmap-card">
+      <h3>发文记录</h3>
+      <div class="home-heatmap" aria-label="最近 365 天发文记录">
+        <% heatmapDays.forEach(function(day) { %>
+          <span class="home-heat-cell level-<%= Math.min(day.count, 4) %>" title="<%= day.date %>：<%= day.count %> 篇"></span>
+        <% }) %>
+      </div>
+      <div class="home-heatmap-legend"><span>少</span><i class="level-0"></i><i class="level-1"></i><i class="level-2"></i><i class="level-3"></i><i class="level-4"></i><span>多</span></div>
+    </section>
+
+    <section class="home-side-card home-list-card">
+      <h3>分类</h3>
+      <div class="home-taxonomy-list">
+        <% categoryItems.slice(0, 3).forEach(function(category) { %>
+          <a href="<%= url_for(category.path) %>"><span><%= category.name %></span><em><%= category.posts.length %></em></a>
+        <% }) %>
+      </div>
+      <% if (categoryItems.length > 3) { %>
+        <details><summary>展开全部（<%= categoryItems.length %>）</summary><div class="home-taxonomy-list home-taxonomy-more"><% categoryItems.slice(3).forEach(function(category) { %><a href="<%= url_for(category.path) %>"><span><%= category.name %></span><em><%= category.posts.length %></em></a><% }) %></div></details>
+      <% } %>
+    </section>
+
+    <section class="home-side-card home-list-card">
+      <h3>标签</h3>
+      <div class="home-taxonomy-list">
+        <% tagItems.slice(0, 3).forEach(function(tag) { %>
+          <a href="<%= url_for(tag.path) %>"><span># <%= tag.name %></span><em><%= tag.posts.length %></em></a>
+        <% }) %>
+      </div>
+      <% if (tagItems.length > 3) { %>
+        <details><summary>展开全部（<%= tagItems.length %>）</summary><div class="home-taxonomy-list home-taxonomy-more"><% tagItems.slice(3).forEach(function(tag) { %><a href="<%= url_for(tag.path) %>"><span># <%= tag.name %></span><em><%= tag.posts.length %></em></a><% }) %></div></details>
+      <% } %>
+    </section>
+
+    <section class="home-side-card home-list-card">
+      <h3>最近文章</h3>
+      <div class="home-recent-list">
+        <% recentPosts.forEach(function(post) { %>
+          <a href="<%= url_for(post.path) %>"><span><%= post.title %></span><time datetime="<%= full_date(post.date, 'YYYY-MM-DD') %>"><%= date(post.date, 'MM-DD') %></time></a>
+        <% }) %>
+      </div>
+    </section>
+  </aside>
+
+  <div class="home-post-list">
+    <% (page.posts || site.posts).forEach(function (post) { %>
+      <div class="row mx-auto index-card">
+        <% var post_url = url_for(post.path), index_img = post.index_img || theme.post.default_index_img %>
+        <% if (index_img) { %>
+          <div class="col-12 col-md-4 m-auto index-img">
+            <a href="<%= post_url %>" target="<%- theme.index.post_url_target %>"><img src="<%= url_for(index_img) %>" alt="<%= post.title %>"></a>
+          </div>
+        <% } %>
+        <article class="col-12 col-md-<%= index_img ? '8' : '12' %> mx-auto index-info">
+          <h2 class="index-header">
+            <% if (theme.index.post_sticky && theme.index.post_sticky.enable && post.sticky > 0) { %><i class="index-pin <%= theme.index.post_sticky && theme.index.post_sticky.icon %>" title="Pin on top"></i><% } %>
+            <a href="<%= post_url %>" target="<%- theme.index.post_url_target %>"><%= post.title %></a>
+          </h2>
+          <% var excerpt = post.description || post.excerpt || (theme.index.auto_excerpt.enable && !post.encrypt && post.content) %>
+          <a class="index-excerpt <%= index_img ? '' : 'index-excerpt__noimg' %>" href="<%= post_url %>" target="<%- theme.index.post_url_target %>"><div><%- strip_html(excerpt).substring(0, 200).trim().replace(/\n/g, ' ') %></div></a>
+          <div class="index-btm post-metas">
+            <% if (theme.index.post_meta.date) { %><div class="post-meta mr-3"><i class="iconfont icon-date"></i><time datetime="<%= full_date(post.date, 'YYYY-MM-DD HH:mm') %>" pubdate><%- date(post.date, config.date_format) %></time></div><% } %>
+            <% if (theme.index.post_meta.category && post.categories.length > 0) { %><div class="post-meta mr-3 d-flex align-items-center"><i class="iconfont icon-category"></i><% post.categories.each(function(category, index) { if (index === 0) { %><a href="<%= url_for(category.path) %>"><%= category.name %></a><% } }) %></div><% } %>
+            <% if (theme.index.post_meta.tag && post.tags.length > 0) { %><div class="post-meta"><i class="iconfont icon-tags"></i><% post.tags.each(function(tag){ %><a href="<%= url_for(tag.path) %>">#<%- tag.name %></a><% }) %></div><% } %>
+          </div>
+        </article>
+      </div>
+    <% }) %>
+    <% if (page.total > 1) { %>
+      <nav aria-label="navigation"><span class="pagination" id="pagination"><%- paginator({ prev_text: '<i class="iconfont icon-arrowleft"></i>', next_text: '<i class="iconfont icon-arrowright"></i>', mid_size: 2, end_size: 1, format: `${config.pagination_dir}/%d/#board`, escape: false }) %></span></nav>
+    <% } %>
+  </div>
+</div>
