@@ -27,7 +27,7 @@
 <meta property="og:description" content="前言静态博客没有后端，评论数据无处存储。Giscus 基于 GitHub Discussions，免费、稳定、支持 Markdown，是 Hexo 博客的最佳评论方案之一。 本文记录从零接入 Giscus 的完整流程，包括踩坑点。 一、GitHub 仓库准备1.1 开启 Discussions进入博客 GitHub 仓库 → Settings → Features → 勾选 Discussions">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-09-03T16:00:00.000Z">
-<meta property="article:modified_time" content="2026-09-05T02:29:31.937Z">
+<meta property="article:modified_time" content="2026-09-06T06:43:01.398Z">
 <meta property="article:author" content="zuige">
 <meta property="article:tag" content="Giscus">
 <meta property="article:tag" content="Hexo">
@@ -329,7 +329,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.7k 字
+          2.3k 字
         
       </span>
     
@@ -340,7 +340,7 @@
         
         
         
-          23 分钟
+          20 分钟
         
       </span>
     
@@ -463,19 +463,6 @@
 <li>所有评论都是该主帖下的 Reply</li>
 <li>只要文章路径不变，修改标题不会丢失历史评论</li>
 </ul>
-<h2 id="六、常见问题"><a href="#六、常见问题" class="headerlink" title="六、常见问题"></a>六、常见问题</h2><h3 id="评论区不显示"><a href="#评论区不显示" class="headerlink" title="评论区不显示"></a>评论区不显示</h3><p>检查项：</p>
-<ul>
-<li>Discussions 是否已开启</li>
-<li>Announcement 分类类型是否正确</li>
-<li>Giscus 应用是否已授权仓库</li>
-<li><code>_config.fluid.yml</code> 中 <code>post.comments.enable</code> 是否为 <code>true</code></li>
-</ul>
-<h3 id="暗色模式下评论区白底"><a href="#暗色模式下评论区白底" class="headerlink" title="暗色模式下评论区白底"></a>暗色模式下评论区白底</h3><p>主题配色要选「用户偏好的色彩方案」，不要固定 GitHub Light。</p>
-<h3 id="本地预览看不到评论"><a href="#本地预览看不到评论" class="headerlink" title="本地预览看不到评论"></a>本地预览看不到评论</h3><p>正常现象。<code>hexo s</code> 只渲染 UI，Discussion 帐子只有部署线上后才会由 Giscus 机器人创建。</p>
-<h3 id="仓库里出现乱七八糟的帖子"><a href="#仓库里出现乱七八糟的帖子" class="headerlink" title="仓库里出现乱七八糟的帖子"></a>仓库里出现乱七八糟的帖子</h3><p>分类类型选错了。必须是 Announcement，不能是 General。Announcement 类型下只有 Giscus 能创建主帖。</p>
-<h2 id="七、进阶设置"><a href="#七、进阶设置" class="headerlink" title="七、进阶设置"></a>七、进阶设置</h2><h3 id="指定文章关闭评论"><a href="#指定文章关闭评论" class="headerlink" title="指定文章关闭评论"></a>指定文章关闭评论</h3><p>在文章 front-matter 中设置：</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-meta">---</span><br><span class="hljs-attr">title:</span> <span class="hljs-string">某篇文章</span><br><span class="hljs-attr">comments:</span> <span class="hljs-literal">false</span><br><span class="hljs-meta">---</span><br></code></pre></td></tr></table></figure>
-
 <h3 id="自定义评论区标题"><a href="#自定义评论区标题" class="headerlink" title="自定义评论区标题"></a>自定义评论区标题</h3><p>Giscus 默认用文章路径作为 Discussion 标题。如需自定义，可在 giscus.app 配置时修改映射方式。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><table>
 <thead>

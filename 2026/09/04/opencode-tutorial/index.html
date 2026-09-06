@@ -27,7 +27,7 @@
 <meta property="og:description" content="前言OpenCode 是一个基于命令行的 AI 编程助手，支持代码生成、调试、重构、项目搭建等场景。本文介绍从环境配置到实际使用的完整流程。 环境准备启动命令行Windows 下启动终端的几种方式：    方式 操作    快捷键 Win + R → 输入 cmd → 回车   开始菜单 搜索”命令提示符”或”PowerShell”   右键菜单 在文件资源管理器空白处右键 → “在终端中打开”">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-09-03T16:00:00.000Z">
-<meta property="article:modified_time" content="2026-09-05T02:28:17.404Z">
+<meta property="article:modified_time" content="2026-09-06T06:40:56.248Z">
 <meta property="article:author" content="zuige">
 <meta property="article:tag" content="AI">
 <meta property="article:tag" content="OpenCode">
@@ -328,7 +328,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.2k 字
+          919 字
         
       </span>
     
@@ -339,7 +339,7 @@
         
         
         
-          11 分钟
+          8 分钟
         
       </span>
     
@@ -445,42 +445,6 @@
 </tbody></table>
 <h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h3 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">opencode<br></code></pre></td></tr></table></figure>
 
-<h3 id="快捷键"><a href="#快捷键" class="headerlink" title="快捷键"></a>快捷键</h3><table>
-<thead>
-<tr>
-<th>快捷键</th>
-<th>功能</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>Enter</code></td>
-<td>发送消息</td>
-</tr>
-<tr>
-<td><code>Shift + Tab</code></td>
-<td>切换模型</td>
-</tr>
-<tr>
-<td><code>Ctrl + C</code></td>
-<td>退出</td>
-</tr>
-<tr>
-<td><code>Ctrl + L</code></td>
-<td>清屏</td>
-</tr>
-</tbody></table>
-<h3 id="场景示例"><a href="#场景示例" class="headerlink" title="场景示例"></a>场景示例</h3><p><strong>代码生成</strong></p>
-<figure class="highlight node-repl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs node-repl"><span class="hljs-meta prompt_">&gt;</span> <span class="language-javascript">用 <span class="hljs-title class_">Python</span> 实现一个 <span class="hljs-variable constant_">HTTP</span> 文件服务器，支持断点续传</span><br></code></pre></td></tr></table></figure>
-
-<p><strong>代码解释</strong></p>
-<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs dns">&gt; 解释这段代码的作用：<br>def fibonacci<span class="hljs-punctuation">(</span>n<span class="hljs-punctuation">)</span>:<br>    if n &lt;= <span class="hljs-number">1</span>:<br>        return n<br>    return fibonacci<span class="hljs-punctuation">(</span>n-<span class="hljs-number">1</span><span class="hljs-punctuation">)</span> + fibonacci<span class="hljs-punctuation">(</span>n-<span class="hljs-number">2</span><span class="hljs-punctuation">)</span><br></code></pre></td></tr></table></figure>
-
-<p><strong>调试</strong></p>
-<figure class="highlight node-repl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs node-repl"><span class="hljs-meta prompt_">&gt;</span> <span class="language-javascript">运行 python app.<span class="hljs-property">py</span> 报错：<span class="hljs-title class_">ModuleNotFoundError</span>: <span class="hljs-title class_">No</span> <span class="hljs-variable language_">module</span> named <span class="hljs-string">&#x27;flask&#x27;</span></span><br></code></pre></td></tr></table></figure>
-
-<p>AI 会分析错误原因并给出修复方案。</p>
-<p><strong>项目搭建</strong></p>
-<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs dart">&gt; 初始化一个 <span class="hljs-title class_">Express</span> 项目，配置 <span class="hljs-title class_">TypeScript</span> 和 <span class="hljs-title class_">ESLint</span><br></code></pre></td></tr></table></figure>
 
 <h3 id="文件与命令操作"><a href="#文件与命令操作" class="headerlink" title="文件与命令操作"></a>文件与命令操作</h3><p>OpenCode 可直接操作文件系统和执行命令：</p>
 <figure class="highlight node-repl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs node-repl"><span class="hljs-meta prompt_">&gt;</span> <span class="language-javascript">列出当前目录下的文件</span><br><span class="hljs-meta prompt_">&gt;</span> <span class="language-javascript">创建 index.<span class="hljs-property">html</span> 并写入基础 <span class="hljs-variable constant_">HTML</span> 结构</span><br><span class="hljs-meta prompt_">&gt;</span> <span class="language-javascript">删除 src/ 下所有 .<span class="hljs-property">bak</span> 文件</span><br><span class="hljs-meta prompt_">&gt;</span> <span class="language-javascript">执行 npm run build 并查看输出</span><br></code></pre></td></tr></table></figure>
