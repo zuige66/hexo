@@ -12,19 +12,19 @@ body:has(.home-with-sidebar) #board > .container > .row > .col-md-10 {
   max-width: 1180px;
 }
 
-.home-sidebar { position: sticky; top: 1.5rem; min-width: 0; }
+.home-sidebar { position: sticky; top: 5rem; min-width: 0; }
 .home-side-card { background: #fff; border-radius: 14px; padding: 1.1rem 1.15rem; margin-bottom: 1rem; box-shadow: 0 6px 20px rgba(71, 93, 76, .06); }
 .home-profile-card { text-align: center; }
 .home-avatar { width: 76px; height: 76px; border-radius: 50%; object-fit: cover; border: 4px solid #e6f0e7; }
-.home-profile-card h2 { margin: .65rem 0 .85rem; font-size: 1.25rem; color: #365b43; }
+.home-profile-card h2 { margin: .65rem 0 .85rem; font-size: 1.25rem; color: #111; }
 .home-social-links { display: flex; justify-content: center; gap: .9rem; flex-wrap: wrap; }
-.home-social-links a { color: #4f8b5e; font-size: 1.35rem; line-height: 1; }
-.home-social-links a:hover { color: #2f6d3d; }
+.home-social-links a { display: inline-flex; align-items: center; justify-content: center; width: 2.6rem; height: 2.6rem; color: #111; font-size: 1.35rem; line-height: 1; cursor: pointer; }
+.home-social-links a:hover { color: #555; }
 .home-stats-card { display: grid; grid-template-columns: repeat(3, 1fr); text-align: center; gap: .35rem; }
 .home-stats-card strong, .home-stats-card span { display: block; }
-.home-stats-card strong { color: #3e7d4d; font-size: 1.12rem; }
-.home-stats-card span { color: #819084; font-size: .72rem; margin-top: .2rem; }
-.home-side-card h3 { color: #365b43; font-size: 1rem; margin: 0 0 .7rem; }
+.home-stats-card strong { color: #111; font-size: 1.12rem; }
+.home-stats-card span { color: #555; font-size: .72rem; margin-top: .2rem; }
+.home-side-card h3 { color: #111; font-size: 1rem; margin: 0 0 .7rem; }
 .home-heatmap { display: grid; grid-template-columns: repeat(18, 10px); grid-auto-flow: row; grid-auto-rows: 10px; gap: 3px; overflow: hidden; }
 .home-heat-cell, .home-heatmap-legend i { display: block; border-radius: 2px; background: #edf3ee; }
 .home-heat-cell.level-1, .home-heatmap-legend .level-1 { background: #cfe5d2; }
@@ -43,6 +43,9 @@ body:has(.home-with-sidebar) #board > .container > .row > .col-md-10 {
 .home-list-card summary { color: #4f8b5e; cursor: pointer; font-size: .78rem; }
 .home-list-card details[open] { display: flex; flex-direction: column; }
 .home-list-card details[open] > summary { order: 2; margin-top: .35rem; }
+.collapse-label { display: none; }
+.home-list-card details[open] .expand-label { display: none; }
+.home-list-card details[open] .collapse-label { display: inline; }
 .home-taxonomy-more { margin-top: .35rem; }
 .home-post-list { min-width: 0; }
 
