@@ -19,28 +19,29 @@
   <meta name="author" content="zuige">
   <meta name="keywords" content="">
   
-    <meta name="description" content="一年级下半学期，我经常路过5号楼。里面总是坐满备考的人，就在一楼，玻璃窗，很透，路人监督吗，有意思。后面一天一点多，刚好走过，好多人趴着睡觉，累了吗。我都觉得累。考研考公，到底多少的努力才能上岸，我思考了很久，摇了摇头。觉得没意思。太累了，我也不聪明，我不想这样。保研难，考研也不见得简单。另外，有人问我你不想读研吗？我沉默了。他以为我不想读。…… 我觉得备考太累太累，很压抑。﻿中考，高考，考研……">
+    <meta name="description" content="Codex 在 Windows 上无法启动受限终端、提示找不到 codex-windows-sandbox-setup.exe 时，可以将 Windows 沙盒实现从 elevated 切换为 unelevated，并重启 Codex。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="我沉默了，他以为我不想读研">
-<meta property="og:url" content="https://zuige.cc.cd/2026/09/05/some%20thoughts/index.html">
+<meta property="og:title" content="Windows 上 Codex 沙盒启动失败：找不到 codex-windows-sandbox-setup.exe 的解决办法">
+<meta property="og:url" content="https://zuige.cc.cd/2026/09/07/codex-windows-sandbox-setup/index.html">
 <meta property="og:site_name" content="zuige&#39;s blog">
-<meta property="og:description" content="一年级下半学期，我经常路过5号楼。里面总是坐满备考的人，就在一楼，玻璃窗，很透，路人监督吗，有意思。后面一天一点多，刚好走过，好多人趴着睡觉，累了吗。我都觉得累。考研考公，到底多少的努力才能上岸，我思考了很久，摇了摇头。觉得没意思。太累了，我也不聪明，我不想这样。保研难，考研也不见得简单。另外，有人问我你不想读研吗？我沉默了。他以为我不想读。…… 我觉得备考太累太累，很压抑。﻿中考，高考，考研……">
+<meta property="og:description" content="Codex 在 Windows 上无法启动受限终端、提示找不到 codex-windows-sandbox-setup.exe 时，可以将 Windows 沙盒实现从 elevated 切换为 unelevated，并重启 Codex。">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2026-09-04T16:00:00.000Z">
-<meta property="article:modified_time" content="2026-09-06T06:39:12.706Z">
+<meta property="og:image" content="https://zuige.cc.cd/img/codex-windows-sandbox-setup-error.png">
+<meta property="article:published_time" content="2026-09-07T06:10:00.000Z">
+<meta property="article:modified_time" content="2026-09-07T05:21:16.565Z">
 <meta property="article:author" content="zuige">
-<meta property="article:tag" content="人生">
-<meta property="article:tag" content="思考">
-<meta property="article:tag" content="方向">
-<meta property="article:tag" content="考研">
-<meta property="article:tag" content="路">
+<meta property="article:tag" content="Codex">
+<meta property="article:tag" content="Windows">
+<meta property="article:tag" content="故障排查">
+<meta property="article:tag" content="沙盒">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://zuige.cc.cd/img/codex-windows-sandbox-setup-error.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>我沉默了，他以为我不想读研 - zuige&#39;s blog</title>
+  <title>Windows 上 Codex 沙盒启动失败：找不到 codex-windows-sandbox-setup.exe 的解决办法 - zuige&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -313,7 +314,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="我沉默了，他以为我不想读研"></span>
+            <span id="subtitle" data-typed-text="Windows 上 Codex 沙盒启动失败：找不到 codex-windows-sandbox-setup.exe 的解决办法"></span>
           
         </div>
 
@@ -324,8 +325,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2026-09-05 00:00" pubdate>
-          2026年9月5日 凌晨
+        <time datetime="2026-09-07 14:10" pubdate>
+          2026年9月7日 下午
         </time>
       </span>
     
@@ -386,16 +387,64 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">我沉默了，他以为我不想读研</h1>
+            <h1 id="seo-header">Windows 上 Codex 沙盒启动失败：找不到 codex-windows-sandbox-setup.exe 的解决办法</h1>
             
             
               <div class="markdown-body">
                 
-                <p>一年级下半学期，我经常路过5号楼。<br>里面总是坐满备考的人，就在一楼，玻璃窗，很透，路人监督吗，有意思。<br>后面一天一点多，刚好走过，好多人趴着睡觉，累了吗。<br>我都觉得累。<br>考研考公，到底多少的努力才能上岸，我思考了很久，摇了摇头。<br>觉得没意思。太累了，我也不聪明，我不想这样。<br>保研难，考研也不见得简单。<br>另外，有人问我你不想读研吗？<br>我沉默了。<br>他以为我不想读。<br>……</p>
-<p>我觉得备考太累太累，很压抑。﻿<br>中考，高考，考研……无穷尽也，何时才是个头。<br>只想有个自己喜欢的生活，悠闲，惬意，慢节奏。<br>其实我想过很多，怎么去实现，最后发现也很简单，<br>就是有钱。<br>真就是现实。<br>有钱想怎么样就怎么样，除了一些东西，<br>搞几套小楼，养点小宠物，腻歪腻歪对象，不用去想着明天，花钱不用计较。<br>可现实呢，又给我一巴掌，天天在这里幻想，不切实际，我想，总有一天，我要做到。总有一天的。﻿<br>想了很久，路还是要走下去，怎么走。<br>我想﻿<br>就业吧，本科直接出来干活吧。要是四年里面，跟着奈文老师搞点小作品，可能也有不错的就业。<br>做点软件做点硬件，学学嵌入式，学习freertos，学学单片机。<br>搞了不少，也不多，<br>claude老师，还有codex老师，还有trae老师，还有ds老师，他们也一直在帮我<br>不会的可以请教他们，也还不错，<br>只是囊中羞涩，没有见识到全力以赴的老师，<br>有时他们也会有点忙，告诉我Reconnecting…1&#x2F;5<br>我不解，追问，老师你去哪里了<br>他不语，只是一味的将数字增加了一位…2&#x2F;5<br>老师失联了。<br>后来有一次我再问它，他瞥了一眼我的校园网，这些日子很多老师失联吧。<br>……</p>
-<p>后来，无意间在父母前面提到，不考研了，就业吧，他们似乎抓到了什么，一直不放。<br>苦口婆心，劝我<br>“森啊，看看争取保研就好啦，实在不行，试试考研嘛，总有机会的”<br>我说，<br>太累了，太难了，我不想走这条路了。我说直接就业也能找到好工作的，说不定读研出来就更加学历贬值了。我还是不想考研。<br>我有我的想法，但也不一定是对的，只是觉得他们思想落后<br>跟不上时代，他们的提醒他们想我的路，似乎也不一定对。<br>某一天我认识到，<br>我错了。<br>……</p>
-<p>二年级，一晃就一年了，似乎也没有什么作为，我更伤心了<br>除了谈了个对象，似乎也没有什么拿得出手的<br>好在对象很爱我，<br>很理解我，也很体贴我，甚至曾经说过要赚钱养我读书，<br>我笑了，不用，谢谢。<br>因为我那个时候，可能已经不想考研了，<br>但是，谢谢。<br>后面，开班会了，结束后跟班主任聊了聊，我才觉得我可能真的错了，我想过四条路，<br>一是本科进电网，二是保研，三是考研，四是本科做工程师。<br>本科进电网，就等着发配吧，流放岭南可不是说说的，偏远地区太多了，茂名汕头湛江…这还只是叫的出名的偏远地区，<br>我不想考出大山又走进大山。<br>除非成为master’s student，才能留在珠三角干活，<br>那就还是要考研…我沉默了。<br>倪老师说，我还是建议有能力就去考研，出来会不一样。<br>可以选择进电网，也可以干出点成功，去做工程师，更高级那种。<br>是啊，选择更多了，薪水跟多了，谁不想呢。<br>至于保研，已经是几乎不可能，GPA要求太高了，还要搞综评，参加一大堆乱七八糟的东西，去完成一大堆毫无意义的凑数的东西，或许只是我觉得无意义吧。<br>脑子很乱。<br>考研，不考研，在打架。<br>……</p>
-<p>我这个时候，觉得最好的路，应该是一边考研一边搞点成果，考研后干工程师。<br>我又去问ds老师，他也认同我的选择，让我多参加比赛，多跟实验室做课题，总是有益的。对考研似乎也有点用。<br>奈文老师也很上心，问他就说方便语音联系。<br>只是他的想法有点不同，觉得兴趣之上，热爱之上，这点我也是认同。<br>唯有兴趣，才能给你稳定的产出。<br>才能提升能力，才能提升自己，这样才是想要的。<br>还提到英语其实也是很重要，是一个区别于人的特别加分项。<br>我想，默默开始背单词，练听力，练口语。<br>或许也对，不过我也想好了，<br>目标华工。<br>课内电路专业课还是要认真学，毕竟考研也用得上，奈文老师那边也继续跟着，努努力，干出点成果。<br>以成果激励自己继续摘取成果。<br>岂不闻，天无绝人之路，只要我想走，路就在脚下。<br>确定了路，我想，<br>我该走了。</p>
+                <p>昨天用 Codex 改博客时，终端和文件编辑工具突然变得不稳定：普通 PowerShell 有时可以执行，但需要受限环境的操作会失败或卡住。最后弹出了一个更直接的错误窗口：Windows 找不到 <code>codex-windows-sandbox-setup.exe</code>。</p>
+<p><img src="/img/codex-windows-sandbox-setup-error.png" srcset="/img/loading.gif" lazyload alt="Windows 找不到 codex-windows-sandbox-setup.exe"></p>
+<p>这篇文章记录问题的判断过程，以及在 Windows 上可行的恢复方法。</p>
+<h2 id="现象：不是项目坏了，也不只是终端坏了"><a href="#现象：不是项目坏了，也不只是终端坏了" class="headerlink" title="现象：不是项目坏了，也不只是终端坏了"></a>现象：不是项目坏了，也不只是终端坏了</h2><p>一开始很容易把问题归因于 Hexo、PowerShell 或网络代理。但实际表现有些矛盾：</p>
+<ul>
+<li>PowerShell 的基础命令可以运行；</li>
+<li>工作目录中的常规文件读写可以通过；</li>
+<li>GitHub 网络检测可以返回成功；</li>
+<li>Codex 发起某些终端会话、应用补丁或沙盒检查时，却可能失败。</li>
+</ul>
+<p>弹窗中的文件名很关键：<code>codex-windows-sandbox-setup.exe</code>。它是 Codex 在 Windows 上准备沙盒环境时会用到的初始化程序。找不到该程序时，失败的是这一步初始化，而不是某个具体的博客项目。</p>
+<h2 id="原因：Windows-提权沙盒初始化没有完成"><a href="#原因：Windows-提权沙盒初始化没有完成" class="headerlink" title="原因：Windows 提权沙盒初始化没有完成"></a>原因：Windows 提权沙盒初始化没有完成</h2><p>Codex 在 Windows 原生环境中有两种沙盒实现：</p>
+<table>
+<thead>
+<tr>
+<th>配置</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>elevated</code></td>
+<td>使用带提权的 Windows 沙盒初始化流程，也是默认推荐方式。</td>
+</tr>
+<tr>
+<td><code>unelevated</code></td>
+<td>使用不依赖提权助手的兼容初始化&#x2F;预检流程。</td>
+</tr>
+</tbody></table>
+<p>当 <code>elevated</code> 的初始化程序无法找到、权限提升失败，或其初始化环境发生异常时，Codex 就可能无法正常创建受限终端。出现“找不到 <code>codex-windows-sandbox-setup.exe</code>”的窗口，正是这一类问题的明确信号。</p>
+<p>至于初始化程序为什么不可用，可能与应用更新不完整、旧路径残留、权限环境或安全软件拦截有关。单凭这个窗口无法准确判定是哪一种，所以不建议一上来就删除配置、重置登录信息或修改项目文件。</p>
+<h2 id="解决：切换到-unelevated"><a href="#解决：切换到-unelevated" class="headerlink" title="解决：切换到 unelevated"></a>解决：切换到 unelevated</h2><p>打开 Codex 的用户配置文件：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">C:\Users\你的用户名\.codex\config.toml<br></code></pre></td></tr></table></figure>
+
+<p>在文件中添加或修改为：</p>
+<figure class="highlight toml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs toml"><span class="hljs-section">[windows]</span><br><span class="hljs-attr">sandbox</span> = <span class="hljs-string">&quot;unelevated&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>保存后，<strong>完全退出 Codex 再重新打开</strong>。只关闭当前对话或窗口不一定会让沙盒初始化程序重新加载。</p>
+<p>我的情况切换后，终端命令、文件修改、Hexo 构建和 GitHub Pages 部署都恢复了正常。</p>
+<h2 id="unelevated-是不是关闭沙盒？"><a href="#unelevated-是不是关闭沙盒？" class="headerlink" title="unelevated 是不是关闭沙盒？"></a>unelevated 是不是关闭沙盒？</h2><p>不是。</p>
+<p><code>unelevated</code> 只是换了一种 Windows 沙盒的底层初始化方式，Codex 的文件访问和命令权限仍会按照当前的权限策略执行。它适合没有管理员权限，或者 <code>elevated</code> 初始化失败的场景。</p>
+<p>OpenAI 的 Codex 配置文档也说明：Windows 上通常推荐 <code>elevated</code>；当管理员权限不可用，或提权初始化失败时，可以将 <code>unelevated</code> 作为回退方案。 <a target="_blank" rel="noopener" href="https://learn.chatgpt.com/fr-FR/docs/config-file/config-basic">Codex 配置说明</a></p>
+<h2 id="恢复后如何确认"><a href="#恢复后如何确认" class="headerlink" title="恢复后如何确认"></a>恢复后如何确认</h2><p>重启后，可以依次做几个轻量测试：</p>
+<ol>
+<li>在 Codex 内运行一个简单的 PowerShell 命令，例如 <code>Get-Location</code>；</li>
+<li>让 Codex 在当前工作目录新建或修改一个普通文本文件；</li>
+<li>再执行项目的构建命令，例如 Hexo 项目的 <code>npm.cmd run build</code>。</li>
+</ol>
+<p>这几项都正常，基本就说明终端、文件写入和项目运行所需的沙盒流程恢复了。</p>
+<h2 id="要不要改回-elevated？"><a href="#要不要改回-elevated？" class="headerlink" title="要不要改回 elevated？"></a>要不要改回 elevated？</h2><p>目前不用急着改回。只要 <code>unelevated</code> 运行稳定，就可以继续使用。以后 Codex 更新后，如果想确认提权沙盒是否已修复，再把配置改回：</p>
+<figure class="highlight toml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs toml"><span class="hljs-section">[windows]</span><br><span class="hljs-attr">sandbox</span> = <span class="hljs-string">&quot;elevated&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>重启后测试即可；如果问题再次出现，切回 <code>unelevated</code>。</p>
+<p>另外，代理软件最好先于 Codex 启动。但代理连接问题和这个“找不到沙盒初始化程序”的错误并不是一回事；不要为了修复这个错误随意删除 <code>.codex</code> 目录、修改 <code>auth.json</code>，或取消已有的代理设置。</p>
 
                 
               </div>
@@ -414,7 +463,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/%E6%9D%82%E8%AE%B0/" class="category-chain-item">杂记</a>
+  <a href="/categories/%E6%8A%80%E6%9C%AF/" class="category-chain-item">技术</a>
   
   
 
@@ -429,15 +478,13 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E8%B7%AF/" class="print-no-link">#路</a>
+        <a href="/tags/Codex/" class="print-no-link">#Codex</a>
       
-        <a href="/tags/%E6%96%B9%E5%90%91/" class="print-no-link">#方向</a>
+        <a href="/tags/Windows/" class="print-no-link">#Windows</a>
       
-        <a href="/tags/%E6%80%9D%E8%80%83/" class="print-no-link">#思考</a>
+        <a href="/tags/%E6%95%85%E9%9A%9C%E6%8E%92%E6%9F%A5/" class="print-no-link">#故障排查</a>
       
-        <a href="/tags/%E8%80%83%E7%A0%94/" class="print-no-link">#考研</a>
-      
-        <a href="/tags/%E4%BA%BA%E7%94%9F/" class="print-no-link">#人生</a>
+        <a href="/tags/%E6%B2%99%E7%9B%92/" class="print-no-link">#沙盒</a>
       
     </div>
   
@@ -449,8 +496,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>我沉默了，他以为我不想读研</div>
-      <div>https://zuige.cc.cd/2026/09/05/some thoughts/</div>
+      <div>Windows 上 Codex 沙盒启动失败：找不到 codex-windows-sandbox-setup.exe 的解决办法</div>
+      <div>https://zuige.cc.cd/2026/09/07/codex-windows-sandbox-setup/</div>
     </div>
     <div class="license-meta">
       
@@ -462,7 +509,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>post.copyright.posted</div>
-          <div>2026年9月5日</div>
+          <div>2026年9月7日</div>
         </div>
       
       
@@ -494,18 +541,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2026/09/07/codex-windows-sandbox-setup/" title="Windows 上 Codex 沙盒启动失败：找不到 codex-windows-sandbox-setup.exe 的解决办法">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Windows 上 Codex 沙盒启动失败：找不到 codex-windows-sandbox-setup.exe 的解决办法</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2026/09/04/hexo-giscus-guide/" title="Giscus，让博客接入评论">
-                        <span class="hidden-mobile">Giscus，让博客接入评论</span>
+                      <a href="/2026/09/05/some%20thoughts/" title="我沉默了，他以为我不想读研">
+                        <span class="hidden-mobile">我沉默了，他以为我不想读研</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
