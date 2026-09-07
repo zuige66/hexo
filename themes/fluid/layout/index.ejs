@@ -16,7 +16,7 @@ var siteStart = new Date(2026, 8, 3)
 var today = new Date()
 today.setHours(0, 0, 0, 0)
 var heatmapStart = new Date(today)
-heatmapStart.setDate(heatmapStart.getDate() - 364)
+heatmapStart.setDate(heatmapStart.getDate() - 125)
 var postCounts = {}
 sitePosts.forEach(function(post) {
   var key = full_date(post.date, 'YYYY-MM-DD')
@@ -55,7 +55,7 @@ var elapsedDays = Math.max(1, Math.floor((today - siteStart) / 86400000) + 1)
 
     <section class="home-side-card home-heatmap-card">
       <h3>发文记录</h3>
-      <div class="home-heatmap" aria-label="最近 365 天发文记录">
+      <div class="home-heatmap" aria-label="最近 126 天发文记录">
         <% heatmapDays.forEach(function(day) { %>
           <span class="home-heat-cell level-<%= Math.min(day.count, 4) %>" title="<%= day.date %>：<%= day.count %> 篇"></span>
         <% }) %>
@@ -71,7 +71,7 @@ var elapsedDays = Math.max(1, Math.floor((today - siteStart) / 86400000) + 1)
         <% }) %>
       </div>
       <% if (categoryItems.length > 3) { %>
-        <details><summary>展开全部（<%= categoryItems.length %>）</summary><div class="home-taxonomy-list home-taxonomy-more"><% categoryItems.slice(3).forEach(function(category) { %><a href="<%= url_for(category.path) %>"><span><%= category.name %></span><em><%= category.posts.length %></em></a><% }) %></div></details>
+        <details><summary><span class="expand-label">展开全部（<%= categoryItems.length %>）</span><span class="collapse-label">收起全部</span></summary><div class="home-taxonomy-list home-taxonomy-more"><% categoryItems.slice(3).forEach(function(category) { %><a href="<%= url_for(category.path) %>"><span><%= category.name %></span><em><%= category.posts.length %></em></a><% }) %></div></details>
       <% } %>
     </section>
 
@@ -83,7 +83,7 @@ var elapsedDays = Math.max(1, Math.floor((today - siteStart) / 86400000) + 1)
         <% }) %>
       </div>
       <% if (tagItems.length > 3) { %>
-        <details><summary>展开全部（<%= tagItems.length %>）</summary><div class="home-taxonomy-list home-taxonomy-more"><% tagItems.slice(3).forEach(function(tag) { %><a href="<%= url_for(tag.path) %>"><span># <%= tag.name %></span><em><%= tag.posts.length %></em></a><% }) %></div></details>
+        <details><summary><span class="expand-label">展开全部（<%= tagItems.length %>）</span><span class="collapse-label">收起全部</span></summary><div class="home-taxonomy-list home-taxonomy-more"><% tagItems.slice(3).forEach(function(tag) { %><a href="<%= url_for(tag.path) %>"><span># <%= tag.name %></span><em><%= tag.posts.length %></em></a><% }) %></div></details>
       <% } %>
     </section>
 
@@ -111,8 +111,10 @@ var elapsedDays = Math.max(1, Math.floor((today - siteStart) / 86400000) + 1)
             <% if (theme.index.post_sticky && theme.index.post_sticky.enable && post.sticky > 0) { %><i class="index-pin <%= theme.index.post_sticky && theme.index.post_sticky.icon %>" title="Pin on top"></i><% } %>
             <a href="<%= post_url %>" target="<%- theme.index.post_url_target %>"><%= post.title %></a>
           </h2>
-          <% var excerpt = post.description || post.excerpt || (theme.index.auto_excerpt.enable && !post.encrypt && post.content) %>
-          <a class="index-excerpt <%= index_img ? '' : 'index-excerpt__noimg' %>" href="<%= post_url %>" target="<%- theme.index.post_url_target %>"><div><%- strip_html(excerpt).substring(0, 200).trim().replace(/\n/g, ' ') %></div></a>
+          <% var excerpt = post.description || (theme.index.auto_excerpt.enable && !post.encrypt && post.content) || post.excerpt || '' %>
+<% var excerptHtml = excerpt.replace(/<figure\b[\s\S]*?<\/figure>/gi, '').replace(/<pre\b[\s\S]*?<\/pre>/gi, '').replace(/<\/?(?:h[1-6]|p|li|blockquote|div|br|hr)\b[^>]*>/gi, ' ') %>
+<% var excerptText = strip_html(excerptHtml).replace(/\r?\n/g, ' ').replace(/```[\s\S]*?```/g, '').replace(/!\[([^\]]*)\]\([^)]*\)/g, '$1').replace(/\[([^\]]+)\]\([^)]*\)/g, '$1').replace(/[|#*_~`]/g, ' ').replace(/\s+/g, ' ').trim() %>
+          <a class="index-excerpt <%= index_img ? '' : 'index-excerpt__noimg' %>" href="<%= post_url %>" target="<%- theme.index.post_url_target %>"><div><%- excerptText.substring(0, 200) %></div></a>
           <div class="index-btm post-metas">
             <% if (theme.index.post_meta.date) { %><div class="post-meta mr-3"><i class="iconfont icon-date"></i><time datetime="<%= full_date(post.date, 'YYYY-MM-DD HH:mm') %>" pubdate><%- date(post.date, config.date_format) %></time></div><% } %>
             <% if (theme.index.post_meta.category && post.categories.length > 0) { %><div class="post-meta mr-3 d-flex align-items-center"><i class="iconfont icon-category"></i><% post.categories.each(function(category, index) { if (index === 0) { %><a href="<%= url_for(category.path) %>"><%= category.name %></a><% } }) %></div><% } %>
