@@ -1,0 +1,237 @@
+:root {
+  --motion-spring: cubic-bezier(.34, 1.56, .64, 1);
+  --motion-smooth: cubic-bezier(.22, 1, .36, 1);
+  --motion-shadow: 0 14px 32px rgba(38, 51, 65, .16);
+  --motion-shadow-strong: 0 18px 42px rgba(38, 51, 65, .22);
+}
+
+/* 首页文章：整张卡片浮起，封面在卡片内部轻微放大。 */
+.home-post-list .index-card {
+  position: relative;
+  padding: 1rem;
+  border-radius: 16px;
+  transition:
+    transform 320ms var(--motion-spring),
+    box-shadow 260ms var(--motion-smooth),
+    background-color 220ms ease;
+  will-change: transform;
+}
+
+.home-post-list .index-img {
+  overflow: hidden;
+  border-radius: .5rem;
+}
+
+.home-post-list .index-img img {
+  transition:
+    transform 520ms var(--motion-smooth),
+    filter 260ms ease,
+    box-shadow 260ms ease;
+  will-change: transform;
+}
+
+/* 归档、分类和友链中的独立条目。 */
+.list-group-item,
+.category-heading-row,
+.links .card,
+.home-social-links a,
+.home-taxonomy-list a,
+.home-recent-list a {
+  transition:
+    transform 280ms var(--motion-spring),
+    box-shadow 240ms var(--motion-smooth),
+    background-color 200ms ease,
+    border-color 200ms ease;
+}
+
+.links .card {
+  border-radius: 14px;
+}
+
+.category-heading-row {
+  position: relative;
+  width: 100%;
+  border-radius: 10px;
+}
+
+.category-heading-row .category-item,
+.category-heading-row .category-subitem,
+.category-heading-row .category-count {
+  transition: color 180ms ease, background-color 180ms ease;
+}
+
+.category-heading-row:hover > a,
+.category-heading-row:focus-within > a {
+  color: var(--link-hover-color);
+  background-color: var(--link-hover-bg-color);
+}
+
+.category-heading-row > a:first-child {
+  border-radius: 10px 0 0 10px;
+}
+
+.category-heading-row > a:last-child {
+  border-radius: 0 10px 10px 0;
+}
+
+.links .link-avatar img {
+  transition: transform 420ms var(--motion-spring);
+}
+
+/* 代码块使用滚轮横向浏览长行。具体滚动逻辑位于 site-interactions.js。 */
+.markdown-body figure.highlight,
+.markdown-body .code-wrapper pre,
+.markdown-body > pre {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+}
+
+/* 文章目录中的标题都是页内跳转链接。 */
+.tocbot-link {
+  display: block;
+  margin: .06rem 0;
+  padding: .14rem .35rem;
+  border-radius: 7px;
+  transform-origin: left center;
+  transition:
+    transform 240ms var(--motion-spring),
+    color 180ms ease,
+    background-color 180ms ease;
+}
+
+/* 小型交互元素只做轻量位移，避免页面显得晃。 */
+.navbar .nav-link,
+.navbar-brand,
+.home-social-links a,
+.home-taxonomy-list a,
+.home-recent-list a,
+.about-icons a,
+.pagination a,
+.btn,
+button,
+.scroll-down-bar,
+#scroll-top-button {
+  transition:
+    transform 240ms var(--motion-spring),
+    color 180ms ease,
+    background-color 180ms ease,
+    box-shadow 220ms var(--motion-smooth),
+    opacity 180ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .home-post-list .index-card:hover,
+  .home-post-list .index-card:focus-within {
+    transform: translateY(-7px) scale(1.008);
+    background-color: var(--board-bg-color);
+    box-shadow: var(--motion-shadow-strong);
+  }
+
+  .home-post-list .index-card:hover .index-img img,
+  .home-post-list .index-card:focus-within .index-img img {
+    transform: scale(1.055);
+    filter: saturate(1.06) brightness(1.03);
+    box-shadow: none;
+  }
+
+  .list-group-item:hover,
+  .list-group-item:focus-visible,
+  .category-heading-row:hover,
+  .category-heading-row:focus-within,
+  .links .card:hover,
+  .links .card:focus-within {
+    transform: translateY(-5px) scale(1.01);
+    box-shadow: var(--motion-shadow);
+    z-index: 2;
+  }
+
+  .links .card:hover .link-avatar img,
+  .links .card:focus-within .link-avatar img {
+    transform: scale(1.08) rotate(2deg);
+  }
+
+  .navbar .nav-link:hover,
+  .navbar .nav-link:focus-visible,
+  .navbar-brand:hover,
+  .navbar-brand:focus-visible,
+  .home-social-links a:hover,
+  .home-social-links a:focus-visible,
+  .about-icons a:hover,
+  .about-icons a:focus-visible,
+  .pagination a:hover,
+  .pagination a:focus-visible,
+  .btn:hover,
+  .btn:focus-visible,
+  button:hover,
+  button:focus-visible,
+  .scroll-down-bar:hover,
+  #scroll-top-button:hover {
+    transform: translateY(-3px) scale(1.06);
+  }
+
+  .home-taxonomy-list a:hover,
+  .home-taxonomy-list a:focus-visible,
+  .home-recent-list a:hover,
+  .home-recent-list a:focus-visible,
+  .tocbot-link:hover,
+  .tocbot-link:focus-visible {
+    transform: translateX(5px);
+  }
+
+  .tocbot-link:hover,
+  .tocbot-link:focus-visible {
+    color: var(--link-hover-color);
+    background-color: var(--link-hover-bg-color);
+  }
+}
+
+/* 点击时快速回弹，触屏设备也能得到清晰反馈。 */
+.home-post-list .index-card:active,
+.list-group-item:active,
+.category-heading-row:active,
+.links .card:active,
+.navbar .nav-link:active,
+.home-social-links a:active,
+.about-icons a:active,
+.tocbot-link:active,
+.pagination a:active,
+.btn:active,
+button:active {
+  transform: translateY(1px) scale(.98);
+  transition-duration: 90ms;
+}
+
+:root[data-user-color-scheme="dark"] {
+  --motion-shadow: 0 14px 34px rgba(0, 0, 0, .34);
+  --motion-shadow-strong: 0 20px 48px rgba(0, 0, 0, .46);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-user-color-scheme]) {
+    --motion-shadow: 0 14px 34px rgba(0, 0, 0, .34);
+    --motion-shadow-strong: 0 20px 48px rgba(0, 0, 0, .46);
+  }
+}
+
+@media (max-width: 767px) {
+  .home-post-list .index-card {
+    padding: .75rem;
+  }
+
+  .home-post-list .index-card:active,
+  .list-group-item:active,
+  .links .card:active {
+    transform: scale(.985);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}

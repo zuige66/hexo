@@ -18,8 +18,7 @@ body:has(.home-with-sidebar) #board > .container > .row > .col-md-10 {
   --sidebar-muted: #5e6e62;
   --sidebar-subtle: #8a988d;
   --sidebar-heat-empty: #edf3ee;
-  position: sticky;
-  top: 5rem;
+  position: static;
   min-width: 0;
 }
 .home-side-card { background: var(--board-bg-color); border-radius: 14px; padding: 1.1rem 1.15rem; margin-bottom: 1rem; box-shadow: 0 6px 20px rgba(0, 0, 0, .08); }
