@@ -105,6 +105,17 @@
     background-color 180ms ease;
 }
 
+/* expand_all 模式下子列表不一定带 collapsible 类，收起时仍需彻底裁掉内容。 */
+#toc-body ol.tocbot-is-collapsed {
+  display: none !important;
+  max-height: 0 !important;
+  overflow: hidden !important;
+  opacity: 0;
+  pointer-events: none;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
 /* 小型交互元素只做轻量位移，避免页面显得晃。 */
 .navbar .nav-link,
 .navbar-brand,
