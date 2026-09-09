@@ -25,4 +25,29 @@
     event.preventDefault();
     block.scrollLeft += delta;
   }, { passive: false });
+
+  function isInteractiveTarget(target) {
+    return target.closest('a, button, input, select, textarea, summary, [role="button"]');
+  }
+
+  function openPostCard(card) {
+    var url = card.dataset.postUrl;
+    if (url) window.location.assign(url);
+  }
+
+  document.addEventListener('click', function (event) {
+    if (!(event.target instanceof Element)) return;
+    var card = event.target.closest('.home-post-list .index-card[data-post-url]');
+    if (!card || isInteractiveTarget(event.target)) return;
+    openPostCard(card);
+  });
+
+  document.addEventListener('keydown', function (event) {
+    if (event.key !== 'Enter' && event.key !== ' ') return;
+    if (!(event.target instanceof Element)) return;
+    var card = event.target.closest('.home-post-list .index-card[data-post-url]');
+    if (!card || event.target !== card) return;
+    event.preventDefault();
+    openPostCard(card);
+  });
 })();
