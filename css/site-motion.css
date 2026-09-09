@@ -10,11 +10,17 @@
   position: relative;
   padding: 1rem;
   border-radius: 16px;
+  cursor: pointer;
   transition:
     transform 320ms var(--motion-spring),
     box-shadow 260ms var(--motion-smooth),
     background-color 220ms ease;
   will-change: transform;
+}
+
+.home-post-list .index-card:focus-visible {
+  outline: 2px solid var(--link-hover-color);
+  outline-offset: 4px;
 }
 
 .home-post-list .index-img {
