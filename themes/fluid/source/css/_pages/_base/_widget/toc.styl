@@ -12,22 +12,25 @@
 .toc-body
   max-height 75vh
   overflow-y auto
+  line-height 1.35
   overflow -moz-scrollbars-none
   -ms-overflow-style none
 
   ol
     list-style none
-    padding-inline-start 1rem
+    padding-inline-start .7rem
 
   &::-webkit-scrollbar
     display none
 
 .tocbot-list
   position relative
+  margin 0
 
   ol
     list-style none
-    padding-left 1rem
+    padding-left .75rem
+    margin .08rem 0
 
   a
     font-size 0.95rem
@@ -40,9 +43,10 @@
 
 .toc-toggle
   display inline-block
-  width .7rem
+  flex 0 0 .8rem
+  width .8rem
   text-align center
-  margin-right .15rem
+  margin-right .2rem
   cursor pointer
   user-select none
   color var(--text-color)
@@ -56,11 +60,20 @@
   &.toc-toggle-expanded
     transform rotate(90deg)
 
-  &.toc-toggle-placeholder
-    visibility hidden
-    pointer-events none
-    cursor default
-    transform none
+.toc-line
+  display flex
+  align-items center
+  min-width 0
+
+  .tocbot-link
+    flex 1 1 auto
+    min-width 0
+    white-space nowrap
+    overflow hidden
+    text-overflow ellipsis
+
+  &.toc-line-leaf
+    padding-left 1rem
 
 
 .tocbot-active-link
@@ -75,12 +88,9 @@
   transition all .3s ease-in-out
 
 .toc-list-item
-  padding .1rem 0
-  display -webkit-box
-  -webkit-box-orient vertical
-  -webkit-line-clamp 2
-  overflow hidden
-  text-overflow ellipsis
+  padding .02rem 0
+  display block
+  overflow visible
 
   &.is-active-li::before
     height 1rem

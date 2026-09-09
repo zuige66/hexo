@@ -240,7 +240,7 @@ custom_js:
 # The usage is the same as custom_js
 custom_css:
   - /css/home-sidebar.css?v=3
-  - /css/site-motion.css?v=4
+  - /css/site-motion.css?v=5
 
 # 网页访问统计
 # Analysis of website visitors
