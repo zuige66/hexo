@@ -77,7 +77,7 @@
 
   
 <link rel="stylesheet" href="/css/home-sidebar.css?v=3.css">
-<link rel="stylesheet" href="/css/site-motion.css?v=5.css">
+<link rel="stylesheet" href="/css/site-motion.css?v=6.css">
 
 
 
@@ -947,6 +947,7 @@
         .toggleClass('toc-toggle-expanded', !collapsed)
         .attr('aria-expanded', String(!collapsed))
         .attr('aria-label', collapsed ? '展开子目录' : '收起子目录');
+      $childList.attr('aria-hidden', String(collapsed));
     }
     function bindTocToggle() {
       if (!isExpandAllEnabled()) { return; }
