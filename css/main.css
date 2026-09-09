@@ -796,22 +796,25 @@ sup > a::before,
 .toc-body {
   max-height: 75vh;
   overflow-y: auto;
+  line-height: 1.35;
   overflow: -moz-scrollbars-none;
   -ms-overflow-style: none;
 }
 .toc-body ol {
   list-style: none;
-  padding-inline-start: 1rem;
+  padding-inline-start: 0.7rem;
 }
 .toc-body::-webkit-scrollbar {
   display: none;
 }
 .tocbot-list {
   position: relative;
+  margin: 0;
 }
 .tocbot-list ol {
   list-style: none;
-  padding-left: 1rem;
+  padding-left: 0.75rem;
+  margin: 0.08rem 0;
 }
 .tocbot-list a {
   font-size: 0.95rem;
@@ -824,9 +827,10 @@ sup > a::before,
 }
 .toc-toggle {
   display: inline-block;
-  width: 0.7rem;
+  flex: 0 0 0.8rem;
+  width: 0.8rem;
   text-align: center;
-  margin-right: 0.15rem;
+  margin-right: 0.2rem;
   cursor: pointer;
   user-select: none;
   color: var(--text-color);
@@ -840,11 +844,20 @@ sup > a::before,
 .toc-toggle.toc-toggle-expanded {
   transform: rotate(90deg);
 }
-.toc-toggle.toc-toggle-placeholder {
-  visibility: hidden;
-  pointer-events: none;
-  cursor: default;
-  transform: none;
+.toc-line {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+.toc-line .tocbot-link {
+  flex: 1 1 auto;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.toc-line.toc-line-leaf {
+  padding-left: 1rem;
 }
 .tocbot-active-link {
   font-weight: bold;
@@ -858,12 +871,9 @@ sup > a::before,
   transition: all 0.3s ease-in-out;
 }
 .toc-list-item {
-  padding: 0.1rem 0;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  padding: 0.02rem 0;
+  display: block;
+  overflow: visible;
 }
 .toc-list-item.is-active-li::before {
   height: 1rem;
