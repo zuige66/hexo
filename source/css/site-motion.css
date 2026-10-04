@@ -113,29 +113,16 @@
 /* 由站内搜索跳转到文章时，突出显示首次命中的关键词。 */
 .search-hit {
   color: inherit;
-  background: #ffe28a;
+  background: transparent;
   border-radius: 4px;
-  box-shadow: 0 0 0 2px rgba(255, 192, 64, .45);
+  box-shadow: none;
   padding: 0 .12em;
-  animation: search-hit-flash 2.4s ease-out both;
+  animation: search-hit-flash 680ms ease-in-out 3;
 }
 
 @keyframes search-hit-flash {
-  0%, 42% { background: #ffbd3e; box-shadow: 0 0 0 4px rgba(255, 189, 62, .6); }
-  18%, 64% { background: #fff1b8; box-shadow: 0 0 0 2px rgba(255, 192, 64, .35); }
-  100% { background: #ffe28a; box-shadow: 0 0 0 2px rgba(255, 192, 64, .2); }
-}
-
-:root[data-user-color-scheme="dark"] .search-hit {
-  background: #855b16;
-  box-shadow: 0 0 0 2px rgba(255, 194, 72, .42);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-user-color-scheme]) .search-hit {
-    background: #855b16;
-    box-shadow: 0 0 0 2px rgba(255, 194, 72, .42);
-  }
+  0%, 100% { color: inherit; background: transparent; box-shadow: none; }
+  45% { color: #30a9de; background: rgba(48, 169, 222, .16); box-shadow: 0 0 0 2px rgba(48, 169, 222, .2); }
 }
 
 /* expand_all 模式下子列表不一定带 collapsible 类，收起时仍需彻底裁掉内容。 */
@@ -150,8 +137,6 @@
 }
 
 /* 小型交互元素只做轻量位移，避免页面显得晃。 */
-.navbar .nav-link,
-.navbar-brand,
 .home-social-links a,
 .home-taxonomy-list a,
 .home-recent-list a,
@@ -200,10 +185,6 @@ button,
     transform: scale(1.08) rotate(2deg);
   }
 
-  .navbar .nav-link:hover,
-  .navbar .nav-link:focus-visible,
-  .navbar-brand:hover,
-  .navbar-brand:focus-visible,
   .home-social-links a:hover,
   .home-social-links a:focus-visible,
   .about-icons a:hover,
@@ -235,12 +216,23 @@ button,
   }
 }
 
+/* 导航栏以颜色反馈当前与悬停状态，避免与页面滚动产生位移感。 */
+.navbar .nav-link:hover,
+.navbar .nav-link:focus-visible,
+.navbar .nav-link:active,
+.navbar .nav-link.active,
+.navbar-brand:hover,
+.navbar-brand:focus-visible,
+.navbar-brand:active {
+  color: var(--link-hover-color);
+  transform: none;
+}
+
 /* 点击时快速回弹，触屏设备也能得到清晰反馈。 */
 .home-post-list .index-card:active,
 .list-group-item:not(.category-item):not(.category-subitem):active,
 .category-heading-row:active,
 .links .card:active,
-.navbar .nav-link:active,
 .home-social-links a:active,
 .about-icons a:active,
 .tocbot-link:active,

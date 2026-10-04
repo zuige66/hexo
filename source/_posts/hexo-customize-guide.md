@@ -287,7 +287,7 @@ color:
 | 改导航栏 | `_config.fluid.yml` → `navbar.menu` |
 | 改颜色 | `_config.fluid.yml` → `color` |
 | 改字体 | `_config.fluid.yml` → `font` |
-| 改悬停与浮起动效 | `source/css/site-motion.css` |
+| 改悬停、浮起与搜索高亮动效 | `source/css/site-motion.css` |
 | 改站内搜索定位效果 | `themes/fluid/source/js/local-search.js` 与 `source/js/site-interactions.js` |
 | 写新文章 | `hexo new "标题"` → 编辑 md → `hexo deploy` |
 

@@ -19,6 +19,7 @@
           <% if (text.indexOf('.menu') !== -1 || text.indexOf('.title') !== -1) {
             text = each.key
           } %>
+          <% var isCurrentPage = !each.submenu && is_current(each.link) %>
           <% if (each.submenu) { %>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
@@ -42,7 +43,7 @@
             </li>
           <% } else { %>
             <li class="nav-item">
-              <a class="nav-link" href="<%= url_for(each.link) %>" target="<%= each.target || '_self' %>">
+              <a class="nav-link<%= isCurrentPage ? ' active' : '' %>" href="<%= url_for(each.link) %>" target="<%= each.target || '_self' %>">
                 <%- each.icon ? '<i class="' + each.icon + '"></i>' : '' %>
                 <span><%- text %></span>
               </a>
