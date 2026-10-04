@@ -1,0 +1,1030 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/avatar.jpg">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="zuige">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="记录通过 Google Workspace 购买 .com 域名时，如何确认账单资料、完成注册人验证，并在不需要企业邮箱时处理 Workspace 订阅。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="低价购买 .com 域名：Google Workspace 购买与续费避坑">
+<meta property="og:url" content="https://blog.zuiges.com/2026/10/04/domain-three-sites-server-github-pages/index.html">
+<meta property="og:site_name" content="zuige&#39;s blog">
+<meta property="og:description" content="记录通过 Google Workspace 购买 .com 域名时，如何确认账单资料、完成注册人验证，并在不需要企业邮箱时处理 Workspace 订阅。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-10-04T07:00:00.000Z">
+<meta property="article:modified_time" content="2026-10-04T09:19:09.232Z">
+<meta property="article:author" content="zuige">
+<meta property="article:tag" content=".com">
+<meta property="article:tag" content="Google Workspace">
+<meta property="article:tag" content="域名">
+<meta property="article:tag" content="教程">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>低价购买 .com 域名：Google Workspace 购买与续费避坑 - zuige&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/home-sidebar.css?v=3.css">
+<link rel="stylesheet" href="/css/site-motion.css?v=8.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"blog.zuiges.com","root":"/","version":"1.9.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"expand_all":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"openkounter":{"server_url":"https://open-kounter.mintimate.cn","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.2"><link rel="alternate" href="/atom.xml" title="zuige's blog" type="application/atom+xml">
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>zuige&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content (desktop) -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile grid menu overlay -->
+<div id="mobile-grid-menu" class="d-lg-none">
+  <div class="mobile-grid-menu-inner">
+    <div class="container">
+      <div class="row">
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-home-fill"></i>
+                  <span>首页</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/archives/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-archive-fill"></i>
+                  <span>归档</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/categories/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-category-fill"></i>
+                  <span>分类</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/tags/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-tags-fill"></i>
+                  <span>标签</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/about/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-user-fill"></i>
+                  <span>关于</span>
+                </div>
+              </a>
+            </div>
+          
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-search-btn">
+            <a href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-search"></i>
+                <span>搜索</span>
+              </div>
+            </a>
+          </div>
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-color-toggle-btn"
+               data-label-light="开灯"
+               data-label-dark="关灯">
+            <a href="javascript:;" aria-label="Color Toggle">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-dark" id="mobile-color-toggle-icon"></i>
+                <span id="mobile-color-toggle-label">关灯</span>
+              </div>
+            </a>
+          </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="低价购买 .com 域名：Google Workspace 购买与续费避坑"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-10-04 15:00" pubdate>
+          2026年10月4日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          21 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">低价购买 .com 域名：Google Workspace 购买与续费避坑</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>买 <code>.com</code> 域名时，最容易被低价页面吸引的不是域名本身，而是结账页上的数字。地区、币种、税费、首年优惠、续费价，几个选项叠在一起，很容易让人只盯着“现在多少钱”，忘了问一句：明年续费怎么算，资料能不能验证，附带的 Workspace 试用会不会自动扣费。</p>
+<p>这篇记录通过 Google Workspace 购买 <code>.com</code> 域名时真正要盯住的环节。不同地区、币种和税费会让结账页的数字不同，但域名注册资料需要能通过验证，续费成本也要提前算清，捆绑的 Workspace 订阅更要单独处理。</p>
+<h2 id="购买前先看清三笔钱"><a href="#购买前先看清三笔钱" class="headerlink" title="购买前先看清三笔钱"></a>购买前先看清三笔钱</h2><p>一个看起来便宜的域名订单，通常至少有三部分：</p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>什么时候收费</th>
+<th>下单前要确认什么</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>域名首年注册费</td>
+<td>下单时</td>
+<td>是否包含税费、是否为首年优惠</td>
+</tr>
+<tr>
+<td>域名续费费</td>
+<td>到期前后</td>
+<td>次年价格、续费币种、是否自动续费</td>
+</tr>
+<tr>
+<td>Google Workspace</td>
+<td>试用结束后或订阅开始后</td>
+<td>试用时长、订阅套餐、自动续费日期</td>
+</tr>
+</tbody></table>
+<p>付款前把订单摘要和续费说明存下来。域名注册费和 Workspace 订阅费是两条不同的账单，结账页的首年价格也不等于后续每年的成本。</p>
+<p>Google 官方说明：账单国家会影响可用币种和支付方式；变更账单国家也可能要求提供该国企业或居住地址证明。<a target="_blank" rel="noopener" href="https://support.google.com/a/answer/3530790">Google Workspace 账单国家说明</a>；<a target="_blank" rel="noopener" href="https://support.google.com/a/answer/2380700">各地区支付方式说明</a></p>
+<p>价格以自己具备真实资格的账单地区为准。汇率会动，促销会结束，所谓“固定低价”往往只存在于某一刻的结账页里。</p>
+<h2 id="注册-Google-Workspace-并选择账单地区"><a href="#注册-Google-Workspace-并选择账单地区" class="headerlink" title="注册 Google Workspace 并选择账单地区"></a>注册 Google Workspace 并选择账单地区</h2><p>从 Google Workspace 注册流程开始时，系统会询问是否已有域名。想在流程内注册新域名时，选择“没有，我需要一个域名”，再输入准备购买的名称，例如 <code>example.com</code>。</p>
+<p>账单国家&#x2F;地区要按自己的真实居住地或企业注册地选择，并与付款资料、联系人地址保持一致。Google 的帮助文档说明，账单国家会影响币种和支付方式；变更时可能要求提供地址证明。</p>
+<p>选名字时同时做三件事：</p>
+<ol>
+<li>在搜索框中确认域名可注册。</li>
+<li>看清顶级域名，确认是 <code>.com</code>，而不是相似但不同的后缀。</li>
+<li>检查订单页的首年和续费价格，确定自己能接受长期成本。</li>
+</ol>
+<p>域名一旦提交注册，之后更改注册人信息、转移注册商或退款都可能有额外限制。第一次就把名称、拼写和联系人邮箱核对好。</p>
+<h2 id="地址、电话和联系人信息应该怎么填"><a href="#地址、电话和联系人信息应该怎么填" class="headerlink" title="地址、电话和联系人信息应该怎么填"></a>地址、电话和联系人信息应该怎么填</h2><p>这一页看起来像普通表单，实际却关系到域名验证、续费通知和日后的转移。信息要能被证明，也要能长期联系到你。</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>应填写的内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>注册人姓名或组织</td>
+<td>实际持有人姓名，或实际拥有该域名的组织名称</td>
+</tr>
+<tr>
+<td>国家&#x2F;地区</td>
+<td>自己真实的居住地或企业注册地，且与账单地区一致</td>
+</tr>
+<tr>
+<td>地址、城市、邮编</td>
+<td>可证明的真实联系地址</td>
+</tr>
+<tr>
+<td>电话</td>
+<td>自己可接收通知的号码，使用正确的国家区号</td>
+</tr>
+<tr>
+<td>注册人邮箱</td>
+<td>可以持续收信的邮箱，用于验证、续费和转移确认</td>
+</tr>
+</tbody></table>
+<p>注册人邮箱必须真实且能长期收信。域名注册需要验证联系人邮箱，后续转移域名、修改注册信息时也依赖这个邮箱。Squarespace 官方说明提到，注册或修改域名注册信息后会发送验证邮件；在要求的期限内没有完成验证，域名可能被暂停。<a target="_blank" rel="noopener" href="https://support.squarespace.com/hc/en-us/articles/205812218-Verifying-your-Squarespace-managed-domain">Squarespace 域名验证说明</a></p>
+<p>隐私保护可以减少公开 Whois 中展示的信息，但不等于可以填写虚假注册资料。</p>
+<h2 id="完成付款后，先做两件事"><a href="#完成付款后，先做两件事" class="headerlink" title="完成付款后，先做两件事"></a>完成付款后，先做两件事</h2><p>付款成功还不算结束。我会马上处理下面两件事：</p>
+<h3 id="验证注册人邮箱"><a href="#验证注册人邮箱" class="headerlink" title="验证注册人邮箱"></a>验证注册人邮箱</h3><p>检查注册邮箱的收件箱和垃圾邮件箱，寻找来自域名注册商的验证邮件。通过邮件中的链接完成确认后，再到域名后台检查状态是否显示为正常或有效。</p>
+<p>Google Domains 的域名业务已迁移到 Squarespace，所以最初从 Google 流程进入的域名，后续 DNS、续费和注册信息可能需要在 Squarespace Domains 后台管理。<a target="_blank" rel="noopener" href="https://support.squarespace.com/hc/en-us/articles/17131164996365-About-the-Google-Domains-migration-to-Squarespace">Google Domains 迁移说明</a></p>
+<h3 id="记录域名续费日期"><a href="#记录域名续费日期" class="headerlink" title="记录域名续费日期"></a>记录域名续费日期</h3><p>在日历里设置两个提醒：一个在域名到期前 30 天，另一个在到期前 7 天。域名过期后的网站、邮箱和跳转都可能中断；等到浏览器报错再找回，成本通常比提前续费高得多。</p>
+<h2 id="Workspace-试用要单独处理"><a href="#Workspace-试用要单独处理" class="headerlink" title="Workspace 试用要单独处理"></a>Workspace 试用要单独处理</h2><p>通过 Google Workspace 流程购买域名时，页面可能同时创建 Workspace 试用或订阅。它提供企业邮箱、云端文档等服务，域名注册则负责持有和管理网址，两者要分开看。</p>
+<p><strong>如果只想保留域名，不打算使用企业邮箱，必须在试用结束前取消 Workspace 订阅。</strong></p>
+<p>操作步骤：</p>
+<ol>
+<li>用管理员账号登录 Google 管理控制台。</li>
+<li>进入 <strong>结算 → 订阅</strong>。</li>
+<li>找到 Google Workspace 订阅，查看试用结束日期、套餐和取消选项。</li>
+<li>按页面提示取消订阅，或设为当前周期结束后不续费。</li>
+<li>在挽留弹窗中点击“继续进行取消流程”，后续选项选“当前周期结束后取消”。</li>
+<li>如果系统询问是否同时取消域名，<strong>务必选择“保留域名”</strong>。</li>
+<li>回到域名后台，确认域名注册仍有效，并确认自己仍能进入 DNS 与续费页面。</li>
+</ol>
+<p>取消 Workspace 前，先确认没有依赖它的企业邮箱和云端文件。Google 官方取消文档也提醒，如果组织账号还管理其他订阅（例如域名注册），不要直接删除组织账号。<a target="_blank" rel="noopener" href="https://support.google.com/a/answer/1257646">取消 Google Workspace 官方说明</a></p>
+<p>后台中的套餐名称、试用期限和按钮文案会更新，以自己的结算页为准。最后确认前再看一遍：取消的是 Workspace 服务，保留的是域名注册。</p>
+<h2 id="域名后台需要检查的设置"><a href="#域名后台需要检查的设置" class="headerlink" title="域名后台需要检查的设置"></a>域名后台需要检查的设置</h2><p>域名到手后，至少检查以下几项：</p>
+<ul>
+<li>注册人邮箱是否已验证，且自己能长期登录。</li>
+<li>自动续费是否开启，付款方式是否有效。</li>
+<li>续费价格、续费日期和账单币种是否清楚。</li>
+<li>DNS 管理入口在哪里，后续网站解析会用到。</li>
+<li>域名锁定和转移码入口是否可找到。</li>
+<li>Whois 隐私保护是否按自己的需求开启。</li>
+</ul>
+<p>Squarespace 说明：域名转移需要解锁域名并向注册人邮箱发送授权码。这也是注册人邮箱必须真实且能收信的原因。<a target="_blank" rel="noopener" href="https://support.squarespace.com/hc/en-us/articles/205812338-Transferring-a-domain-away-from-Squarespace">Squarespace 域名转移说明</a></p>
+<h2 id="最后检查"><a href="#最后检查" class="headerlink" title="最后检查"></a>最后检查</h2><p>下单后的检查比“付款成功”多走两步，但它决定这个域名是不是以后还能稳定使用：</p>
+<ul>
+<li>域名状态正常，注册人验证邮件已经完成。</li>
+<li>Workspace 订阅和域名订阅的到期日都已记录。</li>
+<li>账单国家、联系人资料和支付方式都是真实且可验证的。</li>
+<li>能登录域名后台，找到 DNS、续费和注册人信息页面。</li>
+</ul>
+<p>我买域名时，首年价格只是开始。续费价能不能接受、验证邮件能不能收到、后台能不能自己管理，才决定这笔钱到底花得值不值。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%8A%80%E6%9C%AF/" class="category-chain-item">技术</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%95%99%E7%A8%8B/" class="print-no-link">#教程</a>
+      
+        <a href="/tags/%E5%9F%9F%E5%90%8D/" class="print-no-link">#域名</a>
+      
+        <a href="/tags/Google-Workspace/" class="print-no-link">#Google Workspace</a>
+      
+        <a href="/tags/com/" class="print-no-link">#.com</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>低价购买 .com 域名：Google Workspace 购买与续费避坑</div>
+      <div>https://blog.zuiges.com/2026/10/04/domain-three-sites-server-github-pages/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>post.copyright.author</div>
+          <div>zuige</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>post.copyright.posted</div>
+          <div>2026年10月4日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>post.copyright.licensed</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="post.copyright.BY">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2026/10/03/docker-project-introduction/" title="Docker的认识与使用">
+                        <span class="hidden-mobile">Docker的认识与使用</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+    <div id="giscus" class="giscus"></div>
+    <script type="text/javascript">
+      Fluid.utils.loadComments('#giscus', function() {
+        var options = {"repo":"zuige66/hexo","repo-id":"R_kgDOUNLYKw","category":"Announcements","category-id":"DIC_kwDOUNLYK84DE1jw","theme-light":"light","theme-dark":"dark","mapping":"pathname","reactions-enabled":1,"emit-metadata":0,"input-position":"top","lang":"zh-CN","strict":0};
+        var attributes = {};
+        for (let option in options) {
+          if (!option.startsWith('theme-')) {
+            var key = option.startsWith('data-') ? option : 'data-' + option;
+            attributes[key] = options[option];
+          }
+        }
+        var light = 'light';
+        var dark = 'dark';
+        window.GiscusThemeLight = light;
+        window.GiscusThemeDark = dark;
+        attributes['data-theme'] = document.documentElement.getAttribute('data-user-color-scheme') === 'dark' ? dark : light;
+        for (let attribute in attributes) {
+          var value = attributes[attribute];
+          if (value === undefined || value === null || value === '') {
+            delete attributes[attribute];
+          }
+        }
+        var s = document.createElement('script');
+        s.setAttribute('src', 'https://giscus.app/client.js');
+        s.setAttribute('crossorigin', 'anonymous');
+        for (let attribute in attributes) {
+          s.setAttribute(attribute, attributes[attribute]);
+        }
+        var ss = document.getElementsByTagName('script');
+        var e = ss.length > 0 ? ss[ss.length - 1] : document.head || document.documentElement;
+        e.parentNode.insertBefore(s, e.nextSibling);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        站点访问量：
+        <span id="busuanzi_value_site_pv"></span>
+        
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        访客数量：
+        <span id="busuanzi_value_site_uv"></span>
+        
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    function isExpandAllEnabled() {
+      return CONFIG.toc && CONFIG.toc.expand_all === true;
+    }
+    function expandAllToc() {
+      if (!isExpandAllEnabled()) { return; }
+      jQuery('#toc-body .tocbot-is-collapsed').removeClass('tocbot-is-collapsed');
+    }
+    function updateTocToggle($li, $childList) {
+      var $toggle = $li.children('.toc-line').children('.toc-toggle');
+      if ($toggle.length === 0) { return; }
+      var collapsed = $childList.hasClass('tocbot-is-collapsed');
+      $toggle
+        .toggleClass('toc-toggle-collapsed', collapsed)
+        .toggleClass('toc-toggle-expanded', !collapsed)
+        .attr('aria-expanded', String(!collapsed))
+        .attr('aria-label', collapsed ? '展开子目录' : '收起子目录');
+      $childList.attr('aria-hidden', String(collapsed));
+    }
+    function bindTocToggle() {
+      if (!isExpandAllEnabled()) { return; }
+      jQuery('#toc-body .toc-list-item').each(function() {
+        var $li = jQuery(this);
+        var $childList = $li.children('ol');
+        var $line = $li.children('.toc-line');
+        var $link = $li.children('.tocbot-link');
+
+        if ($line.length === 0 && $link.length > 0) {
+          $link.wrap('<div class="toc-line"></div>');
+          $line = $li.children('.toc-line');
+        }
+
+        $li.children('.toc-toggle').remove();
+        $line.children('.toc-toggle').remove();
+        if ($childList.length === 0) {
+          $line.addClass('toc-line-leaf');
+          return;
+        }
+
+        $line.removeClass('toc-line-leaf');
+        $line.prepend('<span class="toc-toggle toc-toggle-expanded" role="button" tabindex="0">›</span>');
+        updateTocToggle($li, $childList);
+      });
+      jQuery('#toc-body').off('click.tocToggle').on('click.tocToggle', '.toc-toggle', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var $li = jQuery(this).closest('.toc-list-item');
+        var $childList = $li.children('ol');
+        if ($childList.length === 0) { return; }
+        $childList.toggleClass('tocbot-is-collapsed');
+        updateTocToggle($li, $childList);
+      });
+      jQuery('#toc-body').off('keydown.tocToggle').on('keydown.tocToggle', '.toc-toggle', function(e) {
+        if (e.key !== 'Enter' && e.key !== ' ') { return; }
+        e.preventDefault();
+        jQuery(this).trigger('click');
+      });
+      if (window.__tocToggleObserver) {
+        window.__tocToggleObserver.disconnect();
+      }
+      window.__tocToggleObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          if (mutation.type !== 'attributes' || mutation.attributeName !== 'class') { return; }
+          var $list = jQuery(mutation.target);
+          var $li = $list.parent('.toc-list-item');
+          if ($li.length === 0) { return; }
+          updateTocToggle($li, $list);
+        });
+      });
+      jQuery('#toc-body ol').each(function() {
+        window.__tocToggleObserver.observe(this, { attributes: true });
+      });
+    }
+    var tocConfig = Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc);
+    if (isExpandAllEnabled()) {
+      tocConfig.collapseDepth = 6;
+    }
+    window.tocbot.init(tocConfig);
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+    expandAllToc();
+    bindTocToggle();
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+        expandAllToc();
+        bindTocToggle();
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="/js/site-interactions.js?v=2.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">noscript_warning</div>
+  </noscript>
+</body>
+</html>

@@ -4,6 +4,37 @@
   
   
   <entry>
+    <title>低价购买 .com 域名：Google Workspace 购买与续费避坑</title>
+    <link href="/2026/10/04/domain-three-sites-server-github-pages/"/>
+    <url>/2026/10/04/domain-three-sites-server-github-pages/</url>
+    
+    <content type="html"><![CDATA[<p>买 <code>.com</code> 域名时，最容易被低价页面吸引的不是域名本身，而是结账页上的数字。地区、币种、税费、首年优惠、续费价，几个选项叠在一起，很容易让人只盯着“现在多少钱”，忘了问一句：明年续费怎么算，资料能不能验证，附带的 Workspace 试用会不会自动扣费。</p><p>这篇记录通过 Google Workspace 购买 <code>.com</code> 域名时真正要盯住的环节。不同地区、币种和税费会让结账页的数字不同，但域名注册资料需要能通过验证，续费成本也要提前算清，捆绑的 Workspace 订阅更要单独处理。</p><h2 id="购买前先看清三笔钱"><a href="#购买前先看清三笔钱" class="headerlink" title="购买前先看清三笔钱"></a>购买前先看清三笔钱</h2><p>一个看起来便宜的域名订单，通常至少有三部分：</p><table><thead><tr><th>项目</th><th>什么时候收费</th><th>下单前要确认什么</th></tr></thead><tbody><tr><td>域名首年注册费</td><td>下单时</td><td>是否包含税费、是否为首年优惠</td></tr><tr><td>域名续费费</td><td>到期前后</td><td>次年价格、续费币种、是否自动续费</td></tr><tr><td>Google Workspace</td><td>试用结束后或订阅开始后</td><td>试用时长、订阅套餐、自动续费日期</td></tr></tbody></table><p>付款前把订单摘要和续费说明存下来。域名注册费和 Workspace 订阅费是两条不同的账单，结账页的首年价格也不等于后续每年的成本。</p><p>Google 官方说明：账单国家会影响可用币种和支付方式；变更账单国家也可能要求提供该国企业或居住地址证明。<a href="https://support.google.com/a/answer/3530790">Google Workspace 账单国家说明</a>；<a href="https://support.google.com/a/answer/2380700">各地区支付方式说明</a></p><p>价格以自己具备真实资格的账单地区为准。汇率会动，促销会结束，所谓“固定低价”往往只存在于某一刻的结账页里。</p><h2 id="注册-Google-Workspace-并选择账单地区"><a href="#注册-Google-Workspace-并选择账单地区" class="headerlink" title="注册 Google Workspace 并选择账单地区"></a>注册 Google Workspace 并选择账单地区</h2><p>从 Google Workspace 注册流程开始时，系统会询问是否已有域名。想在流程内注册新域名时，选择“没有，我需要一个域名”，再输入准备购买的名称，例如 <code>example.com</code>。</p><p>账单国家&#x2F;地区要按自己的真实居住地或企业注册地选择，并与付款资料、联系人地址保持一致。Google 的帮助文档说明，账单国家会影响币种和支付方式；变更时可能要求提供地址证明。</p><p>选名字时同时做三件事：</p><ol><li>在搜索框中确认域名可注册。</li><li>看清顶级域名，确认是 <code>.com</code>，而不是相似但不同的后缀。</li><li>检查订单页的首年和续费价格，确定自己能接受长期成本。</li></ol><p>域名一旦提交注册，之后更改注册人信息、转移注册商或退款都可能有额外限制。第一次就把名称、拼写和联系人邮箱核对好。</p><h2 id="地址、电话和联系人信息应该怎么填"><a href="#地址、电话和联系人信息应该怎么填" class="headerlink" title="地址、电话和联系人信息应该怎么填"></a>地址、电话和联系人信息应该怎么填</h2><p>这一页看起来像普通表单，实际却关系到域名验证、续费通知和日后的转移。信息要能被证明，也要能长期联系到你。</p><table><thead><tr><th>字段</th><th>应填写的内容</th></tr></thead><tbody><tr><td>注册人姓名或组织</td><td>实际持有人姓名，或实际拥有该域名的组织名称</td></tr><tr><td>国家&#x2F;地区</td><td>自己真实的居住地或企业注册地，且与账单地区一致</td></tr><tr><td>地址、城市、邮编</td><td>可证明的真实联系地址</td></tr><tr><td>电话</td><td>自己可接收通知的号码，使用正确的国家区号</td></tr><tr><td>注册人邮箱</td><td>可以持续收信的邮箱，用于验证、续费和转移确认</td></tr></tbody></table><p>注册人邮箱必须真实且能长期收信。域名注册需要验证联系人邮箱，后续转移域名、修改注册信息时也依赖这个邮箱。Squarespace 官方说明提到，注册或修改域名注册信息后会发送验证邮件；在要求的期限内没有完成验证，域名可能被暂停。<a href="https://support.squarespace.com/hc/en-us/articles/205812218-Verifying-your-Squarespace-managed-domain">Squarespace 域名验证说明</a></p><p>隐私保护可以减少公开 Whois 中展示的信息，但不等于可以填写虚假注册资料。</p><h2 id="完成付款后，先做两件事"><a href="#完成付款后，先做两件事" class="headerlink" title="完成付款后，先做两件事"></a>完成付款后，先做两件事</h2><p>付款成功还不算结束。我会马上处理下面两件事：</p><h3 id="验证注册人邮箱"><a href="#验证注册人邮箱" class="headerlink" title="验证注册人邮箱"></a>验证注册人邮箱</h3><p>检查注册邮箱的收件箱和垃圾邮件箱，寻找来自域名注册商的验证邮件。通过邮件中的链接完成确认后，再到域名后台检查状态是否显示为正常或有效。</p><p>Google Domains 的域名业务已迁移到 Squarespace，所以最初从 Google 流程进入的域名，后续 DNS、续费和注册信息可能需要在 Squarespace Domains 后台管理。<a href="https://support.squarespace.com/hc/en-us/articles/17131164996365-About-the-Google-Domains-migration-to-Squarespace">Google Domains 迁移说明</a></p><h3 id="记录域名续费日期"><a href="#记录域名续费日期" class="headerlink" title="记录域名续费日期"></a>记录域名续费日期</h3><p>在日历里设置两个提醒：一个在域名到期前 30 天，另一个在到期前 7 天。域名过期后的网站、邮箱和跳转都可能中断；等到浏览器报错再找回，成本通常比提前续费高得多。</p><h2 id="Workspace-试用要单独处理"><a href="#Workspace-试用要单独处理" class="headerlink" title="Workspace 试用要单独处理"></a>Workspace 试用要单独处理</h2><p>通过 Google Workspace 流程购买域名时，页面可能同时创建 Workspace 试用或订阅。它提供企业邮箱、云端文档等服务，域名注册则负责持有和管理网址，两者要分开看。</p><p><strong>如果只想保留域名，不打算使用企业邮箱，必须在试用结束前取消 Workspace 订阅。</strong></p><p>操作步骤：</p><ol><li>用管理员账号登录 Google 管理控制台。</li><li>进入 <strong>结算 → 订阅</strong>。</li><li>找到 Google Workspace 订阅，查看试用结束日期、套餐和取消选项。</li><li>按页面提示取消订阅，或设为当前周期结束后不续费。</li><li>在挽留弹窗中点击“继续进行取消流程”，后续选项选“当前周期结束后取消”。</li><li>如果系统询问是否同时取消域名，<strong>务必选择“保留域名”</strong>。</li><li>回到域名后台，确认域名注册仍有效，并确认自己仍能进入 DNS 与续费页面。</li></ol><p>取消 Workspace 前，先确认没有依赖它的企业邮箱和云端文件。Google 官方取消文档也提醒，如果组织账号还管理其他订阅（例如域名注册），不要直接删除组织账号。<a href="https://support.google.com/a/answer/1257646">取消 Google Workspace 官方说明</a></p><p>后台中的套餐名称、试用期限和按钮文案会更新，以自己的结算页为准。最后确认前再看一遍：取消的是 Workspace 服务，保留的是域名注册。</p><h2 id="域名后台需要检查的设置"><a href="#域名后台需要检查的设置" class="headerlink" title="域名后台需要检查的设置"></a>域名后台需要检查的设置</h2><p>域名到手后，至少检查以下几项：</p><ul><li>注册人邮箱是否已验证，且自己能长期登录。</li><li>自动续费是否开启，付款方式是否有效。</li><li>续费价格、续费日期和账单币种是否清楚。</li><li>DNS 管理入口在哪里，后续网站解析会用到。</li><li>域名锁定和转移码入口是否可找到。</li><li>Whois 隐私保护是否按自己的需求开启。</li></ul><p>Squarespace 说明：域名转移需要解锁域名并向注册人邮箱发送授权码。这也是注册人邮箱必须真实且能收信的原因。<a href="https://support.squarespace.com/hc/en-us/articles/205812338-Transferring-a-domain-away-from-Squarespace">Squarespace 域名转移说明</a></p><h2 id="最后检查"><a href="#最后检查" class="headerlink" title="最后检查"></a>最后检查</h2><p>下单后的检查比“付款成功”多走两步，但它决定这个域名是不是以后还能稳定使用：</p><ul><li>域名状态正常，注册人验证邮件已经完成。</li><li>Workspace 订阅和域名订阅的到期日都已记录。</li><li>账单国家、联系人资料和支付方式都是真实且可验证的。</li><li>能登录域名后台，找到 DNS、续费和注册人信息页面。</li></ul><p>我买域名时，首年价格只是开始。续费价能不能接受、验证邮件能不能收到、后台能不能自己管理，才决定这笔钱到底花得值不值。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>技术</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>教程</tag>
+      
+      <tag>域名</tag>
+      
+      <tag>Google Workspace</tag>
+      
+      <tag>.com</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Docker的认识与使用</title>
     <link href="/2026/10/03/docker-project-introduction/"/>
     <url>/2026/10/03/docker-project-introduction/</url>
@@ -223,6 +254,35 @@
   
   
   <entry>
+    <title>OpenCode 上手</title>
+    <link href="/2026/09/04/opencode-tutorial/"/>
+    <url>/2026/09/04/opencode-tutorial/</url>
+    
+    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>OpenCode 是一个基于命令行的 AI 编程助手，支持代码生成、调试、重构、项目搭建等场景。本文介绍从环境配置到实际使用的完整流程。</p><h2 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h2><h3 id="启动命令行"><a href="#启动命令行" class="headerlink" title="启动命令行"></a>启动命令行</h3><p>Windows 下启动终端的几种方式：</p><table><thead><tr><th>方式</th><th>操作</th></tr></thead><tbody><tr><td>快捷键</td><td><code>Win + R</code> → 输入 <code>cmd</code> → 回车</td></tr><tr><td>开始菜单</td><td>搜索”命令提示符”或”PowerShell”</td></tr><tr><td>右键菜单</td><td>在文件资源管理器空白处右键 → “在终端中打开”</td></tr></tbody></table><p>启动后确认路径前缀为 <code>C:\Users\你的用户名&gt;</code> 即可。</p><h3 id="安装-Node-js"><a href="#安装-Node-js" class="headerlink" title="安装 Node.js"></a>安装 Node.js</h3><p>OpenCode 依赖 Node.js 运行环境，需先完成安装。</p><p><strong>下载</strong></p><p>访问 <a href="https://nodejs.org,下载/">https://nodejs.org，下载</a> LTS 版本安装包。</p><p><strong>安装</strong></p><p>双击安装包，全程保持默认选项，点击 Install 完成安装。</p><p><strong>验证</strong></p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">node -v    <span class="hljs-comment"># 输出 v22.x.x 即为成功</span><br>npm -v     <span class="hljs-comment"># 输出 10.x.x 即为成功</span><br></code></pre></td></tr></table></figure><p>若提示”不是内部或外部命令”，重启终端后重试。</p><h2 id="安装-OpenCode"><a href="#安装-OpenCode" class="headerlink" title="安装 OpenCode"></a>安装 OpenCode</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">npm install -g opencode<br></code></pre></td></tr></table></figure><p><code>-g</code> 参数表示全局安装，安装完成后可在任意目录调用。</p><p>验证安装：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">opencode --version<br></code></pre></td></tr></table></figure><h2 id="模型切换"><a href="#模型切换" class="headerlink" title="模型切换"></a>模型切换</h2><p>OpenCode 内置免费模型，无需配置 API Key，开箱即用。</p><p>启动后按 <code>Shift + Tab</code> 可切换模型，常用免费模型：</p><table><thead><tr><th>模型</th><th>特点</th></tr></thead><tbody><tr><td>Gemini 2.5 Flash</td><td>响应快，推荐日常使用</td></tr><tr><td>Gemini 2.5 Pro</td><td>推理能力强，适合复杂任务</td></tr><tr><td>Llama 4 Maverick</td><td>Meta 开源模型</td></tr></tbody></table><h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h3 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">opencode<br></code></pre></td></tr></table></figure><h3 id="文件与命令操作"><a href="#文件与命令操作" class="headerlink" title="文件与命令操作"></a>文件与命令操作</h3><p>OpenCode 可直接操作文件系统和执行命令：</p><figure class="highlight node-repl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs node-repl"><span class="hljs-meta prompt_">&gt;</span> <span class="language-javascript">列出当前目录下的文件</span><br><span class="hljs-meta prompt_">&gt;</span> <span class="language-javascript">创建 index.<span class="hljs-property">html</span> 并写入基础 <span class="hljs-variable constant_">HTML</span> 结构</span><br><span class="hljs-meta prompt_">&gt;</span> <span class="language-javascript">删除 src/ 下所有 .<span class="hljs-property">bak</span> 文件</span><br><span class="hljs-meta prompt_">&gt;</span> <span class="language-javascript">执行 npm run build 并查看输出</span><br></code></pre></td></tr></table></figure><h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><h3 id="npm-安装速度慢"><a href="#npm-安装速度慢" class="headerlink" title="npm 安装速度慢"></a>npm 安装速度慢</h3><p>切换至国内镜像源：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">npm config <span class="hljs-built_in">set</span> registry https://registry.npmmirror.com<br></code></pre></td></tr></table></figure><h3 id="权限不足"><a href="#权限不足" class="headerlink" title="权限不足"></a>权限不足</h3><p>Windows 下右键终端图标，选择”以管理员身份运行”。</p><h3 id="更新-OpenCode"><a href="#更新-OpenCode" class="headerlink" title="更新 OpenCode"></a>更新 OpenCode</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">npm update -g opencode<br></code></pre></td></tr></table></figure><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ol><li>安装 Node.js 并验证</li><li><code>npm install -g opencode</code> 全局安装</li><li>配置 API Key 和模型</li><li><code>opencode</code> 启动，开始使用</li></ol><p>完整流程约 10 分钟完成。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>技术</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>教程</tag>
+      
+      <tag>AI</tag>
+      
+      <tag>OpenCode</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Markdown 语法规则</title>
     <link href="/2026/09/04/markdown-guide/"/>
     <url>/2026/09/04/markdown-guide/</url>
@@ -246,35 +306,6 @@
       <tag>Markdown</tag>
       
       <tag>写作</tag>
-      
-    </tags>
-    
-  </entry>
-  
-  
-  
-  <entry>
-    <title>OpenCode 上手</title>
-    <link href="/2026/09/04/opencode-tutorial/"/>
-    <url>/2026/09/04/opencode-tutorial/</url>
-    
-    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>OpenCode 是一个基于命令行的 AI 编程助手，支持代码生成、调试、重构、项目搭建等场景。本文介绍从环境配置到实际使用的完整流程。</p><h2 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h2><h3 id="启动命令行"><a href="#启动命令行" class="headerlink" title="启动命令行"></a>启动命令行</h3><p>Windows 下启动终端的几种方式：</p><table><thead><tr><th>方式</th><th>操作</th></tr></thead><tbody><tr><td>快捷键</td><td><code>Win + R</code> → 输入 <code>cmd</code> → 回车</td></tr><tr><td>开始菜单</td><td>搜索”命令提示符”或”PowerShell”</td></tr><tr><td>右键菜单</td><td>在文件资源管理器空白处右键 → “在终端中打开”</td></tr></tbody></table><p>启动后确认路径前缀为 <code>C:\Users\你的用户名&gt;</code> 即可。</p><h3 id="安装-Node-js"><a href="#安装-Node-js" class="headerlink" title="安装 Node.js"></a>安装 Node.js</h3><p>OpenCode 依赖 Node.js 运行环境，需先完成安装。</p><p><strong>下载</strong></p><p>访问 <a href="https://nodejs.org,下载/">https://nodejs.org，下载</a> LTS 版本安装包。</p><p><strong>安装</strong></p><p>双击安装包，全程保持默认选项，点击 Install 完成安装。</p><p><strong>验证</strong></p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">node -v    <span class="hljs-comment"># 输出 v22.x.x 即为成功</span><br>npm -v     <span class="hljs-comment"># 输出 10.x.x 即为成功</span><br></code></pre></td></tr></table></figure><p>若提示”不是内部或外部命令”，重启终端后重试。</p><h2 id="安装-OpenCode"><a href="#安装-OpenCode" class="headerlink" title="安装 OpenCode"></a>安装 OpenCode</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">npm install -g opencode<br></code></pre></td></tr></table></figure><p><code>-g</code> 参数表示全局安装，安装完成后可在任意目录调用。</p><p>验证安装：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">opencode --version<br></code></pre></td></tr></table></figure><h2 id="模型切换"><a href="#模型切换" class="headerlink" title="模型切换"></a>模型切换</h2><p>OpenCode 内置免费模型，无需配置 API Key，开箱即用。</p><p>启动后按 <code>Shift + Tab</code> 可切换模型，常用免费模型：</p><table><thead><tr><th>模型</th><th>特点</th></tr></thead><tbody><tr><td>Gemini 2.5 Flash</td><td>响应快，推荐日常使用</td></tr><tr><td>Gemini 2.5 Pro</td><td>推理能力强，适合复杂任务</td></tr><tr><td>Llama 4 Maverick</td><td>Meta 开源模型</td></tr></tbody></table><h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h3 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">opencode<br></code></pre></td></tr></table></figure><h3 id="文件与命令操作"><a href="#文件与命令操作" class="headerlink" title="文件与命令操作"></a>文件与命令操作</h3><p>OpenCode 可直接操作文件系统和执行命令：</p><figure class="highlight node-repl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs node-repl"><span class="hljs-meta prompt_">&gt;</span> <span class="language-javascript">列出当前目录下的文件</span><br><span class="hljs-meta prompt_">&gt;</span> <span class="language-javascript">创建 index.<span class="hljs-property">html</span> 并写入基础 <span class="hljs-variable constant_">HTML</span> 结构</span><br><span class="hljs-meta prompt_">&gt;</span> <span class="language-javascript">删除 src/ 下所有 .<span class="hljs-property">bak</span> 文件</span><br><span class="hljs-meta prompt_">&gt;</span> <span class="language-javascript">执行 npm run build 并查看输出</span><br></code></pre></td></tr></table></figure><h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><h3 id="npm-安装速度慢"><a href="#npm-安装速度慢" class="headerlink" title="npm 安装速度慢"></a>npm 安装速度慢</h3><p>切换至国内镜像源：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">npm config <span class="hljs-built_in">set</span> registry https://registry.npmmirror.com<br></code></pre></td></tr></table></figure><h3 id="权限不足"><a href="#权限不足" class="headerlink" title="权限不足"></a>权限不足</h3><p>Windows 下右键终端图标，选择”以管理员身份运行”。</p><h3 id="更新-OpenCode"><a href="#更新-OpenCode" class="headerlink" title="更新 OpenCode"></a>更新 OpenCode</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">npm update -g opencode<br></code></pre></td></tr></table></figure><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ol><li>安装 Node.js 并验证</li><li><code>npm install -g opencode</code> 全局安装</li><li>配置 API Key 和模型</li><li><code>opencode</code> 启动，开始使用</li></ol><p>完整流程约 10 分钟完成。</p>]]></content>
-    
-    
-    <categories>
-      
-      <category>技术</category>
-      
-    </categories>
-    
-    
-    <tags>
-      
-      <tag>教程</tag>
-      
-      <tag>AI</tag>
-      
-      <tag>OpenCode</tag>
       
     </tags>
     
