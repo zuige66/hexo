@@ -66,10 +66,15 @@
   transition: color 180ms ease, background-color 180ms ease;
 }
 
+.category-heading-row:hover,
+.category-heading-row:focus-within {
+  background-color: var(--link-hover-bg-color);
+}
+
 .category-heading-row:hover > a,
 .category-heading-row:focus-within > a {
   color: var(--link-hover-color);
-  background-color: var(--link-hover-bg-color);
+  background-color: transparent;
 }
 
 .category-heading-row > a:first-child {
@@ -103,6 +108,34 @@
     transform 240ms var(--motion-spring),
     color 180ms ease,
     background-color 180ms ease;
+}
+
+/* 由站内搜索跳转到文章时，突出显示首次命中的关键词。 */
+.search-hit {
+  color: inherit;
+  background: #ffe28a;
+  border-radius: 4px;
+  box-shadow: 0 0 0 2px rgba(255, 192, 64, .45);
+  padding: 0 .12em;
+  animation: search-hit-flash 2.4s ease-out both;
+}
+
+@keyframes search-hit-flash {
+  0%, 42% { background: #ffbd3e; box-shadow: 0 0 0 4px rgba(255, 189, 62, .6); }
+  18%, 64% { background: #fff1b8; box-shadow: 0 0 0 2px rgba(255, 192, 64, .35); }
+  100% { background: #ffe28a; box-shadow: 0 0 0 2px rgba(255, 192, 64, .2); }
+}
+
+:root[data-user-color-scheme="dark"] .search-hit {
+  background: #855b16;
+  box-shadow: 0 0 0 2px rgba(255, 194, 72, .42);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-user-color-scheme]) .search-hit {
+    background: #855b16;
+    box-shadow: 0 0 0 2px rgba(255, 194, 72, .42);
+  }
 }
 
 /* expand_all 模式下子列表不一定带 collapsible 类，收起时仍需彻底裁掉内容。 */
@@ -151,8 +184,8 @@ button,
     box-shadow: none;
   }
 
-  .list-group-item:hover,
-  .list-group-item:focus-visible,
+  .list-group-item:not(.category-item):not(.category-subitem):hover,
+  .list-group-item:not(.category-item):not(.category-subitem):focus-visible,
   .category-heading-row:hover,
   .category-heading-row:focus-within,
   .links .card:hover,
@@ -204,7 +237,7 @@ button,
 
 /* 点击时快速回弹，触屏设备也能得到清晰反馈。 */
 .home-post-list .index-card:active,
-.list-group-item:active,
+.list-group-item:not(.category-item):not(.category-subitem):active,
 .category-heading-row:active,
 .links .card:active,
 .navbar .nav-link:active,

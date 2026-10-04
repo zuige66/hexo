@@ -23,8 +23,10 @@ body:has(.home-with-sidebar) #board > .container > .row > .col-md-10 {
 }
 .home-side-card { background: var(--board-bg-color); border-radius: 14px; padding: 1.1rem 1.15rem; margin-bottom: 1rem; box-shadow: 0 6px 20px rgba(0, 0, 0, .08); }
 .home-profile-card { text-align: center; }
+.home-profile-link { display: block; margin: -.25rem; padding: .25rem; border-radius: 12px; color: inherit; text-decoration: none; transition: transform 280ms var(--motion-spring), box-shadow 240ms var(--motion-smooth), background-color 200ms ease; }
 .home-avatar { width: 76px; height: 76px; border-radius: 50%; object-fit: cover; border: 4px solid #e6f0e7; }
 .home-profile-card h2 { margin: .65rem 0 .85rem; font-size: 1.25rem; color: var(--text-color); }
+.home-profile-link:hover h2, .home-profile-link:focus-visible h2 { color: var(--sidebar-accent); }
 .home-social-links { display: flex; justify-content: center; gap: .9rem; flex-wrap: wrap; }
 .home-social-links a { display: inline-flex; align-items: center; justify-content: center; width: 2.6rem; height: 2.6rem; color: var(--text-color); font-size: 1.35rem; line-height: 1; cursor: pointer; }
 .home-social-links a:hover { color: var(--sidebar-accent); }
@@ -81,3 +83,8 @@ body:has(.home-with-sidebar) #board > .container > .row > .col-md-10 {
   .home-with-sidebar { display: block; }
   .home-sidebar { display: none; }
 }
+
+@media (hover: hover) and (pointer: fine) {
+  .home-profile-link:hover, .home-profile-link:focus-visible { transform: translateY(-5px) scale(1.02); box-shadow: var(--motion-shadow); background: var(--board-bg-color); }
+}
+.home-profile-link:active { transform: translateY(1px) scale(.98); transition-duration: 90ms; }

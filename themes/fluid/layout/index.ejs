@@ -38,8 +38,10 @@ var elapsedDays = Math.max(1, Math.floor((today - siteStart) / 86400000) + 1)
 <div class="home-with-sidebar">
   <aside class="home-sidebar" aria-label="博客侧栏">
     <section class="home-side-card home-profile-card">
-      <img class="home-avatar" src="<%= url_for('/img/avatar.jpg') %>" alt="zuige">
-      <h2>zuige</h2>
+      <a class="home-profile-link" href="<%= url_for('/about/') %>" aria-label="前往关于页面" title="前往关于页面">
+        <img class="home-avatar" src="<%= url_for('/img/avatar.jpg') %>" alt="zuige">
+        <h2>zuige</h2>
+      </a>
       <div class="home-social-links">
         <a href="https://github.com/zuige66" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub"><i class="iconfont icon-github-fill" aria-hidden="true"></i></a>
         <a href="mailto:liruisen2007@163.com" aria-label="邮箱" title="邮箱"><i class="iconfont icon-mail" aria-hidden="true"></i></a>

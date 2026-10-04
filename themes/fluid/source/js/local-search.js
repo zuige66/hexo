@@ -84,7 +84,8 @@
             }
             // 0x05. show search results
             if (isMatch) {
-              resultHTML += '<a href=\'' + data_url + '\' class=\'list-group-item list-group-item-action font-weight-bolder search-list-title\'>' + orig_data_title + '</a>';
+              var searchUrl = data_url + (data_url.indexOf('?') === -1 ? '?q=' : '&q=') + encodeURIComponent($input.val().trim());
+              resultHTML += '<a href=\'' + searchUrl + '\' class=\'list-group-item list-group-item-action font-weight-bolder search-list-title\'>' + orig_data_title + '</a>';
               var content = orig_data_content;
               if (first_occur >= 0) {
                 // cut out 100 characters
@@ -111,7 +112,7 @@
                   match_content = match_content.replace(regS, '<span class="search-word">' + keyword + '</span>');
                 });
 
-                resultHTML += '<p class=\'search-list-content\'>' + match_content + '...</p>';
+                resultHTML += '<a href=\'' + searchUrl + '\' class=\'search-list-content search-list-content-link\'>' + match_content + '...</a>';
               }
             }
           });
