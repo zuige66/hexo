@@ -50,4 +50,70 @@
     event.preventDefault();
     openPostCard(card);
   });
+
+  function getSearchKeywords() {
+    var query = new URLSearchParams(window.location.search).get('q');
+    if (!query) return [];
+    return query.trim().split(/[\s-]+/).filter(Boolean);
+  }
+
+  function findFirstSearchMatch(root, keywords) {
+    var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode: function (node) {
+        if (!node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+        var parent = node.parentElement;
+        if (!parent || parent.closest('script, style, noscript, .search-hit')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    var node;
+    while ((node = walker.nextNode())) {
+      var text = node.nodeValue;
+      var lowerText = text.toLocaleLowerCase();
+      var matchIndex = -1;
+      var matchLength = 0;
+      keywords.forEach(function (keyword) {
+        var index = lowerText.indexOf(keyword.toLocaleLowerCase());
+        if (index !== -1 && (matchIndex === -1 || index < matchIndex)) {
+          matchIndex = index;
+          matchLength = keyword.length;
+        }
+      });
+      if (matchIndex !== -1) return { node: node, index: matchIndex, length: matchLength };
+    }
+    return null;
+  }
+
+  function highlightSearchMatch() {
+    var keywords = getSearchKeywords();
+    var article = document.querySelector('.post-content');
+    if (!article || keywords.length === 0) return;
+
+    var match = findFirstSearchMatch(article, keywords);
+    if (!match) return;
+
+    var text = match.node.nodeValue;
+    var before = document.createTextNode(text.slice(0, match.index));
+    var hit = document.createElement('mark');
+    hit.className = 'search-hit';
+    hit.textContent = text.slice(match.index, match.index + match.length);
+    hit.setAttribute('tabindex', '-1');
+    var after = document.createTextNode(text.slice(match.index + match.length));
+    var parent = match.node.parentNode;
+    parent.insertBefore(before, match.node);
+    parent.insertBefore(hit, match.node);
+    parent.insertBefore(after, match.node);
+    parent.removeChild(match.node);
+
+    window.requestAnimationFrame(function () {
+      var navbar = document.querySelector('#navbar');
+      var offset = (navbar ? navbar.getBoundingClientRect().height : 0) + 24;
+      var targetTop = hit.getBoundingClientRect().top + window.scrollY - offset;
+      var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({ top: Math.max(0, targetTop), behavior: reduceMotion ? 'auto' : 'smooth' });
+      hit.focus({ preventScroll: true });
+    });
+  }
+
+  highlightSearchMatch();
 })();
