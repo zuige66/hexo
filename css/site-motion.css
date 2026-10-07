@@ -97,6 +97,30 @@
   overscroll-behavior-x: contain;
 }
 
+/* 正文图片默认缩小展示，点击后通过 Fluid 的图片查看器查看大图。 */
+.markdown-body p > img,
+.markdown-body p > a > img,
+.markdown-body figure > img,
+.markdown-body figure > a > img {
+  max-width: 72%;
+  max-height: 72vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  cursor: zoom-in;
+}
+
+/* 小屏幕保留足够的阅读宽度。 */
+@media (max-width: 767px) {
+  .markdown-body p > img,
+  .markdown-body p > a > img,
+  .markdown-body figure > img,
+  .markdown-body figure > a > img {
+    max-width: 100%;
+    max-height: none;
+  }
+}
+
 /* 文章目录中的标题都是页内跳转链接。 */
 .tocbot-link {
   display: block;
