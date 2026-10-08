@@ -1,1 +1,1 @@
-{"versionName":"0.3.0","versionCode":10,"changelog":"新增：顶部日期行（公历+周几+农历）、自定义签名行、播放器底色 7 档含跟随封面、全组件配色跟随专辑、点小封面直达音乐 App、时钟描边加粗、检查更新。","apkUrl":"https://blog.zuiges.com/downloads/melolock/Hyper-MeloLock-v0.3.0.apk"}
+{"versionName":"0.3.1","versionCode":11,"changelog":"新增：取色风格（磨砂/鲜艳）每项独立、主色来源（占比优先）、外观页折叠卡与分组恢复默认、去掉锁定比例。修复：改外观不必再关开模块（元素指纹取错数据源的根因级修复）。","apkUrl":"https://blog.zuiges.com/downloads/melolock/Hyper-MeloLock-v0.3.1.apk"}
