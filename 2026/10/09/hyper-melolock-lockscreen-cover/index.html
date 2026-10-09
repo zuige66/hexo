@@ -28,9 +28,11 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://blog.zuiges.com/img/hyper-melolock/lockscreen-colors.jpg">
 <meta property="og:image" content="https://blog.zuiges.com/img/hyper-melolock/app-home.jpg">
+<meta property="og:image" content="https://blog.zuiges.com/img/hyper-melolock/app-about.jpg">
 <meta property="og:image" content="https://blog.zuiges.com/img/hyper-melolock/app-appearance.jpg">
+<meta property="og:image" content="https://blog.zuiges.com/img/hyper-melolock/app-appearance-picker.jpg">
 <meta property="article:published_time" content="2026-10-09T06:00:00.000Z">
-<meta property="article:modified_time" content="2026-10-09T05:54:43.560Z">
+<meta property="article:modified_time" content="2026-10-09T06:02:48.912Z">
 <meta property="article:author" content="zuige">
 <meta property="article:tag" content="LSPosed">
 <meta property="article:tag" content="Xposed">
@@ -347,7 +349,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.6k 字
+          1.7k 字
         
       </span>
     
@@ -447,7 +449,13 @@
 <li>播放一首带封面的歌曲，熄屏再点亮。</li>
 </ul>
 <p>成功标志：锁屏出现大号时间和全屏封面，底部有播放控制条；配置端首页显示系统版本与「已激活」。</p>
-<p><img src="/img/hyper-melolock/app-home.jpg" srcset="/img/loading.gif" lazyload alt="配置端首页"></p>
+<table>
+<tr>
+<td align="center" width="50%"><img src="/img/hyper-melolock/app-home.jpg" srcset="/img/loading.gif" lazyload width="300" alt="配置端首页"/><br/><b>配置端首页</b><br/>开关状态 · 已开启应用 · 系统信息</td>
+<td align="center" width="50%"><img src="/img/hyper-melolock/app-about.jpg" srcset="/img/loading.gif" lazyload width="300" alt="关于页"/><br/><b>关于页</b><br/>开发者信息 · 检查更新</td>
+</tr>
+</table>
+
 <h2 id="二、外观可以调什么"><a href="#二、外观可以调什么" class="headerlink" title="二、外观可以调什么"></a>二、外观可以调什么</h2><p>外观页里每一项都能实时调整，改完回到锁屏立即生效，不需要重启。基础可调项：</p>
 <ul>
 <li>时间：字号、粗细、圆润、颜色、上间距，还可以单独加描边；</li>
@@ -455,7 +463,13 @@
 <li>播放器卡片：圆角、上间距、底色（七档，含跟随封面动态取色）；</li>
 <li>时钟上方可加一行「公历 + 周几 + 农历」日期和自定义签名，各自独立开关。</li>
 </ul>
-<p><img src="/img/hyper-melolock/app-appearance.jpg" srcset="/img/loading.gif" lazyload alt="外观调整页"></p>
+<table>
+<tr>
+<td align="center" width="50%"><img src="/img/hyper-melolock/app-appearance.jpg" srcset="/img/loading.gif" lazyload width="300" alt="外观分组页"/><br/><b>外观分组</b><br/>取色 · 日期 · 签名 · 时间 · 封面 · 播放器</td>
+<td align="center" width="50%"><img src="/img/hyper-melolock/app-appearance-picker.jpg" srcset="/img/loading.gif" lazyload width="300" alt="时间取色设置"/><br/><b>时间取色</b><br/>跟随封面 / 固定色 · 取色风格（M3E / 鲜艳原色）</td>
+</tr>
+</table>
+
 <h3 id="取色：让锁屏跟着专辑变色"><a href="#取色：让锁屏跟着专辑变色" class="headerlink" title="取色：让锁屏跟着专辑变色"></a>取色：让锁屏跟着专辑变色</h3><p>除了直接选颜色，时间、日期行、签名行、播放器底色、入口文字和入口背景都<strong>能单独开关「跟随专辑封面」自动取色</strong>。切换歌曲时颜色跟着封面一起变，不用手动改。</p>
 <p>取色风格有两种，观感差别明显：</p>
 <ul>
