@@ -19,32 +19,32 @@
   <meta name="author" content="zuige">
   <meta name="keywords" content="">
   
-    <meta name="description" content="记录 Redmi Note 9 Pro（gauguin）从 MIUI 14 线刷澎湃 OS 3，并通过 SukiSU Ultra 确认内核 Root 状态的过程。">
+    <meta name="description" content="Hyper MeloLock，为澎湃 OS 3 打造的锁屏沉浸音乐模块：专辑封面铺成真壁纸、时钟跟随取色、完整播放控制，附下载地址与安装步骤。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="红米Note9 Pro刷澎湃OS3带Root">
-<meta property="og:url" content="https://blog.zuiges.com/2026/10/07/redmi-note9-pro-hyperos3-root/index.html">
+<meta property="og:title" content="让澎湃OS锁屏铺满专辑封面">
+<meta property="og:url" content="https://blog.zuiges.com/2026/10/09/hyper-melolock-lockscreen-cover/index.html">
 <meta property="og:site_name" content="zuige&#39;s blog">
-<meta property="og:description" content="记录 Redmi Note 9 Pro（gauguin）从 MIUI 14 线刷澎湃 OS 3，并通过 SukiSU Ultra 确认内核 Root 状态的过程。">
+<meta property="og:description" content="Hyper MeloLock，为澎湃 OS 3 打造的锁屏沉浸音乐模块：专辑封面铺成真壁纸、时钟跟随取色、完整播放控制，附下载地址与安装步骤。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://blog.zuiges.com/img/redmi-note9-pro-hyperos3/miflash-success.png">
-<meta property="og:image" content="https://blog.zuiges.com/img/redmi-note9-pro-hyperos3/hyperos-version.jpg">
-<meta property="og:image" content="https://blog.zuiges.com/img/redmi-note9-pro-hyperos3/sukisu-root.jpg">
-<meta property="article:published_time" content="2026-10-07T12:00:00.000Z">
-<meta property="article:modified_time" content="2026-10-07T02:56:34.372Z">
+<meta property="og:image" content="https://blog.zuiges.com/img/hyper-melolock/lockscreen-colors.jpg">
+<meta property="og:image" content="https://blog.zuiges.com/img/hyper-melolock/app-home.jpg">
+<meta property="og:image" content="https://blog.zuiges.com/img/hyper-melolock/app-appearance.jpg">
+<meta property="article:published_time" content="2026-10-09T06:00:00.000Z">
+<meta property="article:modified_time" content="2026-10-09T05:49:46.858Z">
 <meta property="article:author" content="zuige">
-<meta property="article:tag" content="Android">
-<meta property="article:tag" content="Root">
-<meta property="article:tag" content="刷机">
+<meta property="article:tag" content="LSPosed">
+<meta property="article:tag" content="Xposed">
+<meta property="article:tag" content="模块">
 <meta property="article:tag" content="澎湃OS">
 <meta property="article:tag" content="红米Note9 Pro">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://blog.zuiges.com/img/redmi-note9-pro-hyperos3/miflash-success.png">
+<meta name="twitter:image" content="https://blog.zuiges.com/img/hyper-melolock/lockscreen-colors.jpg">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>红米Note9 Pro刷澎湃OS3带Root - zuige&#39;s blog</title>
+  <title>让澎湃OS锁屏铺满专辑封面 - zuige&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -324,7 +324,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="红米Note9 Pro刷澎湃OS3带Root"></span>
+            <span id="subtitle" data-typed-text="让澎湃OS锁屏铺满专辑封面"></span>
           
         </div>
 
@@ -335,8 +335,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2026-10-07 20:00" pubdate>
-          2026年10月7日 晚上
+        <time datetime="2026-10-09 14:00" pubdate>
+          2026年10月9日 下午
         </time>
       </span>
     
@@ -347,7 +347,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.9k 字
+          1.9k 字
         
       </span>
     
@@ -358,7 +358,7 @@
         
         
         
-          25 分钟
+          16 分钟
         
       </span>
     
@@ -397,150 +397,87 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">红米Note9 Pro刷澎湃OS3带Root</h1>
+            <h1 id="seo-header">让澎湃OS锁屏铺满专辑封面</h1>
             
             
               <div class="markdown-body">
                 
-                <p>这次在 REDMI Note 9 Pro 上，从 MIUI 14 线刷到澎湃 OS 3，并确认内核 Root 可以被 SukiSU Ultra 正常识别。系统页显示版本为 <code>3.0.303.0.WJSCNXM.C06</code>，Root 管理器显示 Android 16、内核 <code>4.19.157-moon-gc5e300589</code>。</p>
-<p>本文只记录这台设备的实际流程。刷机包目录中包含 <code>gauguin</code>，因此<strong>仅适用于设备代号同为 <code>gauguin</code>，且刷机包明确写明适配的机型</strong>。Redmi Note 9 Pro 存在不同地区和硬件版本；型号名称相同不代表分区、内核和刷机包通用。未确认代号前，不要继续线刷。</p>
-<blockquote>
-<p><strong>警告：这不是“保留数据”的无损操作。</strong> 解锁 BL 与 MiFlash 的“全部删除”都会清空手机数据。刷入第三方系统和 Root 也可能影响 OTA 更新、金融类应用、DRM 与保修状态。开始前完成备份，并自行承担刷机风险。</p>
-</blockquote>
-<h2 id="一、准备工作"><a href="#一、准备工作" class="headerlink" title="一、准备工作"></a>一、准备工作</h2><h3 id="1、确认设备和包"><a href="#1、确认设备和包" class="headerlink" title="1、确认设备和包"></a>1、确认设备和包</h3><p>本次实际设备信息如下：</p>
-<table>
+                <p>Hyper MeloLock 是一个开源免费的澎湃 OS 3 锁屏音乐模块：正在播放音乐时，锁屏会换成大号时间、铺满全屏的专辑封面和完整播放控制条。封面是真正的壁纸，不是叠在锁屏上的一层图，所以系统的液态玻璃时钟、通知卡毛玻璃都能取到专辑的颜色。</p>
+<p>模块通过 Vector &#x2F; LSPosed 框架注入系统界面，不修改任何音乐播放器，也不改系统 APK。默认关闭、失败关闭：找不到锁屏视图或媒体数据无效时，立刻恢复原生锁屏。</p>
+<p><img src="/img/hyper-melolock/lockscreen-colors.jpg" srcset="/img/loading.gif" lazyload alt="四种配色方案的锁屏效果"></p>
+<h2 id="一、下载安装"><a href="#一、下载安装" class="headerlink" title="一、下载安装"></a>一、下载安装</h2><h3 id="下载地址"><a href="#下载地址" class="headerlink" title="下载地址"></a>下载地址</h3><ul>
+<li>GitHub 发布页：<a target="_blank" rel="noopener" href="https://github.com/zuige66/Hyper-MeloLock/releases">https://github.com/zuige66/Hyper-MeloLock/releases</a></li>
+<li>最新版 APK 直链：<a target="_blank" rel="noopener" href="https://github.com/zuige66/Hyper-MeloLock/releases/download/v0.3.1/Hyper-MeloLock-v0.3.1.apk">Hyper-MeloLock-v0.3.1.apk</a></li>
+</ul>
+<p>只从 GitHub Releases 下载正式签名包。模块作用于系统锁屏界面，来源不明的二次打包版本有风险。</p>
+<h3 id="安装前提"><a href="#安装前提" class="headerlink" title="安装前提"></a>安装前提</h3><table>
 <thead>
 <tr>
 <th>项目</th>
-<th>本次记录</th>
+<th>要求</th>
 </tr>
 </thead>
 <tbody><tr>
+<td>系统</td>
+<td>澎湃 OS 3（Android 16）</td>
+</tr>
+<tr>
 <td>设备</td>
-<td>REDMI Note 9 Pro</td>
+<td>Redmi Note 9 Pro（<code>gauguinpro</code>）</td>
 </tr>
 <tr>
-<td>处理器</td>
-<td>高通骁龙 750G</td>
+<td>框架</td>
+<td>Vector &#x2F; LSPosed（SukiSU Ultra 提供）</td>
 </tr>
 <tr>
-<td>刷机包代号</td>
-<td><code>gauguin</code></td>
-</tr>
-<tr>
-<td>原系统</td>
-<td>MIUI 14</td>
-</tr>
-<tr>
-<td>刷入后版本</td>
-<td><code>3.0.303.0.WJSCNXM.C06</code></td>
-</tr>
-<tr>
-<td>电脑系统</td>
-<td>Windows</td>
+<td>播放器</td>
+<td>任何提供标准媒体会话的音乐应用</td>
 </tr>
 </tbody></table>
-<p>刷机前先核对以下三项：</p>
-<ol>
-<li>在手机“设置 → 我的设备 → 全部参数”中确认型号与处理器信息。</li>
-<li>在刷机包说明、文件夹名称和发布页中确认设备代号为 <code>gauguin</code>。</li>
-<li>确认刷机包来自原作者发布页，而不是二次打包的网盘或转存链接。本次使用的适配包发布者页面为 <a target="_blank" rel="noopener" href="https://www.coolapk.com/u/1184948">酷安：某滑稽苟</a>。</li>
-</ol>
-<h3 id="2、准备工具和备份"><a href="#2、准备工具和备份" class="headerlink" title="2、准备工具和备份"></a>2、准备工具和备份</h3><table>
-<thead>
-<tr>
-<th>项目</th>
-<th>用途</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><a target="_blank" rel="noopener" href="https://www.mi.com/global/unlock/">小米 BL 解锁工具</a></td>
-<td>完成官方解锁流程</td>
-</tr>
-<tr>
-<td>小米 MiFlash</td>
-<td>在 Fastboot 模式下线刷系统</td>
-</tr>
-<tr>
-<td>与机型完全匹配的第三方刷机包</td>
-<td>刷入澎湃 OS 3</td>
-</tr>
-<tr>
-<td>同设备代号的官方 Fastboot 救砖包</td>
-<td>出现异常时恢复官方系统</td>
-</tr>
-<tr>
-<td>可靠数据线</td>
-<td>连接电脑与手机</td>
-</tr>
-</tbody></table>
-<p>将刷机包、官方救砖包解压到纯英文路径，例如：</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">D:\ROM\gauguin\hyperos3<br></code></pre></td></tr></table></figure>
-
-<p>路径不要包含中文、空格或特殊符号。线刷前备份照片、下载文件、验证码、聊天记录和需要迁移的应用数据；解锁 BL 与“全部删除”都会抹掉本机数据。</p>
-<h2 id="二、解锁-BL"><a href="#二、解锁-BL" class="headerlink" title="二、解锁 BL"></a>二、解锁 BL</h2><p>第三方 Fastboot 包需要已解锁的 BL。小米账号的等待时间以解锁工具显示为准；本次流程中显示为 7 天，其他账号或设备可能不同。</p>
-<h3 id="1、在手机绑定账号"><a href="#1、在手机绑定账号" class="headerlink" title="1、在手机绑定账号"></a>1、在手机绑定账号</h3><ol>
-<li>打开“设置 → 我的设备”，连续点击“OS 版本”或“MIUI 版本”，直到出现开发者模式已开启的提示。</li>
-<li>返回“设置 → 更多设置 → 开发者选项”。</li>
-<li>打开“设备解锁状态”，登录小米账号并完成“绑定账号和设备”。</li>
-<li>记下系统或解锁工具提示的等待时间。等待期间不要退出账号、解绑设备或恢复出厂设置。</li>
-</ol>
-<h3 id="2、用解锁工具完成解锁"><a href="#2、用解锁工具完成解锁" class="headerlink" title="2、用解锁工具完成解锁"></a>2、用解锁工具完成解锁</h3><ol>
-<li>关闭手机，同时按住“电源键 + 音量下键”，进入 Fastboot 模式。</li>
-<li>用数据线连接 Windows 电脑，打开小米 BL 解锁工具并登录同一个小米账号。</li>
-<li>按工具页面提示执行解锁，等待状态显示解锁成功。</li>
-<li>手机会清空数据并重启；重新进入系统后完成基础设置。</li>
-</ol>
-<p>成功标志：解锁工具显示成功，或 Fastboot 屏幕底部显示设备已解锁。失败时先确认账号绑定、等待时间、数据线和网络，不要反复刷写分区文件。</p>
-<h2 id="三、线刷澎湃-OS-3"><a href="#三、线刷澎湃-OS-3" class="headerlink" title="三、线刷澎湃 OS 3"></a>三、线刷澎湃 OS 3</h2><h3 id="1、进入-Fastboot"><a href="#1、进入-Fastboot" class="headerlink" title="1、进入 Fastboot"></a>1、进入 Fastboot</h3><p>关闭手机，同时按住“电源键 + 音量下键”进入 Fastboot。使用稳定的数据线直连电脑 USB 接口，避免通过扩展坞或松动的数据线刷机。</p>
-<h3 id="2、在-MiFlash-选择刷机包"><a href="#2、在-MiFlash-选择刷机包" class="headerlink" title="2、在 MiFlash 选择刷机包"></a>2、在 MiFlash 选择刷机包</h3><ol>
-<li>打开 MiFlash，点击“选择”，定位到解压后的刷机包目录。</li>
-<li>点击“加载设备”或刷新，确认列表出现设备序列号。</li>
-<li>确认所选目录中的脚本是该包自带的 <code>flash_all.bat</code>，而不是其他机型的目录。</li>
-<li>在窗口底部选择 <strong>全部删除（clean all）</strong>。</li>
-</ol>
-<blockquote>
-<p><strong>不要选择“全部删除并 lock（clean all and lock）”。</strong> 第三方系统包重新上锁 BL，可能导致无法开机或无法再次进入正常刷机流程。</p>
-</blockquote>
-<p>确认设备代号、包目录和清除选项后，点击“刷机”。过程中不要拔线、关闭电脑或让手机断电。首次启动时间通常比日常开机更长。</p>
-<p><img src="/img/redmi-note9-pro-hyperos3/miflash-success.png" srcset="/img/loading.gif" lazyload alt="MiFlash 显示 flash done 与 success"></p>
-<p>上图是本次线刷完成状态：MiFlash 显示 <code>flash done</code> 和 <code>success</code>，耗时约 342 秒。不同电脑、数据线和包体大小会导致耗时不同。</p>
-<h2 id="四、确认系统版本"><a href="#四、确认系统版本" class="headerlink" title="四、确认系统版本"></a>四、确认系统版本</h2><p>系统首次进入桌面后，打开“设置 → 我的设备”，检查设备名称和 OS 版本。以下截图显示本次刷入后的设备状态：</p>
-<p><img src="/img/redmi-note9-pro-hyperos3/hyperos-version.jpg" srcset="/img/loading.gif" lazyload alt="澎湃 OS 3 系统版本与设备信息"></p>
-<p>需要确认的内容：</p>
-<ol>
-<li>设备名称仍为 REDMI Note 9 Pro。</li>
-<li>OS 版本显示为 <code>3.0.303.0.WJSCNXM.C06</code>。</li>
-<li>基础通信、Wi-Fi、相机、充电和指纹功能可以正常使用。</li>
-</ol>
-<p>如出现长时间停在开机动画、反复重启或触控异常，先强制关机并重新进入 Fastboot；使用与设备代号一致的官方 Fastboot 救砖包，在 MiFlash 中选择“全部删除”恢复。恢复过程同样会清空数据。</p>
-<h2 id="五、确认-Root-状态"><a href="#五、确认-Root-状态" class="headerlink" title="五、确认 Root 状态"></a>五、确认 Root 状态</h2><p>本次使用的第三方包已在内核中集成 Root 支持，因此没有额外刷入 Magisk 或修补 <code>boot</code> 镜像。Root 管理器只用于确认状态和后续授权；不要把任意管理器 APK 当作通用 Root 方案。</p>
-<h3 id="1、安装-SukiSU-Ultra"><a href="#1、安装-SukiSU-Ultra" class="headerlink" title="1、安装 SukiSU Ultra"></a>1、安装 SukiSU Ultra</h3><p>从 <a target="_blank" rel="noopener" href="https://github.com/SukiSU-Ultra/SukiSU-Ultra">SukiSU Ultra 官方项目</a> 的发布页获取管理器，并安装到手机。首次打开后，管理器会读取当前内核是否提供兼容的 Root 接口。</p>
-<h3 id="2、检查状态页"><a href="#2、检查状态页" class="headerlink" title="2、检查状态页"></a>2、检查状态页</h3><p>本次状态页显示“工作中”，设备为 REDMI Note 9 Pro，SELinux 为“强制执行”；KPM 显示“不支持（内核未配置）”。KPM 未配置不影响已经集成在该内核中的 Root 状态，但不应因此安装不匹配的 KPM 模块。</p>
-<p><img src="/img/redmi-note9-pro-hyperos3/sukisu-root.jpg" srcset="/img/loading.gif" lazyload alt="SukiSU Ultra 显示 Root 工作中"></p>
-<p>出现以下状态时停止继续安装模块：</p>
+<p>模块按精确构建指纹做门禁，换机型或换系统版本不会生效，此时模块会主动让位给原生锁屏，不会造成黑屏或卡死。</p>
+<h3 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h3><ul>
+<li>安装 APK 后，在 Vector 管理器里启用 Hyper MeloLock，作用域勾选这两项，缺一项对应功能就不生效：<ul>
+<li><code>com.android.systemui</code>——锁屏覆盖层本体，必须勾选；</li>
+<li><code>com.miui.miwallpaper</code>——封面壁纸化，不勾则封面取不到系统毛玻璃效果。</li>
+</ul>
+</li>
+<li>重启手机。管理器里勾上作用域只是声明，进程没重启就不会注入。</li>
+<li>打开 Hyper MeloLock 应用，点首页状态卡开启模块开关，确认显示「已激活」。</li>
+<li>在「应用」页勾选实际使用的音乐播放器。默认一个都不勾，没勾选的播放器不会触发锁屏接管。</li>
+<li>播放一首带封面的歌曲，熄屏再点亮。</li>
+</ul>
+<p>成功标志：锁屏出现大号时间和全屏封面，底部有播放控制条；配置端首页显示系统版本与「已激活」。</p>
+<p><img src="/img/hyper-melolock/app-home.jpg" srcset="/img/loading.gif" lazyload alt="配置端首页"></p>
+<h2 id="二、外观可以调什么"><a href="#二、外观可以调什么" class="headerlink" title="二、外观可以调什么"></a>二、外观可以调什么</h2><p>外观页里每一项都能实时调整，改完回到锁屏立即生效，不需要重启。基础可调项：</p>
 <ul>
-<li>管理器显示未工作或无法读取内核状态。</li>
-<li>系统反复弹出 Root 授权请求。</li>
-<li>安装模块后出现开机循环、应用闪退或网络异常。</li>
+<li>时间：字号、粗细、圆润、颜色、上间距，还可以单独加描边；</li>
+<li>封面：缩放、圆角；</li>
+<li>播放器卡片：圆角、上间距、底色（七档，含跟随封面动态取色）；</li>
+<li>时钟上方可加一行「公历 + 周几 + 农历」日期和自定义签名，各自独立开关。</li>
 </ul>
-<p>先卸载最近添加的模块；无法进入系统时，回到 Fastboot 使用救砖包恢复。金融、支付、企业管理类应用可能会检测 Root 或解锁状态，是否可用取决于应用自身策略。</p>
-<h2 id="六、常见问题"><a href="#六、常见问题" class="headerlink" title="六、常见问题"></a>六、常见问题</h2><h3 id="1、MiFlash-不识别设备"><a href="#1、MiFlash-不识别设备" class="headerlink" title="1、MiFlash 不识别设备"></a>1、MiFlash 不识别设备</h3><p>确认手机停留在 Fastboot 兔子界面后，再点击“加载设备”。更换数据线和电脑 USB 接口，重新安装 MiFlash 自带驱动后重试。设备列表始终为空时，不要执行刷机。</p>
-<h3 id="2、刷机完成却无法开机"><a href="#2、刷机完成却无法开机" class="headerlink" title="2、刷机完成却无法开机"></a>2、刷机完成却无法开机</h3><p>首次开机先等待 10 分钟。仍卡在开机动画时，优先核对刷机包代号、版本和分区要求；确认包不匹配后，使用同设备代号的官方 Fastboot 包恢复。不要在第三方包上执行重新上锁。</p>
-<h3 id="3、Root-管理器没有工作"><a href="#3、Root-管理器没有工作" class="headerlink" title="3、Root 管理器没有工作"></a>3、Root 管理器没有工作</h3><p>确认刷入的包本身声明集成 SukiSU 或兼容 Root 内核。不要随机刷入别的 <code>boot</code>、内核或模块来“补 Root”，这类操作最容易造成版本不匹配。</p>
-<h2 id="七、完成后的检查"><a href="#七、完成后的检查" class="headerlink" title="七、完成后的检查"></a>七、完成后的检查</h2><ul>
-<li>BL 已解锁，且没有在第三方系统上重新上锁。</li>
-<li>MiFlash 的结果为 <code>success</code>，系统可以进入桌面。</li>
-<li>系统版本、设备名称与刷机包说明一致。</li>
-<li>SukiSU Ultra 显示“工作中”。</li>
-<li>通信、Wi-Fi、相机、充电、指纹等基础功能已测试。</li>
-<li>官方 Fastboot 救砖包仍保留在电脑中。</li>
+<p><img src="/img/hyper-melolock/app-appearance.jpg" srcset="/img/loading.gif" lazyload alt="外观调整页"></p>
+<h3 id="取色：让锁屏跟着专辑变色"><a href="#取色：让锁屏跟着专辑变色" class="headerlink" title="取色：让锁屏跟着专辑变色"></a>取色：让锁屏跟着专辑变色</h3><p>除了直接选颜色，时间、日期行、签名行、播放器底色、入口文字和入口背景都<strong>能单独开关「跟随专辑封面」自动取色</strong>。切换歌曲时颜色跟着封面一起变，不用手动改。</p>
+<p>取色风格有两种，观感差别明显：</p>
+<ul>
+<li><strong>低饱和磨砂（M3E）</strong>：从封面取出主色后压暗、降饱和，得到莫兰迪一类的柔和色。大号时间压在这种底色上更耐看，长时间看也不刺眼；</li>
+<li><strong>鲜艳原色直出</strong>：直接取封面里的主色，颜色更跳、更接近海报感，适合封面本身配色干净的专辑。</li>
 </ul>
-<p>这台骁龙 750G 的 REDMI Note 9 Pro 刷入澎湃 OS 3 后，动画和后台体验比 MIUI 14 更符合预期。Root 已由内核提供，后续只在明确用途时授予应用权限，避免为了模块而继续叠加不兼容的修改。</p>
+<p>主色从封面的哪里挑，也有两种选择：</p>
+<ul>
+<li><strong>最鲜艳优先</strong>：直接取整张图里最鲜艳的那个颜色；</li>
+<li><strong>占比优先</strong>：先看封面前五大色块，再在其中挑最鲜艳的，结果更贴近封面主体，不至于取到边角的一点杂色。</li>
+</ul>
+<p>不跟封面时，时间颜色和播放器底色各有固定色档：时间有白、黑、浅灰、暖黄、天蓝、粉；播放器底色七档，其中一档同样是跟随封面动态取色。</p>
+<h2 id="三、封面壁纸化为什么取色能透到系统"><a href="#三、封面壁纸化为什么取色能透到系统" class="headerlink" title="三、封面壁纸化为什么取色能透到系统"></a>三、封面壁纸化为什么取色能透到系统</h2><p>模块把专辑封面当成<strong>真正的壁纸</strong>铺上去，而不是只在锁屏界面叠一层图。区别在这里体现：澎湃 OS 的液态玻璃时钟、通知卡毛玻璃，采样的都是壁纸窗口的颜色。封面成了壁纸，这些系统控件就能直接取到专辑色，时间、通知卡的色调会跟着封面一起变。</p>
+<p>如果只是「在锁屏上叠一层图」，那层图只在锁屏自己的视图树里，系统的时钟和通知卡根本采样不到它，取色就只作用在叠出来的那一层，透不到系统控件上。这也正是封面壁纸化要进 <code>com.miui.miwallpaper</code> 作用域的原因：不勾这一项，封面照常显示，只是系统那些毛玻璃取不到专辑色，其余功能不受影响。</p>
+<h2 id="四、已知限制"><a href="#四、已知限制" class="headerlink" title="四、已知限制"></a>四、已知限制</h2><ul>
+<li>目前只在 Redmi Note 9 Pro（<code>gauguinpro</code>）+ 澎湃 OS 3 这套环境上测试过，其他机型未验证；模块按精确构建指纹门禁，不匹配时主动放弃覆盖、保持原生锁屏。</li>
+<li>「Xposed 框架」一行固定显示「未知」，是读取方式的限制，不是故障。</li>
+</ul>
 <h2 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://www.mi.com/global/unlock/">小米 BL 解锁工具</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/SukiSU-Ultra/SukiSU-Ultra">SukiSU Ultra 官方项目</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.coolapk.com/u/1184948">酷安：某滑稽苟</a></li>
+<li>代码仓库：<a target="_blank" rel="noopener" href="https://github.com/zuige66/Hyper-MeloLock">https://github.com/zuige66/Hyper-MeloLock</a></li>
+<li>问题反馈：<a target="_blank" rel="noopener" href="https://github.com/zuige66/Hyper-MeloLock/issues">GitHub Issues</a></li>
+<li>项目基于 AGPL-3.0 开源，界面组件来自 HyperIsland（MIT License）</li>
 </ul>
 
                 
@@ -579,11 +516,11 @@
       
         <a href="/tags/%E6%BE%8E%E6%B9%83OS/" class="print-no-link">#澎湃OS</a>
       
-        <a href="/tags/Root/" class="print-no-link">#Root</a>
+        <a href="/tags/LSPosed/" class="print-no-link">#LSPosed</a>
       
-        <a href="/tags/%E5%88%B7%E6%9C%BA/" class="print-no-link">#刷机</a>
+        <a href="/tags/Xposed/" class="print-no-link">#Xposed</a>
       
-        <a href="/tags/Android/" class="print-no-link">#Android</a>
+        <a href="/tags/%E6%A8%A1%E5%9D%97/" class="print-no-link">#模块</a>
       
     </div>
   
@@ -595,8 +532,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>红米Note9 Pro刷澎湃OS3带Root</div>
-      <div>https://blog.zuiges.com/2026/10/07/redmi-note9-pro-hyperos3-root/</div>
+      <div>让澎湃OS锁屏铺满专辑封面</div>
+      <div>https://blog.zuiges.com/2026/10/09/hyper-melolock-lockscreen-cover/</div>
     </div>
     <div class="license-meta">
       
@@ -608,7 +545,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>post.copyright.posted</div>
-          <div>2026年10月7日</div>
+          <div>2026年10月9日</div>
         </div>
       
       
@@ -640,18 +577,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2026/10/09/hyper-melolock-lockscreen-cover/" title="让澎湃OS锁屏铺满专辑封面">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">让澎湃OS锁屏铺满专辑封面</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2026/10/04/domain-three-sites-server-github-pages/" title="低价购买顶级域名">
-                        <span class="hidden-mobile">低价购买顶级域名</span>
+                      <a href="/2026/10/07/redmi-note9-pro-hyperos3-root/" title="红米Note9 Pro刷澎湃OS3带Root">
+                        <span class="hidden-mobile">红米Note9 Pro刷澎湃OS3带Root</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
