@@ -30,7 +30,7 @@
 <meta property="og:image" content="https://blog.zuiges.com/img/hyper-melolock/app-home.jpg">
 <meta property="og:image" content="https://blog.zuiges.com/img/hyper-melolock/app-appearance.jpg">
 <meta property="article:published_time" content="2026-10-09T06:00:00.000Z">
-<meta property="article:modified_time" content="2026-10-09T05:49:46.858Z">
+<meta property="article:modified_time" content="2026-10-09T05:54:43.560Z">
 <meta property="article:author" content="zuige">
 <meta property="article:tag" content="LSPosed">
 <meta property="article:tag" content="Xposed">
@@ -347,7 +347,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.9k 字
+          1.6k 字
         
       </span>
     
@@ -358,7 +358,7 @@
         
         
         
-          16 分钟
+          14 分钟
         
       </span>
     
@@ -468,9 +468,7 @@
 <li><strong>占比优先</strong>：先看封面前五大色块，再在其中挑最鲜艳的，结果更贴近封面主体，不至于取到边角的一点杂色。</li>
 </ul>
 <p>不跟封面时，时间颜色和播放器底色各有固定色档：时间有白、黑、浅灰、暖黄、天蓝、粉；播放器底色七档，其中一档同样是跟随封面动态取色。</p>
-<h2 id="三、封面壁纸化为什么取色能透到系统"><a href="#三、封面壁纸化为什么取色能透到系统" class="headerlink" title="三、封面壁纸化为什么取色能透到系统"></a>三、封面壁纸化为什么取色能透到系统</h2><p>模块把专辑封面当成<strong>真正的壁纸</strong>铺上去，而不是只在锁屏界面叠一层图。区别在这里体现：澎湃 OS 的液态玻璃时钟、通知卡毛玻璃，采样的都是壁纸窗口的颜色。封面成了壁纸，这些系统控件就能直接取到专辑色，时间、通知卡的色调会跟着封面一起变。</p>
-<p>如果只是「在锁屏上叠一层图」，那层图只在锁屏自己的视图树里，系统的时钟和通知卡根本采样不到它，取色就只作用在叠出来的那一层，透不到系统控件上。这也正是封面壁纸化要进 <code>com.miui.miwallpaper</code> 作用域的原因：不勾这一项，封面照常显示，只是系统那些毛玻璃取不到专辑色，其余功能不受影响。</p>
-<h2 id="四、已知限制"><a href="#四、已知限制" class="headerlink" title="四、已知限制"></a>四、已知限制</h2><ul>
+<h2 id="三、已知限制"><a href="#三、已知限制" class="headerlink" title="三、已知限制"></a>三、已知限制</h2><ul>
 <li>目前只在 Redmi Note 9 Pro（<code>gauguinpro</code>）+ 澎湃 OS 3 这套环境上测试过，其他机型未验证；模块按精确构建指纹门禁，不匹配时主动放弃覆盖、保持原生锁屏。</li>
 <li>「Xposed 框架」一行固定显示「未知」，是读取方式的限制，不是故障。</li>
 </ul>
