@@ -1,36 +1,36 @@
 ---
-title:  Hexo + Fluid 搭建个人博客
-date: 2026-09-03 21:29:39
-tags:
+　　title:  Hexo + Fluid 搭建个人博客
+　　date: 2026-09-03 21:29:39
+　　tags:
   - 博客
   - Hexo
   - 教程
-categories:
+　　categories:
   - 技术
 ---
 
 ## 前言
 
-花了几个小时搭建了这个博客，记录一下过程，也给想建博客的朋友一个参考。
+　　花了几个小时搭建了这个博客，记录一下过程，也给想建博客的朋友一个参考。
 
-## 为什么选 Hexo？
+## 一、为什么选 Hexo？
 
-对比了几种方案：
+　　对比了几种方案：
 
 | 方案 | 优点 | 缺点 |
 |------|------|------|
-| WordPress | 功能强大、插件多 | 需要服务器、维护成本高 |
+| WordPress | 功能完整、插件多 | 需要服务器、维护成本高 |
 | Hugo | 速度快 | 主题生态不如 Hexo |
 | Hexo | 主题丰富、部署简单 | 需要 Node.js 环境 |
 
-最终选了 Hexo，主要因为：
+　　最终选了 Hexo，主要因为：
 - 免费托管在 GitHub Pages，不用买服务器
 - Fluid 主题颜值高、中文文档好
 - Markdown 写文章很舒服
 
-## 环境准备
+## 二、环境准备
 
-需要安装两个东西：
+　　需要安装两个东西：
 
 **Node.js** - 去官网下载安装即可，自带 npm
 
@@ -46,7 +46,7 @@ npm -v     # 10.x.x
 git --version  # 2.x.x
 ```
 
-## 安装 Hexo
+## 三、安装 Hexo
 
 ```bash
 # 全局安装 Hexo CLI
@@ -60,7 +60,7 @@ hexo init .
 npm install
 ```
 
-初始化后的目录结构：
+　　初始化后的目录结构：
 
 ```
 my-blog/
@@ -72,20 +72,20 @@ my-blog/
 └── themes/        # 主题目录
 ```
 
-## 安装 Fluid 主题
+## 四、安装 Fluid 主题
 
 ```bash
 # 在博客根目录执行
 npm install hexo-theme-fluid --save
 ```
 
-然后编辑根目录的 `_config.yml`，把主题改为 fluid：
+　　然后编辑根目录的 `_config.yml`，把主题改为 fluid：
 
 ```yaml
 theme: fluid
 ```
 
-创建主题配置文件 `_config.fluid.yml`（在根目录），基础配置：
+　　创建主题配置文件 `_config.fluid.yml`（在根目录），基础配置：
 
 ```yaml
 navbar:
@@ -98,7 +98,7 @@ navbar:
     - { key: "about", link: "/about/", icon: "iconfont icon-user-fill" }
 ```
 
-## 写第一篇文章
+## 五、写第一篇文章
 
 ### 方式一：命令行创建
 
@@ -106,11 +106,11 @@ navbar:
 hexo new "文章标题"
 ```
 
-会在 `source/_posts/` 下生成一个 `文章标题.md` 文件。
+　　会在 `source/_posts/` 下生成一个 `文章标题.md` 文件。
 
 ### 方式二：直接新建文件
 
-在 `source/_posts/` 下新建 `.md` 文件，文件名就是文章的 URL。
+　　在 `source/_posts/` 下新建 `.md` 文件，文件名就是文章的 URL。
 
 ### 文章格式
 
@@ -130,18 +130,18 @@ categories:
 
 ### Markdown 常用语法
 
-想系统了解 Markdown 写作，可以继续阅读 {% post_link markdown-guide %}。
+　　想系统了解 Markdown 写作，可以继续阅读 {% post_link markdown-guide %}。
 
 
-## 部署到 GitHub
+## 六、部署到 GitHub
 
 ### 1. 创建 GitHub 仓库
 
-仓库名必须是 `用户名.github.io`（个人主页）或自定义名称（项目页面）。
+　　仓库名必须是 `用户名.github.io`（个人主页）或自定义名称（项目页面）。
 
 ### 2. 配置部署
 
-编辑 `_config.yml`：
+　　编辑 `_config.yml`：
 
 ```yaml
 url: https://zuige66.github.io/hexo
@@ -151,7 +151,7 @@ deploy:
   branch: gh-pages
 ```
 
-安装部署插件：
+　　安装部署插件：
 
 ```bash
 npm install hexo-deployer-git --save
@@ -163,7 +163,7 @@ npm install hexo-deployer-git --save
 hexo clean && hexo deploy
 ```
 
-## 常用命令速查
+## 七、常用命令速查
 
 | 命令 | 说明 |
 |------|------|
@@ -174,7 +174,7 @@ hexo clean && hexo deploy
 | `hexo clean` | 清除缓存和 public 目录 |
 | `hexo clean && hexo deploy` | 重新生成并部署（最常用） |
 
-## 目录结构说明
+## 八、目录结构说明
 
 ```
 source/
@@ -193,7 +193,7 @@ source/
 
 ## 总结
 
-整个流程就是：
+　　整个流程就是：
 
 1. 安装 Node.js + Git
 2. 安装 Hexo CLI
@@ -201,7 +201,7 @@ source/
 4. 写 Markdown 文章
 5. `hexo deploy` 部署
 
-以后写新文章只需要：
+　　以后写新文章只需要：
 
 ```bash
 hexo new "标题"
@@ -209,4 +209,4 @@ hexo new "标题"
 hexo clean && hexo deploy
 ```
 
-就这么简单，开始写博客吧！
+　　就这么简单，开始写博客吧！

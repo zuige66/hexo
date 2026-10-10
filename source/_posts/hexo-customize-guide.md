@@ -1,21 +1,21 @@
 ---
-title: Hexo博客管理
-date: 2026-09-04
-tags:
+　　title: Hexo博客管理
+　　date: 2026-09-04
+　　tags:
   - Hexo
   - Fluid
   - 教程
-categories:
+　　categories:
   - 技术
 ---
 
 ## 前言
 
-博客搭好了，但怎么改标题、加图标、管理分类标签？本文以当前博客为例，讲解 Hexo + Fluid 的目录结构和常用配置。
+　　博客搭好了，但怎么改标题、加图标、管理分类标签？本文以当前博客为例，讲解 Hexo + Fluid 的目录结构和常用配置。
 
 ## 一、常用命令速查
 
-以下命令都在博客根目录下执行。
+　　以下命令都在博客根目录下执行。
 
 | 作用 | 命令 |
 |------|------|
@@ -33,13 +33,13 @@ categories:
 | 列出所有文章 | `hexo list post` |
 | 查看版本 | `hexo version` |
 
-本地预览启动后访问 `http://localhost:4000`，按 `Ctrl+C` 停止。
+　　本地预览启动后访问 `http://localhost:4000`，按 `Ctrl+C` 停止。
 
 `hexo deploy` 不会自动生成文件，必须先 `hexo generate` 再 `hexo deploy`；`hexo generate -d`（可简写 `hexo g -d`）一步完成生成加部署，日常发帖用这条即可。
 
 `hexo generate` 默认增量构建，只重新生成改动过的文章以及受影响的归档、分类、标签页，日常发一两篇不会慢。真正会触发全量重建的是 `hexo clean`——它删除缓存 `db.json` 和 `public/`，下次生成只能从头来。只在换主题、大改配置或升级后输出异常时才跑 `hexo clean`，平时不要加。
 
-写完一篇文章的标准流程：`hexo new "标题"` 新建 → 编辑 `source/_posts/` 下对应的 md → `hexo generate -d` 发布。
+　　写完一篇文章的标准流程：`hexo new "标题"` 新建 → 编辑 `source/_posts/` 下对应的 md → `hexo generate -d` 发布。
 
 ## 二、项目结构
 
@@ -58,7 +58,7 @@ hexo/
 └── themes/               # 主题目录
 ```
 
-两个核心配置文件：
+　　两个核心配置文件：
 
 | 文件 | 作用 |
 |------|------|
@@ -67,7 +67,7 @@ hexo/
 
 ## 三、修改站点信息
 
-编辑根目录 `_config.yml`：
+　　编辑根目录 `_config.yml`：
 
 ```yaml
 # Site
@@ -78,11 +78,11 @@ author: zuige66                # 作者名
 language: zh-CN                # 语言
 ```
 
-修改后执行 `hexo clean && hexo deploy` 生效。
+　　修改后执行 `hexo clean && hexo deploy` 生效。
 
 ## 四、首页配置
 
-编辑 `_config.fluid.yml` 的 `index` 部分：
+　　编辑 `_config.fluid.yml` 的 `index` 部分：
 
 ```yaml
 index:
@@ -105,7 +105,7 @@ index:
 
 ## 五、添加 GitHub 图标
 
-在 `_config.fluid.yml` 的 `about` 部分配置关于页的社交图标：
+　　在 `_config.fluid.yml` 的 `about` 部分配置关于页的社交图标：
 
 ```yaml
 about:
@@ -118,7 +118,7 @@ about:
     - { class: "iconfont icon-email-fill", link: "mailto:your@email.com", tip: "Email" }
 ```
 
-如果想在导航栏也显示 GitHub 图标，修改 `navbar` 部分：
+　　如果想在导航栏也显示 GitHub 图标，修改 `navbar` 部分：
 
 ```yaml
 navbar:
@@ -147,7 +147,7 @@ type: categories
 
 ### 给文章添加分类
 
-在文章的 front-matter 中指定：
+　　在文章的 front-matter 中指定：
 
 ```yaml
 ---
@@ -158,7 +158,7 @@ categories:
 ---
 ```
 
-一个文章可以属于多个分类。如果分类不存在，Hexo 会自动创建。
+　　一个文章可以属于多个分类。如果分类不存在，Hexo 会自动创建。
 
 ### 分类页配置
 
@@ -218,13 +218,13 @@ tag:
 hexo new "文章标题"
 ```
 
-在 `source/_posts/` 下生成 `文章标题.md`，编辑后用一条命令生成并部署：
+　　在 `source/_posts/` 下生成 `文章标题.md`，编辑后用一条命令生成并部署：
 
 ```bash
 hexo generate -d
 ```
 
-文章 front-matter 完整示例：
+　　文章 front-matter 完整示例：
 
 ```yaml
 ---
@@ -245,7 +245,7 @@ math: true                      # 启用数学公式（可选）
 
 ## 九、关于页
 
-编辑 `source/about/index.md`：
+　　编辑 `source/about/index.md`：
 
 ```markdown
 ---
@@ -265,16 +265,16 @@ date: 2026-09-03
 
 ## 十、自定义样式
 
-如需修改颜色、字体等细节，可创建自定义 CSS 文件。
+　　如需修改颜色、字体等细节，可创建自定义 CSS 文件。
 
-在 `_config.fluid.yml` 中指定：
+　　在 `_config.fluid.yml` 中指定：
 
 ```yaml
 custom_css:
   - /css/custom.css
 ```
 
-然后在 `source/css/custom.css` 中编写样式：
+　　然后在 `source/css/custom.css` 中编写样式：
 
 ```css
 /* 修改文章标题颜色 */
@@ -320,9 +320,9 @@ color:
 
 ## 总结
 
-核心就两个文件：
+　　核心就两个文件：
 
 - `_config.yml` 管全局设置
 - `_config.fluid.yml` 管主题样式
 
-改完配置执行 `hexo clean && hexo deploy` 即可生效。日常命令见开头「一、常用命令速查」。
+　　改完配置执行 `hexo clean && hexo deploy` 即可生效。日常命令见开头「一、常用命令速查」。

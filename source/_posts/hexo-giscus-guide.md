@@ -1,30 +1,30 @@
 ---
-title:  Giscus，让博客接入评论
-date: 2026-09-04
-tags:
+　　title:  Giscus，让博客接入评论
+　　date: 2026-09-04
+　　tags:
   - Hexo
   - Giscus
   - 评论系统
   - 教程
-categories:
+　　categories:
   - 技术
 ---
 
 ## 前言
 
-静态博客没有后端，评论数据无处存储。Giscus 基于 GitHub Discussions，免费、稳定、支持 Markdown，是 Hexo 博客的最佳评论方案之一。
+　　静态博客没有后端，评论数据无处存储。Giscus 基于 GitHub Discussions，免费、稳定、支持 Markdown，是 Hexo 博客的最佳评论方案之一。
 
-本文记录从零接入 Giscus 的完整流程，包括踩坑点。
+　　本文记录从零接入 Giscus 的完整流程，包括踩坑点。
 
 ## 一、GitHub 仓库准备
 
 ### 1.1 开启 Discussions
 
-进入博客 GitHub 仓库 → Settings → Features → 勾选 **Discussions**。
+　　进入博客 GitHub 仓库 → Settings → Features → 勾选 **Discussions**。
 
 ### 1.2 创建 Announcement 分类
 
-进入仓库 → Discussions → 右侧 `Edit categories` → `New category`：
+　　进入仓库 → Discussions → 右侧 `Edit categories` → `New category`：
 
 - 名称：`Announcements`
 - **类型必须选 Announcement（公告）**
@@ -33,28 +33,28 @@ categories:
 
 ### 1.3 安装 Giscus 应用
 
-访问 https://github.com/apps/giscus ，点击 Install。
+　　访问 https://github.com/apps/giscus ，点击 Install。
 
-- 只授权你的博客仓库
+- 只授权博客仓库
 - 不要全仓库授权
 
 ## 二、Giscus 官网配置
 
-访问 https://giscus.app/zh-CN ，按以下步骤配置：
+　　访问 https://giscus.app/zh-CN ，按以下步骤配置：
 
 ### 2.1 仓库
 
-填入：`用户名/仓库名`（如 `zuige66/hexo`）
+　　填入：`用户名/仓库名`（如 `zuige66/hexo`）
 
 ### 2.2 映射方式
 
-选择：**Discussion 的标题包含页面的 pathname**
+　　选择：**Discussion 的标题包含页面的 pathname**
 
-这种方式下，每篇文章的 URL 路径会作为 Discussion 的标题，一一对应。
+　　这种方式下，每篇文章的 URL 路径会作为 Discussion 的标题，一一对应。
 
 ### 2.3 Discussion 分类
 
-选择：`Announcements`
+　　选择：`Announcements`
 
 ### 2.4 特性勾选
 
@@ -67,13 +67,13 @@ categories:
 
 ### 2.5 主题配色
 
-选择：**用户偏好的色彩方案**
+　　选择：**用户偏好的色彩方案**
 
-这样评论区会自动跟随博客的亮色/暗色模式切换。
+　　这样评论区会自动跟随博客的亮色/暗色模式切换。
 
 ### 2.6 复制代码
 
-页面会生成一段 `<script>` 代码，类似：
+　　页面会生成一段 `<script>` 代码，类似：
 
 ```html
 <script src="https://giscus.app/client.js"
@@ -94,13 +94,13 @@ categories:
 </script>
 ```
 
-记住里面的 `repo-id` 和 `category-id`，下一步要用。
+　　记住里面的 `repo-id` 和 `category-id`，下一步要用。
 
 ## 三、嵌入 Hexo 博客
 
 ### 3.1 编辑主题配置
 
-打开 `_config.fluid.yml`，添加两处配置：
+　　打开 `_config.fluid.yml`，添加两处配置：
 
 **启用评论（在 post 段落内）：**
 
@@ -167,7 +167,7 @@ Giscus 根据 pathname 查找对应的 Discussion
 
 ### 自定义评论区标题
 
-Giscus 默认用文章路径作为 Discussion 标题。如需自定义，可在 giscus.app 配置时修改映射方式。
+　　Giscus 默认用文章路径作为 Discussion 标题。如需自定义，可在 giscus.app 配置时修改映射方式。
 
 ## 总结
 
@@ -180,4 +180,4 @@ Giscus 默认用文章路径作为 Discussion 标题。如需自定义，可在 
 | 5 | `_config.fluid.yml` 添加 giscus 配置 |
 | 6 | 部署上线验证 |
 
-整个流程约 15 分钟完成，无需服务器，无需付费。
+　　整个流程约 15 分钟完成，无需服务器，无需付费。

@@ -1,23 +1,23 @@
 ---
-title: OpenCode 上手
-date: 2026-09-04
-tags:
+　　title: OpenCode 上手
+　　date: 2026-09-04
+　　tags:
   - AI
   - OpenCode
   - 教程
-categories:
+　　categories:
   - 技术
 ---
 
 ## 前言
 
-OpenCode 是一个基于命令行的 AI 编程助手，支持代码生成、调试、重构、项目搭建等场景。本文介绍从环境配置到实际使用的完整流程。
+　　OpenCode 是一个基于命令行的 AI 编程助手，支持代码生成、调试、重构、项目搭建等场景。本文介绍从环境配置到实际使用的完整流程。
 
-## 环境准备
+## 一、环境准备
 
 ### 启动命令行
 
-Windows 下启动终端的几种方式：
+　　Windows 下启动终端的几种方式：
 
 | 方式 | 操作 |
 |------|------|
@@ -25,19 +25,19 @@ Windows 下启动终端的几种方式：
 | 开始菜单 | 搜索"命令提示符"或"PowerShell" |
 | 右键菜单 | 在文件资源管理器空白处右键 → "在终端中打开" |
 
-启动后确认路径前缀为 `C:\Users\你的用户名>` 即可。
+　　启动后确认路径前缀为 `C:\Users\<用户名>>` 即可。
 
 ### 安装 Node.js
 
-OpenCode 依赖 Node.js 运行环境，需先完成安装。
+　　OpenCode 依赖 Node.js 运行环境，需先完成安装。
 
 **下载**
 
-访问 https://nodejs.org，下载 LTS 版本安装包。
+　　访问 https://nodejs.org，下载 LTS 版本安装包。
 
 **安装**
 
-双击安装包，全程保持默认选项，点击 Install 完成安装。
+　　双击安装包，全程保持默认选项，点击 Install 完成安装。
 
 **验证**
 
@@ -46,9 +46,9 @@ node -v    # 输出 v22.x.x 即为成功
 npm -v     # 输出 10.x.x 即为成功
 ```
 
-若提示"不是内部或外部命令"，重启终端后重试。
+　　若提示"不是内部或外部命令"，重启终端后重试。
 
-## 安装 OpenCode
+## 二、安装 OpenCode
 
 ```bash
 npm install -g opencode
@@ -56,17 +56,17 @@ npm install -g opencode
 
 `-g` 参数表示全局安装，安装完成后可在任意目录调用。
 
-验证安装：
+　　验证安装：
 
 ```bash
 opencode --version
 ```
 
-## 模型切换
+## 三、模型切换
 
-OpenCode 内置免费模型，无需配置 API Key，开箱即用。
+　　OpenCode 内置免费模型，无需配置 API Key，开箱即用。
 
-启动后按 `Shift + Tab` 可切换模型，常用免费模型：
+　　启动后按 `Shift + Tab` 可切换模型，常用免费模型：
 
 | 模型 | 特点 |
 |------|------|
@@ -74,7 +74,7 @@ OpenCode 内置免费模型，无需配置 API Key，开箱即用。
 | Gemini 2.5 Pro | 推理能力强，适合复杂任务 |
 | Llama 4 Maverick | Meta 开源模型 |
 
-## 使用
+## 四、使用
 
 ### 启动
 
@@ -85,7 +85,7 @@ opencode
 
 ### 文件与命令操作
 
-OpenCode 可直接操作文件系统和执行命令：
+　　OpenCode 可直接操作文件系统和执行命令：
 
 ```
 > 列出当前目录下的文件
@@ -94,11 +94,11 @@ OpenCode 可直接操作文件系统和执行命令：
 > 执行 npm run build 并查看输出
 ```
 
-## 常见问题
+## 五、常见问题
 
 ### npm 安装速度慢
 
-切换至国内镜像源：
+　　切换至国内镜像源：
 
 ```bash
 npm config set registry https://registry.npmmirror.com
@@ -106,7 +106,7 @@ npm config set registry https://registry.npmmirror.com
 
 ### 权限不足
 
-Windows 下右键终端图标，选择"以管理员身份运行"。
+　　Windows 下右键终端图标，选择"以管理员身份运行"。
 
 ### 更新 OpenCode
 
@@ -121,4 +121,4 @@ npm update -g opencode
 3. 配置 API Key 和模型
 4. `opencode` 启动，开始使用
 
-完整流程约 10 分钟完成。
+　　完整流程约 10 分钟完成。
