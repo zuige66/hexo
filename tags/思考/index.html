@@ -31,6 +31,17 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
+    <script>
+  if (!/^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname)) {
+    var cfScript = document.createElement('script');
+    cfScript.defer = true;
+    cfScript.src = 'https://static.cloudflareinsights.com/beacon.min.js';
+    cfScript.setAttribute('data-cf-beacon', JSON.stringify({ token: 'YOUR_TOKEN' }));
+    document.head.appendChild(cfScript);
+  }
+</script>
+
+  
   <title>标签 - 思考 - zuige&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />

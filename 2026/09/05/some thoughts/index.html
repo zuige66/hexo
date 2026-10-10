@@ -40,6 +40,17 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
+    <script>
+  if (!/^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname)) {
+    var cfScript = document.createElement('script');
+    cfScript.defer = true;
+    cfScript.src = 'https://static.cloudflareinsights.com/beacon.min.js';
+    cfScript.setAttribute('data-cf-beacon', JSON.stringify({ token: 'YOUR_TOKEN' }));
+    document.head.appendChild(cfScript);
+  }
+</script>
+
+  
   <title>我沉默了，他以为我不想读研 - zuige&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
@@ -501,9 +512,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2026/09/06/hexo-customize-guide/" title="">
+                      <a href="/2026/09/07/codex-windows-sandbox-setup/" title="Codex Windows 沙盒启动失败及解决办法">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile"></span>
+                        <span class="hidden-mobile">Codex Windows 沙盒启动失败及解决办法</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -511,8 +522,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2026/09/04/markdown-guide/" title="Markdown 语法规则">
-                        <span class="hidden-mobile">Markdown 语法规则</span>
+                      <a href="/2026/09/04/hexo-giscus-guide/" title="Giscus，让博客接入评论">
+                        <span class="hidden-mobile">Giscus，让博客接入评论</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

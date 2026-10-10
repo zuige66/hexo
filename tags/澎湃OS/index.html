@@ -31,6 +31,17 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
+    <script>
+  if (!/^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname)) {
+    var cfScript = document.createElement('script');
+    cfScript.defer = true;
+    cfScript.src = 'https://static.cloudflareinsights.com/beacon.min.js';
+    cfScript.setAttribute('data-cf-beacon', JSON.stringify({ token: 'YOUR_TOKEN' }));
+    document.head.appendChild(cfScript);
+  }
+</script>
+
+  
   <title>标签 - 澎湃OS - zuige&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
@@ -339,7 +350,7 @@
                 
 
 <div class="list-group">
-  <p class="h4">共计 1 篇文章</p>
+  <p class="h4">共计 2 篇文章</p>
   <hr>
   
   
@@ -350,6 +361,12 @@
     <a href="/2026/10/09/hyper-melolock-lockscreen-cover/" class="list-group-item list-group-item-action">
       <time>10-09</time>
       <div class="list-group-item-title">Hyper MeloLock 沉浸式音乐锁屏</div>
+    </a>
+  
+    
+    <a href="/2026/10/07/redmi-note9-pro-hyperos3-root/" class="list-group-item list-group-item-action">
+      <time>10-07</time>
+      <div class="list-group-item-title">红米Note9Pro刷澎湃OS3+Root</div>
     </a>
   
 </div>

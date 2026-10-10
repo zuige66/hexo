@@ -31,6 +31,17 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
+    <script>
+  if (!/^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname)) {
+    var cfScript = document.createElement('script');
+    cfScript.defer = true;
+    cfScript.src = 'https://static.cloudflareinsights.com/beacon.min.js';
+    cfScript.setAttribute('data-cf-beacon', JSON.stringify({ token: 'YOUR_TOKEN' }));
+    document.head.appendChild(cfScript);
+  }
+</script>
+
+  
   <title>归档 - zuige&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
@@ -345,37 +356,13 @@
     
     <a href="/2026/09/23/aliyun-singapore-server-tabby/" class="list-group-item list-group-item-action">
       <time>09-23</time>
-      <div class="list-group-item-title"></div>
+      <div class="list-group-item-title">轻量服务器入门</div>
     </a>
   
     
     <a href="/2026/09/07/codex-windows-sandbox-setup/" class="list-group-item list-group-item-action">
       <time>09-07</time>
-      <div class="list-group-item-title"></div>
-    </a>
-  
-    
-    <a href="/2026/09/06/opencode-tutorial/" class="list-group-item list-group-item-action">
-      <time>09-06</time>
-      <div class="list-group-item-title"></div>
-    </a>
-  
-    
-    <a href="/2026/09/06/hexo-giscus-guide/" class="list-group-item list-group-item-action">
-      <time>09-06</time>
-      <div class="list-group-item-title"></div>
-    </a>
-  
-    
-    <a href="/2026/09/06/hexo-fluid/" class="list-group-item list-group-item-action">
-      <time>09-06</time>
-      <div class="list-group-item-title"></div>
-    </a>
-  
-    
-    <a href="/2026/09/06/hexo-customize-guide/" class="list-group-item list-group-item-action">
-      <time>09-06</time>
-      <div class="list-group-item-title"></div>
+      <div class="list-group-item-title">Codex Windows 沙盒启动失败及解决办法</div>
     </a>
   
     
@@ -385,9 +372,33 @@
     </a>
   
     
+    <a href="/2026/09/04/hexo-giscus-guide/" class="list-group-item list-group-item-action">
+      <time>09-04</time>
+      <div class="list-group-item-title">Giscus，让博客接入评论</div>
+    </a>
+  
+    
+    <a href="/2026/09/04/hexo-customize-guide/" class="list-group-item list-group-item-action">
+      <time>09-04</time>
+      <div class="list-group-item-title">Hexo博客管理</div>
+    </a>
+  
+    
+    <a href="/2026/09/04/opencode-tutorial/" class="list-group-item list-group-item-action">
+      <time>09-04</time>
+      <div class="list-group-item-title">OpenCode 上手</div>
+    </a>
+  
+    
     <a href="/2026/09/04/markdown-guide/" class="list-group-item list-group-item-action">
       <time>09-04</time>
       <div class="list-group-item-title">Markdown 语法规则</div>
+    </a>
+  
+    
+    <a href="/2026/09/03/hexo-fluid/" class="list-group-item list-group-item-action">
+      <time>09-03</time>
+      <div class="list-group-item-title">Hexo + Fluid 搭建个人博客</div>
     </a>
   
 </div>
