@@ -186,6 +186,57 @@ ___粗斜体文本___
 ![替代文本](图片URL "图片标题")
 ```
 
+在这个 Hexo 博客中，图片不只有这一种写法：
+
+### 本地图片
+
+将图片放在 `source/img/` 下，文章中使用以 `/img/` 开头的路径：
+
+```markdown
+![说明文字](/img/example.png)
+```
+
+### 外链图片
+
+直接填写图片的完整 URL 即可：
+
+```markdown
+![说明文字](https://example.com/example.png)
+```
+
+### HTML 图片
+
+需要控制宽度、尺寸或其他属性时，可以直接写 HTML：
+
+```html
+<img src="/img/example.png" alt="说明文字" width="600">
+```
+
+### 多图排列
+
+Fluid 主题提供了 `groupimage`（也可简写为 `gi`）标签，适合将多张图片排列在同一组中：
+
+````markdown
+{% groupimage 3 %}
+![图片 1](/img/one.png)
+![图片 2](/img/two.png)
+![图片 3](/img/three.png)
+{% endgroupimage %}
+````
+
+### 文章封面和头图
+
+如果图片是文章封面或文章页顶部大图，不需要写在正文里，可以在 front-matter 中设置：
+
+```yaml
+index_img: /img/cover.jpg
+banner_img: /img/banner.jpg
+```
+
+正文中的 Markdown 图片会继承 Fluid 主题的懒加载和点击放大功能；HTML 图片是否正常处理则取决于主题和浏览器的解析方式。
+
+本站还会将正文图片限制在较小的显示尺寸，避免竖长截图占满页面；点击图片可以打开大图查看细节，手机端则保持接近满宽显示。
+
 ---
 
 ## 六、代码 (Code)

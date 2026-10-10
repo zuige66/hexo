@@ -22,10 +22,10 @@ Hyper MeloLock 是一个开源免费的澎湃 OS 3 锁屏音乐模块：正在�
 
 ### 下载地址
 
-- GitHub 发布页：[https://github.com/zuige66/Hyper-MeloLock/releases](https://github.com/zuige66/Hyper-MeloLock/releases)
-- 最新版 APK 直链：[Hyper-MeloLock-v0.3.1.apk](https://github.com/zuige66/Hyper-MeloLock/releases/download/v0.3.1/Hyper-MeloLock-v0.3.1.apk)
+- GitHub 发布页：[Hyper-MeloLock Releases](https://github.com/zuige66/Hyper-MeloLock/releases)（含历史版本与校验信息）
+- 最新版国内直链：[Hyper-MeloLock-v0.3.2.apk](/downloads/melolock/Hyper-MeloLock-v0.3.2.apk)
 
-只从 GitHub Releases 下载正式签名包。模块作用于系统锁屏界面，来源不明的二次打包版本有风险。
+只从 GitHub Releases 或本博客直链下载正式签名包。模块作用于系统锁屏界面，来源不明的二次打包版本有风险。
 
 ### 安装前提
 
@@ -52,8 +52,8 @@ Hyper MeloLock 是一个开源免费的澎湃 OS 3 锁屏音乐模块：正在�
 
 <table>
 <tr>
-<td align="center" width="50%"><img src="/img/hyper-melolock/app-home.jpg" width="300" alt="配置端首页"/><br/><b>配置端首页</b><br/>开关状态 · 已开启应用 · 系统信息</td>
-<td align="center" width="50%"><img src="/img/hyper-melolock/app-about.jpg" width="300" alt="关于页"/><br/><b>关于页</b><br/>开发者信息 · 检查更新</td>
+<td align="center" width="50%"><img src="/img/hyper-melolock/app-home.jpg?v=2" width="300" alt="配置端首页"/><br/><b>配置端首页</b><br/>开关状态 · 已开启应用 · 系统信息</td>
+<td align="center" width="50%"><img src="/img/hyper-melolock/app-about.jpg?v=2" width="300" alt="关于页"/><br/><b>关于页</b><br/>开发者信息 · 检查更新</td>
 </tr>
 </table>
 
@@ -93,6 +93,20 @@ Hyper MeloLock 是一个开源免费的澎湃 OS 3 锁屏音乐模块：正在�
 
 - 目前只在 Redmi Note 9 Pro（`gauguinpro`）+ 澎湃 OS 3 这套环境上测试过，其他机型未验证；模块按精确构建指纹门禁，不匹配时主动放弃覆盖、保持原生锁屏。
 - 「Xposed 框架」一行固定显示「未知」，是读取方式的限制，不是故障。
+
+## 下载
+
+当前版本 **v0.3.2**（versionCode 12，更新于 2026-10-09）。开源免费（AGPL-3.0），界面基于 HyperIsland（MIT）。
+
+{% note info %}
+应用内也能更新：`关于` 页 → `关于模块` → 检查更新，支持应用内下载并自动切换国内源重试。
+{% endnote %}
+
+- [GitHub Releases（含历史版本与校验信息）](https://github.com/zuige66/Hyper-MeloLock/releases)
+- [国内直链 v0.3.2](/downloads/melolock/Hyper-MeloLock-v0.3.2.apk)
+- 独立下载页：[/download/](/download/)
+
+安装要求与步骤见上方「一、下载安装」。
 
 ## 相关链接
 
