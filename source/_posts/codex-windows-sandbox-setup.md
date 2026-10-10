@@ -1,13 +1,13 @@
 ---
-　　title: Codex Windows 沙盒启动失败及解决办法
-　　date: 2026-09-07 14:10:00
-　　description: Codex 在 Windows 上无法启动受限终端、提示找不到 codex-windows-sandbox-setup.exe 时，可以将 Windows 沙盒实现从 elevated 切换为 unelevated，并重启 Codex。
-　　tags:
+title: Codex Windows 沙盒启动失败及解决办法
+date: 2026-09-07 14:10:00
+description: Codex 在 Windows 上无法启动受限终端、提示找不到 codex-windows-sandbox-setup.exe 时，可以将 Windows 沙盒实现从 elevated 切换为 unelevated，并重启 Codex。
+tags:
   - Codex
   - Windows
   - 故障排查
   - 沙盒
-　　categories:
+categories:
   - 技术
 ---
 

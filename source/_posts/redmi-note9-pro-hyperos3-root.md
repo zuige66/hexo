@@ -1,14 +1,14 @@
 ---
-　　title: 红米Note9 Pro刷澎湃OS3带Root
-　　date: 2026-10-07 20:00:00
-　　description: 记录 Redmi Note 9 Pro（gauguin）从 MIUI 14 线刷澎湃 OS 3，并通过 SukiSU Ultra 确认内核 Root 状态的过程。
-　　tags:
+title: 红米Note9Pro刷澎湃OS3+Root
+date: 2026-10-07 20:00:00
+description: 记录 Redmi Note 9 Pro（gauguin）从 MIUI 14 线刷澎湃 OS 3，并通过 SukiSU Ultra 确认内核 Root 状态的过程。
+tags:
   - 红米Note9 Pro
   - 澎湃OS
   - Root
   - 刷机
   - Android
-　　categories:
+categories:
   - 技术
 ---
 

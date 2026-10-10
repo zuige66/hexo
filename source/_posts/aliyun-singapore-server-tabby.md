@@ -1,14 +1,14 @@
 ---
-　　title: 轻量服务器入门
-　　date: 2026-09-23 15:00:00
-　　description: 记录购买阿里云新加坡轻量应用服务器后，如何检查防火墙、使用 Tabby 建立 SSH 连接、配置密钥登录并完成 Ubuntu 的基础初始化。
-　　tags:
+title: 轻量服务器入门
+date: 2026-09-23 15:00:00
+description: 记录购买阿里云新加坡轻量应用服务器后，如何检查防火墙、使用 Tabby 建立 SSH 连接、配置密钥登录并完成 Ubuntu 的基础初始化。
+tags:
   - 阿里云
   - 服务器
   - Ubuntu
   - Tabby
   - 教程
-　　categories:
+categories:
   - 技术
 ---
 

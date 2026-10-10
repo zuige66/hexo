@@ -1,14 +1,14 @@
 ---
-　　title: Tabby 和 MobaXterm 对比
-　　date: 2026-10-02 15:00:00
-　　description: 从实际使用感受出发，对比 Tabby 和 MobaXterm 的界面、SSH 操作、文件传输和适用场景，并记录两者最基础的连接方法。
-　　tags:
+title: Tabby 和 MobaXterm 对比
+date: 2026-10-02 15:00:00
+description: 从实际使用感受出发，对比 Tabby 和 MobaXterm 的界面、SSH 操作、文件传输和适用场景，并记录两者最基础的连接方法。
+tags:
   - Tabby
   - MobaXterm
   - SSH
   - 服务器
   - 教程
-　　categories:
+categories:
   - 技术
 ---
 

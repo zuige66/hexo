@@ -1,12 +1,12 @@
 ---
-　　title:  Giscus，让博客接入评论
-　　date: 2026-09-04
-　　tags:
+title:  Giscus，让博客接入评论
+date: 2026-09-04
+tags:
   - Hexo
   - Giscus
   - 评论系统
   - 教程
-　　categories:
+categories:
   - 技术
 ---
 

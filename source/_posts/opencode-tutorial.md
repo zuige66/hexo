@@ -1,11 +1,11 @@
 ---
-　　title: OpenCode 上手
-　　date: 2026-09-04
-　　tags:
+title: OpenCode 上手
+date: 2026-09-04
+tags:
   - AI
   - OpenCode
   - 教程
-　　categories:
+categories:
   - 技术
 ---
 
@@ -25,7 +25,7 @@
 | 开始菜单 | 搜索"命令提示符"或"PowerShell" |
 | 右键菜单 | 在文件资源管理器空白处右键 → "在终端中打开" |
 
-　　启动后确认路径前缀为 `C:\Users\<用户名>>` 即可。
+　　启动后确认路径前缀为 `C:\Users\<用户名>` 即可。
 
 ### 安装 Node.js
 

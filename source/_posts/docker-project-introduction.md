@@ -1,8 +1,8 @@
 ---
-　　title: Docker的认识与使用
-　　date: 2026-10-03 00:00:00
-　　categories: 技术
-　　tags:
+title: Docker的认识与使用
+date: 2026-10-03 00:00:00
+categories: 技术
+tags:
   - Docker
   - 部署
   - 运维

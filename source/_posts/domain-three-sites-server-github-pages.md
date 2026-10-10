@@ -1,13 +1,13 @@
 ---
-　　title: 低价购买顶级域名
-　　date: 2026-10-04 15:00:00
-　　description: 通过 Google Workspace 土耳其区注册顶级域名，使用地址生成器完成资料填写，并核验续费与取消 Workspace 试用。
-　　tags:
+title: 低价购买顶级域名
+date: 2026-10-04 15:00:00
+description: 通过 Google Workspace 土耳其区注册顶级域名，使用地址生成器完成资料填写，并核验续费与取消 Workspace 试用。
+tags:
   - 域名
   - Google Workspace
   - 顶级域名
   - 教程
-　　categories:
+categories:
   - 技术
 ---
 

@@ -1,11 +1,11 @@
 ---
-　　title:  Hexo + Fluid 搭建个人博客
-　　date: 2026-09-03 21:29:39
-　　tags:
+title:  Hexo + Fluid 搭建个人博客
+date: 2026-09-03 21:29:39
+tags:
   - 博客
   - Hexo
   - 教程
-　　categories:
+categories:
   - 技术
 ---
 
