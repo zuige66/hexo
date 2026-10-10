@@ -27,12 +27,12 @@
 <meta property="og:description" content="Hyper MeloLock，为澎湃 OS 3 打造的锁屏沉浸音乐模块：专辑封面铺成真壁纸、时钟跟随取色、完整播放控制，附下载地址与安装步骤。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://blog.zuiges.com/img/hyper-melolock/lockscreen-colors.jpg">
-<meta property="og:image" content="https://blog.zuiges.com/img/hyper-melolock/app-home.jpg">
-<meta property="og:image" content="https://blog.zuiges.com/img/hyper-melolock/app-about.jpg">
+<meta property="og:image" content="https://blog.zuiges.com/img/hyper-melolock/app-home.jpg?v=2">
+<meta property="og:image" content="https://blog.zuiges.com/img/hyper-melolock/app-about.jpg?v=2">
 <meta property="og:image" content="https://blog.zuiges.com/img/hyper-melolock/app-appearance.jpg">
 <meta property="og:image" content="https://blog.zuiges.com/img/hyper-melolock/app-appearance-picker.jpg">
 <meta property="article:published_time" content="2026-10-09T06:00:00.000Z">
-<meta property="article:modified_time" content="2026-10-09T06:02:48.912Z">
+<meta property="article:modified_time" content="2026-10-10T01:38:55.023Z">
 <meta property="article:author" content="zuige">
 <meta property="article:tag" content="LSPosed">
 <meta property="article:tag" content="Xposed">
@@ -349,7 +349,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.7k 字
+          1.8k 字
         
       </span>
     
@@ -360,7 +360,7 @@
         
         
         
-          14 分钟
+          16 分钟
         
       </span>
     
@@ -408,10 +408,10 @@
 <p>模块通过 Vector &#x2F; LSPosed 框架注入系统界面，不修改任何音乐播放器，也不改系统 APK。默认关闭、失败关闭：找不到锁屏视图或媒体数据无效时，立刻恢复原生锁屏。</p>
 <p><img src="/img/hyper-melolock/lockscreen-colors.jpg" srcset="/img/loading.gif" lazyload alt="四种配色方案的锁屏效果"></p>
 <h2 id="一、下载安装"><a href="#一、下载安装" class="headerlink" title="一、下载安装"></a>一、下载安装</h2><h3 id="下载地址"><a href="#下载地址" class="headerlink" title="下载地址"></a>下载地址</h3><ul>
-<li>GitHub 发布页：<a target="_blank" rel="noopener" href="https://github.com/zuige66/Hyper-MeloLock/releases">https://github.com/zuige66/Hyper-MeloLock/releases</a></li>
-<li>最新版 APK 直链：<a target="_blank" rel="noopener" href="https://github.com/zuige66/Hyper-MeloLock/releases/download/v0.3.1/Hyper-MeloLock-v0.3.1.apk">Hyper-MeloLock-v0.3.1.apk</a></li>
+<li>GitHub 发布页：<a target="_blank" rel="noopener" href="https://github.com/zuige66/Hyper-MeloLock/releases">Hyper-MeloLock Releases</a>（含历史版本与校验信息）</li>
+<li>最新版国内直链：<a href="/downloads/melolock/Hyper-MeloLock-v0.3.2.apk">Hyper-MeloLock-v0.3.2.apk</a></li>
 </ul>
-<p>只从 GitHub Releases 下载正式签名包。模块作用于系统锁屏界面，来源不明的二次打包版本有风险。</p>
+<p>只从 GitHub Releases 或本博客直链下载正式签名包。模块作用于系统锁屏界面，来源不明的二次打包版本有风险。</p>
 <h3 id="安装前提"><a href="#安装前提" class="headerlink" title="安装前提"></a>安装前提</h3><table>
 <thead>
 <tr>
@@ -451,8 +451,8 @@
 <p>成功标志：锁屏出现大号时间和全屏封面，底部有播放控制条；配置端首页显示系统版本与「已激活」。</p>
 <table>
 <tr>
-<td align="center" width="50%"><img src="/img/hyper-melolock/app-home.jpg" srcset="/img/loading.gif" lazyload width="300" alt="配置端首页"/><br/><b>配置端首页</b><br/>开关状态 · 已开启应用 · 系统信息</td>
-<td align="center" width="50%"><img src="/img/hyper-melolock/app-about.jpg" srcset="/img/loading.gif" lazyload width="300" alt="关于页"/><br/><b>关于页</b><br/>开发者信息 · 检查更新</td>
+<td align="center" width="50%"><img src="/img/hyper-melolock/app-home.jpg?v=2" srcset="/img/loading.gif" lazyload width="300" alt="配置端首页"/><br/><b>配置端首页</b><br/>开关状态 · 已开启应用 · 系统信息</td>
+<td align="center" width="50%"><img src="/img/hyper-melolock/app-about.jpg?v=2" srcset="/img/loading.gif" lazyload width="300" alt="关于页"/><br/><b>关于页</b><br/>开发者信息 · 检查更新</td>
 </tr>
 </table>
 
@@ -486,6 +486,17 @@
 <li>目前只在 Redmi Note 9 Pro（<code>gauguinpro</code>）+ 澎湃 OS 3 这套环境上测试过，其他机型未验证；模块按精确构建指纹门禁，不匹配时主动放弃覆盖、保持原生锁屏。</li>
 <li>「Xposed 框架」一行固定显示「未知」，是读取方式的限制，不是故障。</li>
 </ul>
+<h2 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h2><p>当前版本 <strong>v0.3.2</strong>（versionCode 12，更新于 2026-10-09）。开源免费（AGPL-3.0），界面基于 HyperIsland（MIT）。</p>
+<div class="note note-info">
+            <p>应用内也能更新：<code>关于</code> 页 → <code>关于模块</code> → 检查更新，支持应用内下载并自动切换国内源重试。</p> 
+          </div>
+
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/zuige66/Hyper-MeloLock/releases">GitHub Releases（含历史版本与校验信息）</a></li>
+<li><a href="/downloads/melolock/Hyper-MeloLock-v0.3.2.apk">国内直链 v0.3.2</a></li>
+<li>独立下载页：<a href="/download/">&#x2F;download&#x2F;</a></li>
+</ul>
+<p>安装要求与步骤见上方「一、下载安装」。</p>
 <h2 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h2><ul>
 <li>代码仓库：<a target="_blank" rel="noopener" href="https://github.com/zuige66/Hyper-MeloLock">https://github.com/zuige66/Hyper-MeloLock</a></li>
 <li>问题反馈：<a target="_blank" rel="noopener" href="https://github.com/zuige66/Hyper-MeloLock/issues">GitHub Issues</a></li>

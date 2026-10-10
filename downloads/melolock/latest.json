@@ -1,1 +1,1 @@
-{"versionName":"0.3.1","versionCode":11,"changelog":"新增：取色风格（磨砂/鲜艳）每项独立、主色来源（占比优先）、外观页折叠卡与分组恢复默认、去掉锁定比例。修复：改外观不必再关开模块（元素指纹取错数据源的根因级修复）。","apkUrl":"https://blog.zuiges.com/downloads/melolock/Hyper-MeloLock-v0.3.1.apk"}
+{"versionName":"0.3.2","versionCode":12,"changelog":"新增：更多机型支持（澎湃OS 3 各机型均可启用，未验证机型会提示反馈）、QQ 交流群入口。修复：检查更新能检测到新版但下载失败的问题（下载自动切换国内源重试）。优化：首页系统版本/框架/机型信息打开即显示，不再等待。","apkUrl":"https://blog.zuiges.com/downloads/melolock/Hyper-MeloLock-v0.3.2.apk"}
