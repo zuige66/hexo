@@ -1,5 +1,5 @@
 ---
-title: 让澎湃OS锁屏铺满专辑封面
+title: Hyper MeloLock 沉浸式音乐锁屏
 date: 2026-10-09 14:00:00
 description: Hyper MeloLock，为澎湃 OS 3 打造的锁屏沉浸音乐模块：专辑封面铺成真壁纸、时钟跟随取色、完整播放控制，附下载地址与安装步骤。
 tags:
@@ -57,9 +57,18 @@ Hyper MeloLock 是一个开源免费的澎湃 OS 3 锁屏音乐模块：正在�
 </tr>
 </table>
 
-## 二、外观可以调什么
+## 二、使用说明
 
-外观页里每一项都能实时调整，改完回到锁屏立即生效，不需要重启。基础可调项：
+装好之后，日常使用按下面四步操作。
+
+1. **激活模块与作用域**：在 LSPosed / Vector 管理器里勾选并激活 Hyper MeloLock，作用域要勾选 `com.android.systemui`（必须）与 `com.miui.miwallpaper`（封面壁纸化）；之后重启手机生效。
+2. **勾选音乐应用**：打开 Hyper MeloLock，在「应用」页勾选实际使用的音乐播放器，默认一个都不勾。
+3. **调整外观**：在「外观」页调个性搭配，详见下方「外观调整」与「取色」说明。
+4. **开关模块**：首页左上角显示「已激活」的地方点击一下即可关闭模块，再点一下重新开启。
+
+### 外观调整
+
+「外观」页里每一项都能实时调整，改完回到锁屏立即生效，不需要重启。基础可调项：
 
 - 时间：字号、粗细、圆润、颜色、上间距，还可以单独加描边；
 - 封面：缩放、圆角；
@@ -68,8 +77,8 @@ Hyper MeloLock 是一个开源免费的澎湃 OS 3 锁屏音乐模块：正在�
 
 <table>
 <tr>
-<td align="center" width="50%"><img src="/img/hyper-melolock/app-appearance.jpg" width="300" alt="外观分组页"/><br/><b>外观分组</b><br/>取色 · 日期 · 签名 · 时间 · 封面 · 播放器</td>
-<td align="center" width="50%"><img src="/img/hyper-melolock/app-appearance-picker.jpg" width="300" alt="时间取色设置"/><br/><b>时间取色</b><br/>跟随封面 / 固定色 · 取色风格（M3E / 鲜艳原色）</td>
+<td align="center" width="50%"><img src="/img/hyper-melolock/app-appearance.jpg?v=2" width="300" alt="外观分组页"/><br/><b>外观分组</b><br/>取色 · 日期 · 签名 · 时间 · 封面 · 播放器</td>
+<td align="center" width="50%"><img src="/img/hyper-melolock/app-appearance-picker.jpg?v=2" width="300" alt="时间取色设置"/><br/><b>时间取色</b><br/>跟随封面 / 固定色 · 取色风格（M3E / 鲜艳原色）</td>
 </tr>
 </table>
 
@@ -94,19 +103,6 @@ Hyper MeloLock 是一个开源免费的澎湃 OS 3 锁屏音乐模块：正在�
 - 目前只在 Redmi Note 9 Pro（`gauguinpro`）+ 澎湃 OS 3 这套环境上测试过，其他机型未验证；模块按精确构建指纹门禁，不匹配时主动放弃覆盖、保持原生锁屏。
 - 「Xposed 框架」一行固定显示「未知」，是读取方式的限制，不是故障。
 
-## 下载
-
-当前版本 **v0.3.2**（versionCode 12，更新于 2026-10-09）。开源免费（AGPL-3.0），界面基于 HyperIsland（MIT）。
-
-{% note info %}
-应用内也能更新：`关于` 页 → `关于模块` → 检查更新，支持应用内下载并自动切换国内源重试。
-{% endnote %}
-
-- [GitHub Releases（含历史版本与校验信息）](https://github.com/zuige66/Hyper-MeloLock/releases)
-- [国内直链 v0.3.2](/downloads/melolock/Hyper-MeloLock-v0.3.2.apk)
-- 独立下载页：[/download/](/download/)
-
-安装要求与步骤见上方「一、下载安装」。
 
 ## 相关链接
 
