@@ -1,20 +1,26 @@
 ---
-title: 下载
+title: 下载 Hyper MeloLock
 layout: page
+comment: false
+toc: false
 ---
 
-# Hyper MeloLock 下载
+# 下载 Hyper MeloLock
 
-**当前版本：v0.3.2（versionCode 12） · 更新于 2026-10-09**
+**当前版本 v0.3.2（versionCode 12） · 更新于 2026-10-09**
 
-澎湃 OS 3 锁屏沉浸音乐覆盖层，播放音乐自动接管锁屏：全屏专辑封面、悬浮播放器卡片、时钟样式可调、封面壁纸化。
+澎湃 OS 3 锁屏沉浸音乐覆盖层，播放音乐时自动接管锁屏：全屏专辑封面、悬浮播放器卡片、时钟样式可调、封面壁纸化。开源免费（AGPL-3.0），界面基于 HyperIsland（MIT）。
+
+{% note info %}
+应用内也能更新：`关于` 页 → `关于模块` → 检查更新，支持应用内下载并自动切换国内源重试。
+{% endnote %}
 
 ## 下载
 
-- [GitHub Releases（推荐）](https://github.com/zuige66/Hyper-MeloLock/releases/latest)
+- [GitHub Releases（推荐，含历史版本与校验信息）](https://github.com/zuige66/Hyper-MeloLock/releases)
 - [国内直链 v0.3.2](/downloads/melolock/Hyper-MeloLock-v0.3.2.apk)
 
-> 应用内也有「检查更新」：`关于` 页 → `关于模块` → 检查更新，支持应用内下载与自动切换国内源。
+只从 GitHub Releases 或本博客直链下载正式签名包。模块作用于系统锁屏界面，来源不明的二次打包版本有风险。
 
 ## 安装要求
 
