@@ -19,27 +19,23 @@
   <meta name="author" content="zuige">
   <meta name="keywords" content="">
   
-    <meta name="description" content="前言静态博客没有后端，评论数据无处存储。Giscus 基于 GitHub Discussions，免费、稳定、支持 Markdown，是 Hexo 博客的最佳评论方案之一。 本文记录从零接入 Giscus 的完整流程，包括踩坑点。 一、GitHub 仓库准备1.1 开启 Discussions进入博客 GitHub 仓库 → Settings → Features → 勾选 Discussions">
+    <meta name="description" content="最近开始管理自己的服务器，最先接触的是 Tabby，后来又开始使用 MobaXterm。两者都能通过 SSH 连接 Linux 服务器，也都能保存连接信息、使用密钥、传文件；但实际用下来，手感并不一样。 　　我现在更常用 MobaXterm。它的界面不如 Tabby 简洁好看，但在 SSH 里输入和执行命令时，我这边感觉更跟手、更稳定。Tabby 的图形化界面和标签页设计我很喜欢，不过连接服务">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Giscus，让博客接入评论">
-<meta property="og:url" content="https://blog.zuiges.com/2026/09/04/hexo-giscus-guide/index.html">
+<meta property="og:title" content="zuige&#39;s blog">
+<meta property="og:url" content="https://blog.zuiges.com/2026/10/03/tabby-vs-mobaxterm-ssh-key-docker/index.html">
 <meta property="og:site_name" content="zuige&#39;s blog">
-<meta property="og:description" content="前言静态博客没有后端，评论数据无处存储。Giscus 基于 GitHub Discussions，免费、稳定、支持 Markdown，是 Hexo 博客的最佳评论方案之一。 本文记录从零接入 Giscus 的完整流程，包括踩坑点。 一、GitHub 仓库准备1.1 开启 Discussions进入博客 GitHub 仓库 → Settings → Features → 勾选 Discussions">
+<meta property="og:description" content="最近开始管理自己的服务器，最先接触的是 Tabby，后来又开始使用 MobaXterm。两者都能通过 SSH 连接 Linux 服务器，也都能保存连接信息、使用密钥、传文件；但实际用下来，手感并不一样。 　　我现在更常用 MobaXterm。它的界面不如 Tabby 简洁好看，但在 SSH 里输入和执行命令时，我这边感觉更跟手、更稳定。Tabby 的图形化界面和标签页设计我很喜欢，不过连接服务">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2026-09-03T16:00:00.000Z">
-<meta property="article:modified_time" content="2026-09-06T06:43:01.398Z">
+<meta property="article:published_time" content="2026-10-02T16:18:12.833Z">
+<meta property="article:modified_time" content="2026-10-10T16:03:53.479Z">
 <meta property="article:author" content="zuige">
-<meta property="article:tag" content="Giscus">
-<meta property="article:tag" content="Hexo">
-<meta property="article:tag" content="教程">
-<meta property="article:tag" content="评论系统">
 <meta name="twitter:card" content="summary_large_image">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Giscus，让博客接入评论 - zuige&#39;s blog</title>
+  <title>zuige&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -319,7 +315,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Giscus，让博客接入评论"></span>
+            <span id="subtitle" data-typed-text=""></span>
           
         </div>
 
@@ -330,8 +326,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2026-09-04 00:00" pubdate>
-          2026年9月4日 凌晨
+        <time datetime="2026-10-03 00:18" pubdate>
+          2026年10月3日 凌晨
         </time>
       </span>
     
@@ -342,7 +338,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.3k 字
+          3.1k 字
         
       </span>
     
@@ -353,7 +349,7 @@
         
         
         
-          20 分钟
+          27 分钟
         
       </span>
     
@@ -392,124 +388,110 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Giscus，让博客接入评论</h1>
+            <h1 id="seo-header"></h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>静态博客没有后端，评论数据无处存储。Giscus 基于 GitHub Discussions，免费、稳定、支持 Markdown，是 Hexo 博客的最佳评论方案之一。</p>
-<p>本文记录从零接入 Giscus 的完整流程，包括踩坑点。</p>
-<h2 id="一、GitHub-仓库准备"><a href="#一、GitHub-仓库准备" class="headerlink" title="一、GitHub 仓库准备"></a>一、GitHub 仓库准备</h2><h3 id="1-1-开启-Discussions"><a href="#1-1-开启-Discussions" class="headerlink" title="1.1 开启 Discussions"></a>1.1 开启 Discussions</h3><p>进入博客 GitHub 仓库 → Settings → Features → 勾选 <strong>Discussions</strong>。</p>
-<h3 id="1-2-创建-Announcement-分类"><a href="#1-2-创建-Announcement-分类" class="headerlink" title="1.2 创建 Announcement 分类"></a>1.2 创建 Announcement 分类</h3><p>进入仓库 → Discussions → 右侧 <code>Edit categories</code> → <code>New category</code>：</p>
-<ul>
-<li>名称：<code>Announcements</code></li>
-<li><strong>类型必须选 Announcement（公告）</strong></li>
-</ul>
-<blockquote>
-<p>这一步很关键。如果选成 General，访客可以在仓库里随意新建帖子，造成混乱。Announcement 类型下，只有 Giscus 机器人能创建主帖，访客只能回复。</p>
-</blockquote>
-<h3 id="1-3-安装-Giscus-应用"><a href="#1-3-安装-Giscus-应用" class="headerlink" title="1.3 安装 Giscus 应用"></a>1.3 安装 Giscus 应用</h3><p>访问 <a target="_blank" rel="noopener" href="https://github.com/apps/giscus">https://github.com/apps/giscus</a> ，点击 Install。</p>
-<ul>
-<li>只授权你的博客仓库</li>
-<li>不要全仓库授权</li>
-</ul>
-<h2 id="二、Giscus-官网配置"><a href="#二、Giscus-官网配置" class="headerlink" title="二、Giscus 官网配置"></a>二、Giscus 官网配置</h2><p>访问 <a target="_blank" rel="noopener" href="https://giscus.app/zh-CN">https://giscus.app/zh-CN</a> ，按以下步骤配置：</p>
-<h3 id="2-1-仓库"><a href="#2-1-仓库" class="headerlink" title="2.1 仓库"></a>2.1 仓库</h3><p>填入：<code>用户名/仓库名</code>（如 <code>zuige66/hexo</code>）</p>
-<h3 id="2-2-映射方式"><a href="#2-2-映射方式" class="headerlink" title="2.2 映射方式"></a>2.2 映射方式</h3><p>选择：<strong>Discussion 的标题包含页面的 pathname</strong></p>
-<p>这种方式下，每篇文章的 URL 路径会作为 Discussion 的标题，一一对应。</p>
-<h3 id="2-3-Discussion-分类"><a href="#2-3-Discussion-分类" class="headerlink" title="2.3 Discussion 分类"></a>2.3 Discussion 分类</h3><p>选择：<code>Announcements</code></p>
-<h3 id="2-4-特性勾选"><a href="#2-4-特性勾选" class="headerlink" title="2.4 特性勾选"></a>2.4 特性勾选</h3><table>
+                <p>　　最近开始管理自己的服务器，最先接触的是 Tabby，后来又开始使用 MobaXterm。两者都能通过 SSH 连接 Linux 服务器，也都能保存连接信息、使用密钥、传文件；但实际用下来，手感并不一样。</p>
+<p>　　我现在更常用 MobaXterm。它的界面不如 Tabby 简洁好看，但在 SSH 里输入和执行命令时，我这边感觉更跟手、更稳定。Tabby 的图形化界面和标签页设计我很喜欢，不过连接服务器后输入命令偶尔有一点卡顿，不太舒服。这篇只记录两款 SSH 工具的区别和最基础用法，不讨论服务器部署方案。</p>
+<p>　　文中用 <code>YOUR_SERVER_IP</code> 代替服务器地址，用 <code>root</code> 作为示例用户名。实际连接时要换成自己的公网 IP、端口和用户名；不要把密码、私钥或真实服务器信息发到公开文章和截图里。</p>
+<h2 id="一、先说结论"><a href="#一、先说结论" class="headerlink" title="一、先说结论"></a>一、先说结论</h2><p>　　如果主要在 Windows 上管理服务器，希望 SSH 终端输入顺畅、连接后能直接看到服务器文件，并且偶尔会用到远程桌面、X11 或其他远程协议，我更推荐先试 <strong>MobaXterm</strong>。</p>
+<p>　　如果在意界面美观、希望在 Windows、macOS 和 Linux 上使用同一款终端，或者偏好标签页、分屏和可定制的终端体验，<strong>Tabby</strong> 更值得尝试。</p>
+<p>　　它们没有谁绝对更好。SSH 最重要的是“自己输入命令时是否舒服、连接是否稳定”。我现在把 MobaXterm 当作主力连接工具，Tabby 留作界面更轻松、需要多标签浏览时的选择。</p>
+<h2 id="二、两个工具分别是什么"><a href="#二、两个工具分别是什么" class="headerlink" title="二、两个工具分别是什么"></a>二、两个工具分别是什么</h2><h3 id="Tabby：更像现代终端"><a href="#Tabby：更像现代终端" class="headerlink" title="Tabby：更像现代终端"></a>Tabby：更像现代终端</h3><p>　　Tabby 是跨平台终端工具，支持 Windows、macOS 和 Linux。它本身可以管理 SSH 连接，也支持标签页、分屏、SFTP、跳板机和端口转发等功能。<a target="_blank" rel="noopener" href="https://tabby.sh/about/features">Tabby 官方功能页</a></p>
+<p>　　它给我的第一感觉是界面清爽：配置、主题、标签页和分屏都做得比较现代。如果平时除了 SSH，还经常在本机开 PowerShell、Git Bash 或 WSL，Tabby 可以把这些终端放在同一个界面里管理。</p>
+<h3 id="MobaXterm：更像-Windows-上的远程工具箱"><a href="#MobaXterm：更像-Windows-上的远程工具箱" class="headerlink" title="MobaXterm：更像 Windows 上的远程工具箱"></a>MobaXterm：更像 Windows 上的远程工具箱</h3><p>　　MobaXterm 更偏向 Windows 的“一体化远程连接工具”。除 SSH 外，它还集成了 SFTP 文件浏览、RDP、VNC、FTP、X11 等功能。<a target="_blank" rel="noopener" href="https://mobaxterm.mobatek.net/documentation.html">MobaXterm 官方文档</a></p>
+<p>　　我喜欢它的一点是：通过 SSH 成功登录后，通常可以在左侧直接看到服务器文件目录，不必再额外开一个传输软件。对于刚接触服务器的人来说，这种“终端和文件都在一页”的形式很直观。</p>
+<h2 id="三、详细对比"><a href="#三、详细对比" class="headerlink" title="三、详细对比"></a>三、详细对比</h2><table>
 <thead>
 <tr>
-<th>选项</th>
-<th>建议</th>
+<th>项目</th>
+<th>Tabby</th>
+<th>MobaXterm</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>启用主帖子上的反应</td>
-<td>✅ 勾选</td>
+<td>平台</td>
+<td>Windows、macOS、Linux</td>
+<td>以 Windows 为主</td>
 </tr>
 <tr>
-<td>将评论框放在评论上方</td>
-<td>✅ 勾选</td>
+<td>界面风格</td>
+<td>简洁、现代，主题和终端体验更突出</td>
+<td>功能密集，更像传统远程管理工具</td>
 </tr>
 <tr>
-<td>懒加载评论</td>
-<td>✅ 勾选</td>
+<td>SSH 输入体验</td>
+<td>我的环境里偶尔感觉有轻微卡顿</td>
+<td>我的环境里输入和回显更跟手</td>
 </tr>
 <tr>
-<td>输出 discussion 的元数据</td>
-<td>☐ 不勾选</td>
+<td>保存连接</td>
+<td>可以保存 SSH 配置，方便复用</td>
+<td>可以保存 Session，适合管理多台机器</td>
+</tr>
+<tr>
+<td>文件传输</td>
+<td>支持 SFTP</td>
+<td>SSH 连接后常可直接使用左侧 SFTP 文件树</td>
+</tr>
+<tr>
+<td>分屏与标签页</td>
+<td>标签页、分屏是强项</td>
+<td>也支持多会话和标签页，重点偏远程管理</td>
+</tr>
+<tr>
+<td>其他协议</td>
+<td>重点是终端与 SSH 工作流</td>
+<td>集成 RDP、VNC、FTP、X11 等更多工具</td>
+</tr>
+<tr>
+<td>更适合谁</td>
+<td>喜欢现代终端、跨平台使用的人</td>
+<td>Windows 上管理服务器、希望一站式操作的人</td>
 </tr>
 </tbody></table>
-<h3 id="2-5-主题配色"><a href="#2-5-主题配色" class="headerlink" title="2.5 主题配色"></a>2.5 主题配色</h3><p>选择：<strong>用户偏好的色彩方案</strong></p>
-<p>这样评论区会自动跟随博客的亮色&#x2F;暗色模式切换。</p>
-<h3 id="2-6-复制代码"><a href="#2-6-复制代码" class="headerlink" title="2.6 复制代码"></a>2.6 复制代码</h3><p>页面会生成一段 <code>&lt;script&gt;</code> 代码，类似：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://giscus.app/client.js&quot;</span></span><br><span class="hljs-tag">        <span class="hljs-attr">data-repo</span>=<span class="hljs-string">&quot;zuige66/hexo&quot;</span></span><br><span class="hljs-tag">        <span class="hljs-attr">data-repo-id</span>=<span class="hljs-string">&quot;R_kgDOUNLYKw&quot;</span></span><br><span class="hljs-tag">        <span class="hljs-attr">data-category</span>=<span class="hljs-string">&quot;Announcements&quot;</span></span><br><span class="hljs-tag">        <span class="hljs-attr">data-category-id</span>=<span class="hljs-string">&quot;DIC_kwDOUNLYK84DE1jw&quot;</span></span><br><span class="hljs-tag">        <span class="hljs-attr">data-mapping</span>=<span class="hljs-string">&quot;pathname&quot;</span></span><br><span class="hljs-tag">        <span class="hljs-attr">data-strict</span>=<span class="hljs-string">&quot;0&quot;</span></span><br><span class="hljs-tag">        <span class="hljs-attr">data-reactions-enabled</span>=<span class="hljs-string">&quot;1&quot;</span></span><br><span class="hljs-tag">        <span class="hljs-attr">data-emit-metadata</span>=<span class="hljs-string">&quot;0&quot;</span></span><br><span class="hljs-tag">        <span class="hljs-attr">data-input-position</span>=<span class="hljs-string">&quot;top&quot;</span></span><br><span class="hljs-tag">        <span class="hljs-attr">data-theme</span>=<span class="hljs-string">&quot;preferred_color_scheme&quot;</span></span><br><span class="hljs-tag">        <span class="hljs-attr">data-lang</span>=<span class="hljs-string">&quot;zh-CN&quot;</span></span><br><span class="hljs-tag">        <span class="hljs-attr">data-loading</span>=<span class="hljs-string">&quot;lazy&quot;</span></span><br><span class="hljs-tag">        <span class="hljs-attr">crossorigin</span>=<span class="hljs-string">&quot;anonymous&quot;</span></span><br><span class="hljs-tag">        <span class="hljs-attr">async</span>&gt;</span><span class="language-javascript"></span><br><span class="language-javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br></code></pre></td></tr></table></figure>
-
-<p>记住里面的 <code>repo-id</code> 和 <code>category-id</code>，下一步要用。</p>
-<h2 id="三、嵌入-Hexo-博客"><a href="#三、嵌入-Hexo-博客" class="headerlink" title="三、嵌入 Hexo 博客"></a>三、嵌入 Hexo 博客</h2><h3 id="3-1-编辑主题配置"><a href="#3-1-编辑主题配置" class="headerlink" title="3.1 编辑主题配置"></a>3.1 编辑主题配置</h3><p>打开 <code>_config.fluid.yml</code>，添加两处配置：</p>
-<p><strong>启用评论（在 post 段落内）：</strong></p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">post:</span><br>  <span class="hljs-comment"># ... 其他配置</span><br>  <span class="hljs-attr">comments:</span><br>    <span class="hljs-attr">enable:</span> <span class="hljs-literal">true</span><br>    <span class="hljs-attr">type:</span> <span class="hljs-string">giscus</span><br></code></pre></td></tr></table></figure>
-
-<p><strong>Giscus 参数（文件末尾添加）：</strong></p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">giscus:</span><br>  <span class="hljs-attr">repo:</span> <span class="hljs-string">zuige66/hexo</span><br>  <span class="hljs-attr">repo-id:</span> <span class="hljs-string">R_kgDOUNLYKw</span><br>  <span class="hljs-attr">category:</span> <span class="hljs-string">Announcements</span><br>  <span class="hljs-attr">category-id:</span> <span class="hljs-string">DIC_kwDOUNLYK84DE1jw</span><br>  <span class="hljs-attr">mapping:</span> <span class="hljs-string">pathname</span><br>  <span class="hljs-attr">strict:</span> <span class="hljs-number">0</span><br>  <span class="hljs-attr">reactions-enabled:</span> <span class="hljs-number">1</span><br>  <span class="hljs-attr">emit-metadata:</span> <span class="hljs-number">0</span><br>  <span class="hljs-attr">input-position:</span> <span class="hljs-string">top</span><br>  <span class="hljs-attr">theme-light:</span> <span class="hljs-string">light</span><br>  <span class="hljs-attr">theme-dark:</span> <span class="hljs-string">dark</span><br>  <span class="hljs-attr">lang:</span> <span class="hljs-string">zh-CN</span><br></code></pre></td></tr></table></figure>
-
-<blockquote>
-<p>注意：Fluid 主题要求 <code>theme-light</code> 和 <code>theme-dark</code> 两个字段，不要写成 <code>theme</code>。</p>
-</blockquote>
-<h3 id="3-2-部署"><a href="#3-2-部署" class="headerlink" title="3.2 部署"></a>3.2 部署</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">hexo clean &amp;&amp; hexo deploy<br></code></pre></td></tr></table></figure>
-
-<h2 id="四、上线后验证"><a href="#四、上线后验证" class="headerlink" title="四、上线后验证"></a>四、上线后验证</h2><ol>
-<li>访问线上博客文章页面，滚动到底部</li>
-<li>首次访问某篇文章时，Giscus 机器人会自动在仓库 Announcements 分类下创建一条 Discussion 主帖（标题是文章路径）</li>
-<li>用 GitHub 账号登录后即可发表评论</li>
-<li>未登录的访客可以查看评论，登录后可回复</li>
+<h3 id="界面与使用感"><a href="#界面与使用感" class="headerlink" title="界面与使用感"></a>界面与使用感</h3><p>　　Tabby 的配置页面、图标、主题和标签栏都很舒服，适合长时间打开很多终端窗口。它的分屏也方便，例如左边查看日志、右边执行命令，或者同时连两台服务器。</p>
+<p>　　MobaXterm 的界面信息更多，刚开始可能显得有点复杂；但它把常用的远程操作摆得很直接。尤其是 SSH 登录成功后左侧的 SFTP 文件树，上传、下载、拖拽文件会比较省事。</p>
+<h3 id="命令输入为什么可能感觉卡"><a href="#命令输入为什么可能感觉卡" class="headerlink" title="命令输入为什么可能感觉卡"></a>命令输入为什么可能感觉卡</h3><p>　　SSH 命令输入的卡顿不一定是 Tabby 本身的问题，也可能来自网络延迟、服务器负载、终端渲染、字体或插件。因为我在 MobaXterm 中感觉更顺，所以目前选择它做主要工具；这只是我的实际体验，不代表 Tabby 在所有电脑和服务器上都会慢。</p>
+<p>　　如果想判断问题在哪，可以用同一台服务器、同一个网络、同一个账号分别测试两款工具：连续输入几行短命令，观察字符是否立即回显；再运行 <code>ping</code>、<code>top</code> 之类的命令看网络和服务器是否本身有延迟。若只有 Tabby 卡，优先检查它的主题、字体、插件或关闭后重新打开测试；若两边都卡，更可能是网络或服务器状态造成的。</p>
+<h2 id="四、MobaXterm-的基础用法"><a href="#四、MobaXterm-的基础用法" class="headerlink" title="四、MobaXterm 的基础用法"></a>四、MobaXterm 的基础用法</h2><p>　　下面是我现在更常用的连接方式。</p>
+<h3 id="新建-SSH-会话"><a href="#新建-SSH-会话" class="headerlink" title="新建 SSH 会话"></a>新建 SSH 会话</h3><ol>
+<li>打开 MobaXterm，点击左上角的 <strong>Session</strong>。</li>
+<li>选择 <strong>SSH</strong>。</li>
+<li>在 <strong>Remote host</strong> 填写服务器公网 IP，例如 <code>YOUR_SERVER_IP</code>。</li>
+<li>勾选 <strong>Specify username</strong>，填写服务器用户名，例如 <code>root</code>。</li>
+<li>SSH 端口默认是 <code>22</code>；如果服务器改过端口，在 Port 中填实际数字。</li>
+<li>点击 <strong>OK</strong> 连接。第一次连接会要求确认服务器主机指纹，确认目标确实是自己的服务器后再接受。</li>
 </ol>
-<blockquote>
-<p>本地 <code>hexo s</code> 预览只能看到评论区 UI 框架，不会真正创建 Discussion。必须部署到线上才能正常使用。</p>
-</blockquote>
-<h2 id="五、工作原理"><a href="#五、工作原理" class="headerlink" title="五、工作原理"></a>五、工作原理</h2><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs dart">文章 URL: /<span class="hljs-number">2026</span>/<span class="hljs-number">09</span>/<span class="hljs-number">04</span>/my-post/<br>        ↓<br><span class="hljs-title class_">Giscus</span> 根据 pathname 查找对应的 <span class="hljs-title class_">Discussion</span><br>        ↓<br>找到 → 显示评论<br>没找到 → 自动创建新的 <span class="hljs-title class_">Discussion</span> 主帖<br>        ↓<br>评论存储在 <span class="hljs-title class_">GitHub</span> <span class="hljs-title class_">Discussions</span><br></code></pre></td></tr></table></figure>
-
+<p>　　首次使用密码登录时，终端会要求输入服务器密码。输入时屏幕通常不会显示星号或字符，这是正常的，输完直接按 Enter 即可。</p>
+<p>　　连接成功后，MobaXterm 会把这台机器保存到左侧的 Sessions 列表。之后双击该会话就能重新连接，不必每次再填 IP 和用户名。</p>
+<h3 id="用左侧-SFTP-面板传文件"><a href="#用左侧-SFTP-面板传文件" class="headerlink" title="用左侧 SFTP 面板传文件"></a>用左侧 SFTP 面板传文件</h3><p>　　SSH 登录成功后，MobaXterm 通常会在左侧显示服务器文件目录。这是基于 SFTP 的文件浏览器。</p>
 <ul>
-<li>每篇文章 &#x3D; 1 个 Discussion 主帖</li>
-<li>所有评论都是该主帖下的 Reply</li>
-<li>只要文章路径不变，修改标题不会丢失历史评论</li>
+<li>从本地向服务器上传：把文件拖进左侧对应目录，或使用上传按钮。</li>
+<li>从服务器下载：选中服务器文件，再选择下载到本地的位置。</li>
+<li>新建、重命名或删除文件：先确认当前路径和目标文件，再用右键菜单操作。</li>
 </ul>
-<h3 id="自定义评论区标题"><a href="#自定义评论区标题" class="headerlink" title="自定义评论区标题"></a>自定义评论区标题</h3><p>Giscus 默认用文章路径作为 Discussion 标题。如需自定义，可在 giscus.app 配置时修改映射方式。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><table>
-<thead>
-<tr>
-<th>步骤</th>
-<th>操作</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>1</td>
-<td>仓库开启 Discussions</td>
-</tr>
-<tr>
-<td>2</td>
-<td>创建 Announcement 分类</td>
-</tr>
-<tr>
-<td>3</td>
-<td>安装 Giscus 应用并授权</td>
-</tr>
-<tr>
-<td>4</td>
-<td>giscus.app 配置并获取参数</td>
-</tr>
-<tr>
-<td>5</td>
-<td><code>_config.fluid.yml</code> 添加 giscus 配置</td>
-</tr>
-<tr>
-<td>6</td>
-<td>部署上线验证</td>
-</tr>
-</tbody></table>
-<p>整个流程约 15 分钟完成，无需服务器，无需付费。</p>
+<p>　　命令行和 SFTP 面板看到的是同一台服务器、同一个登录用户的文件。比如终端显示在 <code>/root</code>，左侧文件树通常也是这个用户有权限访问的位置。涉及删除或覆盖时，我会先在终端用 <code>pwd</code> 和 <code>ls -la</code> 确认目录，再操作文件面板。</p>
+<h3 id="常用的几个界面操作"><a href="#常用的几个界面操作" class="headerlink" title="常用的几个界面操作"></a>常用的几个界面操作</h3><ul>
+<li><strong>多开会话</strong>：再次双击左侧保存的服务器，会在新的标签页连接。</li>
+<li><strong>断开连接</strong>：关闭对应标签页即可；不会关掉服务器上的程序。</li>
+<li><strong>复制文本</strong>：服务器命令和报错优先复制为文本，不要只截屏，后续排查更方便。</li>
+<li><strong>保存密码</strong>：可以保存，但更建议之后配置 SSH 密钥登录，避免把密码长期交给客户端保存。</li>
+</ul>
+<h2 id="五、Tabby-的基础用法"><a href="#五、Tabby-的基础用法" class="headerlink" title="五、Tabby 的基础用法"></a>五、Tabby 的基础用法</h2><p>　　Tabby 的 SSH 配置思路和 MobaXterm 一样，只是界面组织不同。</p>
+<ol>
+<li>打开 Tabby 的设置或连接管理区域，新建一个 <strong>SSH profile</strong>。</li>
+<li>填写主机地址 <code>YOUR_SERVER_IP</code>、端口 <code>22</code> 和登录用户名。</li>
+<li>首次可以按服务器当前的认证方式输入密码；之后可在配置中选择私钥登录。</li>
+<li>保存配置，回到主界面打开这个 profile，建立 SSH 会话。</li>
+</ol>
+<p>　　Tabby 比较适合把常用连接整理成 profile。例如可以按“新加坡服务器”“测试服务器”“本机 WSL”来命名，避免只靠 IP 区分。它也可以在同一个窗口内开多个标签页或分屏；但实际用下来 SSH 输入体验不够舒服，没有必要勉强把它当主力工具。</p>
+<h2 id="六、两者都能使用-SSH-密钥"><a href="#六、两者都能使用-SSH-密钥" class="headerlink" title="六、两者都能使用 SSH 密钥"></a>六、两者都能使用 SSH 密钥</h2><p>　　无论使用 Tabby 还是 MobaXterm，SSH 密钥的原理都一样：私钥留在本机，公钥放在服务器用户的 <code>~/.ssh/authorized_keys</code>。客户端里需要选择的是本机的<strong>私钥</strong>，不能把私钥上传到服务器，也不要把它发给任何人。</p>
+<p>　　配置方法细节可以单独展开写；对当前选择工具来说，只要记住一件事：换 SSH 客户端不需要重新生成一套密钥。只要用户名、服务器地址和同一把私钥都正确，两款工具都可以连接同一台服务器。</p>
+<h2 id="七、我现在的选择"><a href="#七、我现在的选择" class="headerlink" title="七、我现在的选择"></a>七、我现在的选择</h2><p>　　我目前会继续用 MobaXterm 连接服务器，因为命令输入的手感对我更重要，左侧 SFTP 文件面板也很方便。Tabby 的图形化界面、标签页和整体视觉体验确实更好，之后如果它在我的环境里输入更稳定，或者我需要跨平台管理终端，我还会再用它。</p>
+<p>　　工具的选择不用一次定死。先用最顺手、能稳定完成连接和文件管理的工具，再慢慢形成自己的工作流就够了。</p>
 
                 
               </div>
@@ -518,40 +500,6 @@
             <div>
               <div class="post-metas my-3">
   
-    <div class="post-meta mr-3 d-flex align-items-center">
-      <i class="iconfont icon-category"></i>
-      
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E6%8A%80%E6%9C%AF/" class="category-chain-item">技术</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-    </div>
-  
-  
-    <div class="post-meta">
-      <i class="iconfont icon-tags"></i>
-      
-        <a href="/tags/%E6%95%99%E7%A8%8B/" class="print-no-link">#教程</a>
-      
-        <a href="/tags/Hexo/" class="print-no-link">#Hexo</a>
-      
-        <a href="/tags/Giscus/" class="print-no-link">#Giscus</a>
-      
-        <a href="/tags/%E8%AF%84%E8%AE%BA%E7%B3%BB%E7%BB%9F/" class="print-no-link">#评论系统</a>
-      
-    </div>
   
 </div>
 
@@ -561,8 +509,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Giscus，让博客接入评论</div>
-      <div>https://blog.zuiges.com/2026/09/04/hexo-giscus-guide/</div>
+      <div></div>
+      <div>https://blog.zuiges.com/2026/10/03/tabby-vs-mobaxterm-ssh-key-docker/</div>
     </div>
     <div class="license-meta">
       
@@ -574,7 +522,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>post.copyright.posted</div>
-          <div>2026年9月4日</div>
+          <div>2026年10月3日</div>
         </div>
       
       
@@ -606,9 +554,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2026/09/05/some%20thoughts/" title="我沉默了，他以为我不想读研">
+                      <a href="/2026/10/03/docker-project-introduction/" title="">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">我沉默了，他以为我不想读研</span>
+                        <span class="hidden-mobile"></span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -616,8 +564,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2026/09/04/hexo-customize-guide/" title="Hexo博客管理">
-                        <span class="hidden-mobile">Hexo博客管理</span>
+                      <a href="/2026/09/23/aliyun-singapore-server-tabby/" title="">
+                        <span class="hidden-mobile"></span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
