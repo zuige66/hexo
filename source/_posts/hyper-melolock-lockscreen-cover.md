@@ -23,7 +23,7 @@ categories:
 ### 下载地址
 
 - GitHub 发布页：[Hyper-MeloLock Releases](https://github.com/zuige66/Hyper-MeloLock/releases)（含历史版本与校验信息）
-- 最新版国内直链：[Hyper-MeloLock-v0.3.2.apk](/downloads/melolock/Hyper-MeloLock-v0.3.2.apk)
+- 最新版国内直链：[Hyper-MeloLock-v0.3.4.apk](/downloads/melolock/Hyper-MeloLock-v0.3.4.apk)
 
 　　只从 GitHub Releases 或本博客直链下载正式签名包。模块作用于系统锁屏界面，来源不明的二次打包版本有风险。
 
