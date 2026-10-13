@@ -1,1 +1,1 @@
-{"versionName":"0.3.2","versionCode":12,"changelog":"新增：更多机型支持（澎湃OS 3 各机型均可启用，未验证机型会提示反馈）、QQ 交流群入口。修复：检查更新能检测到新版但下载失败的问题（下载自动切换国内源重试）。优化：首页系统版本/框架/机型信息打开即显示，不再等待。","apkUrl":"https://blog.zuiges.com/downloads/melolock/Hyper-MeloLock-v0.3.2.apk"}
+{"versionCode":14,"versionName":"0.3.4","apkUrl":"https://github.com/zuige66/Hyper-MeloLock/releases/download/v0.3.4/Hyper-MeloLock-v0.3.4.apk","changelog":"- 通知页/桌面下拉统一跟专辑取色，通知页可独立选底色\n- 取色风格三档自由搭配，设置页重新分组\n- 新增隐藏相机/手电筒、永不息屏\n- 修复亮屏慢一拍、时钟小时消失、媒体卡黑底、文字闪烁等问题\n- 安装包约 3.6MB，不上报任何数据"}
