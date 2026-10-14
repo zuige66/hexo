@@ -46,6 +46,23 @@
     }
   }
 
+  // 同步 banner 外观：不同页面 banner 高度/遮罩/背景图可能不同，
+  // 软导航时从目标页文档复制这些行内样式，避免高度残留导致的跳动
+  function syncBannerChrome(doc) {
+    // banner 高度（.header-inner 的 inline height，如 "80vh"）
+    var fromH = doc.querySelector('.header-inner');
+    var toH = document.querySelector('.header-inner');
+    if (fromH && toH && fromH.style.height) toH.style.height = fromH.style.height;
+    // 黑色遮罩透明度
+    var fromM = doc.querySelector('#banner .mask');
+    var toM = document.querySelector('#banner .mask');
+    if (fromM && toM && fromM.style.backgroundColor) toM.style.backgroundColor = fromM.style.backgroundColor;
+    // 背景图（各页 banner_img 可能不同）
+    var fromB = doc.querySelector('#banner');
+    var toB = document.querySelector('#banner');
+    if (fromB && toB && fromB.style.backgroundImage) toB.style.backgroundImage = fromB.style.backgroundImage;
+  }
+
   function softLoad(url, push) {
     if (busy) return;
     busy = true;
@@ -62,6 +79,7 @@
         var ns = doc.getElementById('subtitle');
         var cs = document.getElementById('subtitle');
         if (ns && cs) cs.innerHTML = ns.innerHTML;
+        syncBannerChrome(doc);
         updateActiveNav(getPath(url));
         window.scrollTo(0, 0);
         board.classList.remove('softnav-in');

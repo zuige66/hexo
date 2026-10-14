@@ -387,6 +387,7 @@
     stop();
     if (canvas.parentNode) canvas.parentNode.removeChild(canvas);
     if (observer) observer.disconnect();
+    if (resizeObs) resizeObs.disconnect();
     window.removeEventListener('resize', resize);
     document.removeEventListener('visibilitychange', onVis);
   }
@@ -405,6 +406,13 @@
       inView && !document.hidden ? start() : stop();
     }, { threshold: [0, 0.02, 0.5] });
     observer.observe(banner);
+  }
+
+  // banner 尺寸变化时重算 canvas 分辨率（软导航切换到不同高度的 banner 时防止拉伸模糊）
+  var resizeObs = null;
+  if ('ResizeObserver' in window) {
+    resizeObs = new ResizeObserver(function () { resize(); });
+    resizeObs.observe(banner);
   }
 
   resize();
