@@ -1090,6 +1090,12 @@ links:
       link: "https://www.nanzhiy.cn",
       avatar: "https://www.nanzhiy.cn/upload/IMG_20260412_164454.ico"
     }
+    - {
+      title: "puresky-blog",
+      intro: "即使迷茫，也要继续前进（2026了还在go，无敌了）",
+      link: "https://pureskyblog.dpdns.org",
+      avatar: "https://avatars.githubusercontent.com/u/232055116?v=4"
+    }
 
   # 当成员头像加载失败时，替换为指定图片
   # When the member avatar fails to load, replace the specified image
