@@ -19,7 +19,7 @@
 ## 友链配置（2026-10-14 新增）
 
 - 友链页：`source/links/index.md`（front-matter `layout: links`），渲染模板 `themes/fluid/layout/links.ejs`，路由 `/links/`。
-- 友链数据：全部在 `_config.fluid.yml` 的 `links.items`，每项字段 `title` / `link` / `avatar` / `intro`。当前仅含 9 个真实友链（**原 3 条 Fluid 官方示例已于 2026-10-14 删除**）：万象存笺(3z.ink)、楠枝小笺(nanzhiy.cn)、puresky-blog(dpdns.org)、桃之夭夭(taozhiyy.top)、蓝莓小屋(aigene.studio)、冷汐的杂货铺(lengxiqwq.com)、qwwp(qwwp.top)、MmzMing的知识库(tblog.mmzhiku.xyz)、Pasule Blog(pasule.com)。**互链核实状态**：Pasule Blog 是唯一经 curl 在 `/friends/` 页确认互链的（明确链到 `blog.zuiges.com`、头像 `blog.zuiges.com/img/avatar.jpg`、标题「zuige's blog」）；其余 8 个真实友链的对方站点多路径均未检索到 zuiges，疑为前端渲染或尚未发布，添加时按 zuige 口述已互链先行加入，待逐一确认。
+- 友链数据：全部在 `_config.fluid.yml` 的 `links.items`，每项字段 `title` / `link` / `avatar` / `intro`。当前仅含 10 个真实友链（**原 3 条 Fluid 官方示例已于 2026-10-14 删除**）：万象存笺(3z.ink)、楠枝小笺(nanzhiy.cn)、puresky-blog(dpdns.org)、桃之夭夭(taozhiyy.top)、蓝莓小屋(aigene.studio)、冷汐的杂货铺(lengxiqwq.com)、qwwp(qwwp.top)、MmzMing的知识库(tblog.mmzhiku.xyz)、Pasule Blog(pasule.com)、番茄主理人(blog.fqzlr.top)。**互链核实状态**：Pasule Blog 是唯一经 curl 在 `/friends/` 页确认互链的（明确链到 `blog.zuiges.com`、头像 `blog.zuiges.com/img/avatar.jpg`、标题「zuige's blog」）；其余 9 个真实友链的对方站点多路径均未检索到 zuiges，疑为前端渲染或尚未发布，添加时按 zuige 口述已互链先行加入，待逐一确认。
 - 导航栏入口：`_config.fluid.yml` 的 `menu` 中 `links` 项，位置在「标签」与「关于」之间。
 - 申请友链说明：`links.custom.enable: true`，内容写在 `links.custom.content`（支持 HTML/中文）。
 - 改动流程：`hexo generate` 本地验证 → 提交推送 main → `hexo deploy` 上线（自动推 gh-pages）。
