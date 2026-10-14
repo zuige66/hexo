@@ -1084,6 +1084,12 @@ links:
       link: "https://3z.ink",
       avatar: "https://3z.ink/assets/images/logo-v2.png"
     }
+    - {
+      title: "楠枝小笺",
+      intro: "安安静静地存在，就已经很好了。",
+      link: "https://www.nanzhiy.cn",
+      avatar: "https://www.nanzhiy.cn/upload/IMG_20260412_164454.ico"
+    }
 
   # 当成员头像加载失败时，替换为指定图片
   # When the member avatar fails to load, replace the specified image
