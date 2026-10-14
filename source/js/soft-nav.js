@@ -78,7 +78,13 @@
         if (doc.title) document.title = doc.title;
         var ns = doc.getElementById('subtitle');
         var cs = document.getElementById('subtitle');
-        if (ns && cs) cs.innerHTML = ns.innerHTML;
+        if (ns && cs) {
+          cs.innerHTML = ns.innerHTML;
+          // 同步打字文本属性，避免 data-typed-text 残留旧页文本
+          if (ns.hasAttribute('data-typed-text')) {
+            cs.setAttribute('data-typed-text', ns.getAttribute('data-typed-text'));
+          }
+        }
         syncBannerChrome(doc);
         updateActiveNav(getPath(url));
         window.scrollTo(0, 0);
