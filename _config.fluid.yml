@@ -1096,6 +1096,12 @@ links:
       link: "https://pureskyblog.dpdns.org",
       avatar: "https://avatars.githubusercontent.com/u/232055116?v=4"
     }
+    - {
+      title: "桃之夭夭",
+      intro: "桃之夭夭的小屋",
+      link: "https://taozhiyy.top",
+      avatar: "https://tzyy-1330068502.cos.ap-beijing.myqcloud.com/1.png"
+    }
 
   # 当成员头像加载失败时，替换为指定图片
   # When the member avatar fails to load, replace the specified image
