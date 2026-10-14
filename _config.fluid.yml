@@ -995,7 +995,7 @@ category:
 tag:
   enable: true
   banner_img: /img/default.png
-  banner_img_height: 60
+  banner_img_height: 80
   banner_mask_alpha: 0.3
   tagcloud:
     min_font: 15
