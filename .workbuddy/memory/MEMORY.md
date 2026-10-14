@@ -23,3 +23,11 @@
 - 导航栏入口：`_config.fluid.yml` 的 `menu` 中 `links` 项，位置在「标签」与「关于」之间。
 - 申请友链说明：`links.custom.enable: true`，内容写在 `links.custom.content`（支持 HTML/中文）。
 - 改动流程：`hexo generate` 本地验证 → 提交推送 main → `hexo deploy` 上线（自动推 gh-pages）。
+
+## 首页动态 Banner「云间列车」（2026-10-14 新增）
+
+- 来源：Shadertoy `Ndc3zl`《Up in the Cloud Sea》（原作 mdb，**CC BY-NC-SA 3.0**），用 Tyson Zhou 单 Pass 移植版改写。**署名行在 `_config.fluid.yml` 的 `footer.content`，不可删**（许可证合规）。
+- 实现：`source/js/cloud-sea.js`（WebGL2 引擎+shader 内嵌字符串）+ `source/img/cloud-sea-noise.png`（蓝噪声 256x256 灰度图，~160KB）。注入方式走 Fluid `custom_js`（带 `?v=N` 缓存版本号，改 JS 必须同步 bump）。
+- **红线/教训**：① 蓝噪声纹理不能平滑降采样（LANCZOS 抹平方差→云变平色带），必须 NEAREST 抽取；② shader 内噪声查表常量 `/256.0` 必须与纹理尺寸一致；③ JS 拼接 GLSL 浮点字面量要用字符串（JS 数字 256.0 会变 "256" 引发编译错）。
+- 降级链：<768px / reduced-motion / 无 WebGL2 / 编译失败 → 静态头图；帧耗时超标 → renderScale 0.75→0.5 → 仍不行退静态；后台/滚出视口自动暂停。仅首页（pathname 判断）生效。
+- 调试手段：`hexo server` + playwright-cli 截图对比作者原版页（people.tamu.edu/~choutianxius/csce646/pr01/index.html）。
