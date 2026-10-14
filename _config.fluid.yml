@@ -1078,6 +1078,12 @@ links:
       link: "https://github.com/fluid-dev/hexo-theme-fluid",
       avatar: "/img/favicon.png"
     }
+    - {
+      title: "万象存笺",
+      intro: "一个汇聚前端、后端、数据库、运维、系统知识的网络日志",
+      link: "https://3z.ink",
+      avatar: "https://3z.ink/assets/images/logo-v2.png"
+    }
 
   # 当成员头像加载失败时，替换为指定图片
   # When the member avatar fails to load, replace the specified image
