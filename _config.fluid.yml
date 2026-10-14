@@ -1120,6 +1120,12 @@ links:
       link: "https://qwwp.top/",
       avatar: "https://qwwp.top/images/avatar.jpg"
     }
+    - {
+      title: "MmzMing的知识库",
+      intro: "哈基米，南北绿豆",
+      link: "https://tblog.mmzhiku.xyz/",
+      avatar: "https://i.stardots.io/784774835/StarDots-2026052116374135506.jpg"
+    }
 
   # 当成员头像加载失败时，替换为指定图片
   # When the member avatar fails to load, replace the specified image
