@@ -14,13 +14,14 @@
   'use strict';
 
   // ---------- 生效条件 ----------
-  var path = location.pathname;
-  var isHome = path === '/' || path === '/index.html';
-  if (!isHome) return;
+  // 全站所有页面（首页/关于/友链/归档/分类/标签页等）都显示，因每页都有 #banner
+  // 注：仍保留对系统“减弱动效(prefers-reduced-motion)”的尊重——用户主动关闭动效时不渲染
 
   var reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var isMobile = window.matchMedia && window.matchMedia('(max-width: 767px)').matches;
-  if (reducedMotion || isMobile) return;
+  if (reducedMotion) return;
+
+  var MOBILE = window.matchMedia && window.matchMedia('(max-width: 767px)').matches;
+  // 手机端同样显示；但用更低分辨率比例与 DPR 上限以控发热/耗电
 
   var banner = document.getElementById('banner');
   if (!banner) return;
@@ -320,7 +321,7 @@
   canvas.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;';
   banner.insertBefore(canvas, banner.firstChild);
 
-  var renderScale = 0.75;           // 初始渲染分辨率比例
+  var renderScale = MOBILE ? 0.5 : 0.75;   // 手机端从更低分辨率起步以控耗电
   var startTime = performance.now();
   var rafId = 0;
   var running = false;
@@ -332,7 +333,7 @@
   function resize() {
     var w = banner.clientWidth, h = banner.clientHeight;
     if (!w || !h) return;
-    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var dpr = Math.min(window.devicePixelRatio || 1, MOBILE ? 1.5 : 2);
     canvas.width = Math.max(2, Math.round(w * dpr * renderScale));
     canvas.height = Math.max(2, Math.round(h * dpr * renderScale));
     gl.viewport(0, 0, canvas.width, canvas.height);
@@ -355,7 +356,7 @@
         renderScale = 0.5;
         frameCount = 0; frameTimeSum = 0;
         resize();
-      } else if (avg > 30) {
+      } else if (avg > (MOBILE ? 45 : 30)) {
         dispose();
         return;
       }
