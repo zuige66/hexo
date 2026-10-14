@@ -322,7 +322,13 @@
   banner.insertBefore(canvas, banner.firstChild);
 
   var renderScale = MOBILE ? 0.5 : 0.75;   // 手机端从更低分辨率起步以控耗电
-  var startTime = performance.now();
+
+  // 跨页面动画续接：把动画时刻存进 sessionStorage，新页面从上一页离开时刻继续跑，
+  // 避免整页导航时列车/亮度相位“从头开始”造成的跳变。sessionStorage 按标签页隔离，关页即重置。
+  var CLOCK_KEY = 'cloudSeaElapsed';
+  var seed = 0;
+  try { seed = parseFloat(sessionStorage.getItem(CLOCK_KEY)) || 0; } catch (e) {}
+  var startTime = performance.now() - seed * 1000;
   var rafId = 0;
   var running = false;
   var inView = true;
@@ -346,6 +352,10 @@
     gl.uniform3f(uRes, canvas.width, canvas.height, 1.0);
     gl.uniform1f(uTime, (t0 - startTime) / 1000);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
+    // 跨页面续接：每 16 帧把当前动画时刻存回 sessionStorage（导航离开时 pagehide 再精确存一次）
+    if ((frameCount & 15) === 0) {
+      try { sessionStorage.setItem(CLOCK_KEY, ((t0 - startTime) / 1000).toString()); } catch (e) {}
+    }
     // 自适应降级：连续统计帧耗时，过重则降分辨率，仍不行则退回静态头图
     frameCount++;
     frameTimeSum += performance.now() - t0;
@@ -381,6 +391,12 @@
     document.removeEventListener('visibilitychange', onVis);
   }
   function onVis() { document.hidden ? stop() : (inView && start()); }
+  function saveClock() {
+    try { sessionStorage.setItem(CLOCK_KEY, ((performance.now() - startTime) / 1000).toString()); } catch (e) {}
+  }
+  // 离开/隐藏页面时精确记录动画时刻，保证下一页无缝续接
+  window.addEventListener('pagehide', saveClock);
+  document.addEventListener('visibilitychange', function () { if (document.hidden) saveClock(); });
 
   var observer = null;
   if ('IntersectionObserver' in window) {
