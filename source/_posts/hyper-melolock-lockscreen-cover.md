@@ -23,7 +23,7 @@ categories:
 ### 下载地址
 
 - GitHub 发布页：[Hyper-MeloLock Releases](https://github.com/zuige66/Hyper-MeloLock/releases)（含历史版本与校验信息）
-- 最新版国内直链：[Hyper-MeloLock-v0.3.4.apk](/downloads/melolock/Hyper-MeloLock-v0.3.4.apk)
+- 最新版国内直链：[Hyper-MeloLock-v0.3.5.apk](/downloads/melolock/Hyper-MeloLock-v0.3.5.apk)
 
 　　只从 GitHub Releases 或本博客直链下载正式签名包。模块作用于系统锁屏界面，来源不明的二次打包版本有风险。
 
@@ -36,7 +36,7 @@ categories:
 | 框架 | Vector / LSPosed（SukiSU Ultra 提供） |
 | 播放器 | 任何提供标准媒体会话的音乐应用 |
 
-　　模块按精确构建指纹做门禁，换机型或换系统版本不会生效，此时模块会主动让位给原生锁屏，不会造成黑屏或卡死。
+　　v0.3.5 起版本门禁已移除：其他机型、其他澎湃 OS 3 小版本也会尝试启用；找不到目标界面时模块会主动让位给原生锁屏，不会造成黑屏或卡死。遇到显示异常请打开「调试」分组的诊断报告，一键复制后反馈。
 
 ### 安装步骤
 
@@ -101,7 +101,7 @@ categories:
 
 ## 三、已知限制
 
-- 目前只在 Redmi Note 9 Pro（`gauguinpro`）+ 澎湃 OS 3 这套环境上测试过，其他机型未验证；模块按精确构建指纹门禁，不匹配时主动放弃覆盖、保持原生锁屏。
+- 目前只在 Redmi Note 9 Pro（`gauguinpro`）+ 澎湃 OS 3 这套环境上完整测试过；v0.3.5 起其他机型 / 系统小版本也会尝试启用（多机型测试期），显示异常时自动保持原生锁屏，欢迎带诊断报告反馈。
 - 「Xposed 框架」一行固定显示「未知」，是读取方式的限制，不是故障。
 
 
