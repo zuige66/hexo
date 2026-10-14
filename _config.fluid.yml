@@ -1108,6 +1108,12 @@ links:
       link: "https://tblog.mmzhiku.xyz/",
       avatar: "https://i.stardots.io/784774835/StarDots-2026052116374135506.jpg"
     }
+    - {
+      title: "Pasule Blog",
+      intro: "Keep the Wonder. Keep the Fire",
+      link: "https://pasule.com",
+      avatar: "https://tu.pasule.com/file/wallpaper/1784014500478.png"
+    }
 
   # 当成员头像加载失败时，替换为指定图片
   # When the member avatar fails to load, replace the specified image
