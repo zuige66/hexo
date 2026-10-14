@@ -1117,6 +1117,12 @@ links:
       link: "https://pasule.com",
       avatar: "https://tu.pasule.com/file/wallpaper/1784014500478.png"
     }
+    - {
+      title: "番茄主理人",
+      intro: "躬身入局，心为主理，行有尺度，自持本心。",
+      link: "https://blog.fqzlr.top/",
+      avatar: "https://q1.qlogo.cn/g?b=qq&nk=20447289&s=640"
+    }
 
   # 当成员头像加载失败时，替换为指定图片
   # When the member avatar fails to load, replace the specified image
