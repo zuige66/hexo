@@ -1102,6 +1102,24 @@ links:
       link: "https://taozhiyy.top",
       avatar: "https://tzyy-1330068502.cos.ap-beijing.myqcloud.com/1.png"
     }
+    - {
+      title: "蓝莓小屋",
+      intro: "向着光前行，不负每一次相遇与热爱。",
+      link: "https://aigene.studio/",
+      avatar: "https://aigene.studio/logo/icon.webp"
+    }
+    - {
+      title: "冷汐的杂货铺",
+      intro: "你好谢谢小笼包再见",
+      link: "https://lengxiqwq.com",
+      avatar: "https://weavatar.com/avatar/52f243e67ccc2293d68c6f33db3f4083?s=640"
+    }
+    - {
+      title: "qwwp",
+      intro: "你要吃一口C4吗？",
+      link: "https://qwwp.top/",
+      avatar: "https://qwwp.top/images/avatar.jpg"
+    }
 
   # 当成员头像加载失败时，替换为指定图片
   # When the member avatar fails to load, replace the specified image
