@@ -61,6 +61,29 @@
     var fromB = doc.querySelector('#banner');
     var toB = document.querySelector('#banner');
     if (fromB && toB && fromB.style.backgroundImage) toB.style.backgroundImage = fromB.style.backgroundImage;
+    // 滚动箭头：仅 banner ≥80vh 的页面（首页）由 banner.ejs 渲染该元素，
+    // 软导航后残留会让 60vh 页面在 banner 底部露出箭头；按目标页有无进行增删
+    var fromArrow = doc.querySelector('#banner .scroll-down-bar');
+    var toArrow = document.querySelector('#banner .scroll-down-bar');
+    if (!fromArrow && toArrow) {
+      toArrow.remove();
+    } else if (fromArrow && !toArrow) {
+      var mask = document.querySelector('#banner .mask');
+      if (mask) {
+        var arrow = document.importNode(fromArrow, true);
+        mask.appendChild(arrow);
+        // events.js 仅在整页加载时绑定点击，克隆出的箭头需补绑
+        // （行为对齐 registerScrollDownArrowEvent：滚动到 board 顶部并避开导航栏）
+        arrow.addEventListener('click', function () {
+          var target = document.getElementById('board');
+          if (!target) return;
+          var navbar = document.getElementById('navbar');
+          var offset = navbar ? navbar.getBoundingClientRect().height : 0;
+          var top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+          window.scrollTo({ top: top, behavior: 'smooth' });
+        });
+      }
+    }
   }
 
   function softLoad(url, push) {
@@ -75,6 +98,14 @@
         if (!board) throw new Error('no current board');
         // 只换正文；banner 与 WebGL canvas 原样保留，动画不中断
         board.innerHTML = nb.innerHTML;
+        // 同步 board 行内 margin：首页（100vh + parallax）由 layout.ejs 渲染
+        // style="margin-top: 0"，只换 innerHTML 会把它残留到 60vh 页面，
+        // 导致内容卡片不凸起、与 banner 呈上下拼接
+        if (nb.style.marginTop) {
+          board.style.marginTop = nb.style.marginTop;
+        } else {
+          board.style.removeProperty('margin-top');
+        }
         if (doc.title) document.title = doc.title;
         var ns = doc.getElementById('subtitle');
         var cs = document.getElementById('subtitle');
