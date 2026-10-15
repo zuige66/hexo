@@ -86,6 +86,32 @@
     }
   }
 
+  // 软导航只替换 #board 的 innerHTML，而 img-lazyload.js 只在整页加载时扫描一次
+  // img[lazyload]，不会处理换入的节点。换入内容里的图片（如友链头像、其他页面配图）
+  // 仍带着 srcset=loading.gif + lazyload，真图藏在 src 中无法显示。这里复用 Fluid 的
+  // 懒加载逻辑对换入的图片重新登记，使其在可见时移除 srcset、露出真图。
+  function processLazyImages(root) {
+    if (!root) return;
+    var imgs = root.querySelectorAll('img[lazyload]');
+    if (!imgs.length) return;
+    var factor = (window.CONFIG && CONFIG.lazyload && typeof CONFIG.lazyload.offset_factor === 'number')
+      ? CONFIG.lazyload.offset_factor : 0;
+    for (var i = 0; i < imgs.length; i++) {
+      (function (el) {
+        if (window.Fluid && Fluid.utils && typeof Fluid.utils.waitElementVisible === 'function') {
+          Fluid.utils.waitElementVisible(el, function () {
+            el.removeAttribute('srcset');
+            el.removeAttribute('lazyload');
+          }, factor);
+        } else {
+          // Fluid 不可用时的兜底：直接露出真图
+          el.removeAttribute('srcset');
+          el.removeAttribute('lazyload');
+        }
+      })(imgs[i]);
+    }
+  }
+
   function softLoad(url, push) {
     if (busy) return;
     busy = true;
@@ -98,6 +124,9 @@
         if (!board) throw new Error('no current board');
         // 只换正文；banner 与 WebGL canvas 原样保留，动画不中断
         board.innerHTML = nb.innerHTML;
+        // 换入的新内容里的图片需重新登记懒加载（见 processLazyImages 注释），
+        // 否则友链头像等会永远停在 loading.gif
+        processLazyImages(board);
         // 同步 board 行内 margin：首页（100vh + parallax）由 layout.ejs 渲染
         // style="margin-top: 0"，只换 innerHTML 会把它残留到 60vh 页面，
         // 导致内容卡片不凸起、与 banner 呈上下拼接
