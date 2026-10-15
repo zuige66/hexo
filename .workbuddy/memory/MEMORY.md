@@ -34,3 +34,4 @@
 - **红线/教训**：① 蓝噪声纹理不能平滑降采样（LANCZOS 抹平方差→云变平色带），必须 NEAREST 抽取；② shader 内噪声查表常量 `/256.0` 必须与纹理尺寸一致；③ JS 拼接 GLSL 浮点字面量要用字符串（JS 数字 256.0 会变 "256" 引发编译错）。
 - 降级链：~~<768px~~ **2026-10-14 起手机端也显示**（renderScale 0.5 起步、DPR≤1.5、击杀阈值 45ms）/ reduced-motion / 无 WebGL2 / 编译失败 → 静态头图；帧耗时超标 → renderScale 0.75→0.5 → 仍不行退静态；后台/滚出视口自动暂停。**全站所有页面生效**（每页都有 #banner），不再限首页。
 - 调试手段：`hexo server` + playwright-cli 截图对比作者原版页（people.tamu.edu/~choutianxius/csce646/pr01/index.html）。
+- **「凸起/相切」感知机制（2026-10-15 诊断，勿再当 bug 查）**：`#board` 恒以 `margin-top: -2rem`（2026-09-07 d6b9417 起）压住 banner 底边 32px，本地/线上渲染完全一致（HTML 一致、main.css 字节级相同）。zuige 感知的「一个卡片头凸起来、一个与背景相切」是 **WebGL 云场景明暗相位**造成的：卡片顶边处是亮云 → 深色卡片"切进"banner 显凸起；是暗云带 → 卡片与暗云糊成一片显"相切"。云相随 shader 时间动画（底部前景云层 dist=1~2，约 1 uv/s 快漂移）与窗口高度（60vh → uv 裁剪不同）而变，**非布局差异**。滚动箭头仅 banner ≥80vh 渲染（`banner_height_limit: 80`，全站仅首页 100vh 够格），其他页 banner 里的小图标是场景内容或截图浮层，不是主题组件。
