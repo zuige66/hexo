@@ -20,8 +20,6 @@
     
     <tags>
       
-      <tag>红米Note9 Pro</tag>
-      
       <tag>澎湃OS</tag>
       
       <tag>LSPosed</tag>
@@ -29,6 +27,8 @@
       <tag>Xposed</tag>
       
       <tag>模块</tag>
+      
+      <tag>红米Note9 Pro</tag>
       
     </tags>
     
@@ -53,9 +53,9 @@
     
     <tags>
       
-      <tag>红米Note9 Pro</tag>
-      
       <tag>澎湃OS</tag>
+      
+      <tag>红米Note9 Pro</tag>
       
       <tag>Root</tag>
       
