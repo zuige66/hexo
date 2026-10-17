@@ -1,0 +1,62 @@
+/* 友链朋友圈：拉取 /circle/circle.json，一篇文章一张小卡片。
+   卡片：标题在上；左下角圆形头像 + 站点名，右下角日期。 */
+(function () {
+  var box = document.getElementById("circle-feed");
+  if (!box) return;
+
+  fetch("/circle/circle.json")
+    .then(function (r) {
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      return r.json();
+    })
+    .then(render)
+    .catch(function (e) {
+      console.error("[circle-feed] 加载失败：", e);
+    });
+
+  function esc(s) {
+    return (s || "").replace(/[&<>"]/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
+    });
+  }
+  function fmt(d) {
+    if (!d) return "";
+    try {
+      return new Date(d).toLocaleDateString("zh-CN");
+    } catch (e) {
+      return "";
+    }
+  }
+
+  function render(data) {
+    var posts = data.posts || [];
+    if (!posts.length) return;
+    box.innerHTML = posts
+      .map(function (p) {
+        var avatar = p.avatar
+          ? '<img class="feed-avatar" src="' +
+            esc(p.avatar) +
+            '" alt="" loading="lazy" onerror="this.style.display=\'none\'">'
+          : "";
+        return (
+          '<a class="feed-card" href="' +
+          esc(p.url) +
+          '" target="_blank" rel="noopener">' +
+          '<div class="feed-title">' +
+          esc(p.title) +
+          "</div>" +
+          '<div class="feed-foot">' +
+          avatar +
+          '<span class="feed-name">' +
+          esc(p.name) +
+          "</span>" +
+          '<span class="feed-date">' +
+          fmt(p.date) +
+          "</span>" +
+          "</div>" +
+          "</a>"
+        );
+      })
+      .join("");
+  }
+})();

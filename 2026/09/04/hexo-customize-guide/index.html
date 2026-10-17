@@ -27,7 +27,7 @@
 <meta property="og:description" content="前言　　博客搭好了，但怎么改标题、加图标、管理分类标签？本文以当前博客为例，讲解 Hexo + Fluid 的目录结构和常用配置。 一、常用命令速查　　以下命令都在博客根目录下执行。    作用 命令    新建文章 hexo new &quot;文章标题&quot;   新建独立页面 hexo new page &quot;页面名&quot;   新建草稿 hexo new draft &amp;quo">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-09-03T16:00:00.000Z">
-<meta property="article:modified_time" content="2026-10-10T16:15:06.221Z">
+<meta property="article:modified_time" content="2026-10-17T15:42:25.397Z">
 <meta property="article:author" content="zuige">
 <meta property="article:tag" content="Fluid">
 <meta property="article:tag" content="Hexo">
@@ -74,7 +74,7 @@
 
   
 <link rel="stylesheet" href="/css/home-sidebar.css?v=3.css">
-<link rel="stylesheet" href="/css/site-motion.css?v=9.css">
+<link rel="stylesheet" href="/css/site-motion.css?v=12.css">
 
 
 
@@ -368,7 +368,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4.7k 字
+          6.1k 字
         
       </span>
     
@@ -379,7 +379,7 @@
         
         
         
-          40 分钟
+          51 分钟
         
       </span>
     
@@ -605,12 +605,35 @@
 <td><code>themes/fluid/source/js/local-search.js</code> 与 <code>source/js/site-interactions.js</code></td>
 </tr>
 </tbody></table>
+<h2 id="十三、管理友链"><a href="#十三、管理友链" class="headerlink" title="十三、管理友链"></a>十三、管理友链</h2><p>友链配置在 <code>_config.fluid.yml</code> 的 <code>links.items</code>，每条是一个对象，字段如下：</p>
+<ul>
+<li><code>title</code>：站点名称</li>
+<li><code>intro</code>：一句话简介</li>
+<li><code>link</code>：站点地址</li>
+<li><code>avatar</code>：头像地址</li>
+<li><code>rss</code>：对方订阅源地址，可选；填写后该友链卡片右上角显示 RSS 图标</li>
+</ul>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">links:</span><br>  <span class="hljs-attr">items:</span><br>    <span class="hljs-bullet">-</span> &#123; <span class="hljs-attr">title:</span> <span class="hljs-string">&quot;站点名&quot;</span>, <span class="hljs-attr">intro:</span> <span class="hljs-string">&quot;一句话简介&quot;</span>, <span class="hljs-attr">link:</span> <span class="hljs-string">&quot;https://example.com&quot;</span>, <span class="hljs-attr">avatar:</span> <span class="hljs-string">&quot;https://example.com/avatar.png&quot;</span>, <span class="hljs-attr">rss:</span> <span class="hljs-string">&quot;https://example.com/rss.xml&quot;</span> &#125;<br></code></pre></td></tr></table></figure>
+
+<p><code>rss</code> 字段非空时，友链卡片右上角出现 RSS 图标，点击跳转到对方订阅源。图标渲染依赖两处改动：<code>themes/fluid/layout/links.ejs</code>（卡片内增加 RSS 链接）与 <code>source/css/site-motion.css</code>（<code>.link-rss</code> 定位样式）。主题升级后需重新应用这两处。友链页本体位于 <code>source/links/index.md</code>，一般无需改动。</p>
+<h2 id="十四、友链朋友圈（动态聚合）"><a href="#十四、友链朋友圈（动态聚合）" class="headerlink" title="十四、友链朋友圈（动态聚合）"></a>十四、友链朋友圈（动态聚合）</h2><p>　　友链页 <code>/links/</code> 在友链头像与简介<strong>下方</strong>、「我的友链信息」<strong>上方</strong>，把每位友链的最新文章以卡片形式聚合展示，无需自建后端。原理：定时抓取各友链的 RSS，生成一份静态 JSON，友链页的脚本拉取该 JSON 渲染卡片。</p>
+<ul>
+<li>数据源：<code>circle-feeds.json</code>（仓库根目录），只列带 <code>rss</code> 的友链，每项含 <code>name</code> &#x2F; <code>link</code> &#x2F; <code>rss</code> &#x2F; <code>avatar</code>。</li>
+<li>生成器：<code>tools/circle_fetch.py</code>，纯标准库实现，运行后写出两份文件：<ul>
+<li><code>circle-archive.json</code>（仓库根目录，<strong>入库、不进 <code>.gitignore</code></strong>）：累积归档，每次运行按文章 URL 去重合并新文章，每人上限 100 篇、跨运行一直留存，是「朋友圈一直存在」的来源。</li>
+<li><code>source/circle/circle.json</code>（<strong>已进 <code>.gitignore</code>，不入库</strong>；部署后地址为 <code>/circle/circle.json</code>）：展示用扁平数据，取全部文章按时间倒序前 60 条。</li>
+</ul>
+</li>
+<li>渲染：<code>source/js/circle-feed.js</code> 由 <code>themes/fluid/layout/links.ejs</code> 在友链卡片之后引入，拉取 <code>/circle/circle.json</code> 后<strong>一篇文章一张小卡片</strong>：标题在上，左下角圆形头像 + 站点名，右下角日期；卡片样式在 <code>source/css/site-motion.css</code> 的 <code>#circle-feed</code> &#x2F; <code>.feed-card</code> 段（CSS Grid 排布，避免重叠）。</li>
+<li>自动化：<code>.github/workflows/circle.yml</code> 每天 UTC 22:17 定时运行，也可在仓库 Actions 页手动触发；<code>circle-feeds.json</code>、<code>tools/circle_fetch.py</code> 等变动会触发重新部署。每次运行结束会把最新的 <code>circle-archive.json</code> 提交回 <code>main</code>，因此归档跨运行持续累积。</li>
+</ul>
+<p>　　新增一个友链的动态：在 <code>circle-feeds.json</code> 加一项（填上对方 RSS 地址）即可，其余由流水线自动完成。本地预览可用 <code>bash tools/deploy-circle.sh</code> 一键抓数据并部署。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>　　核心就两个文件：</p>
 <ul>
 <li><code>_config.yml</code> 管全局设置</li>
 <li><code>_config.fluid.yml</code> 管主题样式</li>
 </ul>
-<p>　　改完配置执行 <code>hexo clean &amp;&amp; hexo deploy</code> 即可生效。日常命令见开头「一、常用命令速查」。</p>
+<p>　　改完配置执行 <code>hexo generate -d</code> 即可生成并部署。日常命令见开头「一、常用命令速查」。</p>
 
                 
               </div>
