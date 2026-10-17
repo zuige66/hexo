@@ -341,9 +341,11 @@ links:
 　　友链页 `/links/` 在友链头像与简介**下方**、「我的友链信息」**上方**，把每位友链的最新文章以卡片形式聚合展示，无需自建后端。原理：定时抓取各友链的 RSS，生成一份静态 JSON，友链页的脚本拉取该 JSON 渲染卡片。
 
 - 数据源：`circle-feeds.json`（仓库根目录），只列带 `rss` 的友链，每项含 `name` / `link` / `rss` / `avatar`。
-- 生成器：`tools/circle_fetch.py`，纯标准库实现，运行后写出 `source/circle/circle.json`（已加入 `.gitignore`，不入库；部署后地址为 `/circle/circle.json`）。
-- 渲染：`source/js/circle-feed.js` 由 `themes/fluid/layout/links.ejs` 在友链卡片之后引入，复用 `.links .card` 网格样式；卡片列表样式在 `source/css/site-motion.css` 的 `.feed-posts` 段。
-- 自动化：`.github/workflows/circle.yml` 每天 UTC 22:17 定时运行，也可在仓库 Actions 页手动触发；`circle-feeds.json` 变动会触发重新部署。
+- 生成器：`tools/circle_fetch.py`，纯标准库实现，运行后写出两份文件：
+  - `circle-archive.json`（仓库根目录，**入库、不进 `.gitignore`**）：累积归档，每次运行按文章 URL 去重合并新文章，每人上限 100 篇、跨运行一直留存，是「朋友圈一直存在」的来源。
+  - `source/circle/circle.json`（**已进 `.gitignore`，不入库**；部署后地址为 `/circle/circle.json`）：展示用扁平数据，取全部文章按时间倒序前 60 条。
+- 渲染：`source/js/circle-feed.js` 由 `themes/fluid/layout/links.ejs` 在友链卡片之后引入，拉取 `/circle/circle.json` 后**一篇文章一张小卡片**：标题在上，左下角圆形头像 + 站点名，右下角日期；卡片样式在 `source/css/site-motion.css` 的 `#circle-feed` / `.feed-card` 段（CSS Grid 排布，避免重叠）。
+- 自动化：`.github/workflows/circle.yml` 每天 UTC 22:17 定时运行，也可在仓库 Actions 页手动触发；`circle-feeds.json`、`tools/circle_fetch.py` 等变动会触发重新部署。每次运行结束会把最新的 `circle-archive.json` 提交回 `main`，因此归档跨运行持续累积。
 
 　　新增一个友链的动态：在 `circle-feeds.json` 加一项（填上对方 RSS 地址）即可，其余由流水线自动完成。本地预览可用 `bash tools/deploy-circle.sh` 一键抓数据并部署。
 

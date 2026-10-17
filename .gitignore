@@ -8,4 +8,5 @@ public/
 .deploy*/
 _multiconfig.yml
 .playwright-cli/
-source/circle/circle.json        # 由 scripts/circle_fetch.py 生成，Actions/本地发布时重建
+# 由 tools/circle_fetch.py 生成，Actions/本地发布时重建
+source/circle/circle.json

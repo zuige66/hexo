@@ -1,5 +1,5 @@
-/* 友链朋友圈：拉取 /circle/circle.json，把每位友链的最新文章渲染成卡片。
-   卡片复用主题 .links .card 样式，自动融入友链页网格。 */
+/* 友链朋友圈：拉取 /circle/circle.json，一篇文章一张小卡片。
+   卡片：标题在上；左下角圆形头像 + 站点名，右下角日期。 */
 (function () {
   var box = document.getElementById("circle-feed");
   if (!box) return;
@@ -29,46 +29,32 @@
   }
 
   function render(data) {
-    var friends = (data.friends || []).filter(function (f) {
-      return f.posts && f.posts.length;
-    });
-    if (!friends.length) return;
-
-    box.innerHTML = friends
-      .map(function (f) {
-        var posts = f.posts
-          .map(function (p) {
-            return (
-              '<li class="feed-post"><a href="' +
-              esc(p.url) +
-              '" target="_blank" rel="noopener">' +
-              esc(p.title) +
-              '</a><span class="feed-date">' +
-              fmt(p.date) +
-              "</span></li>"
-            );
-          })
-          .join("");
-        var avatar = f.avatar
-          ? '<div class="link-avatar my-auto"><img src="' +
-            esc(f.avatar) +
-            '" alt="' +
-            esc(f.name) +
-            '" onerror="this.style.display=\'none\'"></div>'
+    var posts = data.posts || [];
+    if (!posts.length) return;
+    box.innerHTML = posts
+      .map(function (p) {
+        var avatar = p.avatar
+          ? '<img class="feed-avatar" src="' +
+            esc(p.avatar) +
+            '" alt="" loading="lazy" onerror="this.style.display=\'none\'">'
           : "";
         return (
-          '<div class="card col-lg-4 col-md-6 col-sm-12">' +
-          '<div class="card-body hover-with-bg">' +
-          '<div class="card-content">' +
-          avatar +
-          '<div class="link-text">' +
-          '<div class="link-title">' +
-          esc(f.name) +
+          '<a class="feed-card" href="' +
+          esc(p.url) +
+          '" target="_blank" rel="noopener">' +
+          '<div class="feed-title">' +
+          esc(p.title) +
           "</div>" +
-          '<ul class="feed-posts">' +
-          posts +
-          "</ul>" +
-          "</div></div></div></div>"
+          '<div class="feed-foot">' +
+          avatar +
+          '<span class="feed-name">' +
+          esc(p.name) +
+          "</span>" +
+          '<span class="feed-date">' +
+          fmt(p.date) +
+          "</span>" +
+          "</div>" +
+          "</a>"
         );
       })
       .join("");
