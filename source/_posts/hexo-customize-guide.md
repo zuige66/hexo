@@ -349,6 +349,34 @@ links:
 
 　　新增一个友链的动态：在 `circle-feeds.json` 加一项（填上对方 RSS 地址）即可，其余由流水线自动完成。本地预览可用 `bash tools/deploy-circle.sh` 一键抓数据并部署。
 
+## 十五、首页侧栏吸顶（粘性侧边栏）
+
+　　首页左栏（个人卡片、统计、发文记录、分类、标签、最近文章）在下滑时会跟着一起滚走。用 **粘性侧边栏（sticky sidebar）** 可以让它滚到某个位置后锁住不动，之后只有右栏的文章列表继续滚动。
+
+　　技术上靠 CSS 的 **`position: sticky`**——它跟 `position: fixed` 不同：`fixed` 是一开始就钉死在窗口，`sticky` 是「没滚到之前正常跟着走，滚到了才吸住」，正好是想要的效果。
+
+### 当前实现
+
+　　锁定点定在**「分类」卡片**：左栏先跟着页面往上滚，等「分类」卡片升到固定导航栏下方时锁死，之后只有右栏继续滚。
+
+| 文件 | 作用 |
+|------|------|
+| `themes/fluid/layout/index.ejs` | 给「分类」这个 `<section>` 加 `home-sticky-anchor` 类，作为锁定锚点 |
+| `source/css/home-sidebar.css` | `.home-sidebar` 写 `position: sticky; top: 76px`，是 JS 未生效时的兜底值 |
+| `source/js/home-sidebar-sticky.js` | 动态计算 `top`，让「分类」卡片正好停在导航栏下方 |
+| `_config.fluid.yml` | `custom_js` 里注册该脚本，`custom_css` 里带版本号 |
+
+　　计算方式：设 `d` 为「分类」卡片相对侧栏顶部的距离、`nav` 为导航栏高度加间距，则 `top = nav - d`。`d` 大于 `nav` 时 `top` 为负值，表示侧栏要先跟着往上滚一段再锁住。
+
+　　兜底逻辑：当屏幕高度放不下「分类以下」的全部内容时，会自动退化为「整体吸顶 + 左栏内部滚动」，保证底部的「最近文章」仍然看得到。
+
+### 调整锁定位置
+
+　　- 想让锁定时离导航栏更远/更近：改 `home-sidebar-sticky.js` 里的 `TOP_GAP`。
+    - 想换成别的卡片作为锁定点（比如「标签」）：把 `home-sticky-anchor` 类挪到那个 `<section>` 上即可。
+    - 想改成「一滚到顶就整体吸住」：把锚点类挪到侧栏最上面那张卡片（个人卡片）上。
+    - 手机端（≤767px）左栏本来就是隐藏的，脚本会自动跳过；如果改了 `home-sidebar.css` 里的断点，记得同步改脚本里的 `MOBILE_MAX`。
+
 ## 总结
 
 　　核心就两个文件：
