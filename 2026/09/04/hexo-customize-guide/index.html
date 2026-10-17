@@ -27,7 +27,7 @@
 <meta property="og:description" content="前言　　博客搭好了，但怎么改标题、加图标、管理分类标签？本文以当前博客为例，讲解 Hexo + Fluid 的目录结构和常用配置。 一、常用命令速查　　以下命令都在博客根目录下执行。    作用 命令    新建文章 hexo new &quot;文章标题&quot;   新建独立页面 hexo new page &quot;页面名&quot;   新建草稿 hexo new draft &amp;quo">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-09-03T16:00:00.000Z">
-<meta property="article:modified_time" content="2026-10-17T15:42:25.397Z">
+<meta property="article:modified_time" content="2026-10-17T16:55:01.415Z">
 <meta property="article:author" content="zuige">
 <meta property="article:tag" content="Fluid">
 <meta property="article:tag" content="Hexo">
@@ -73,7 +73,7 @@
 
 
   
-<link rel="stylesheet" href="/css/home-sidebar.css?v=3.css">
+<link rel="stylesheet" href="/css/home-sidebar.css?v=4.css">
 <link rel="stylesheet" href="/css/site-motion.css?v=12.css">
 
 
@@ -368,7 +368,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          6.1k 字
+          7k 字
         
       </span>
     
@@ -379,7 +379,7 @@
         
         
         
-          51 分钟
+          59 分钟
         
       </span>
     
@@ -628,6 +628,36 @@
 <li>自动化：<code>.github/workflows/circle.yml</code> 每天 UTC 22:17 定时运行，也可在仓库 Actions 页手动触发；<code>circle-feeds.json</code>、<code>tools/circle_fetch.py</code> 等变动会触发重新部署。每次运行结束会把最新的 <code>circle-archive.json</code> 提交回 <code>main</code>，因此归档跨运行持续累积。</li>
 </ul>
 <p>　　新增一个友链的动态：在 <code>circle-feeds.json</code> 加一项（填上对方 RSS 地址）即可，其余由流水线自动完成。本地预览可用 <code>bash tools/deploy-circle.sh</code> 一键抓数据并部署。</p>
+<h2 id="十五、首页侧栏吸顶（粘性侧边栏）"><a href="#十五、首页侧栏吸顶（粘性侧边栏）" class="headerlink" title="十五、首页侧栏吸顶（粘性侧边栏）"></a>十五、首页侧栏吸顶（粘性侧边栏）</h2><p>　　首页左栏（个人卡片、统计、发文记录、分类、标签、最近文章）在下滑时会跟着一起滚走。用 <strong>粘性侧边栏（sticky sidebar）</strong> 可以让它滚到某个位置后锁住不动，之后只有右栏的文章列表继续滚动。</p>
+<p>　　技术上靠 CSS 的 <strong><code>position: sticky</code></strong>——它跟 <code>position: fixed</code> 不同：<code>fixed</code> 是一开始就钉死在窗口，<code>sticky</code> 是「没滚到之前正常跟着走，滚到了才吸住」，正好是想要的效果。</p>
+<h3 id="当前实现"><a href="#当前实现" class="headerlink" title="当前实现"></a>当前实现</h3><p>　　锁定点定在**「分类」卡片**：左栏先跟着页面往上滚，等「分类」卡片升到固定导航栏下方时锁死，之后只有右栏继续滚。</p>
+<table>
+<thead>
+<tr>
+<th>文件</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>themes/fluid/layout/index.ejs</code></td>
+<td>给「分类」这个 <code>&lt;section&gt;</code> 加 <code>home-sticky-anchor</code> 类，作为锁定锚点</td>
+</tr>
+<tr>
+<td><code>source/css/home-sidebar.css</code></td>
+<td><code>.home-sidebar</code> 写 <code>position: sticky; top: 76px</code>，是 JS 未生效时的兜底值</td>
+</tr>
+<tr>
+<td><code>source/js/home-sidebar-sticky.js</code></td>
+<td>动态计算 <code>top</code>，让「分类」卡片正好停在导航栏下方</td>
+</tr>
+<tr>
+<td><code>_config.fluid.yml</code></td>
+<td><code>custom_js</code> 里注册该脚本，<code>custom_css</code> 里带版本号</td>
+</tr>
+</tbody></table>
+<p>　　计算方式：设 <code>d</code> 为「分类」卡片相对侧栏顶部的距离、<code>nav</code> 为导航栏高度加间距，则 <code>top = nav - d</code>。<code>d</code> 大于 <code>nav</code> 时 <code>top</code> 为负值，表示侧栏要先跟着往上滚一段再锁住。</p>
+<p>　　兜底逻辑：当屏幕高度放不下「分类以下」的全部内容时，会自动退化为「整体吸顶 + 左栏内部滚动」，保证底部的「最近文章」仍然看得到。</p>
+<h3 id="调整锁定位置"><a href="#调整锁定位置" class="headerlink" title="调整锁定位置"></a>调整锁定位置</h3><p>　　- 想让锁定时离导航栏更远&#x2F;更近：改 <code>home-sidebar-sticky.js</code> 里的 <code>TOP_GAP</code>。<br>    - 想换成别的卡片作为锁定点（比如「标签」）：把 <code>home-sticky-anchor</code> 类挪到那个 <code>&lt;section&gt;</code> 上即可。<br>    - 想改成「一滚到顶就整体吸住」：把锚点类挪到侧栏最上面那张卡片（个人卡片）上。<br>    - 手机端（≤767px）左栏本来就是隐藏的，脚本会自动跳过；如果改了 <code>home-sidebar.css</code> 里的断点，记得同步改脚本里的 <code>MOBILE_MAX</code>。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>　　核心就两个文件：</p>
 <ul>
 <li><code>_config.yml</code> 管全局设置</li>
@@ -1150,6 +1180,7 @@
 <script src="/js/site-interactions.js?v=2.js"></script>
 <script src="/js/cloud-sea.js?v=7.js"></script>
 <script src="/js/soft-nav.js?v=4.js"></script>
+<script src="/js/home-sidebar-sticky.js?v=1.js"></script>
 
 
 

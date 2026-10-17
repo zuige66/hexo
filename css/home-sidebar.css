@@ -18,7 +18,10 @@ body:has(.home-with-sidebar) #board > .container > .row > .col-md-10 {
   --sidebar-muted: #5e6e62;
   --sidebar-subtle: #8a988d;
   --sidebar-heat-empty: #edf3ee;
-  position: static;
+  /* 吸附由 CSS 完成，具体 top 由 home-sidebar-sticky.js 动态计算；
+     下面是 JS 未生效时的兜底值，保证左栏不会整条滚没。 */
+  position: sticky;
+  top: 76px;
   min-width: 0;
 }
 .home-side-card { background: var(--board-bg-color); border-radius: 14px; padding: 1.1rem 1.15rem; margin-bottom: 1rem; box-shadow: 0 6px 20px rgba(0, 0, 0, .08); }
