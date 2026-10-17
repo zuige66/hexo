@@ -242,7 +242,7 @@ custom_js:
 # The usage is the same as custom_js
 custom_css:
   - /css/home-sidebar.css?v=3
-  - /css/site-motion.css?v=9
+  - /css/site-motion.css?v=11
 
 # 网页访问统计
 # Analysis of website visitors
@@ -1123,6 +1123,13 @@ links:
       intro: "躬身入局，心为主理，行有尺度，自持本心。",
       link: "https://blog.fqzlr.top/",
       avatar: "https://q1.qlogo.cn/g?b=qq&nk=20447289&s=640"
+    }
+    - {
+      title: "年华",
+      intro: "分享生活和技术。",
+      link: "https://blog.amamo.top",
+      avatar: "https://q1.qlogo.cn/g?b=qq&nk=1323860289&s=640",
+      rss: "https://blog.amamo.top/rss.xml"
     }
 
   # 当成员头像加载失败时，替换为指定图片

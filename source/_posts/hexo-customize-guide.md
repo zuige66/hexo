@@ -318,6 +318,35 @@ color:
 | 改悬停、浮起与搜索高亮动效 | `source/css/site-motion.css` |
 | 改站内搜索定位效果 | `themes/fluid/source/js/local-search.js` 与 `source/js/site-interactions.js` |
 
+## 十三、管理友链
+
+友链配置在 `_config.fluid.yml` 的 `links.items`，每条是一个对象，字段如下：
+
+- `title`：站点名称
+- `intro`：一句话简介
+- `link`：站点地址
+- `avatar`：头像地址
+- `rss`：对方订阅源地址，可选；填写后该友链卡片右上角显示 RSS 图标
+
+```yaml
+links:
+  items:
+    - { title: "站点名", intro: "一句话简介", link: "https://example.com", avatar: "https://example.com/avatar.png", rss: "https://example.com/rss.xml" }
+```
+
+`rss` 字段非空时，友链卡片右上角出现 RSS 图标，点击跳转到对方订阅源。图标渲染依赖两处改动：`themes/fluid/layout/links.ejs`（卡片内增加 RSS 链接）与 `source/css/site-motion.css`（`.link-rss` 定位样式）。主题升级后需重新应用这两处。友链页本体位于 `source/links/index.md`，一般无需改动。
+
+## 十四、友链朋友圈（动态聚合）
+
+　　友链页 `/links/` 在友链头像与简介**下方**、「我的友链信息」**上方**，把每位友链的最新文章以卡片形式聚合展示，无需自建后端。原理：定时抓取各友链的 RSS，生成一份静态 JSON，友链页的脚本拉取该 JSON 渲染卡片。
+
+- 数据源：`circle-feeds.json`（仓库根目录），只列带 `rss` 的友链，每项含 `name` / `link` / `rss` / `avatar`。
+- 生成器：`tools/circle_fetch.py`，纯标准库实现，运行后写出 `source/circle/circle.json`（已加入 `.gitignore`，不入库；部署后地址为 `/circle/circle.json`）。
+- 渲染：`source/js/circle-feed.js` 由 `themes/fluid/layout/links.ejs` 在友链卡片之后引入，复用 `.links .card` 网格样式；卡片列表样式在 `source/css/site-motion.css` 的 `.feed-posts` 段。
+- 自动化：`.github/workflows/circle.yml` 每天 UTC 22:17 定时运行，也可在仓库 Actions 页手动触发；`circle-feeds.json` 变动会触发重新部署。
+
+　　新增一个友链的动态：在 `circle-feeds.json` 加一项（填上对方 RSS 地址）即可，其余由流水线自动完成。本地预览可用 `bash tools/deploy-circle.sh` 一键抓数据并部署。
+
 ## 总结
 
 　　核心就两个文件：
@@ -325,4 +354,4 @@ color:
 - `_config.yml` 管全局设置
 - `_config.fluid.yml` 管主题样式
 
-　　改完配置执行 `hexo clean && hexo deploy` 即可生效。日常命令见开头「一、常用命令速查」。
+　　改完配置执行 `hexo generate -d` 即可生成并部署。日常命令见开头「一、常用命令速查」。

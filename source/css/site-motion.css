@@ -51,6 +51,7 @@
 }
 
 .links .card {
+  position: relative;
   border-radius: 14px;
 }
 
@@ -300,4 +301,82 @@ button:active {
     animation-iteration-count: 1 !important;
     transition-duration: .01ms !important;
   }
+}
+
+/* 友链卡片右上角的 RSS 订阅图标，仅在该友链项配置了 rss 字段时出现。 */
+.links .card .link-rss {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  color: #e0913b;
+  background: var(--board-bg-color, #fff);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, .18);
+  transition: color 180ms ease, transform 220ms var(--motion-spring), box-shadow 220ms var(--motion-smooth);
+}
+
+.links .card .link-rss:hover,
+.links .card .link-rss:focus-visible {
+  color: #c9701a;
+  transform: translateY(-2px) scale(1.08);
+  box-shadow: var(--motion-shadow);
+}
+
+@media (prefers-color-scheme: dark) {
+  .links .card .link-rss {
+    color: #f0a857;
+  }
+  .links .card .link-rss:hover,
+  .links .card .link-rss:focus-visible {
+    color: #ffbf73;
+  }
+}
+
+/* 友链最新动态：复用 .links .card 网格，卡片内列出该友链的最新文章。 */
+#circle-feed {
+  margin-top: 1.5rem;
+}
+
+.feed-posts {
+  list-style: none;
+  margin: .5rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: .4rem;
+}
+
+.feed-post {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: .6rem;
+  font-size: .86rem;
+  line-height: 1.4;
+}
+
+.feed-post a {
+  color: var(--post-link-color, #0366d6);
+  text-decoration: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.feed-post a:hover,
+.feed-post a:focus-visible {
+  color: var(--link-hover-color, #30a9de);
+  text-decoration: underline;
+}
+
+.feed-date {
+  flex: none;
+  color: var(--text-color-secondary, #9aa0a6);
+  font-size: .72rem;
 }

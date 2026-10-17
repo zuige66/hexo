@@ -26,9 +26,21 @@ page.comment = theme.links.comments.type
           </div>
         </div>
       </a>
+      <% if (each.rss) { %>
+      <a href="<%= url_for(each.rss) %>" class="link-rss" target="_blank" rel="noopener" title="RSS 订阅" aria-label="RSS 订阅">
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M4 11a9 9 0 0 1 9 9"></path>
+          <path d="M4 4a16 16 0 0 1 16 16"></path>
+          <circle cx="5" cy="19" r="1"></circle>
+        </svg>
+      </a>
+      <% } %>
     </div>
   <% } %>
 </div>
+
+<div class="row links" id="circle-feed" aria-label="友链最新动态"></div>
+<script src="<%= url_for('/js/circle-feed.js') %>"></script>
 
 <% if(theme.links.custom && theme.links.custom.enable && theme.links.custom.content) { %>
   <!-- Custom -->
