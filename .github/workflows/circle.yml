@@ -9,6 +9,9 @@ on:
     paths:
       - 'circle-feeds.json'
       - 'tools/circle_fetch.py'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+      - 'pnpm-workspace.yaml'
 
 jobs:
   build:

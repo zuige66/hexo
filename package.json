@@ -11,6 +11,11 @@
   "hexo": {
     "version": "8.1.2"
   },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "hexo-util"
+    ]
+  },
   "dependencies": {
     "hexo": "^8.0.0",
     "hexo-deployer-git": "^4.0.0",
