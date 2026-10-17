@@ -27,7 +27,7 @@
 <meta property="og:description" content="前言　　博客搭好了，但怎么改标题、加图标、管理分类标签？本文以当前博客为例，讲解 Hexo + Fluid 的目录结构和常用配置。 一、常用命令速查　　以下命令都在博客根目录下执行。    作用 命令    新建文章 hexo new &quot;文章标题&quot;   新建独立页面 hexo new page &quot;页面名&quot;   新建草稿 hexo new draft &amp;quo">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-09-03T16:00:00.000Z">
-<meta property="article:modified_time" content="2026-10-17T16:55:01.415Z">
+<meta property="article:modified_time" content="2026-10-17T17:05:54.544Z">
 <meta property="article:author" content="zuige">
 <meta property="article:tag" content="Fluid">
 <meta property="article:tag" content="Hexo">
@@ -368,7 +368,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          7k 字
+          7.1k 字
         
       </span>
     
@@ -379,7 +379,7 @@
         
         
         
-          59 分钟
+          60 分钟
         
       </span>
     
@@ -656,7 +656,7 @@
 </tr>
 </tbody></table>
 <p>　　计算方式：设 <code>d</code> 为「分类」卡片相对侧栏顶部的距离、<code>nav</code> 为导航栏高度加间距，则 <code>top = nav - d</code>。<code>d</code> 大于 <code>nav</code> 时 <code>top</code> 为负值，表示侧栏要先跟着往上滚一段再锁住。</p>
-<p>　　兜底逻辑：当屏幕高度放不下「分类以下」的全部内容时，会自动退化为「整体吸顶 + 左栏内部滚动」，保证底部的「最近文章」仍然看得到。</p>
+<p>　　兜底逻辑：展开「展开全部」后侧栏可能比屏幕还高，「分类以下」放不下，此时改为把<strong>侧栏底部对齐屏幕底部</strong>，保证刚展开的标签和最近文章可见；往回滚到顶部时侧栏恢复原位，简介和统计不会丢。<strong>红线：绝不给侧栏加内部滚动条</strong>（<code>maxHeight</code> + <code>overflow</code>）——内部滚动位置会残留，导致顶部卡片「看起来消失」。侧栏高度变化时通过 <code>ResizeObserver</code> 自动重新计算锁定位置。</p>
 <h3 id="调整锁定位置"><a href="#调整锁定位置" class="headerlink" title="调整锁定位置"></a>调整锁定位置</h3><p>　　- 想让锁定时离导航栏更远&#x2F;更近：改 <code>home-sidebar-sticky.js</code> 里的 <code>TOP_GAP</code>。<br>    - 想换成别的卡片作为锁定点（比如「标签」）：把 <code>home-sticky-anchor</code> 类挪到那个 <code>&lt;section&gt;</code> 上即可。<br>    - 想改成「一滚到顶就整体吸住」：把锚点类挪到侧栏最上面那张卡片（个人卡片）上。<br>    - 手机端（≤767px）左栏本来就是隐藏的，脚本会自动跳过；如果改了 <code>home-sidebar.css</code> 里的断点，记得同步改脚本里的 <code>MOBILE_MAX</code>。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>　　核心就两个文件：</p>
 <ul>
@@ -1180,7 +1180,7 @@
 <script src="/js/site-interactions.js?v=2.js"></script>
 <script src="/js/cloud-sea.js?v=7.js"></script>
 <script src="/js/soft-nav.js?v=4.js"></script>
-<script src="/js/home-sidebar-sticky.js?v=1.js"></script>
+<script src="/js/home-sidebar-sticky.js?v=2.js"></script>
 
 
 
