@@ -166,14 +166,19 @@ Fluid.events = {
 
     var bg = document.getElementById('banner');
     if (bg) {
-      var src = bg.style.backgroundImage;
-      var url = src.match(/\((.*?)\)/)[1].replace(/(['"])/g, '');
-      var img = new Image();
-      img.onload = function() {
-        window.NProgress && window.NProgress.status !== null && window.NProgress.inc(0.2);
-      };
-      img.src = url;
-      if (img.complete) { img.onload(); }
+      var src = bg.style.backgroundImage || '';
+      // banner 背景并不总是 url()：渐变预载底色（见 cloud-sea.js 的 showStaticFallback
+      // 与 banner.ejs 的默认渐变）会让下面原本的 /\((.*?)\)/ 提取到渐变里的颜色值
+      // （如 "rgb(111, 155, 216"）并当成图片去请求，产生 404。这里显式只认 url()。
+      var urlMatch = src.match(/url\(['"]?(.*?)['"]?\)/);
+      if (urlMatch) {
+        var img = new Image();
+        img.onload = function() {
+          window.NProgress && window.NProgress.status !== null && window.NProgress.inc(0.2);
+        };
+        img.src = urlMatch[1];
+        if (img.complete) { img.onload(); }
+      }
     }
 
     var notLazyImages = jQuery('main img:not([lazyload])');
