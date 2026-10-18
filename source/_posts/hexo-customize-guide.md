@@ -364,10 +364,12 @@ links:
 | 文件 | 作用 |
 |------|------|
 | `themes/fluid/layout/index.ejs` | 把「分类」「部分标签」「最近文章」三个 `<section>` 整体包进 `<div class="home-side-sticky">`；上半部分（个人卡片/统计/发文记录）留在容器外，走正常流自然滚走 |
-| `source/css/home-sidebar.css` | `.home-side-sticky { position: sticky; top: 76px; max-height: calc(100vh - 76px - 16px); overflow-y: auto; }`，`top` 是常数，不靠 JS |
+| `source/css/home-sidebar.css` | `.home-sidebar { align-self: stretch }`（拉满 Grid 行高，sticky 子元素才有整页高度可钉）；`.home-side-sticky { position: sticky; top: 76px; max-height: calc(100vh - 76px - 16px); overflow-y: auto; }`，`top` 是常数，不靠 JS |
 | `_config.fluid.yml` | `custom_css` 里 `home-sidebar.css` 带版本号（改 CSS 必须 bump） |
 
 　　原理：`.home-side-sticky` 的 `top: 76px` 是固定值（76 ≈ 导航栏高度 + 间距），它的**上边缘**就是锁定位置——也就是「分类」卡片的顶部。上半部分卡片不在容器里，所以会先滚走；容器本身是 sticky，等上边缘碰到 76px 处就锁住。`top` 是常数，iPad 上也不会漂移。内容若高于视口，仅容器内部滚动（`overflow-y: auto`），**不影响已滚走的上半栏**——这与「整体吸顶 + 内部滚动」的坑不同（旧法会把上半栏卷进内部视口，看起来像消失）。
+
+　　**红线：`.home-sidebar` 必须拉满 Grid 行高**（Grid 默认 `align-items: stretch`，或显式给 `.home-sidebar` 写 `align-self: stretch`）。曾误设 `align-items: start`，导致 `.home-sidebar` 只有「自身内容高」，sticky 子元素只能在父级范围内钉一小段、父级底一到就整条滚走，表现成「完全不吸顶」。要点：sticky 子元素的钉住范围 = 父容器高度 − 自身高度 − top，父容器不高就钉不住。
 
 ### 调整锁定位置
 

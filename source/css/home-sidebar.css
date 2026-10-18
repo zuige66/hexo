@@ -19,6 +19,10 @@ body:has(.home-with-sidebar) #board > .container > .row > .col-md-10 {
   --sidebar-subtle: #8a988d;
   --sidebar-heat-empty: #edf3ee;
   min-width: 0;
+  /* 关键：拉满 Grid 行高，让下半块 .home-side-sticky 有整页高度可钉。
+     否则 .home-sidebar 只有自身内容高，sticky 子元素钉一小段后父级底就到，
+     整条左栏会跟着滚走（2026-10-18 踩过的坑）。 */
+  align-self: stretch;
 }
 /* 左栏下半部分（分类 / 部分标签 / 最近文章）整体吸附在导航栏下方；
    上半部分（头像 / 统计 / 发文记录）随页面自然滚走。
