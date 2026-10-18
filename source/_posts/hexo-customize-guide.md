@@ -357,25 +357,24 @@ links:
 
 ### 当前实现
 
-　　锁定点定在**「分类」卡片**：左栏先跟着页面往上滚，等「分类」卡片升到固定导航栏下方时锁死，之后只有右栏继续滚。
+　　锁定点定在**「分类」卡片**：左栏上半部分（个人卡片、统计、发文记录）先跟着页面往上滚并自然消失，等「分类」卡片升到固定导航栏下方时，从「分类」开始往下的整块锁死，之后只有右栏继续滚。
+
+　　实现方式是**纯 CSS 容器吸附**，不依赖 JS——早期用 JS 动态算 `top`，但在 iPad Safari 上会因工具栏收展导致锁定点漂移，已被弃用：
 
 | 文件 | 作用 |
 |------|------|
-| `themes/fluid/layout/index.ejs` | 给「分类」这个 `<section>` 加 `home-sticky-anchor` 类，作为锁定锚点 |
-| `source/css/home-sidebar.css` | `.home-sidebar` 写 `position: sticky; top: 76px`，是 JS 未生效时的兜底值 |
-| `source/js/home-sidebar-sticky.js` | 动态计算 `top`，让「分类」卡片正好停在导航栏下方 |
-| `_config.fluid.yml` | `custom_js` 里注册该脚本，`custom_css` 里带版本号 |
+| `themes/fluid/layout/index.ejs` | 把「分类」「部分标签」「最近文章」三个 `<section>` 整体包进 `<div class="home-side-sticky">`；上半部分（个人卡片/统计/发文记录）留在容器外，走正常流自然滚走 |
+| `source/css/home-sidebar.css` | `.home-side-sticky { position: sticky; top: 76px; max-height: calc(100vh - 76px - 16px); overflow-y: auto; }`，`top` 是常数，不靠 JS |
+| `_config.fluid.yml` | `custom_css` 里 `home-sidebar.css` 带版本号（改 CSS 必须 bump） |
 
-　　计算方式：设 `d` 为「分类」卡片相对侧栏顶部的距离、`nav` 为导航栏高度加间距，则 `top = nav - d`。`d` 大于 `nav` 时 `top` 为负值，表示侧栏要先跟着往上滚一段再锁住。
-
-　　兜底逻辑：展开「展开全部」后侧栏可能比屏幕还高，「分类以下」放不下，此时改为把**侧栏底部对齐屏幕底部**，保证刚展开的标签和最近文章可见；往回滚到顶部时侧栏恢复原位，简介和统计不会丢。**红线：绝不给侧栏加内部滚动条**（`maxHeight` + `overflow`）——内部滚动位置会残留，导致顶部卡片「看起来消失」。侧栏高度变化时通过 `ResizeObserver` 自动重新计算锁定位置。
+　　原理：`.home-side-sticky` 的 `top: 76px` 是固定值（76 ≈ 导航栏高度 + 间距），它的**上边缘**就是锁定位置——也就是「分类」卡片的顶部。上半部分卡片不在容器里，所以会先滚走；容器本身是 sticky，等上边缘碰到 76px 处就锁住。`top` 是常数，iPad 上也不会漂移。内容若高于视口，仅容器内部滚动（`overflow-y: auto`），**不影响已滚走的上半栏**——这与「整体吸顶 + 内部滚动」的坑不同（旧法会把上半栏卷进内部视口，看起来像消失）。
 
 ### 调整锁定位置
 
-　　- 想让锁定时离导航栏更远/更近：改 `home-sidebar-sticky.js` 里的 `TOP_GAP`。
-    - 想换成别的卡片作为锁定点（比如「标签」）：把 `home-sticky-anchor` 类挪到那个 `<section>` 上即可。
-    - 想改成「一滚到顶就整体吸住」：把锚点类挪到侧栏最上面那张卡片（个人卡片）上。
-    - 手机端（≤767px）左栏本来就是隐藏的，脚本会自动跳过；如果改了 `home-sidebar.css` 里的断点，记得同步改脚本里的 `MOBILE_MAX`。
+　　- 想让锁定时离导航栏更远/更近：改 `home-sidebar.css` 里 `.home-side-sticky` 的 `top: 76px`（值越大贴导航栏越紧、越晚吸住；值越小越早吸住）。注意它同时是容器上边缘与导航栏的间距，也是视口可用高度扣减项。
+    - 想换成别的卡片作为锁定点（比如从「标签」开始锁）：在 `index.ejs` 里把 `<div class="home-side-sticky">` 的起始位置挪到那个 `<section>` 之前即可（容器上边缘 = 锁定点）。
+    - 想改成「一滚到顶就整体吸住」：把 `<div class="home-side-sticky">` 移到侧栏最上面（包住个人卡片），并把 `top` 设小即可。
+    - 手机端（≤767px）左栏在 `home-sidebar.css` 里 `display: none` 隐藏，容器 sticky 自然不生效。
 
 ## 十六、首页侧栏卡片
 

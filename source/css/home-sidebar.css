@@ -18,11 +18,17 @@ body:has(.home-with-sidebar) #board > .container > .row > .col-md-10 {
   --sidebar-muted: #5e6e62;
   --sidebar-subtle: #8a988d;
   --sidebar-heat-empty: #edf3ee;
-  /* 吸附由 CSS 完成，具体 top 由 home-sidebar-sticky.js 动态计算；
-     下面是 JS 未生效时的兜底值，保证左栏不会整条滚没。 */
+  min-width: 0;
+}
+/* 左栏下半部分（分类 / 部分标签 / 最近文章）整体吸附在导航栏下方；
+   上半部分（头像 / 统计 / 发文记录）随页面自然滚走。
+   top 为常数 76px，不依赖 JS 计算，iPad Safari 上也不会漂移。
+   内容若高于视口，仅本容器内滚动，不影响上半栏。 */
+.home-side-sticky {
   position: sticky;
   top: 76px;
-  min-width: 0;
+  max-height: calc(100vh - 76px - 16px);
+  overflow-y: auto;
 }
 .home-side-card { background: var(--board-bg-color); border-radius: 14px; padding: 1.1rem 1.15rem; margin-bottom: 1rem; box-shadow: 0 6px 20px rgba(0, 0, 0, .08); }
 .home-profile-card { text-align: center; }
