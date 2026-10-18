@@ -17,20 +17,30 @@
   // 全站所有页面（首页/关于/友链/归档/分类/标签页等）都显示，因每页都有 #banner
   // 注：仍保留对系统“减弱动效(prefers-reduced-motion)”的尊重——用户主动关闭动效时不渲染
 
+  var banner = document.getElementById('banner');
+  if (!banner) return;
+
+  // 静态头图 fallback：banner.ejs 默认已用「与云海场景接近的渐变」作预载底色，
+  // 这里是“再退一步”——仅在无法渲染 WebGL 动画时挂上静态壁纸(default.png)，
+  // 避免硬刷新瞬间或降级时露出渐变/空白。
+  function showStaticFallback() {
+    banner.style.backgroundImage = "url('/img/default.png')";
+    banner.style.backgroundRepeat = 'no-repeat';
+    banner.style.backgroundPosition = 'center center';
+    banner.style.backgroundSize = 'cover';
+  }
+
   var reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reducedMotion) return;
+  if (reducedMotion) { showStaticFallback(); return; }
 
   var MOBILE = window.matchMedia && window.matchMedia('(max-width: 767px)').matches;
   // 手机端同样显示；但用更低分辨率比例与 DPR 上限以控发热/耗电
 
-  var banner = document.getElementById('banner');
-  if (!banner) return;
-
   var gl = null;
   try {
     gl = document.createElement('canvas').getContext('webgl2', { antialias: false, alpha: false, powerPreference: 'low-power' });
-  } catch (e) { /* 保持静态图 */ }
-  if (!gl) return;
+  } catch (e) { showStaticFallback(); } // 不支持 WebGL2：保持静态壁纸
+  if (!gl) { showStaticFallback(); return; }
 
   // ---------- Shader 源码 ----------
   var NOISE_SIZE_STR = '256.0'; // 蓝噪声纹理尺寸（字符串形式，保持 GLSL 浮点字面量），须与 /img/cloud-sea-noise.png 一致
@@ -311,6 +321,7 @@
   };
   noiseImg.onerror = function () {
     console.error('[cloud-sea] 蓝噪声纹理加载失败，回退静态头图');
+    showStaticFallback();
     dispose();
   };
   noiseImg.src = '/img/cloud-sea-noise.png';

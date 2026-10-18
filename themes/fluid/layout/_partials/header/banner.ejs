@@ -26,8 +26,18 @@ var banner_mask_alpha = parseFloat(page.banner_mask_alpha || theme.index.banner_
 var subtitle = page.subtitle || page.title
 %>
 
+<%
+// 默认 banner（未显式自定义 banner_img）不再一上来就挂静态壁纸，否则硬刷新时会
+// 闪一下旧壁纸：HTML 解析即显示，要等 cloud-sea.js 注入 canvas 覆盖后才消失。
+// 这里改用与 WebGL 云海场景接近的渐变作预载底色；静态壁纸(default.png)改由
+// cloud-sea.js 在「减弱动效 / 不支持 WebGL2 / 纹理加载失败」时显式设为 fallback。
+var isDefaultBanner = (banner_img === theme.index.banner_img);
+var bannerBgStyle = isDefaultBanner
+  ? 'background: linear-gradient(180deg, #6f9bd8 0%, #c39bb4 52%, #eab487 100%);'
+  : "background: url('" + url_for(banner_img) + "') no-repeat center center; background-size: cover;";
+%>
 <div id="banner" class="banner"<%- banner_attrs %>
-     style="background: url('<%- url_for(banner_img) %>') no-repeat center center; background-size: cover;">
+     style="<%- bannerBgStyle %>">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, <%= banner_mask_alpha %>)">
       <div class="banner-text text-center fade-in-up">
