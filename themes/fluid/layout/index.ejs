@@ -29,8 +29,8 @@ for (var heatDate = new Date(heatmapStart); heatDate <= today; heatDate.setDate(
 }
 
 var categoryItems = site.categories.sort('length', -1).toArray()
-// 标签：次数多的优先，次数相同按首字母（中文按拼音）排；首页最多展示 10 个
-var tagLimit = 10
+// 标签：次数多的优先，次数相同按首字母（中文按拼音）排；首页最多展示 5 个
+var tagLimit = 5
 var tagItems = site.tags.sort('length', -1).toArray().sort(function (a, b) {
   var diff = b.posts.length - a.posts.length
   if (diff !== 0) return diff
