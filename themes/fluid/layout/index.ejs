@@ -29,7 +29,14 @@ for (var heatDate = new Date(heatmapStart); heatDate <= today; heatDate.setDate(
 }
 
 var categoryItems = site.categories.sort('length', -1).toArray()
-var tagItems = site.tags.sort('length', -1).toArray()
+// 标签：次数多的优先，次数相同按首字母（中文按拼音）排；首页最多展示 10 个
+var tagLimit = 10
+var tagItems = site.tags.sort('length', -1).toArray().sort(function (a, b) {
+  var diff = b.posts.length - a.posts.length
+  if (diff !== 0) return diff
+  return a.name.localeCompare(b.name, 'zh-Hans-CN')
+})
+var topTags = tagItems.slice(0, tagLimit)
 var recentPosts = sitePosts.slice(0, 5)
 var elapsedDays = Math.max(1, Math.floor((today - siteStart) / 86400000) + 1)
 %>
@@ -79,20 +86,18 @@ var elapsedDays = Math.max(1, Math.floor((today - siteStart) / 86400000) + 1)
         <% }) %>
       </div>
       <% if (categoryItems.length > 3) { %>
-        <details><summary><span class="expand-label">展开全部（<%= categoryItems.length %>）</span><span class="collapse-label">收起全部</span></summary><div class="home-taxonomy-list home-taxonomy-more"><% categoryItems.slice(3).forEach(function(category) { %><a href="<%= url_for(category.path) %>"><span><%= category.name %></span><em><%= category.posts.length %></em></a><% }) %></div></details>
+        <div class="home-taxonomy-list home-taxonomy-more" hidden><% categoryItems.slice(3).forEach(function(category) { %><a href="<%= url_for(category.path) %>"><span><%= category.name %></span><em><%= category.posts.length %></em></a><% }) %></div>
+        <button type="button" class="home-more-toggle" aria-expanded="false" data-open-text="收起全部" data-close-text="展开全部（<%= categoryItems.length %>）">展开全部（<%= categoryItems.length %>）</button>
       <% } %>
     </section>
 
     <section class="home-side-card home-list-card">
-      <h3>标签</h3>
+      <h3>部分标签</h3>
       <div class="home-taxonomy-list">
-        <% tagItems.slice(0, 3).forEach(function(tag) { %>
+        <% topTags.forEach(function(tag) { %>
           <a href="<%= url_for(tag.path) %>"><span># <%= tag.name %></span><em><%= tag.posts.length %></em></a>
         <% }) %>
       </div>
-      <% if (tagItems.length > 3) { %>
-        <details><summary><span class="expand-label">展开全部（<%= tagItems.length %>）</span><span class="collapse-label">收起全部</span></summary><div class="home-taxonomy-list home-taxonomy-more"><% tagItems.slice(3).forEach(function(tag) { %><a href="<%= url_for(tag.path) %>"><span># <%= tag.name %></span><em><%= tag.posts.length %></em></a><% }) %></div></details>
-      <% } %>
     </section>
 
     <section class="home-side-card home-list-card">

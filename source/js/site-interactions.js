@@ -42,6 +42,20 @@
     openPostCard(card);
   });
 
+  // 首页侧栏「展开全部 / 收起全部」按钮：按钮在列表下方，切换列表显隐。
+  // 用事件委托绑定，软导航（soft-nav.js）换页重建 DOM 后依然有效。
+  document.addEventListener('click', function (event) {
+    if (!(event.target instanceof Element)) return;
+    var btn = event.target.closest('.home-more-toggle');
+    if (!btn) return;
+    var list = btn.parentElement.querySelector('.home-taxonomy-more');
+    if (!list) return;
+    var willCollapse = !list.hidden;
+    list.hidden = willCollapse;
+    btn.textContent = willCollapse ? btn.dataset.closeText : btn.dataset.openText;
+    btn.setAttribute('aria-expanded', String(!willCollapse));
+  });
+
   document.addEventListener('keydown', function (event) {
     if (event.key !== 'Enter' && event.key !== ' ') return;
     if (!(event.target instanceof Element)) return;

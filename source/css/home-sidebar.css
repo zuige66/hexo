@@ -54,14 +54,12 @@ body:has(.home-with-sidebar) #board > .container > .row > .col-md-10 {
 .home-recent-list a { align-items: flex-start; line-height: 1.35; }
 .home-recent-list a > span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .home-recent-list time { flex: 0 0 auto; color: var(--sidebar-subtle); font-size: .72rem; }
-.home-list-card details { margin-top: .35rem; }
-.home-list-card summary { color: var(--sidebar-accent); cursor: pointer; font-size: .78rem; }
-.home-list-card details[open] { display: flex; flex-direction: column; }
-.home-list-card details[open] > summary { order: 2; margin-top: .35rem; }
-.collapse-label { display: none; }
-.home-list-card details[open] .expand-label { display: none; }
-.home-list-card details[open] .collapse-label { display: inline; }
 .home-taxonomy-more { margin-top: .35rem; }
+/* 「展开全部 / 收起全部」按钮：位于列表下方，箭头随展开状态旋转 */
+.home-more-toggle { display: inline-flex; align-items: center; gap: .3rem; margin-top: .35rem; padding: 0; border: 0; background: none; color: var(--sidebar-accent); cursor: pointer; font-size: .78rem; transition: color 180ms ease; }
+.home-more-toggle::before { content: "▸"; font-size: .72rem; transition: transform 220ms var(--motion-spring); }
+.home-more-toggle[aria-expanded="true"]::before { transform: rotate(90deg); }
+.home-more-toggle:hover, .home-more-toggle:focus-visible { color: var(--sidebar-accent-hover); }
 .home-post-list { min-width: 0; }
 
 :root[data-user-color-scheme="dark"] .home-sidebar {
