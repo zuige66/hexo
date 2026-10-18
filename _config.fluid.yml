@@ -244,7 +244,7 @@ custom_js:
 custom_css:
   - /css/home-sidebar.css?v=7
   - /css/site-motion.css?v=12
-  - /css/moments.css?v=1
+  - /css/moments.css?v=2
 
 # 网页访问统计
 # Analysis of website visitors

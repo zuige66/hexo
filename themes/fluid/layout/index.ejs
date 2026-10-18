@@ -39,6 +39,21 @@ var tagItems = site.tags.sort('length', -1).toArray().sort(function (a, b) {
 var topTags = tagItems.slice(0, tagLimit)
 var recentPosts = sitePosts.slice(0, 5)
 var elapsedDays = Math.max(1, Math.floor((today - siteStart) / 86400000) + 1)
+
+// 动态（Moments）：数据来自 source/_data/moments.yml，按时间倒序（新的在前）
+var allMoments = (site.data.moments || []).filter(function (m) {
+  return m && m.content;
+}).sort(function (a, b) {
+  return new Date(b.date || 0) - new Date(a.date || 0);
+})
+var homeMomentLimit = 2  // 首页正文动态条数
+var sideMomentLimit = 3  // 侧栏「最新动态」条数
+var homeMoments = allMoments.slice(0, homeMomentLimit)
+var sideMoments = allMoments.slice(0, sideMomentLimit)
+// 侧栏空间有限，只展示纯文本单行；先把 Markdown 渲染成文本再压平空白，方便悬浮看原文
+function momentPlain(m) {
+  return strip_html(markdown(m.content)).replace(/\r?\n/g, ' ').replace(/\s+/g, ' ').trim()
+}
 %>
 
 <h1 style="display: none"><%= config.title %></h1>
@@ -78,6 +93,21 @@ var elapsedDays = Math.max(1, Math.floor((today - siteStart) / 86400000) + 1)
       <div class="home-heatmap-legend"><span>少</span><i class="level-0"></i><i class="level-1"></i><i class="level-2"></i><i class="level-3"></i><i class="level-4"></i><span>多</span></div>
     </section>
 
+    <% if (sideMoments.length) { %>
+    <section class="home-side-card home-moment-card">
+      <h3>最新动态</h3>
+      <div class="home-recent-list">
+        <% sideMoments.forEach(function (m) { %>
+          <a href="<%= url_for('/archives/') %>#moments" title="<%= momentPlain(m) %>">
+            <span><%= momentPlain(m) %></span>
+            <time datetime="<%= m.date ? full_date(m.date, 'YYYY-MM-DD') : '' %>"><%= m.date ? date(m.date, 'MM-DD') : '' %></time>
+          </a>
+        <% }) %>
+      </div>
+      <a class="home-moment-more" href="<%= url_for('/archives/') %>#moments">查看全部动态 →</a>
+    </section>
+    <% } %>
+
     <div class="home-side-sticky">
     <section class="home-side-card home-list-card">
       <h3>分类</h3>
@@ -113,6 +143,26 @@ var elapsedDays = Math.max(1, Math.floor((today - siteStart) / 86400000) + 1)
   </aside>
 
   <div class="home-post-list">
+    <% if (homeMoments.length) { %>
+    <section class="home-moment-stream" aria-label="最新动态">
+      <div class="home-moment-head">
+        <h3>动态</h3>
+        <a href="<%= url_for('/archives/') %>#moments">更多 →</a>
+      </div>
+      <div class="moments-timeline">
+        <% homeMoments.forEach(function (m) { %>
+          <article class="moment-item">
+            <span class="moment-dot"></span>
+            <div class="moment-card">
+              <time class="moment-time"><%= m.date ? date(m.date, 'YYYY-MM-DD HH:mm') : '' %></time>
+              <div class="moment-content"><%- markdown(m.content) %></div>
+            </div>
+          </article>
+        <% }) %>
+      </div>
+    </section>
+    <% } %>
+
     <% (page.posts || site.posts).forEach(function (post) { %>
       <% var post_url = url_for(post.path), index_img = post.index_img || theme.post.default_index_img %>
       <div class="row mx-auto index-card" data-post-url="<%= post_url %>" role="link" tabindex="0" aria-label="打开文章：<%= post.title %>">

@@ -140,6 +140,47 @@
   .moment-item .moment-dot { left: -1.5rem; }
 }
 
+/* ---------- 首页：正文区动态流 ---------- */
+.home-moment-stream { margin-bottom: 1.75rem; }
+
+.home-moment-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: .15rem;
+}
+
+.home-moment-head h3 {
+  margin: 0;
+  font-size: 1.15rem;
+  color: var(--text-color, #3c4858);
+}
+
+.home-moment-head a {
+  color: var(--sec-text-color, #718096);
+  font-size: .82rem;
+  text-decoration: none;
+  transition: color 180ms ease;
+}
+
+.home-moment-head a:hover { color: var(--link-hover-color, #30a9de); }
+
+/* ---------- 首页：侧栏「最新动态」卡片 ---------- */
+/* 列表本身复用 .home-recent-list 的单行截断样式，这里只补「查看全部动态」入口 */
+.home-moment-card .home-moment-more {
+  display: inline-block;
+  margin-top: .55rem;
+  color: var(--sidebar-accent, #39854b);
+  font-size: .78rem;
+  text-decoration: none;
+  transition: color 180ms ease;
+}
+
+.home-moment-card .home-moment-more:hover {
+  color: var(--sidebar-accent-hover, #2f6d3d);
+}
+
 /* 尊重系统「减弱动效」 */
 @media (prefers-reduced-motion: reduce) {
   .moment-card { transition: none; }

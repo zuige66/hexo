@@ -435,6 +435,22 @@ links:
 - CSS / JS 需登记在 `_config.fluid.yml` 的 `custom_css` / `custom_js` 列表里；**改动后记得 bump 版本号**（如 `?v=1` → `?v=2`）以失效浏览器缓存。
 - 统计文案在 `source/_data/languages/zh-CN.yml` 的 `moments.post_total`（「共计 %d 条动态」）。
 
+### 17.5 首页与侧栏的动态展示
+
+　　动态除了归档页的专属视图，首页也有两处入口，都由 `themes/fluid/layout/index.ejs` 渲染：
+
+| 位置 | 元素 | 内容 |
+|------|------|------|
+| 首页正文（右栏文章列表上方） | `.home-moment-stream` | 最近 **2** 条，完整 Markdown 渲染，直接复用归档页的时间线卡片 |
+| 首页侧栏（热力图下方） | `.home-moment-card` | 「最新动态」卡片，最近 **3** 条，纯文本单行截断，鼠标悬浮（`title`）看全文 |
+
+- 两者底部/右上角都有「更多 / 查看全部动态 →」，指向 `/archives/#moments`。
+- 改动展示条数：编辑 `index.ejs` 顶部的 `homeMomentLimit`（正文）与 `sideMomentLimit`（侧栏）。
+- 侧栏列表复用了既有的 `.home-recent-list` 样式（自带单行 ellipsis），因此动态过长不会撑破卡片；正文区侧的 Markdown 内容则按原始格式渲染。
+- 移动端（≤767px）`.home-sidebar` 整体隐藏，侧栏动态卡片自然不显示，正文区的动态流仍在。
+
+> 提醒：`moments.css` 的任何改动都要同步 bump `_config.fluid.yml` 里的版本号（如 `?v=1` → `?v=2`），否则访客浏览器会用缓存的旧样式，表现为「改了没生效」。
+
 ## 总结
 
 　　核心就两个文件：
