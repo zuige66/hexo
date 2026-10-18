@@ -391,6 +391,50 @@ links:
 
 　　想调整标签显示数量：改 `index.ejs` 顶部的 `tagLimit`；想改排序规则：改 `tagItems` 的比较函数。
 
+## 十七、动态（Moments）板块
+
+　　「动态」用来发短句、牢骚、随手记；「文章」则是成篇的正式内容。二者本质相同（都是 Markdown 内容），区别在于**长度与语气**，而不是技术形态。
+
+　　设计上**不新增独立板块与路由**：动态挂在已有归档页 `/archives/` 内，顶部新增一个胶囊切换按钮，在「文章归档」与「动态」两个视图之间切换。
+
+### 17.1 数据：写在独立数据文件里
+
+　　动态内容放在 `source/_data/moments.yml`（列表，Hexo 会自动载入为 `site.data.moments`）：
+
+```yaml
+- date: '2026-10-19 00:50'
+  content: |
+    我创建了动态板块
+```
+
+| 字段 | 说明 |
+|------|------|
+| `date` | 必填，建议加英文单引号写成字符串，格式 `YYYY-MM-DD HH:mm`（不写时间则只显示日期） |
+| `content` | 必填，正文，支持 Markdown 与 HTML |
+
+- 新增一条：复制模板放到列表**最前面**（模板渲染时按 `date` 倒序，新的在上）。
+- 选数据文件而非「文章 + `moment: true` 标记」，是为了**不污染文章归档的统计口径与分页**——动态数不计入「共计 N 篇文章」，也不会挤占归档分页。
+
+### 17.2 渲染：复用归档页的 partial
+
+　　渲染逻辑在 `themes/fluid/layout/_partials/archive-list.ejs`。该 partial 同时被归档页 / 分类页 / 标签页复用，因此用 `params.key === 'archive'` 判断，**只在归档页**挂载切换控件与动态时间线。
+
+　　两个视图的 DOM 会一次性渲染（`archive-panel-posts` / `archive-panel-moments`），切换只是显隐，不重新请求数据。
+
+### 17.3 样式与交互
+
+| 文件 | 职责 |
+|------|------|
+| `source/css/moments.css` | 胶囊切换按钮 + 时间线卡片流（左侧竖线与节点圆点），配色沿用主题 CSS 变量，已覆盖深色模式与移动端 |
+| `source/js/moments.js` | 切换显隐、同步 URL hash（`#moments`，用 `replaceState` 不污染前进/后退历史） |
+
+关键坑：软导航换入 `#board` 后**内联 `<script>` 不会执行**，所以这里用 `document` 级事件委托绑定点击，并监听 `soft-nav.js` 派发的 `softnav:loaded` 事件重新初始化——否则从其他页面软导航进归档页后，切换按钮会失效。
+
+### 17.4 资源注入与文案
+
+- CSS / JS 需登记在 `_config.fluid.yml` 的 `custom_css` / `custom_js` 列表里；**改动后记得 bump 版本号**（如 `?v=1` → `?v=2`）以失效浏览器缓存。
+- 统计文案在 `source/_data/languages/zh-CN.yml` 的 `moments.post_total`（「共计 %d 条动态」）。
+
 ## 总结
 
 　　核心就两个文件：

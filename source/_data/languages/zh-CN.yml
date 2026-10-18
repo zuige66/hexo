@@ -8,6 +8,9 @@ archive:
   subtitle: 归档
   post_total: 共计 %d 篇文章
 
+moments:
+  post_total: 共计 %d 条动态
+
 category:
   menu: 分类
   title: 分类

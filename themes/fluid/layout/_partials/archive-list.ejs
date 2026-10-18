@@ -1,17 +1,62 @@
-<div class="list-group">
-  <p class="h4"><%= __(params.key + '.post_total', params.postTotal) %></p>
-  <hr>
-  <% var dateCursor %>
-  <% page.posts.each(function (post) { %>
-    <% if(date(post.date, "YYYY") !== dateCursor) { %>
-      <% dateCursor = date(post.date, "YYYY") %>
-      <p class="h5"><%= dateCursor %></p>
-    <% } %>
-    <a href="<%= url_for(post.path) %>" class="list-group-item list-group-item-action">
-      <time><%= date(post.date, "MM-DD") %></time>
-      <div class="list-group-item-title"><%= post.title %></div>
-    </a>
-  <% }) %>
+<%
+// 本 partial 同时被归档页 / 分类页 / 标签页复用。
+// 只有归档页（key === 'archive'）才需要「文章归档 / 动态」双视图切换。
+var isArchive = params.key === 'archive';
+// 动态内容来自 source/_data/moments.yml（数组），已由 Hexo 自动载入 site.data.moments
+var moments = (site.data.moments || []).filter(function (m) { return m && m.content; });
+// 新动态排在最前面
+moments.sort(function (a, b) {
+  return new Date(b.date || 0) - new Date(a.date || 0);
+});
+// 文章归档列表排除动态（动态在另一个视图里展示，避免重复与统计口径混淆）
+var posts = isArchive ? page.posts.filter(function (p) { return !p.moment; }) : page.posts;
+var postTotal = isArchive ? posts.length : params.postTotal;
+%>
+
+<% if (isArchive) { %>
+<div class="archive-tabs" role="tablist" aria-label="归档视图切换">
+  <button type="button" class="archive-tab is-active" data-archive-tab="posts" role="tab" aria-selected="true">文章归档</button>
+  <button type="button" class="archive-tab" data-archive-tab="moments" role="tab" aria-selected="false">动态</button>
+</div>
+<% } %>
+
+<div class="archive-panel" id="archive-panel-posts">
+  <div class="list-group">
+    <p class="h4"><%= __(params.key + '.post_total', postTotal) %></p>
+    <hr>
+    <% var dateCursor %>
+    <% posts.each(function (post) { %>
+      <% if(date(post.date, "YYYY") !== dateCursor) { %>
+        <% dateCursor = date(post.date, "YYYY") %>
+        <p class="h5"><%= dateCursor %></p>
+      <% } %>
+      <a href="<%= url_for(post.path) %>" class="list-group-item list-group-item-action">
+        <time><%= date(post.date, "MM-DD") %></time>
+        <div class="list-group-item-title"><%= post.title %></div>
+      </a>
+    <% }) %>
+  </div>
+
+  <%- partial('_partials/paginator') %>
 </div>
 
-<%- partial('_partials/paginator') %>
+<% if (isArchive) { %>
+<div class="archive-panel" id="archive-panel-moments" hidden>
+  <div class="list-group">
+    <p class="h4"><%= __('moments.post_total', moments.length) %></p>
+    <hr>
+  </div>
+
+  <div class="moments-timeline">
+    <% moments.forEach(function (m) { %>
+      <article class="moment-item">
+        <span class="moment-dot"></span>
+        <div class="moment-card">
+          <time class="moment-time"><%= m.date ? date(m.date, 'YYYY-MM-DD HH:mm') : '' %></time>
+          <div class="moment-content"><%- markdown(m.content) %></div>
+        </div>
+      </article>
+    <% }) %>
+  </div>
+</div>
+<% } %>
