@@ -32,7 +32,7 @@
   - 抓取脚本 `tools/circle_fetch.py`（纯标准库，无第三方依赖）：GitHub Actions `circle.yml` 定时跑，本地也可 `python tools/circle_fetch.py`。
   - 输出 `source/circle/circle.json`（展示数据，按时间倒序取前 60 条）；累积归档 `circle-archive.json`（仓库根，按 URL 去重合并，每人上限 100 篇）。
   - 上线链路：`hexo generate` 把 `source/circle/circle.json` 拷到 `public/circle/circle.json` → `hexo deploy` 推 gh-pages → 线上 `/circle/circle.json`。**该 JSON 现作为基线提交进 git（2026-10-19 从 .gitignore 移除并 commit），不再被忽略**——保证任何一次 `hexo deploy`（含别的会话的纯页面优化推送、干净检出）都带数据；`circle.yml` 的 Actions 跑完 `circle_fetch.py` 后也会把最新 `circle.json` 写回 main，保持基线新鲜。
-  - 前端：`themes/fluid/layout/links.ejs` 在好友卡片后放 `<div id="circle-feed" aria-label="友链最新动态"></div>` + `<script src="/js/circle-feed.js?v=3">`；`source/js/circle-feed.js` 运行时 `fetch('/circle/circle.json?v=YYYY-MM-DD')`（**按日缓存破坏符**，防 Cloudflare/浏览器 4h 缓存拿到旧/空版本）渲染 `.feed-card` 卡片。
+  - 前端：`themes/fluid/layout/links.ejs` 在好友卡片后放 `<div id="circle-feed" aria-label="友链最新动态"></div>` + `<script src="/js/circle-feed.js?v=4">`；`source/js/circle-feed.js` 运行时 `fetch('/circle/circle.json?v=YYYY-MM-DD')`（**按日缓存破坏符**，防 Cloudflare/浏览器 4h 缓存拿到旧/空版本）渲染 `.feed-card` 卡片。**默认收起**：网格桌面/平板固定 3 列，收起态 `#circle-feed.is-collapsed` 隐藏第 10+ 张（只显示前 9 张 = 三行三列九宫格），卡片流下方有"展开全部 N 篇"↔"收起"按钮（`total<=9` 时不折叠无按钮）。
   - 样式：`source/css/site-motion.css` 的 `#circle-feed` / `.feed-card` 段（**不是** moments.css；moments.css 只管"动态/Moments"归档页与首页流）。
 - **已知坑（2026-10-19 排查确认）**：
   1. 容器曾**没有可见标题**，只有屏幕阅读器用的 `aria-label`——极易被当成"没了"或忽略。**2026-10-19 已修**：`links.ejs` 在 `#circle-feed` 前加了 `<h2 class="circle-feed-title">订阅朋友圈 <span class="circle-feed-sub">友链最新动态</span></h2>`，样式在 `site-motion.css`（该次改动曾漏 bump `?v=13→?v=14`，导致线上拿到旧 CSS）。
