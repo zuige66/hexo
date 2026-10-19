@@ -1076,7 +1076,8 @@ links:
       title: "楠枝小笺",
       intro: "安安静静地存在，就已经很好了。",
       link: "https://www.nanzhiy.cn",
-      avatar: "https://www.nanzhiy.cn/upload/IMG_20260412_164454.ico"
+      avatar: "https://www.nanzhiy.cn/upload/IMG_20260412_164454.ico",
+      rss: "https://www.nanzhiy.cn/rss.xml"
     }
     - {
       title: "puresky-blog",
@@ -1095,7 +1096,8 @@ links:
       title: "蓝莓小屋",
       intro: "向着光前行，不负每一次相遇与热爱。",
       link: "https://aigene.studio/",
-      avatar: "https://aigene.studio/logo/icon.webp"
+      avatar: "https://aigene.studio/logo/icon.webp",
+      rss: "https://aigene.studio/rss.xml"
     }
     - {
       title: "冷汐的杂货铺",
@@ -1108,25 +1110,29 @@ links:
       title: "qwwp",
       intro: "你要吃一口C4吗？",
       link: "https://qwwp.top/",
-      avatar: "https://qwwp.top/images/avatar.jpg"
+      avatar: "https://qwwp.top/images/avatar.jpg",
+      rss: "https://qwwp.top/feed.xml"
     }
     - {
       title: "MmzMing的知识库",
       intro: "哈基米，南北绿豆",
       link: "https://tblog.mmzhiku.xyz/",
-      avatar: "https://i.stardots.io/784774835/StarDots-2026052116374135506.jpg"
+      avatar: "https://i.stardots.io/784774835/StarDots-2026052116374135506.jpg",
+      rss: "https://tblog.mmzhiku.xyz/rss.xml"
     }
     - {
       title: "Pasule Blog",
       intro: "Keep the Wonder. Keep the Fire",
       link: "https://pasule.com",
-      avatar: "https://tu.pasule.com/file/wallpaper/1784014500478.png"
+      avatar: "https://tu.pasule.com/file/wallpaper/1784014500478.png",
+      rss: "https://pasule.com/rss.xml"
     }
     - {
       title: "番茄主理人",
       intro: "躬身入局，心为主理，行有尺度，自持本心。",
       link: "https://blog.fqzlr.top/",
-      avatar: "https://q1.qlogo.cn/g?b=qq&nk=20447289&s=640"
+      avatar: "https://q1.qlogo.cn/g?b=qq&nk=20447289&s=640",
+      rss: "https://blog.fqzlr.top/rss.xml"
     }
     - {
       title: "年华",
@@ -1139,7 +1145,8 @@ links:
       title: "x1shang-山与回响",
       intro: "山有轮廓，思绪没有",
       link: "https://www.x1shang.top",
-      avatar: "https://x1shang.top/assets/img/x1shang-avatar.webp"
+      avatar: "https://x1shang.top/assets/img/x1shang-avatar.webp",
+      rss: "https://www.x1shang.top/feed"
     }
 
   # 当成员头像加载失败时，替换为指定图片

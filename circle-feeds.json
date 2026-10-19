@@ -16,5 +16,47 @@
     "link": "https://pureskyblog.dpdns.org",
     "rss": "https://pureskyblog.dpdns.org/rss.xml",
     "avatar": "https://avatars.githubusercontent.com/u/232055116?v=4"
+  },
+  {
+    "name": "Pasule Blog",
+    "link": "https://pasule.com",
+    "rss": "https://pasule.com/rss.xml",
+    "avatar": "https://tu.pasule.com/file/wallpaper/1784014500478.png"
+  },
+  {
+    "name": "番茄主理人",
+    "link": "https://blog.fqzlr.top",
+    "rss": "https://blog.fqzlr.top/rss.xml",
+    "avatar": "https://q1.qlogo.cn/g?b=qq&nk=20447289&s=640"
+  },
+  {
+    "name": "MmzMing的知识库",
+    "link": "https://tblog.mmzhiku.xyz",
+    "rss": "https://tblog.mmzhiku.xyz/rss.xml",
+    "avatar": "https://i.stardots.io/784774835/StarDots-2026052116374135506.jpg"
+  },
+  {
+    "name": "楠枝小笺",
+    "link": "https://www.nanzhiy.cn",
+    "rss": "https://www.nanzhiy.cn/rss.xml",
+    "avatar": "https://www.nanzhiy.cn/upload/IMG_20260412_164454.ico"
+  },
+  {
+    "name": "蓝莓小屋",
+    "link": "https://aigene.studio",
+    "rss": "https://aigene.studio/rss.xml",
+    "avatar": "https://aigene.studio/logo/icon.webp"
+  },
+  {
+    "name": "qwwp",
+    "link": "https://qwwp.top",
+    "rss": "https://qwwp.top/feed.xml",
+    "avatar": "https://qwwp.top/images/avatar.jpg"
+  },
+  {
+    "name": "x1shang-山与回响",
+    "link": "https://www.x1shang.top",
+    "rss": "https://www.x1shang.top/feed",
+    "avatar": "https://x1shang.top/assets/img/x1shang-avatar.webp"
   }
 ]
