@@ -94,6 +94,11 @@
     "rss": "https://pureskyblog.dpdns.org/rss.xml",
     "posts": [
       {
+        "title": "稀疏矩阵的压缩与运算优化（其二）：行单链表、十字链表",
+        "url": "https://pureskyblog.dpdns.org/posts/post-20261019/",
+        "date": "2026-10-19T00:00:00+00:00"
+      },
+      {
         "title": "稀疏矩阵的压缩与运算优化（其一）：稀疏矩阵转置",
         "url": "https://pureskyblog.dpdns.org/posts/post-20261018/",
         "date": "2026-10-18T00:00:00+00:00"

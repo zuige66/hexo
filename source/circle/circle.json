@@ -1,7 +1,15 @@
 {
-  "generated": "2026-10-19T01:58:57.399977+00:00",
-  "total_archived": 27,
+  "generated": "2026-10-19T03:31:45.890177+00:00",
+  "total_archived": 28,
   "posts": [
+    {
+      "title": "稀疏矩阵的压缩与运算优化（其二）：行单链表、十字链表",
+      "url": "https://pureskyblog.dpdns.org/posts/post-20261019/",
+      "date": "2026-10-19T00:00:00+00:00",
+      "name": "puresky-blog",
+      "link": "https://pureskyblog.dpdns.org",
+      "avatar": "https://avatars.githubusercontent.com/u/232055116?v=4"
+    },
     {
       "title": "稀疏矩阵的压缩与运算优化（其一）：稀疏矩阵转置",
       "url": "https://pureskyblog.dpdns.org/posts/post-20261018/",
