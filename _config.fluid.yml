@@ -237,14 +237,14 @@ custom_js:
   - /js/site-interactions.js?v=3
   - /js/cloud-sea.js?v=8
   - /js/soft-nav.js?v=4
-  - /js/moments.js?v=1
+  - /js/moments.js?v=2
 
 # 指定自定义 .css 文件路径，用法和 custom_js 相同
 # The usage is the same as custom_js
 custom_css:
   - /css/home-sidebar.css?v=7
-  - /css/site-motion.css?v=12
-  - /css/moments.css?v=2
+  - /css/site-motion.css?v=13
+  - /css/moments.css?v=3
 
 # 网页访问统计
 # Analysis of website visitors
@@ -1082,7 +1082,8 @@ links:
       title: "puresky-blog",
       intro: "即使迷茫，也要继续前进（2026了还在go，无敌了）",
       link: "https://pureskyblog.dpdns.org",
-      avatar: "https://avatars.githubusercontent.com/u/232055116?v=4"
+      avatar: "https://avatars.githubusercontent.com/u/232055116?v=4",
+      rss: "https://pureskyblog.dpdns.org/rss.xml"
     }
     - {
       title: "桃之夭夭",
@@ -1100,7 +1101,8 @@ links:
       title: "冷汐的杂货铺",
       intro: "你好谢谢小笼包再见",
       link: "https://lengxiqwq.com",
-      avatar: "https://weavatar.com/avatar/52f243e67ccc2293d68c6f33db3f4083?s=640"
+      avatar: "https://weavatar.com/avatar/52f243e67ccc2293d68c6f33db3f4083?s=640",
+      rss: "https://lengxiqwq.com/rss.xml"
     }
     - {
       title: "qwwp",

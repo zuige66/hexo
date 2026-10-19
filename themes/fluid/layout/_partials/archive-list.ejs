@@ -14,9 +14,11 @@ var postTotal = isArchive ? posts.length : params.postTotal;
 %>
 
 <% if (isArchive) { %>
-<div class="archive-tabs" role="tablist" aria-label="归档视图切换">
-  <button type="button" class="archive-tab is-active" data-archive-tab="posts" role="tab" aria-selected="true">文章归档</button>
-  <button type="button" class="archive-tab" data-archive-tab="moments" role="tab" aria-selected="false">动态</button>
+<div class="archive-tabs-wrap" role="tablist" aria-label="归档视图切换">
+  <div class="archive-tabs">
+    <button type="button" class="archive-tab is-active" data-archive-tab="posts" data-tabs-group="archive" role="tab" aria-selected="true">文章归档</button>
+    <button type="button" class="archive-tab" data-archive-tab="moments" data-tabs-group="archive" role="tab" aria-selected="false">动态</button>
+  </div>
 </div>
 <% } %>
 

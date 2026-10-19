@@ -46,9 +46,7 @@ var allMoments = (site.data.moments || []).filter(function (m) {
 }).sort(function (a, b) {
   return new Date(b.date || 0) - new Date(a.date || 0);
 })
-var homeMomentLimit = 2  // 首页正文动态条数
 var sideMomentLimit = 3  // 侧栏「最新动态」条数
-var homeMoments = allMoments.slice(0, homeMomentLimit)
 var sideMoments = allMoments.slice(0, sideMomentLimit)
 // 侧栏空间有限，只展示纯文本单行；先把 Markdown 渲染成文本再压平空白，方便悬浮看原文
 function momentPlain(m) {
@@ -143,26 +141,14 @@ function momentPlain(m) {
   </aside>
 
   <div class="home-post-list">
-    <% if (homeMoments.length) { %>
-    <section class="home-moment-stream" aria-label="最新动态">
-      <div class="home-moment-head">
-        <h3>动态</h3>
-        <a href="<%= url_for('/archives/') %>#moments">更多 →</a>
+    <div class="archive-tabs-wrap" role="tablist" aria-label="首页视图切换">
+      <div class="archive-tabs">
+        <button type="button" class="archive-tab is-active" data-archive-tab="posts" data-tabs-group="home" role="tab" aria-selected="true">文章</button>
+        <button type="button" class="archive-tab" data-archive-tab="moments" data-tabs-group="home" role="tab" aria-selected="false">动态</button>
       </div>
-      <div class="moments-timeline">
-        <% homeMoments.forEach(function (m) { %>
-          <article class="moment-item">
-            <span class="moment-dot"></span>
-            <div class="moment-card">
-              <time class="moment-time"><%= m.date ? date(m.date, 'YYYY-MM-DD HH:mm') : '' %></time>
-              <div class="moment-content"><%- markdown(m.content) %></div>
-            </div>
-          </article>
-        <% }) %>
-      </div>
-    </section>
-    <% } %>
+    </div>
 
+    <div class="archive-panel" id="home-panel-posts">
     <% (page.posts || site.posts).forEach(function (post) { %>
       <% var post_url = url_for(post.path), index_img = post.index_img || theme.post.default_index_img %>
       <div class="row mx-auto index-card" data-post-url="<%= post_url %>" role="link" tabindex="0" aria-label="打开文章：<%= post.title %>">
@@ -191,5 +177,20 @@ function momentPlain(m) {
     <% if (page.total > 1) { %>
       <nav aria-label="navigation"><span class="pagination" id="pagination"><%- paginator({ prev_text: '<i class="iconfont icon-arrowleft"></i>', next_text: '<i class="iconfont icon-arrowright"></i>', mid_size: 2, end_size: 1, format: `${config.pagination_dir}/%d/#board`, escape: false }) %></span></nav>
     <% } %>
+    </div>
+
+    <div class="archive-panel" id="home-panel-moments" hidden>
+      <div class="moments-timeline">
+        <% allMoments.forEach(function (m) { %>
+          <article class="moment-item">
+            <span class="moment-dot"></span>
+            <div class="moment-card">
+              <time class="moment-time"><%= m.date ? date(m.date, 'YYYY-MM-DD HH:mm') : '' %></time>
+              <div class="moment-content"><%- markdown(m.content) %></div>
+            </div>
+          </article>
+        <% }) %>
+      </div>
+    </div>
   </div>
 </div>

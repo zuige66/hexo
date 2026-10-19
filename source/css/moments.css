@@ -8,10 +8,17 @@
  */
 
 /* ---------- 视图切换控件（胶囊分段按钮） ---------- */
+/* 外层 wrap 负责居中与下间距；.archive-tabs 自身保持 inline-flex，
+   这样胶囊底色只包裹按钮，不会撑满整行 */
+.archive-tabs-wrap {
+  text-align: center;
+  margin: 0 0 1.25rem;
+}
+
 .archive-tabs {
   display: inline-flex;
   gap: .25rem;
-  margin: 0 0 1.25rem;
+  margin: 0;
   padding: .25rem;
   border-radius: 999px;
   background: rgba(127, 140, 159, .14);
@@ -139,32 +146,6 @@
   .moments-timeline { padding-left: 1.5rem; }
   .moment-item .moment-dot { left: -1.5rem; }
 }
-
-/* ---------- 首页：正文区动态流 ---------- */
-.home-moment-stream { margin-bottom: 1.75rem; }
-
-.home-moment-head {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-bottom: .15rem;
-}
-
-.home-moment-head h3 {
-  margin: 0;
-  font-size: 1.15rem;
-  color: var(--text-color, #3c4858);
-}
-
-.home-moment-head a {
-  color: var(--sec-text-color, #718096);
-  font-size: .82rem;
-  text-decoration: none;
-  transition: color 180ms ease;
-}
-
-.home-moment-head a:hover { color: var(--link-hover-color, #30a9de); }
 
 /* ---------- 首页：侧栏「最新动态」卡片 ---------- */
 /* 列表本身复用 .home-recent-list 的单行截断样式，这里只补「查看全部动态」入口 */

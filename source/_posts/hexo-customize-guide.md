@@ -426,7 +426,7 @@ links:
 | 文件 | 职责 |
 |------|------|
 | `source/css/moments.css` | 胶囊切换按钮 + 时间线卡片流（左侧竖线与节点圆点），配色沿用主题 CSS 变量，已覆盖深色模式与移动端 |
-| `source/js/moments.js` | 切换显隐、同步 URL hash（`#moments`，用 `replaceState` 不污染前进/后退历史） |
+| `source/js/moments.js` | 切换显隐、同步 URL hash（`#moments`，用 `replaceState` 不污染前进/后退历史）；通过按钮的 `data-tabs-group` 区分归档页与首页两组，独立切换 |
 
 关键坑：软导航换入 `#board` 后**内联 `<script>` 不会执行**，所以这里用 `document` 级事件委托绑定点击，并监听 `soft-nav.js` 派发的 `softnav:loaded` 事件重新初始化——否则从其他页面软导航进归档页后，切换按钮会失效。
 
@@ -435,19 +435,22 @@ links:
 - CSS / JS 需登记在 `_config.fluid.yml` 的 `custom_css` / `custom_js` 列表里；**改动后记得 bump 版本号**（如 `?v=1` → `?v=2`）以失效浏览器缓存。
 - 统计文案在 `source/_data/languages/zh-CN.yml` 的 `moments.post_total`（「共计 %d 条动态」）。
 
-### 17.5 首页与侧栏的动态展示
+### 17.5 首页切换与侧栏预览
 
-　　动态除了归档页的专属视图，首页也有两处入口，都由 `themes/fluid/layout/index.ejs` 渲染：
+　　归档页与首页右栏各有一组**居中的胶囊切换按钮**（`文章 / 动态`），视觉与逻辑完全一致：
 
-| 位置 | 元素 | 内容 |
-|------|------|------|
-| 首页正文（右栏文章列表上方） | `.home-moment-stream` | 最近 **2** 条，完整 Markdown 渲染，直接复用归档页的时间线卡片 |
-| 首页侧栏（热力图下方） | `.home-moment-card` | 「最新动态」卡片，最近 **3** 条，纯文本单行截断，鼠标悬浮（`title`）看全文 |
+| 位置 | 面板 ID | 说明 |
+|------|---------|------|
+| 归档页 `/archives/` | `archive-panel-posts` / `archive-panel-moments` | 按钮文案「文章归档 / 动态」 |
+| 首页右栏 `.home-post-list` | `home-panel-posts` / `home-panel-moments` | 按钮文案「文章 / 动态」，动态视图展示**全部**动态 |
 
-- 两者底部/右上角都有「更多 / 查看全部动态 →」，指向 `/archives/#moments`。
-- 改动展示条数：编辑 `index.ejs` 顶部的 `homeMomentLimit`（正文）与 `sideMomentLimit`（侧栏）。
-- 侧栏列表复用了既有的 `.home-recent-list` 样式（自带单行 ellipsis），因此动态过长不会撑破卡片；正文区侧的 Markdown 内容则按原始格式渲染。
-- 移动端（≤767px）`.home-sidebar` 整体隐藏，侧栏动态卡片自然不显示，正文区的动态流仍在。
+　　两处按钮通过 `data-tabs-group`（`archive` / `home`）区分，`moments.js` 按组独立切换，互不干扰；URL hash 统一同步 `#moments`（`replaceState`，不污染前进/后退历史），因此 `/archives/#moments` 与 `/#moments` 都可作为深链分享。
+
+　　首页侧栏（热力图下方）另有 `.home-moment-card`「最新动态」卡片作预览：最近 **3** 条纯文本单行截断，鼠标悬浮（`title`）看全文，底部「查看全部动态 →」指向 `/archives/#moments`。移动端（≤767px）`.home-sidebar` 整体隐藏，该卡片不显示，右栏切换仍在。
+
+- 居中实现：`.archive-tabs`（胶囊底板）是 `inline-flex`，外包一层 `.archive-tabs-wrap { text-align: center }`——**不能**给 `.archive-tabs` 直接设 `margin: 0 auto`（inline 元素水平 auto 无效），也不能改成占满宽度的 flex（胶囊底色会撑满整行）。
+- 改动展示条数：编辑 `index.ejs` 顶部的 `sideMomentLimit`（侧栏）。
+- 侧栏列表复用既有的 `.home-recent-list` 样式（自带单行 ellipsis），动态过长不会撑破卡片。
 
 > 提醒：`moments.css` 的任何改动都要同步 bump `_config.fluid.yml` 里的版本号（如 `?v=1` → `?v=2`），否则访客浏览器会用缓存的旧样式，表现为「改了没生效」。
 
