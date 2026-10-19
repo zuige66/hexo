@@ -340,7 +340,7 @@ button:active {
 
 /* 友链最新动态：一篇文章一张小卡片，CSS Grid 排布避免浮动错位/重叠。 */
 #circle-feed {
-  margin-top: 1.5rem;
+  margin-top: 0;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
   gap: .9rem;
@@ -350,6 +350,23 @@ button:active {
   #circle-feed {
     grid-template-columns: 1fr;
   }
+}
+
+/* 朋友圈可见标题（2026-10-19 新增，此前仅有 aria-label 易被忽略） */
+.circle-feed-title {
+  margin: 2.5rem 0 .9rem;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text-color, #3c4858);
+  display: flex;
+  align-items: baseline;
+  gap: .5rem;
+}
+
+.circle-feed-title .circle-feed-sub {
+  font-size: .82rem;
+  font-weight: 400;
+  color: var(--text-color-secondary, #6b7785);
 }
 
 .feed-card {
