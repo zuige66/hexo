@@ -82,13 +82,13 @@
     btn.type = "button";
     btn.className = "circle-feed-toggle";
     btn.setAttribute("aria-expanded", "false");
-    btn.textContent = "展开全部 " + total + " 篇";
+    btn.textContent = "展开";
 
     btn.addEventListener("click", function () {
       collapsed = !collapsed;
       box.classList.toggle("is-collapsed", collapsed);
       btn.setAttribute("aria-expanded", String(!collapsed));
-      btn.textContent = collapsed ? "展开全部 " + total + " 篇" : "收起";
+      btn.textContent = collapsed ? "展开" : "收起";
     });
 
     box.insertAdjacentElement("afterend", btn);

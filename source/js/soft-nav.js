@@ -112,6 +112,27 @@
     }
   }
 
+  // innerHTML 替换后，新内容里的 <script> 不会自动执行（浏览器行为）。
+  // 软导航进入友链页时 circle-feed.js 不跑 → 只有标题没卡片，必须硬刷新才恢复。
+  // 这里重建 script 节点触发执行（src 外部脚本与内联脚本都支持）。
+  function rerunScripts(root) {
+    if (!root) return;
+    var scripts = root.querySelectorAll('script');
+    for (var i = 0; i < scripts.length; i++) {
+      var old = scripts[i];
+      if (old.hasAttribute('data-softnav-exec')) continue;
+      var s = document.createElement('script');
+      for (var j = 0; j < old.attributes.length; j++) {
+        var a = old.attributes[j];
+        if (a.name === 'data-softnav-exec') continue;
+        s.setAttribute(a.name, a.value);
+      }
+      s.textContent = old.textContent;
+      old.setAttribute('data-softnav-exec', '1');
+      old.parentNode.replaceChild(s, old);
+    }
+  }
+
   function softLoad(url, push) {
     if (busy) return;
     busy = true;
@@ -124,6 +145,9 @@
         if (!board) throw new Error('no current board');
         // 只换正文；banner 与 WebGL canvas 原样保留，动画不中断
         board.innerHTML = nb.innerHTML;
+        // innerHTML 不会执行新内容里的 <script>，重建执行，否则依赖 JS 的页面
+        // （如友链朋友圈 circle-feed.js）软导航进入时是空的，须硬刷新才恢复
+        rerunScripts(board);
         // 换入的新内容里的图片需重新登记懒加载（见 processLazyImages 注释），
         // 否则友链头像等会永远停在 loading.gif
         processLazyImages(board);
