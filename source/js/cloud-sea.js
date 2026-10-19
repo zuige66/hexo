@@ -252,7 +252,10 @@
     'vec3 vignettCorrection( vec3 col, vec2 uv ) {',
     '    vec3 col1 = col;',
     '    col1 *= 0.5 + 0.5 * pow( 16.0*uv.x*uv.y*(1.0-uv.x)*(1.0-uv.y), 0.2 );',
-    '    col1 *= 1.3 + 0.4 * cos(0.5 * (iTime + 3.14));',
+    /* 原作这里还有一行整体曝光脉动：
+         col1 *= 1.3 + 0.4 * cos(0.5 * (iTime + 3.14));
+       它让画面亮度在 0.9x~1.7x 之间以约 12.6 秒为周期反复起伏，
+       既会让人觉得"忽明忽暗"，峰值还会过曝。已移除，保持恒定亮度（1.0x）。 */
     '    return col1;',
     '}',
     'void mainImage( out vec4 fragColor, in vec2 fragCoord ) {',
