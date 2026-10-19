@@ -1133,6 +1133,12 @@ links:
       avatar: "https://q1.qlogo.cn/g?b=qq&nk=1323860289&s=640",
       rss: "https://blog.amamo.top/rss.xml"
     }
+    - {
+      title: "x1shang-山与回响",
+      intro: "山有轮廓，思绪没有",
+      link: "https://www.x1shang.top",
+      avatar: "https://x1shang.top/assets/img/x1shang-avatar.webp"
+    }
 
   # 当成员头像加载失败时，替换为指定图片
   # When the member avatar fails to load, replace the specified image
