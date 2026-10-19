@@ -243,7 +243,7 @@ custom_js:
 # The usage is the same as custom_js
 custom_css:
   - /css/home-sidebar.css?v=7
-  - /css/site-motion.css?v=16
+  - /css/site-motion.css?v=17
   - /css/moments.css?v=3
 
 # 网页访问统计
