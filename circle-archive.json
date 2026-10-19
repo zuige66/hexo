@@ -65,5 +65,94 @@
         "date": "2026-08-19T00:00:00+00:00"
       }
     ]
+  },
+  "冷汐的杂货铺": {
+    "link": "https://lengxiqwq.com",
+    "avatar": "https://weavatar.com/avatar/52f243e67ccc2293d68c6f33db3f4083?s=640",
+    "rss": "https://lengxiqwq.com/rss.xml",
+    "posts": [
+      {
+        "title": "我想要的 Windows 输入法切换到底是什么样？",
+        "url": "https://lengxiqwq.com/posts/%E6%88%91%E6%83%B3%E8%A6%81%E7%9A%84-windows-%E8%BE%93%E5%85%A5%E6%B3%95%E5%88%87%E6%8D%A2%E5%88%B0%E5%BA%95%E6%98%AF%E4%BB%80%E4%B9%88%E6%A0%B7/",
+        "date": "2026-09-20T18:30:00+00:00"
+      },
+      {
+        "title": "实况照片到底是什么？为什么换个手机就可能打不开？",
+        "url": "https://lengxiqwq.com/posts/%E5%AE%9E%E5%86%B5%E7%85%A7%E7%89%87%E5%88%B0%E5%BA%95%E6%98%AF%E4%BB%80%E4%B9%88%E4%B8%BA%E4%BB%80%E4%B9%88%E6%8D%A2%E4%B8%AA%E6%89%8B%E6%9C%BA%E5%B0%B1%E5%8F%AF%E8%83%BD%E6%89%93%E4%B8%8D%E5%BC%80/",
+        "date": "2026-09-17T17:44:00+00:00"
+      },
+      {
+        "title": "实况照片工具箱：从一个小工具到现在",
+        "url": "https://lengxiqwq.com/posts/%E5%AE%9E%E5%86%B5%E7%85%A7%E7%89%87%E5%B7%A5%E5%85%B7%E7%AE%B1%E4%BB%8E%E4%B8%80%E4%B8%AA%E5%B0%8F%E5%B7%A5%E5%85%B7%E5%88%B0%E7%8E%B0%E5%9C%A8/",
+        "date": "2026-09-10T23:22:00+00:00"
+      }
+    ]
+  },
+  "puresky-blog": {
+    "link": "https://pureskyblog.dpdns.org",
+    "avatar": "https://avatars.githubusercontent.com/u/232055116?v=4",
+    "rss": "https://pureskyblog.dpdns.org/rss.xml",
+    "posts": [
+      {
+        "title": "稀疏矩阵的压缩与运算优化（其一）：稀疏矩阵转置",
+        "url": "https://pureskyblog.dpdns.org/posts/post-20261018/",
+        "date": "2026-10-18T00:00:00+00:00"
+      },
+      {
+        "title": "从零搭一个GitHub个人主页README",
+        "url": "https://pureskyblog.dpdns.org/posts/profile-readme-field-guide/",
+        "date": "2026-10-17T00:00:00+00:00"
+      },
+      {
+        "title": "PyTorch入门（1）：了解并安装PyTorch",
+        "url": "https://pureskyblog.dpdns.org/posts/post-20261016/",
+        "date": "2026-10-16T00:00:00+00:00"
+      },
+      {
+        "title": "你需要扩大你的上下文窗口",
+        "url": "https://pureskyblog.dpdns.org/posts/post-20261014/",
+        "date": "2026-10-14T00:00:00+00:00"
+      },
+      {
+        "title": "四季虫歌（转载）",
+        "url": "https://pureskyblog.dpdns.org/posts/post-20261014-2/",
+        "date": "2026-10-14T00:00:00+00:00"
+      },
+      {
+        "title": "KMP算法入门向讲解",
+        "url": "https://pureskyblog.dpdns.org/posts/post-20261014-3/",
+        "date": "2026-10-14T00:00:00+00:00"
+      },
+      {
+        "title": "你真的了解git worktree吗？",
+        "url": "https://pureskyblog.dpdns.org/posts/post-20261013/",
+        "date": "2026-10-13T00:00:00+00:00"
+      },
+      {
+        "title": "链表归并：递归还是迭代？",
+        "url": "https://pureskyblog.dpdns.org/posts/post-20261012/",
+        "date": "2026-10-12T00:00:00+00:00"
+      },
+      {
+        "title": "PAT：GitHub 个人访问令牌是什么",
+        "url": "https://pureskyblog.dpdns.org/posts/post-20261012-2/",
+        "date": "2026-10-12T00:00:00+00:00"
+      },
+      {
+        "title": "GitHub Actions：.workflow里面到底有什么——CI篇",
+        "url": "https://pureskyblog.dpdns.org/posts/post-20261011/",
+        "date": "2026-10-11T00:00:00+00:00"
+      },
+      {
+        "title": "力扣解题笔记：重排链表",
+        "url": "https://pureskyblog.dpdns.org/posts/post-20261011-2/",
+        "date": "2026-10-11T00:00:00+00:00"
+      },
+      {
+        "title": "力扣解题笔记：接雨水",
+        "url": "https://pureskyblog.dpdns.org/posts/post-20261011-3/",
+        "date": "2026-10-11T00:00:00+00:00"
+      }
+    ]
   }
 }
