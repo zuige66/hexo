@@ -28,17 +28,18 @@
 
 - **作用**：抓取带 `rss` 字段的友链 RSS，在友链页（`/links/`）好友卡片之后展示"友链最新动态"卡片流（一篇一卡：标题 + 左下头像/站名 + 右下日期）。
 - **架构**：
-  - 源列表 `circle-feeds.json`（仓库根）：仅含带 `rss` 的友链。**现有 3 个源**（2026-10-19 起）：年华（blog.amamo.top/rss.xml）、冷汐的杂货铺（lengxiqwq.com/rss.xml）、puresky-blog（pureskyblog.dpdns.org/rss.xml）。其余友链未配 RSS，不出现在朋友圈。
+  - 源列表 `circle-feeds.json`（仓库根）：仅含带 `rss` 的友链。**现有 10 个源**（2026-10-19 由 3 扩到 10）：年华、冷汐的杂货铺、puresky-blog、Pasule Blog(pasule.com/rss.xml)、番茄主理人(blog.fqzlr.top/rss.xml)、MmzMing的知识库(tblog.mmzhiku.xyz/rss.xml)、楠枝小笺(nanzhiy.cn/rss.xml)、蓝莓小屋(aigene.studio/rss.xml)、qwwp(qwwp.top/feed.xml)、x1shang-山与回响(www.x1shang.top/feed)。**未配 RSS 的友链（不进朋友圈）**：万象存笺(3z.ink，沙箱出网拦 502 未验证)、桃之夭夭(taozhiyy.top，各路径返回 text/html 无 feed)。
   - 抓取脚本 `tools/circle_fetch.py`（纯标准库，无第三方依赖）：GitHub Actions `circle.yml` 定时跑，本地也可 `python tools/circle_fetch.py`。
   - 输出 `source/circle/circle.json`（展示数据，按时间倒序取前 60 条）；累积归档 `circle-archive.json`（仓库根，按 URL 去重合并，每人上限 100 篇）。
-  - 上线链路：`hexo generate` 把 `source/circle/circle.json` 拷到 `public/circle/circle.json` → `hexo deploy` 推 gh-pages → 线上 `/circle/circle.json`。**注意**：该 JSON 曾被 gitignore 命中但仍被跟踪（已提交），改完要重新 generate+deploy 才上线。
-  - 前端：`themes/fluid/layout/links.ejs` 在好友卡片后放 `<div id="circle-feed" aria-label="友链最新动态"></div>` + `<script src="/js/circle-feed.js?v=2">`；`source/js/circle-feed.js` 运行时 `fetch('/circle/circle.json')` 渲染 `.feed-card` 卡片。
+  - 上线链路：`hexo generate` 把 `source/circle/circle.json` 拷到 `public/circle/circle.json` → `hexo deploy` 推 gh-pages → 线上 `/circle/circle.json`。**该 JSON 现作为基线提交进 git（2026-10-19 从 .gitignore 移除并 commit），不再被忽略**——保证任何一次 `hexo deploy`（含别的会话的纯页面优化推送、干净检出）都带数据；`circle.yml` 的 Actions 跑完 `circle_fetch.py` 后也会把最新 `circle.json` 写回 main，保持基线新鲜。
+  - 前端：`themes/fluid/layout/links.ejs` 在好友卡片后放 `<div id="circle-feed" aria-label="友链最新动态"></div>` + `<script src="/js/circle-feed.js?v=3">`；`source/js/circle-feed.js` 运行时 `fetch('/circle/circle.json?v=YYYY-MM-DD')`（**按日缓存破坏符**，防 Cloudflare/浏览器 4h 缓存拿到旧/空版本）渲染 `.feed-card` 卡片。
   - 样式：`source/css/site-motion.css` 的 `#circle-feed` / `.feed-card` 段（**不是** moments.css；moments.css 只管"动态/Moments"归档页与首页流）。
 - **已知坑（2026-10-19 排查确认）**：
   1. 容器曾**没有可见标题**，只有屏幕阅读器用的 `aria-label`——极易被当成"没了"或忽略。**2026-10-19 已修**：`links.ejs` 在 `#circle-feed` 前加了 `<h2 class="circle-feed-title">订阅朋友圈 <span class="circle-feed-sub">友链最新动态</span></h2>`，样式在 `site-motion.css`（该次改动曾漏 bump `?v=13→?v=14`，导致线上拿到旧 CSS）。
   2. 朋友圈源数量取决于 `circle-feeds.json` 登记（始于仅年华 1 家，2026-10-19 扩到 3 家）。要加新友链进朋友圈：① 在其 `links.items` 项加 `rss` 字段；② 在 `circle-feeds.json` 登记同名源；③ 跑 `circle_fetch.py` 或 `hexo generate` 重新生成 `circle.json` 并 deploy。
-  3. 改 `circle-feed.js` 后必须 bump `?v=N`（防 CDN/浏览器缓存）。
+  3. 改 `circle-feed.js` 后必须 bump `?v=N`（防 CDN/浏览器缓存）；当前 `?v=3`（2026-10-19 因加缓存破坏符而 bump，从 v2 起）。
   4. 数据新鲜度依赖 Actions 定时抓取；本地手改 `source/circle/circle.json` 后必须 `hexo generate` + `hexo deploy` 才生效。
+  5. **【根因红线·2026-10-19】朋友圈"什么都没有"最常不是 bug，而是 `circle.json` 没被打进部署包**：旧版它被 `.gitignore` 忽略且未提交，任何一次"没跑 `circle_fetch.py` 就 `hexo deploy`"的部署（尤其是别的会话只改页面就推送）都不会生成 `public/circle/circle.json` → 线上 `/circle/circle.json` 404 → 整块朋友圈空白。判定口诀：线上 `links` 页有 `#circle-feed` 容器和"订阅朋友圈"标题、CSS 含 `.feed-card`、JS 与源码一致，但卡片为空 → 99% 是 `circle.json` 缺失/空。**已根治**：把 `circle.json` 基线提交进 git + Actions 写回，从此干净部署也带数据。
 
 ## 首页动态 Banner「云间列车」（2026-10-14 新增，v7 / 软导航 2026-10-15 上线）
 
