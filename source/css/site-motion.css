@@ -342,8 +342,13 @@ button:active {
 #circle-feed {
   margin-top: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: .9rem;
+}
+
+/* 收起态：仅展示前 9 张（桌面/平板三行三列正好九宫格）。默认收起。 */
+#circle-feed.is-collapsed .feed-card:nth-child(n+10) {
+  display: none;
 }
 
 @media (max-width: 767px) {
@@ -438,6 +443,47 @@ button:active {
   flex: none;
   font-size: .72rem;
   color: var(--text-color-secondary, #9aa0a6);
+}
+
+/* 朋友圈展开/收起按钮：默认收起，仅多于 9 篇时出现。 */
+.circle-feed-toggle {
+  display: block;
+  margin: 1.1rem auto 0;
+  padding: .5rem 1.5rem;
+  border: 1px solid var(--border-color, rgba(0, 0, 0, .12));
+  border-radius: 999px;
+  background: var(--board-bg-color, #fff);
+  color: var(--link-color, #30a9de);
+  font-size: .85rem;
+  line-height: 1.4;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(38, 51, 65, .06);
+  transition:
+    transform 220ms var(--motion-spring),
+    box-shadow 220ms var(--motion-smooth),
+    color 180ms ease,
+    border-color 200ms ease,
+    background-color 200ms ease;
+}
+
+.circle-feed-toggle:hover,
+.circle-feed-toggle:focus-visible {
+  color: var(--link-hover-color, #1c7fb0);
+  border-color: var(--link-hover-color, #30a9de);
+  transform: translateY(-2px);
+  box-shadow: var(--motion-shadow);
+  outline: none;
+}
+
+.circle-feed-toggle:active {
+  transform: translateY(1px) scale(.98);
+  transition-duration: 90ms;
+}
+
+@media (prefers-color-scheme: dark) {
+  .circle-feed-toggle {
+    border-color: rgba(255, 255, 255, .14);
+  }
 }
 
 @media (prefers-color-scheme: dark) {

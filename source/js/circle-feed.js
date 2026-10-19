@@ -61,5 +61,36 @@
         );
       })
       .join("");
+    setupToggle(posts.length);
+  }
+
+  // 默认收起：多于 9 篇时只显示前 9 张（三行三列），下方出现展开/收起按钮。
+  function setupToggle(total) {
+    var parent = box.parentNode;
+    if (parent) {
+      var prev = parent.querySelector(".circle-feed-toggle");
+      if (prev) prev.parentNode.removeChild(prev);
+    }
+    if (total <= 9) {
+      box.classList.remove("is-collapsed");
+      return;
+    }
+    var collapsed = true;
+    box.classList.add("is-collapsed");
+
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "circle-feed-toggle";
+    btn.setAttribute("aria-expanded", "false");
+    btn.textContent = "展开全部 " + total + " 篇";
+
+    btn.addEventListener("click", function () {
+      collapsed = !collapsed;
+      box.classList.toggle("is-collapsed", collapsed);
+      btn.setAttribute("aria-expanded", String(!collapsed));
+      btn.textContent = collapsed ? "展开全部 " + total + " 篇" : "收起";
+    });
+
+    box.insertAdjacentElement("afterend", btn);
   }
 })();
