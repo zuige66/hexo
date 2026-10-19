@@ -41,6 +41,7 @@
   4. 数据新鲜度依赖 Actions 定时抓取；本地手改 `source/circle/circle.json` 后必须 `hexo generate` + `hexo deploy` 才生效。
   5. **【根因红线·2026-10-19】朋友圈"什么都没有"最常不是 bug，而是 `circle.json` 没被打进部署包**：旧版它被 `.gitignore` 忽略且未提交，任何一次"没跑 `circle_fetch.py` 就 `hexo deploy`"的部署（尤其是别的会话只改页面就推送）都不会生成 `public/circle/circle.json` → 线上 `/circle/circle.json` 404 → 整块朋友圈空白。判定口诀：线上 `links` 页有 `#circle-feed` 容器和"订阅朋友圈"标题、CSS 含 `.feed-card`、JS 与源码一致，但卡片为空 → 99% 是 `circle.json` 缺失/空。**已根治**：把 `circle.json` 基线提交进 git + Actions 写回，从此干净部署也带数据。
   6. **按日缓存破坏符不够**：同日多次部署时，Cloudflare/浏览器对 `circle.json?v=2026-10-19` 的 4h 缓存会让用户一直拿到旧版（例如 12 篇而非 60 篇）。**已改为按小时破坏符** `v=2-YYYY-MM-DD-HH`，且每次 JS 改动仍同步 bump `?v=N`。
+  7. **【CSS 坑·2026-10-19】展开后卡片变宽/横向溢出**：grid item `.feed-card` 默认 `min-width:auto`，卡片内不换行的长站点名/标题会撑宽整列，展开 60 张后必炸。修复：`.feed-card`/`.feed-foot`/`.feed-name` 全加 `min-width:0`；`#circle-feed` 加 `margin-left/right:0; max-width:100%` 覆盖 Fluid `.row` 负 margin。`site-motion.css` 当前 `?v=15`。收起/展开列数都固定 `repeat(3,1fr)`，卡片宽度恒定。
 
 ## 首页动态 Banner「云间列车」（2026-10-14 新增，v7 / 软导航 2026-10-15 上线）
 
