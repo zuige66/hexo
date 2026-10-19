@@ -390,6 +390,7 @@ navbar:
   menu:
     - { key: "home", name: "首页", link: "/", icon: "iconfont icon-home-fill" }
     - { key: "archive", name: "归档", link: "/archives/", icon: "iconfont icon-archive-fill" }
+    - { key: "guestbook", name: "留言", link: "/guestbook/", icon: "iconfont icon-comment-fill" }
     - { key: "category", name: "分类", link: "/categories/", icon: "iconfont icon-category-fill" }
     - { key: "tag", name: "标签", link: "/tags/", icon: "iconfont icon-tags-fill" }
     - { key: "links", name: "友链", link: "/links/", icon: "iconfont icon-link-fill" }
@@ -1162,11 +1163,11 @@ links:
   # 评论插件
   # Comment plugin
   comments:
-    enable: false
+    enable: true
     # 指定的插件，需要同时设置对应插件的必要参数
     # The specified plugin needs to set the necessary parameters at the same time
     # Options: utterances | disqus | gitalk | valine | waline | changyan | livere | remark42 | twikoo | cusdis | giscus | discuss
-    type: disqus
+    type: giscus
 
 
 #---------------------------
