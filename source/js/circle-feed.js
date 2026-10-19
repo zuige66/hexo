@@ -4,7 +4,10 @@
   var box = document.getElementById("circle-feed");
   if (!box) return;
 
-  fetch("/circle/circle.json")
+  // 按日追加缓存破坏符：Cloudflare/浏览器缓存 circle.json 最长 4h，
+  // 每日换 URL 可保证当天新数据上线后用户不会一直拿到旧（或空）版本。
+  var jsonUrl = "/circle/circle.json?v=" + new Date().toISOString().slice(0, 10);
+  fetch(jsonUrl)
     .then(function (r) {
       if (!r.ok) throw new Error("HTTP " + r.status);
       return r.json();

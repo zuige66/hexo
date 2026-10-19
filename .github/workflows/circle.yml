@@ -56,12 +56,13 @@ jobs:
           chmod 600 ~/.ssh/deploy_key
           export GIT_SSH_COMMAND="ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=accept-new"
           npx hexo generate -d
-          # 把累积归档写回 main，跨运行持久化（circle-archive.json 不进 .gitignore）。
-          # 该路径不在 push.paths 内，不会触发本工作流二次运行。
-          if [ -z "$(git status --porcelain circle-archive.json)" ]; then
-            echo "archive 无变化，跳过提交"
+          # 把累积归档 + 展示数据写回 main，跨运行持久化。
+          # circle-archive.json 与 source/circle/circle.json 都不在 push.paths 内，
+          # 不会触发本工作流二次运行；[skip ci] 双保险。
+          git add circle-archive.json source/circle/circle.json
+          if [ -z "$(git status --porcelain circle-archive.json source/circle/circle.json)" ]; then
+            echo "circle 数据无变化，跳过提交"
           else
-            git add circle-archive.json
-            git commit -m "chore: 更新友链朋友圈归档 [skip ci]"
-            git push origin HEAD:main || echo "warn: 归档写回 main 失败，下次运行会重试"
+            git commit -m "chore: 刷新友链朋友圈数据 [skip ci]"
+            git push origin HEAD:main || echo "warn: 数据写回 main 失败，下次运行会重试"
           fi
