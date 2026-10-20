@@ -1,5 +1,15 @@
 # 项目长期记忆：zuige66/hexo 博客
 
+## template 模板分支（2026-10-20 新增，commit 6423045）
+
+- 用途：给他人整站复用的「博客模板」分支，地址 <https://github.com/zuige66/hexo/tree/template>，对方 `git clone -b template`。基于 main 剥离文章与个人信息，保留全部二改（banner/朋友圈/动态/软导航/留言板）。
+- 与 main 的差异：_posts 仅留 hello-world 示例；download/downloads/CNAME/DOMAIN.md/个人脚本/头像/文章配图删除；配置全部占位化（含 giscus 四项参数清空——Fluid giscus.ejs 有 `repo && repo-id` 空参保护）；circle-feeds/archive/circle.json/moments.yml 清空；新增 README.md 模板说明；`tools/circle_fetch.py` UA 去掉个人域名。
+- **首页侧栏配置化（2026-10-20 已同步 main）**：`themes/fluid/layout/index.ejs` 首页侧栏原**写死**头像/昵称/邮箱/QQ，已改为读 `theme.about` 配置（avatar/name/icons，回退 `config.author`）。template 分支与 main 均已改（main commit `e131d45`），配置未动、渲染结果与改前一致。以后改侧栏信息只需动 `_config.fluid.yml` 的 about 段。
+- 维护方式：template 不会自动跟随 main 更新。zuige 若要求刷新模板，需在 main 上重新执行剥离流程或 cherry-pick 相关提交。
+- **2026-10-20 已清理（commit 19e7b1d）**：`.workbuddy/`（历史跟踪误入）、`_config.landscape.yml`（旧主题残留）、`.github/dependabot.yml`（模板无必要）已移除；保留 `.github/workflows/circle.yml`（朋友圈功能）与 `.gitattributes`。清理后根目录仅 14 项。
+- **切分支教训**：`git rm --cached .workbuddy` 后文件变未跟踪会挡住 `git checkout main`（untracked would be overwritten）——先 `mv .workbuddy /tmp/备份` 再 checkout，回来再拷回。
+- 教训：**增量 `hexo generate` 不清 public/ 旧产物**——删源文件后旧 HTML 仍在 public/（旧文章/CNAME），验证模板是否干净必须先删旧产物目录再全量 generate，否则扫描会误报/漏报。
+
 ## 分支策略与红线（2026-10-13 核查）
 
 仓库 `git@github.com:zuige66/hexo.git` 采用 Hexo 标准「源码 / 站点」双分支部署：
