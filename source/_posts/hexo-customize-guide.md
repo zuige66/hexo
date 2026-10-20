@@ -430,6 +430,8 @@ links:
 
 关键坑：软导航换入 `#board` 后**内联 `<script>` 不会执行**，所以这里用 `document` 级事件委托绑定点击，并监听 `soft-nav.js` 派发的 `softnav:loaded` 事件重新初始化——否则从其他页面软导航进归档页后，切换按钮会失效。
 
+> **红线（2026-10-20 补）**：软导航「只换 `#board.innerHTML`」的假设只在「同类 layout 页面间」成立。本博客 `is_post` 文章页的 `#board` 外层是 `col-lg-8>#board-ctn`（窄列），非文章页是 `.container.nopadding-x-md`（全宽）。从文章页（整页加载）点导航软导航回首页时，只换 innerHTML 会让首页内容残留塞进文章页窄列、整页变窄。因此 `soft-nav.js` 换正文前必须**连 `#board` 的外层父链一起同步**（把 `#board` 节点整体移入目标页外层容器并 `replaceChild` 替换旧外层）。改 `soft-nav.js` 后务必 bump `?v=N`。
+
 ### 17.4 资源注入与文案
 
 - CSS / JS 需登记在 `_config.fluid.yml` 的 `custom_css` / `custom_js` 列表里；**改动后记得 bump 版本号**（如 `?v=1` → `?v=2`）以失效浏览器缓存。
