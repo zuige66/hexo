@@ -235,7 +235,7 @@ font:
 # Specify the path of your custom js file, support list. The path is relative to the source directory, such as `/js/custom.js` corresponding to the directory `source/js/custom.js`
 custom_js:
   - /js/site-interactions.js?v=3
-  - /js/azure-sea.js?v=2
+  - /js/azure-sea.js?v=3
   - /js/soft-nav.js?v=7
   - /js/moments.js?v=2
 

@@ -133,30 +133,13 @@
     '    strip(c, uv, b, 0.118, 0.036, 0.079, 0.118, SNOW, SKY1, SKY2, SKY3);',
     '    return c;',
     '}',
-    // ---- 梵高式旋涡海浪 ----
-    // 不直接按屏幕 y 画横带，而是先把坐标绕若干涡心旋转（旋转强度随半径衰减），
-    // 再在"扭曲后的深度"上分色阶。这样原本水平的笔触就被卷成螺旋弧线，
-    // 与《星月夜》里海浪的圈圈读感一致。
-    'vec2 swirlOne(vec2 p, vec2 c, float strength, float radius, float phase, float t){',
-    '    vec2 d = p - c;',
-    '    float r2 = dot(d, d);',
-    '    float w = exp(-r2 / (radius*radius*0.55));',
-    '    float a = strength*w + 0.22*t*phase*w;',
-    '    float ca = cos(a); float sa = sin(a);',
-    '    return c + vec2(d.x*ca - d.y*sa, d.x*sa + d.y*ca);',
-    '}',
-    'vec2 swirl(vec2 p, float t){',
-    '    vec2 q = p;',
-    '    q = swirlOne(q, vec2(0.42, 0.16), 3.4, 0.20, 0.30, t);',
-    '    q = swirlOne(q, vec2(1.05, 0.22), 2.9, 0.17, -0.42, t);',
-    '    q = swirlOne(q, vec2(1.62, 0.15), 3.1, 0.19, 0.25, t);',
-    '    q = swirlOne(q, vec2(0.10, 0.30), 2.2, 0.14, -0.30, t);',
-    '    q = swirlOne(q, vec2(1.38, 0.32), 2.0, 0.13, 0.36, t);',
-    '    return q;',
-    '}',
+    // ---- 海浪：完全照搬云的画法（strip 硬边色带），只换配色 ----
+    // 云 = 一条大起伏轮廓 + 下方一条色带切成 4 级硬边色阶。浪用同一套：
+    // 轮廓线 = 浪脊，色带下沿 = 浪谷。disp 必须远大于层厚（云是 ~10 倍），
+    // 否则轮廓几乎不动，每条浪都会退化成一根平直横线。
     'vec3 seaCol(vec2 uv, float t, float hz){',
     '    float d01 = clamp((hz - uv.y) / hz, 0.0, 1.0);',
-    // 海面底色：远浅近深
+    // 海水底色：远（近地平线）浅、映天光；近（画面底部）深
     '    float g = pow(d01, 0.55) + (fbm(vec2(uv.x*1.2 + t*0.004, d01*2.0), 6) - 0.5)*0.12;',
     '    vec3 c = SEA1;',
     '    if (g >= 0.08) c = SEA0;',
@@ -164,32 +147,32 @@
     '    if (g >= 0.42) c = SEA2;',
     '    if (g >= 0.60) c = SEA3;',
     '    if (g >= 0.80) c = SEA4;',
-    // 旋涡笔触
-    '    vec2 q = swirl(uv, t);',
-    '    float v = clamp((hz - q.y) / hz, 0.0, 1.0);',
-    '    float wob = fbm(vec2(q.x*2.6 + t*0.02, v*3.2), 5) - 0.5;',
-    '    float band = pow(v, 0.58)*13.0 + wob*1.55 + t*0.20;',
-    '    float f = fract(band);',
-    '    vec3 s = SEA2;',
-    '    if (f < 0.055)      s = WHITE;',
-    '    else if (f < 0.105) s = SNOW;',
-    '    else if (f < 0.220) s = SEA0;',
-    '    else if (f < 0.400) s = SEA1;',
-    '    else if (f < 0.580) s = SEA2;',
-    '    else if (f < 0.760) s = SEA3;',
-    '    else if (f < 0.900) s = SEA4;',
-    '    else                s = DEEP;',
-    // 远处淡入、近处保持对比
-    '    float fade = clamp(pow(d01, 0.75)*1.55, 0.0, 1.0);',
-    '    c = mix(c, s, fade);',
-    // 第二层更细的笔触，做笔刷质感
-    '    float wob2 = fbm(vec2(q.x*6.0 - t*0.03, v*7.0), 4) - 0.5;',
-    '    float band2 = pow(v, 0.58)*30.0 + wob2*2.2 - t*0.32;',
-    '    if (fract(band2) < 0.10 && d01 > 0.09) {',
-    '        c = (d01 > 0.40) ? SNOW : SEA0;',
-    '    }',
+    // 7 层浪：远（薄、慢、起伏小）→ 近（厚、快、起伏大），与 skyCol 完全同构。
+    // 参数：轮廓基线, disp, 层厚, 漂移速度, x 频率, y 频率, 三档色阶距离, 四色（上亮→底暗）
+    '    float b; float sp;',
+    '    sp = 150.0;',
+    '    b = hz - 0.020 + (fbm(vec2(uv.x*1.55 + t/sp + 3.0, uv.y*1.30), 8) - 0.5)*0.055;',
+    '    strip(c, uv, b, 0.026, 0.008, 0.016, 0.026, SNOW, SEA0, SEA1, SEA2);',
+    '    sp = 105.0;',
+    '    b = hz - 0.055 + (fbm(vec2(uv.x*1.45 + t/sp + 9.0, uv.y*1.25), 8) - 0.5)*0.110;',
+    '    strip(c, uv, b, 0.048, 0.015, 0.031, 0.048, WHITE, SEA0, SEA1, SEA2);',
+    '    sp = 74.0;',
+    '    b = hz - 0.105 + (fbm(vec2(uv.x*1.35 + t/sp + 16.0, uv.y*1.20), 8) - 0.5)*0.190;',
+    '    strip(c, uv, b, 0.075, 0.024, 0.049, 0.075, SNOW, SEA1, SEA2, SEA3);',
+    '    sp = 52.0;',
+    '    b = hz - 0.170 + (fbm(vec2(uv.x*1.28 + t/sp + 23.0, uv.y*1.16), 8) - 0.5)*0.300;',
+    '    strip(c, uv, b, 0.110, 0.035, 0.072, 0.110, WHITE, SEA1, SEA2, SEA3);',
+    '    sp = 36.0;',
+    '    b = hz - 0.250 + (fbm(vec2(uv.x*1.22 + t/sp + 31.0, uv.y*1.12), 8) - 0.5)*0.440;',
+    '    strip(c, uv, b, 0.155, 0.050, 0.102, 0.155, SNOW, SEA2, SEA3, SEA4);',
+    '    sp = 24.0;',
+    '    b = hz - 0.350 + (fbm(vec2(uv.x*1.16 + t/sp + 40.0, uv.y*1.08), 8) - 0.5)*0.620;',
+    '    strip(c, uv, b, 0.210, 0.068, 0.138, 0.210, WHITE, SEA2, SEA3, SEA4);',
+    '    sp = 15.0;',
+    '    b = hz - 0.470 + (fbm(vec2(uv.x*1.10 + t/sp + 50.0, uv.y*1.04), 8) - 0.5)*0.850;',
+    '    strip(c, uv, b, 0.270, 0.087, 0.178, 0.270, SNOW, SEA3, SEA4, DEEP);',
     // 地平线处柔和过渡，避免天空与海面之间出现一条硬边
-    '    float seam = clamp((d01 - 0.055) / 0.10, 0.0, 1.0);',
+    '    float seam = clamp((d01 - 0.045) / 0.090, 0.0, 1.0);',
     '    c = mix(SEA0, c, seam);',
     '    return c;',
     '}',
