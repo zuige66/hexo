@@ -143,6 +143,35 @@
         var nb = doc.getElementById('board');
         if (!nb) throw new Error('no board in response');
         if (!board) throw new Error('no current board');
+        // 同步 #board 的外层父链：文章页的 #board 外层是
+        // .container-fluid>.row>.col-lg-8>#board-ctn（窄列），非文章页是
+        // .container.nopadding-x-md（全宽）。软导航只换 innerHTML 会让「从文章页
+        // 整页加载后点导航回首页」时，首页等内容残留塞在文章页窄列里，导致整页变小。
+        // 这里把 #board 节点整体移入「目标页的外层容器」并用它替换当前旧外层链。
+        var curMain = board.closest('main');
+        if (curMain && nb.parentNode && nb.parentNode !== curMain) {
+          // 目标页 #board 的祖先链（紧邻父级 → main 直接子），逐层浅克隆（保留 class/style）
+          var chain = [];
+          var p = nb.parentNode;
+          while (p && p.tagName !== 'MAIN' && p.parentNode && p !== curMain) {
+            chain.unshift(p.cloneNode(false));
+            p = p.parentNode;
+          }
+          if (chain.length) {
+            // 当前 #board 旧外层链的根（main 的直接子节点）
+            var curOuter = board;
+            while (curOuter.parentNode && curOuter.parentNode !== curMain) {
+              curOuter = curOuter.parentNode;
+            }
+            // 从内到外组装：board → chain[0] → … → chain[last]，再整体替换旧外层链
+            var inner = board;
+            for (var ci = 0; ci < chain.length; ci++) {
+              chain[ci].appendChild(inner);
+              inner = chain[ci];
+            }
+            curMain.replaceChild(inner, curOuter);
+          }
+        }
         // 只换正文；banner 与 WebGL canvas 原样保留，动画不中断
         board.innerHTML = nb.innerHTML;
         // innerHTML 不会执行新内容里的 <script>，重建执行，否则依赖 JS 的页面
@@ -176,7 +205,8 @@
         void board.offsetWidth; // 重启动画
         board.classList.add('softnav-in');
         if (push) history.pushState({ softnav: true }, '', url);
-        var canvasAlive = document.getElementById('cloud-sea-canvas') ? 'canvas-alive' : 'canvas-gone';
+        var canvasAlive = (document.getElementById('azure-sea-canvas') ||
+                           document.getElementById('cloud-sea-canvas')) ? 'canvas-alive' : 'canvas-gone';
         console.log('[soft-nav] loaded ' + url + ' (' + canvasAlive + ')');
         document.dispatchEvent(new CustomEvent('softnav:loaded', { detail: { url: url } }));
       })
