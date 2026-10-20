@@ -14,3 +14,6 @@ _multiconfig.yml
 
 # WorkBuddy 项目记忆目录，不纳入 git
 .workbuddy/
+
+# 本地 banner 预览截图产物，不纳入 git
+banner-preview/
