@@ -11,3 +11,6 @@ _multiconfig.yml
 # source/circle/circle.json 现为基线数据，已提交到 git：
 # 保证任何一次 hexo deploy（含干净检出/其它会话的纯优化推送）都带此文件，
 # 不再出现“朋友圈 404 / 什么都没有”。仍由 tools/circle_fetch.py / Actions 每日刷新。
+
+# WorkBuddy 项目记忆目录，不纳入 git
+.workbuddy/
