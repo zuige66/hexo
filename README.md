@@ -61,7 +61,7 @@ hexo server         # 本地预览 http://localhost:4000
 3. 运行 `python tools/circle_fetch.py` 生成 `source/circle/circle.json`；
 4. GitHub 仓库开启 Actions 后，`.github/workflows/circle.yml` 会每日自动抓取并写回最新数据。
 
-只想用友链、不用朋友圈：`circle-feeds.json` 保持空数组 `[]` 即可，友链页只显示标题不显示卡片，属正常现象。
+只想用友链、不用朋友圈：`circle-feeds.json` 保持空数组 `[]` 即可，友链页只显示标题不显示卡片，属正常现象。彻底不需要可删除 `.github/` 目录（或仓库 Settings → Actions → Disable），否则未配置 `DEPLOY_KEY` 的定时任务会每日运行失败。
 
 ## 常用命令与缓存坑
 
