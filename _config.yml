@@ -3,17 +3,18 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: zuige's blog
+# ↓↓↓ 以下三项是模板占位值，使用时请改成你自己的信息 ↓↓↓
+title: Your Blog
 subtitle: ''
 description: ''
 keywords:
-author: zuige
+author: Your Name
 language: zh-CN
 timezone: ''
 
 # URL
-## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
-url: https://blog.zuiges.com
+## 改成你自己的站点域名，例如 https://username.github.io
+url: https://example.com
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 pretty_urls:
@@ -110,8 +111,8 @@ feed:
   content: excerpt
 
 # Deployment
-## Docs: https://hexo.io/docs/one-command-deployment
+## 部署到 GitHub Pages 时改成你自己的仓库，例如 git@github.com:<用户名>/<用户名>.github.io.git
 deploy:
   type: git
-  repo: git@github.com:zuige66/hexo.git
+  repo: git@github.com:your-name/your-repo.git
   branch: gh-pages

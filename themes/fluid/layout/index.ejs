@@ -59,13 +59,13 @@ function momentPlain(m) {
   <aside class="home-sidebar" aria-label="博客侧栏">
     <section class="home-side-card home-profile-card">
       <a class="home-profile-link" href="<%= url_for('/about/') %>" aria-label="前往关于页面" title="前往关于页面">
-        <img class="home-avatar" src="<%= url_for('/img/avatar.jpg') %>" alt="zuige">
-        <h2>zuige</h2>
+        <img class="home-avatar" src="<%= url_for(theme.about.avatar || '/img/avatar.png') %>" alt="<%= theme.about.name || config.author %>">
+        <h2><%= theme.about.name || config.author %></h2>
       </a>
       <div class="home-social-links">
-        <a href="https://github.com/zuige66" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub"><i class="iconfont icon-github-fill" aria-hidden="true"></i></a>
-        <a href="mailto:liruisen2007@163.com" aria-label="邮箱" title="邮箱"><i class="iconfont icon-mail" aria-hidden="true"></i></a>
-        <a href="https://user.qzone.qq.com/3575053735" target="_blank" rel="noopener" aria-label="QQ 空间" title="QQ 空间"><i class="iconfont icon-qq-fill" aria-hidden="true"></i></a>
+        <% (theme.about.icons || []).forEach(function (ic) { %>
+        <a href="<%= ic.link %>" target="_blank" rel="noopener" aria-label="<%= ic.tip %>" title="<%= ic.tip %>"><i class="<%= ic.class %>" aria-hidden="true"></i></a>
+        <% }) %>
         <a class="home-feed-link" href="<%= url_for('/atom.xml') %>" aria-label="RSS 订阅" title="RSS 订阅">
           <svg class="home-rss-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
             <circle cx="5" cy="19" r="2.2"></circle>

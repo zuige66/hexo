@@ -26,7 +26,7 @@ OUT_PATH = os.path.join(REPO_ROOT, "source", "circle", "circle.json")
 MAX_PER_FRIEND = 100  # 归档中每位友链保留的最大文章数
 MAX_DISPLAY = 60      # 页面展示的最新文章条数
 
-UA = "Mozilla/5.0 (compatible; zuiges-circle/1.0; +https://blog.zuiges.com)"
+UA = "Mozilla/5.0 (compatible; hexo-circle-feed/1.0)"
 
 
 def fetch(url, timeout=20):

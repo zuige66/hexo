@@ -1,62 +1,10 @@
-[
-  {
-    "name": "年华",
-    "link": "https://blog.amamo.top",
-    "rss": "https://blog.amamo.top/rss.xml",
-    "avatar": "https://q1.qlogo.cn/g?b=qq&nk=1323860289&s=640"
-  },
-  {
-    "name": "冷汐的杂货铺",
-    "link": "https://lengxiqwq.com",
-    "rss": "https://lengxiqwq.com/rss.xml",
-    "avatar": "https://weavatar.com/avatar/52f243e67ccc2293d68c6f33db3f4083?s=640"
-  },
-  {
-    "name": "puresky-blog",
-    "link": "https://pureskyblog.dpdns.org",
-    "rss": "https://pureskyblog.dpdns.org/rss.xml",
-    "avatar": "https://avatars.githubusercontent.com/u/232055116?v=4"
-  },
-  {
-    "name": "Pasule Blog",
-    "link": "https://pasule.com",
-    "rss": "https://pasule.com/rss.xml",
-    "avatar": "https://tu.pasule.com/file/wallpaper/1784014500478.png"
-  },
-  {
-    "name": "番茄主理人",
-    "link": "https://blog.fqzlr.top",
-    "rss": "https://blog.fqzlr.top/rss.xml",
-    "avatar": "https://q1.qlogo.cn/g?b=qq&nk=20447289&s=640"
-  },
-  {
-    "name": "MmzMing的知识库",
-    "link": "https://tblog.mmzhiku.xyz",
-    "rss": "https://tblog.mmzhiku.xyz/rss.xml",
-    "avatar": "https://i.stardots.io/784774835/StarDots-2026052116374135506.jpg"
-  },
-  {
-    "name": "楠枝小笺",
-    "link": "https://www.nanzhiy.cn",
-    "rss": "https://www.nanzhiy.cn/rss.xml",
-    "avatar": "https://www.nanzhiy.cn/upload/IMG_20260412_164454.ico"
-  },
-  {
-    "name": "蓝莓小屋",
-    "link": "https://aigene.studio",
-    "rss": "https://aigene.studio/rss.xml",
-    "avatar": "https://aigene.studio/logo/icon.webp"
-  },
-  {
-    "name": "qwwp",
-    "link": "https://qwwp.top",
-    "rss": "https://qwwp.top/feed.xml",
-    "avatar": "https://qwwp.top/images/avatar.jpg"
-  },
-  {
-    "name": "x1shang-山与回响",
-    "link": "https://www.x1shang.top",
-    "rss": "https://www.x1shang.top/feed",
-    "avatar": "https://x1shang.top/assets/img/x1shang-avatar.webp"
-  }
-]
+// 朋友圈 RSS 订阅源列表（模板占位）
+//
+// 作用：抓取带 rss 字段的友链 RSS，在友链页展示「订阅朋友圈」动态卡片流。
+// 启用方法：
+//   1. 在 _config.fluid.yml 的 links.items 中给友链加上 rss 字段
+//   2. 把该友链按下面格式登记到本文件（name/link/rss/avatar 与 links.items 保持一致）
+//   3. 运行 python tools/circle_fetch.py 生成 source/circle/circle.json
+//      （GitHub Actions circle.yml 也会每日自动抓取并写回）
+// 全部清空时友链页只显示「订阅朋友圈」标题，不显示任何卡片，属正常现象。
+[]

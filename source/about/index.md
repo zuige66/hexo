@@ -3,8 +3,16 @@ title: 关于
 layout: about
 ---
 
-关于我…
+这里写关于你自己的内容。
 
-其实一年前还是大一的时候就想过做一个blog，不过又搁置了，后面也忘了，到现在又突然想起，于是就有了这个网站。软件开发着，天才程序员（codex），搞搞单片机（点灯），玩机（随便搞搞老机），平常也没有什么特别的爱好，可能看看小说（爽文），听听歌之类的（呆同），后面还是多学习技能技术提升自己，然后打算把一些东西记录在这个blog里面。
+模板占位文字：可以介绍你的职业、兴趣、建站初衷等等，支持 Markdown 与 HTML。
 
-<div style="text-align: right;">——2026.9.6</div>
+<details>
+<summary>折叠示例（可选）</summary>
+
+<pre><code class="language-markdown">## 小标题
+
+正文……
+</code></pre>
+
+</details>

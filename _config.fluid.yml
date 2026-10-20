@@ -18,7 +18,7 @@
 
 # 用于浏览器标签的图标
 # Icon for browser tab
-favicon: /img/avatar.jpg
+favicon: /img/avatar.png
 
 # 用于苹果设备的图标
 # Icon for Apple touch
@@ -369,7 +369,7 @@ iconfont: //at.alicdn.com/t/c/font_1736178_k526ubmyhba.css
 navbar:
   # 导航栏左侧的标题，为空则按 hexo config 中 `title` 显示
   # The title on the left side of the navigation bar. If empty, it is based on `title` in hexo config
-  blog_title: "zuige's blog"
+  blog_title: "Your Blog"
 
   # 导航栏毛玻璃特效，实验性功能，可能会造成页面滚动掉帧和抖动，部分浏览器不支持会自动不生效
   # Navigation bar frosted glass special animation. It is an experimental feature
@@ -531,7 +531,7 @@ index:
 
     # 为空则按 hexo config.subtitle 显示，支持列表格式来实现随机选择一行文字显示
     # If empty, text based on `subtitle` in hexo config, support list format to random selection of a row for display
-    text: "落魄谷中寒风吹，春秋蝉鸣少年归"
+    text: "在这里写下你的站点副标题"
 
     # 通过 API 接口作为首页副标题的内容，必须返回的是 JSON 格式，如果请求失败则按 text 字段显示，该功能必须先开启 typing 打字机功能
     # Subtitle of the homepage through the API, must be returned a JSON. If the request fails, it will be displayed in `text` value. This feature must first enable the typing animation
@@ -929,11 +929,15 @@ cusdis:
 # 基于 GitHub Discussions，类似于 Utterances
 # Based on GitHub Discussions, similar to Utterances
 # See: https://giscus.app/
+#
+# ↓↓↓ 模板占位：使用前请去 giscus.app 生成你自己的参数 ↓↓↓
+# 三项都可留空——未填写时评论框不会渲染，不会报错，但留言功能不工作。
+# 注意：repo 必须是公开仓库、已开启 Discussions、已安装 giscus App。
 giscus:
-  repo: zuige66/hexo
-  repo-id: R_kgDOUNLYKw
-  category: Announcements
-  category-id: DIC_kwDOUNLYK84DE1jw
+  repo:
+  repo-id:
+  category:
+  category-id:
   theme-light: light
   theme-dark: dark
   mapping: pathname
@@ -1017,15 +1021,14 @@ about:
   banner_img: /img/default.png
   banner_img_height: 60
   banner_mask_alpha: 0.3
-  avatar: /img/avatar.jpg
-  name: "zuige"
-  intro: "欢迎来到 zuige blog"
+  avatar: /img/avatar.png
+  name: "Your Name"
+  intro: "一句话介绍你自己"
   # 更多图标可从 https://hexo.fluid-dev.com/docs/icon/ 查找，`class` 代表图标的 css class，添加 `qrcode` 后，图标不再是链接而是悬浮二维码
   # More icons can be found from https://hexo.fluid-dev.com/docs/en/icon/  `class` is the css class of the icon. If adding `qrcode`, the icon is no longer a link, but a hovering QR code
+  # ↓↓↓ 模板占位：改成你自己的社交链接（不想要的行可直接删）↓↓↓
   icons:
-    - { class: "iconfont icon-github-fill", link: "https://github.com/zuige66", tip: "GitHub" }
-    - { class: "iconfont icon-mail", link: "mailto:liruisen2007@163.com", tip: "邮箱" }
-    - { class: "iconfont icon-qq-fill", link: "https://user.qzone.qq.com/3575053735", tip: "QQ 空间" }
+    - { class: "iconfont icon-github-fill", link: "https://github.com/your-name", tip: "GitHub" }
 
 
 #---------------------------
@@ -1067,87 +1070,19 @@ links:
   # 友链的成员项
   # Member item of page
   items:
+  # ↓↓↓ 模板占位：下面是两条示例友链，换成你自己的（整条删掉即可减少，格式照抄）↓↓↓
     - {
-      title: "万象存笺",
-      intro: "一个汇聚前端、后端、数据库、运维、系统知识的网络日志",
-      link: "https://3z.ink",
-      avatar: "https://3z.ink/assets/images/logo-v2.png"
+      title: "示例博客 A",
+      intro: "这里写一句话简介",
+      link: "https://example.com",
+      avatar: "https://example.com/avatar.png"
     }
     - {
-      title: "楠枝小笺",
-      intro: "安安静静地存在，就已经很好了。",
-      link: "https://www.nanzhiy.cn",
-      avatar: "https://www.nanzhiy.cn/upload/IMG_20260412_164454.ico",
-      rss: "https://www.nanzhiy.cn/rss.xml"
-    }
-    - {
-      title: "puresky-blog",
-      intro: "即使迷茫，也要继续前进（2026了还在go，无敌了）",
-      link: "https://pureskyblog.dpdns.org",
-      avatar: "https://avatars.githubusercontent.com/u/232055116?v=4",
-      rss: "https://pureskyblog.dpdns.org/rss.xml"
-    }
-    - {
-      title: "桃之夭夭",
-      intro: "桃之夭夭的小屋",
-      link: "https://taozhiyy.top",
-      avatar: "https://tzyy-1330068502.cos.ap-beijing.myqcloud.com/1.png"
-    }
-    - {
-      title: "蓝莓小屋",
-      intro: "向着光前行，不负每一次相遇与热爱。",
-      link: "https://aigene.studio/",
-      avatar: "https://aigene.studio/logo/icon.webp",
-      rss: "https://aigene.studio/rss.xml"
-    }
-    - {
-      title: "冷汐的杂货铺",
-      intro: "你好谢谢小笼包再见",
-      link: "https://lengxiqwq.com",
-      avatar: "https://weavatar.com/avatar/52f243e67ccc2293d68c6f33db3f4083?s=640",
-      rss: "https://lengxiqwq.com/rss.xml"
-    }
-    - {
-      title: "qwwp",
-      intro: "你要吃一口C4吗？",
-      link: "https://qwwp.top/",
-      avatar: "https://qwwp.top/images/avatar.jpg",
-      rss: "https://qwwp.top/feed.xml"
-    }
-    - {
-      title: "MmzMing的知识库",
-      intro: "哈基米，南北绿豆",
-      link: "https://tblog.mmzhiku.xyz/",
-      avatar: "https://i.stardots.io/784774835/StarDots-2026052116374135506.jpg",
-      rss: "https://tblog.mmzhiku.xyz/rss.xml"
-    }
-    - {
-      title: "Pasule Blog",
-      intro: "Keep the Wonder. Keep the Fire",
-      link: "https://pasule.com",
-      avatar: "https://tu.pasule.com/file/wallpaper/1784014500478.png",
-      rss: "https://pasule.com/rss.xml"
-    }
-    - {
-      title: "番茄主理人",
-      intro: "躬身入局，心为主理，行有尺度，自持本心。",
-      link: "https://blog.fqzlr.top/",
-      avatar: "https://q1.qlogo.cn/g?b=qq&nk=20447289&s=640",
-      rss: "https://blog.fqzlr.top/rss.xml"
-    }
-    - {
-      title: "年华",
-      intro: "分享生活和技术。",
-      link: "https://blog.amamo.top",
-      avatar: "https://q1.qlogo.cn/g?b=qq&nk=1323860289&s=640",
-      rss: "https://blog.amamo.top/rss.xml"
-    }
-    - {
-      title: "x1shang-山与回响",
-      intro: "山有轮廓，思绪没有",
-      link: "https://www.x1shang.top",
-      avatar: "https://x1shang.top/assets/img/x1shang-avatar.webp",
-      rss: "https://www.x1shang.top/feed"
+      title: "示例博客 B",
+      intro: "带 rss 字段的友链可加入首页「订阅朋友圈」动态聚合",
+      link: "https://example.org",
+      avatar: "https://example.org/avatar.png",
+      rss: "https://example.org/rss.xml"
     }
 
   # 当成员头像加载失败时，替换为指定图片
@@ -1158,7 +1093,7 @@ links:
   # Custom content at the bottom of the links
   custom:
     enable: true
-    content: "<hr><h3>我的友链信息</h3><p>如果你想和我交换友链，可复制以下信息添加到你的网站：</p><ul><li>博客名：zuige's blog</li><li>简介：软件开发 · 玩机折腾 · 技术随手记</li><li>链接：https://blog.zuiges.com</li><li>头像：https://blog.zuiges.com/img/avatar.jpg</li><li>订阅：https://blog.zuiges.com/atom.xml</li></ul><h3>申请友链</h3><p>欢迎交换友链。申请前请先确认以下几点：</p><ul><li>站点为原创博客，内容健康、持续更新</li><li>已在本站添加了本站的链接（互相友链）</li><li>站点可正常访问，非纯商业推广</li></ul><p>确认后，请在下方留言并按如下格式提供信息：</p><ul><li>博客名：你的博客名称</li><li>简介：一句话介绍你的博客</li><li>链接：https://your-blog.com</li><li>头像：https://your-blog.com/favicon.ico</li></ul><p>我看到后会尽快添加，感谢！</p>"
+    content: "<hr><h3>我的友链信息</h3><p>如果想和你交换友链，可复制以下信息添加到你的网站：</p><ul><li>博客名：你的博客名称</li><li>简介：一句话介绍你的博客</li><li>链接：https://your-blog.com</li><li>头像：https://your-blog.com/avatar.png</li></ul><h3>申请友链</h3><p>欢迎交换友链，请先确认本站符合你的交换标准，然后在下方留言按「博客名 / 简介 / 链接 / 头像」的格式提供信息。</p>"
 
   # 评论插件
   # Comment plugin
