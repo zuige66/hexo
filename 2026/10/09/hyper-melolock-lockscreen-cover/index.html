@@ -32,7 +32,7 @@
 <meta property="og:image" content="https://blog.zuiges.com/img/hyper-melolock/app-appearance.jpg?v=2">
 <meta property="og:image" content="https://blog.zuiges.com/img/hyper-melolock/app-appearance-picker.jpg?v=2">
 <meta property="article:published_time" content="2026-10-09T06:00:00.000Z">
-<meta property="article:modified_time" content="2026-10-20T04:50:20.979Z">
+<meta property="article:modified_time" content="2026-10-23T17:16:36.743Z">
 <meta property="article:author" content="zuige">
 <meta property="article:tag" content="LSPosed">
 <meta property="article:tag" content="Xposed">
@@ -405,7 +405,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2k 字
+          2.6k 字
         
       </span>
     
@@ -416,7 +416,7 @@
         
         
         
-          18 分钟
+          22 分钟
         
       </span>
     
@@ -465,7 +465,7 @@
 <p><img src="/img/hyper-melolock/lockscreen-colors.jpg" srcset="/img/loading.gif" lazyload alt="四种配色方案的锁屏效果"></p>
 <h2 id="一、下载安装"><a href="#一、下载安装" class="headerlink" title="一、下载安装"></a>一、下载安装</h2><h3 id="下载地址"><a href="#下载地址" class="headerlink" title="下载地址"></a>下载地址</h3><ul>
 <li>GitHub 发布页：<a target="_blank" rel="noopener" href="https://github.com/zuige66/Hyper-MeloLock/releases">Hyper-MeloLock Releases</a>（含历史版本与校验信息）</li>
-<li>最新版国内直链：<a href="/downloads/melolock/Hyper-MeloLock-v0.3.5.apk">Hyper-MeloLock-v0.3.5.apk</a></li>
+<li>最新版国内直链：<a href="/downloads/melolock/Hyper-MeloLock-v0.3.6.apk">Hyper-MeloLock-v0.3.6.apk</a></li>
 </ul>
 <p>　　只从 GitHub Releases 或本博客直链下载正式签名包。模块作用于系统锁屏界面，来源不明的二次打包版本有风险。</p>
 <h3 id="安装前提"><a href="#安装前提" class="headerlink" title="安装前提"></a>安装前提</h3><table>
@@ -550,6 +550,17 @@
 <li>目前只在 Redmi Note 9 Pro（<code>gauguinpro</code>）+ 澎湃 OS 3 这套环境上完整测试过；v0.3.5 起其他机型 &#x2F; 系统小版本也会尝试启用（多机型测试期），显示异常时自动保持原生锁屏，欢迎带诊断报告反馈。</li>
 <li>「Xposed 框架」一行固定显示「未知」，是读取方式的限制，不是故障。</li>
 </ul>
+<h2 id="四、v0-3-6-更新说明"><a href="#四、v0-3-6-更新说明" class="headerlink" title="四、v0.3.6 更新说明"></a>四、v0.3.6 更新说明</h2><p>　　这一版主要让播放器卡片「信息更全、样子更干净」，另外把密码界面也纳入了封面沉浸。</p>
+<ul>
+<li><strong>歌词、歌名、歌手同屏</strong>：播放器卡片副行新增「歌手 &#x2F; 歌名」。放歌词时主行是当前歌词句、副行是歌手和歌名，一次看全，不会再出现「一放歌词就不知道放的哪首」。不习惯的可以在「播放器」分组关掉，回到原来的两行。</li>
+<li><strong>逐句歌词</strong>：播放带歌词的曲目时，播放器主行跟着播放进度一句一句走；前奏和开头那句 App 广告自动跳过，第一句之前显示歌名。目前实测 QQ 音乐可用，其他播放器取决于它是否向系统提供歌词数据。</li>
+<li><strong>播放器卡片可隐藏专辑封面</strong>：「播放器」分组新增「隐藏专辑封面」，打开后卡片左侧的小封面消失，歌词与歌名歌手两行水平居中。注意点小封面直接跳音乐 App 的快捷入口会随封面一起消失。</li>
+<li><strong>密码界面封面沉浸</strong>：输解锁密码时背景同样用当前专辑封面，不再闪回原生壁纸。</li>
+<li><strong>长歌名 &#x2F; 歌手名自动滚动</strong>：文字超出卡片宽度时自动跑马灯，滚动速度和滚动前停顿都能调，长文本不会被省略号切掉。</li>
+<li><strong>其他</strong>：播放键换成圆润矢量图标；可选用系统原生媒体卡；锁屏底部充电提示可单独关闭。</li>
+<li><strong>修复</strong>：通知页退出后媒体卡偶发残留染色、时钟小时数偶发消失、快速亮屏或解锁时闪一下原生壁纸。</li>
+</ul>
+<p>　　上面两个新开关默认就是打开的状态，装上升级即是新样子；想回到旧版外观，在「播放器」分组里关掉即可。</p>
 <h2 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h2><ul>
 <li>代码仓库：<a target="_blank" rel="noopener" href="https://github.com/zuige66/Hyper-MeloLock">https://github.com/zuige66/Hyper-MeloLock</a></li>
 <li>问题反馈：<a target="_blank" rel="noopener" href="https://github.com/zuige66/Hyper-MeloLock/issues">GitHub Issues</a></li>
