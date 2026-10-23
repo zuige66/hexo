@@ -1,0 +1,6 @@
+{
+  "versionCode": 21,
+  "versionName": "0.8.3",
+  "apkUrl": "https://blog.zuiges.com/downloads/oneline/todo-0.8.3.apk",
+  "changelog": "## 0.8.3\n\n**国内更新兜底源**\n- 检查更新新增 blog 静态源（blog.zuiges.com）作为 GitHub 被墙 / 限流时的兜底：主源 GitHub 连通时仍以它为准，断网或被墙时自动回退。\n- 下载 APK 主源（GitHub 资产 CDN）失败时，自动向 blog 源再要一次国内可直连的镜像直链重试。\n- latest.json 格式与 Hyper MeloLock 一致：versionCode / versionName / apkUrl / changelog。"
+}
