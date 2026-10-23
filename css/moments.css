@@ -1,0 +1,169 @@
+/**
+ * 动态（Moments）——归档页内的第二个视图
+ *
+ * 内容来自 source/_data/moments.yml，由 archive-list.ejs 渲染成时间线卡片流，
+ * 与「文章归档」列表并列，通过 .archive-tabs 切换显隐（逻辑见 source/js/moments.js）。
+ *
+ * 配色沿用主题 CSS 变量，并覆盖深色模式（:root[data-user-color-scheme="dark"]）。
+ */
+
+/* ---------- 视图切换控件（胶囊分段按钮） ---------- */
+/* 外层 wrap 负责居中与下间距；.archive-tabs 自身保持 inline-flex，
+   这样胶囊底色只包裹按钮，不会撑满整行 */
+.archive-tabs-wrap {
+  text-align: center;
+  margin: 0 0 1.25rem;
+}
+
+.archive-tabs {
+  display: inline-flex;
+  gap: .25rem;
+  margin: 0;
+  padding: .25rem;
+  border-radius: 999px;
+  background: rgba(127, 140, 159, .14);
+}
+
+.archive-tab {
+  padding: .35rem 1.1rem;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--sec-text-color, #718096);
+  font-size: .9rem;
+  line-height: 1.5;
+  cursor: pointer;
+  transition:
+    color 200ms ease,
+    background-color 200ms ease,
+    box-shadow 200ms ease;
+}
+
+.archive-tab:hover { color: var(--link-hover-color, #30a9de); }
+
+.archive-tab:focus-visible {
+  outline: 2px solid var(--link-hover-color, #30a9de);
+  outline-offset: 2px;
+}
+
+.archive-tab.is-active {
+  background: var(--link-hover-color, #30a9de);
+  color: #fff;
+  box-shadow: 0 6px 16px rgba(48, 169, 222, .28);
+}
+
+/* 非当前视图隐藏。用属性选择器兜底，避免被主题的 display 规则覆盖 */
+.archive-panel[hidden] { display: none; }
+
+/* ---------- 时间线 ---------- */
+.moments-timeline {
+  position: relative;
+  padding-left: 1.9rem;
+  margin-top: .5rem;
+}
+
+/* 竖线：主色渐变到透明，与站点卡片风格一致 */
+.moments-timeline::before {
+  content: "";
+  position: absolute;
+  left: .45rem;
+  top: .5rem;
+  bottom: .5rem;
+  width: 2px;
+  border-radius: 2px;
+  background: linear-gradient(180deg,
+    var(--link-hover-color, #30a9de),
+    rgba(127, 140, 159, .25));
+}
+
+.moment-item {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+/* 节点圆点：外圈用 board 背景做描边，压住竖线形成「串珠」效果 */
+.moment-item .moment-dot {
+  position: absolute;
+  left: -1.9rem;
+  top: 1.15rem;
+  width: .7rem;
+  height: .7rem;
+  border-radius: 50%;
+  background: var(--link-hover-color, #30a9de);
+  box-shadow: 0 0 0 3px var(--board-bg-color, #fff);
+}
+
+.moment-card {
+  padding: .9rem 1.15rem 1rem;
+  border-radius: .5rem;
+  background: rgba(127, 140, 159, .1);
+  box-shadow: 0 6px 18px rgba(38, 51, 65, .08);
+  transition:
+    transform 260ms var(--motion-spring, cubic-bezier(.34, 1.56, .64, 1)),
+    box-shadow 260ms var(--motion-smooth, cubic-bezier(.22, 1, .36, 1));
+}
+
+.moment-item:hover .moment-card {
+  transform: translateY(-3px);
+  box-shadow: var(--motion-shadow, 0 14px 32px rgba(38, 51, 65, .16));
+}
+
+.moment-time {
+  display: block;
+  margin-bottom: .35rem;
+  color: var(--sec-text-color, #718096);
+  font-size: .78rem;
+  letter-spacing: .02em;
+}
+
+.moment-content {
+  color: var(--text-color, #3c4858);
+  font-size: .95rem;
+  line-height: 1.75;
+  word-break: break-word;
+}
+
+/* 收紧 markdown 首末元素的外边距，让卡片内部间距干净 */
+.moment-content > :first-child { margin-top: 0; }
+.moment-content > :last-child { margin-bottom: 0; }
+.moment-content p { margin-bottom: .6rem; }
+.moment-content img { max-width: 100%; border-radius: .35rem; }
+.moment-content a { word-break: break-all; }
+
+/* ---------- 深色模式 ---------- */
+:root[data-user-color-scheme="dark"] .archive-tabs {
+  background: rgba(255, 255, 255, .08);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-user-color-scheme]) .archive-tabs {
+    background: rgba(255, 255, 255, .08);
+  }
+}
+
+/* ---------- 移动端 ---------- */
+@media (max-width: 767px) {
+  .moments-timeline { padding-left: 1.5rem; }
+  .moment-item .moment-dot { left: -1.5rem; }
+}
+
+/* ---------- 首页：侧栏「最新动态」卡片 ---------- */
+/* 列表本身复用 .home-recent-list 的单行截断样式，这里只补「查看全部动态」入口 */
+.home-moment-card .home-moment-more {
+  display: inline-block;
+  margin-top: .55rem;
+  color: var(--sidebar-accent, #39854b);
+  font-size: .78rem;
+  text-decoration: none;
+  transition: color 180ms ease;
+}
+
+.home-moment-card .home-moment-more:hover {
+  color: var(--sidebar-accent-hover, #2f6d3d);
+}
+
+/* 尊重系统「减弱动效」 */
+@media (prefers-reduced-motion: reduce) {
+  .moment-card { transition: none; }
+  .moment-item:hover .moment-card { transform: none; }
+}

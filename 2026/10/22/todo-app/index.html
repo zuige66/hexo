@@ -1,0 +1,1157 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/avatar.jpg">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="zuige">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Todo，一款离线优先的 Android 待办软件：输入框是唯一入口，一句话自动解析日期、时间与提醒，附下载与安装步骤。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Todo一句话待办软件">
+<meta property="og:url" content="https://blog.zuiges.com/2026/10/22/todo-app/index.html">
+<meta property="og:site_name" content="zuige&#39;s blog">
+<meta property="og:description" content="Todo，一款离线优先的 Android 待办软件：输入框是唯一入口，一句话自动解析日期、时间与提醒，附下载与安装步骤。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog.zuiges.com/img/oneline/add-sheet.jpg">
+<meta property="og:image" content="https://blog.zuiges.com/img/oneline/list.jpg">
+<meta property="og:image" content="https://blog.zuiges.com/img/oneline/archive.jpg">
+<meta property="og:image" content="https://blog.zuiges.com/img/oneline/settings.jpg">
+<meta property="og:image" content="https://blog.zuiges.com/img/oneline/about.jpg">
+<meta property="article:published_time" content="2026-10-22T13:10:00.000Z">
+<meta property="article:modified_time" content="2026-10-22T13:28:52.925Z">
+<meta property="article:author" content="zuige">
+<meta property="article:tag" content="Android">
+<meta property="article:tag" content="Compose">
+<meta property="article:tag" content="Kotlin">
+<meta property="article:tag" content="待办">
+<meta property="article:tag" content="效率">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://blog.zuiges.com/img/oneline/add-sheet.jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Todo一句话待办软件 - zuige&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/home-sidebar.css?v=7.css">
+<link rel="stylesheet" href="/css/site-motion.css?v=19.css">
+<link rel="stylesheet" href="/css/moments.css?v=3.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"blog.zuiges.com","root":"/","version":"1.9.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"expand_all":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"openkounter":{"server_url":"https://open-kounter.mintimate.cn","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.2"><link rel="alternate" href="/atom.xml" title="zuige's blog" type="application/atom+xml">
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>zuige&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content (desktop) -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/guestbook/" target="_self">
+                <i class="nav-icon-guestbook"></i>
+                <span>留言</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile grid menu overlay -->
+<div id="mobile-grid-menu" class="d-lg-none">
+  <div class="mobile-grid-menu-inner">
+    <div class="container">
+      <div class="row">
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-home-fill"></i>
+                  <span>首页</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/archives/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-archive-fill"></i>
+                  <span>归档</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/guestbook/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="nav-icon-guestbook"></i>
+                  <span>留言</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/categories/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-category-fill"></i>
+                  <span>分类</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/tags/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-tags-fill"></i>
+                  <span>标签</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/links/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-link-fill"></i>
+                  <span>友链</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/about/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-user-fill"></i>
+                  <span>关于</span>
+                </div>
+              </a>
+            </div>
+          
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-search-btn">
+            <a href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-search"></i>
+                <span>搜索</span>
+              </div>
+            </a>
+          </div>
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-color-toggle-btn"
+               data-label-light="开灯"
+               data-label-dark="关灯">
+            <a href="javascript:;" aria-label="Color Toggle">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-dark" id="mobile-color-toggle-icon"></i>
+                <span id="mobile-color-toggle-label">关灯</span>
+              </div>
+            </a>
+          </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+  
+
+
+<div id="banner" class="banner" parallax=true
+     style="background: linear-gradient(180deg, #5b7fd0 0%, #7898dc 26%, #c2d6ff 46%, #d8e8ff 50%, #b0cdf0 58%, #88aede 74%, #6a92c4 88%, #4a6a96 100%);">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up banner-text-shadow">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Todo一句话待办软件">Todo一句话待办软件</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-10-22 21:10" pubdate>
+          2026年10月22日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.7k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          15 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Todo一句话待办软件</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>　　记一件待办，多数软件要依次点新建、选日期、滚时间、填标题、设提醒，六个动作下来，事情本身反而成了负担。Todo 把这件事压成一行字：写下「明天下午4点 交周报」，日期、时间和提醒它自己排好；只写「买牛奶」，就安静地放进「无日期」里。</p>
+<p>　　它简单、离线、不打扰。没有日期选择器、没有分类标签、没有账号，待办数据全部留在本机，除了检查更新之外不联网。装上就能用，不需要 Root 或任何框架。</p>
+<h2 id="一、下载安装"><a href="#一、下载安装" class="headerlink" title="一、下载安装"></a>一、下载安装</h2><h3 id="下载地址"><a href="#下载地址" class="headerlink" title="下载地址"></a>下载地址</h3><ul>
+<li>GitHub 发布页：<a target="_blank" rel="noopener" href="https://github.com/zuige66/todo/releases">Todo Releases</a>（含历史版本）</li>
+<li>最新版国内直链：<a href="/downloads/oneline/todo-0.6.2.apk">todo-0.6.2.apk</a></li>
+</ul>
+<p>　　只从 GitHub Releases 或本博客直链下载正式签名包。</p>
+<h3 id="安装前提"><a href="#安装前提" class="headerlink" title="安装前提"></a>安装前提</h3><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>要求</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>系统</td>
+<td>Android 8.0（API 26）及以上</td>
+</tr>
+<tr>
+<td>权限</td>
+<td>通知、精确闹钟（设置内一键跳转）</td>
+</tr>
+<tr>
+<td>网络</td>
+<td>仅检查更新时联网，待办数据全程留本机</td>
+</tr>
+</tbody></table>
+<h3 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h3><ul>
+<li>下载 APK 后点击安装；首次安装若提示「未知来源」，按系统引导开启对应权限即可。</li>
+<li>装好后授予通知权限与精确闹钟权限。</li>
+<li>打开应用，直接在顶部输入框写一句话。</li>
+</ul>
+<p>　　成功标志：首页出现「无日期」分组，输入框下方实时显示解析出的日期与时间。</p>
+<h2 id="二、一句话输入"><a href="#二、一句话输入" class="headerlink" title="二、一句话输入"></a>二、一句话输入</h2><p>　　记一件事只需要一行字。写下日期、时间和事情，剩下的部分自然变成详情，不用再分栏填选。</p>
+<table>
+<tr>
+<td align="center"><img src="/img/oneline/add-sheet.jpg" srcset="/img/loading.gif" lazyload width="300" alt="一句话待办"/><br/><b>一句话待办</b><br/>输入「周五下午开会」，下方直接给出 10月23日 周五 14点 与标题「开会」</td>
+</tr>
+</table>
+
+<h3 id="支持的日期写法"><a href="#支持的日期写法" class="headerlink" title="支持的日期写法"></a>支持的日期写法</h3><table>
+<thead>
+<tr>
+<th>类别</th>
+<th>写法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>相对天</td>
+<td>今天、明天、后天、大后天</td>
+</tr>
+<tr>
+<td>本周</td>
+<td>周四、礼拜四、本周四</td>
+</tr>
+<tr>
+<td>下周</td>
+<td>下周四、下下周四（+2 周）</td>
+</tr>
+<tr>
+<td>月日</td>
+<td>1月2日、十二月三十一号</td>
+</tr>
+<tr>
+<td>纯日号</td>
+<td>5号、十五号</td>
+</tr>
+<tr>
+<td>数字短日期</td>
+<td><code>1.2</code> &#x2F; <code>26.1.2</code>（分隔符支持 <code>.</code> <code>-</code> <code>/</code>）</td>
+</tr>
+</tbody></table>
+<h3 id="支持的时刻写法"><a href="#支持的时刻写法" class="headerlink" title="支持的时刻写法"></a>支持的时刻写法</h3><ul>
+<li><code>15:30</code>、<code>3点</code>、<code>下午3点</code>、<code>晚上11点</code></li>
+<li><code>3点半</code>、<code>3点一刻</code>、<code>3点三刻</code>、<code>3点20分</code></li>
+</ul>
+<p>　　只写时段也能用：早上 08:00、中午 12:00、晚上 18:00、夜里 22:00。「今晚8点」会自动算成今天 20:00。</p>
+<h3 id="几个刻意的处理"><a href="#几个刻意的处理" class="headerlink" title="几个刻意的处理"></a>几个刻意的处理</h3><ul>
+<li>本周已经过去的星期 → 提示写错了，不会偷偷推到下周；</li>
+<li>没写年份、算出来是过去的日期 → 顺延到下月或明年；</li>
+<li>写死了年份、算出来是过去 → 提示；</li>
+<li>一句话里有多个日期 → 生成多条待办，一次录完。</li>
+</ul>
+<h2 id="三、首页与分组"><a href="#三、首页与分组" class="headerlink" title="三、首页与分组"></a>三、首页与分组</h2><p>　　待办按板块分组，顺序可调、可隐藏：</p>
+<ul>
+<li>逾期：过了时间还没做的，统一标红；</li>
+<li>有日期：未来的待办，内部再分「今日 &#x2F; 明天 &#x2F; 后天 &#x2F; 本周 &#x2F; 下周 &#x2F; 更晚」，可多选；</li>
+<li>无日期：只记了一件事、没定时间的。</li>
+</ul>
+<table>
+<tr>
+<td align="center"><img src="/img/oneline/list.jpg" srcset="/img/loading.gif" lazyload width="300" alt="待办列表"/><br/><b>待办列表</b><br/>逾期标红，按本周 / 更晚分组，右下角一键添加</td>
+</tr>
+</table>
+
+<p>　　列表会自己刷新，从「今天」翻成「已逾期」，不需要退出重进。</p>
+<h2 id="四、提醒与逾期"><a href="#四、提醒与逾期" class="headerlink" title="四、提醒与逾期"></a>四、提醒与逾期</h2><p>　　写了时间，Todo 会准时提醒，不靠后台常驻。一条待办可以有多重提醒：</p>
+<table>
+<thead>
+<tr>
+<th>时刻</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>提前 7 天</td>
+<td>提前一周提醒</td>
+</tr>
+<tr>
+<td>提前 3 天</td>
+<td>提前 3 天提醒</td>
+</tr>
+<tr>
+<td>提前 1 天</td>
+<td>明天到期</td>
+</tr>
+<tr>
+<td>提前 1 小时</td>
+<td>1 小时后到期（仅写了精确时刻）</td>
+</tr>
+<tr>
+<td>到点</td>
+<td>该办了</td>
+</tr>
+<tr>
+<td>逾期后</td>
+<td>还没完成，按间隔反复提醒（默认每天）</td>
+</tr>
+</tbody></table>
+<p>　　通知上直接带「完成」按钮，点一下就变成已完成，按钮转成「撤回」，不会堆出第二条通知。通知正文是一句小文案，同一条待办从头到尾都是同一句。</p>
+<h2 id="五、完成与重复"><a href="#五、完成与重复" class="headerlink" title="五、完成与重复"></a>五、完成与重复</h2><ul>
+<li>点一下圆圈：标记完成，动画走完自动归档，中途滑走或切页也不会丢；</li>
+<li>右滑卡片：快速归档，没滑够会自动弹回。</li>
+</ul>
+<table>
+<tr>
+<td align="center"><img src="/img/oneline/archive.jpg" srcset="/img/loading.gif" lazyload width="300" alt="归档列表"/><br/><b>归档列表</b><br/>完成或删除的待办都在这里，可恢复或删除</td>
+</tr>
+</table>
+
+<p>　　给待办加重复（每天 &#x2F; 每周 &#x2F; 每月）后，完成它不会归档，而是顺延到下一次：<code>每天 8点 吃药</code> 完成后自动变成明天 8:00。重复任务永远只有一条。</p>
+<h2 id="六、外观与设置"><a href="#六、外观与设置" class="headerlink" title="六、外观与设置"></a>六、外观与设置</h2><ul>
+<li>支持浅色、深色、跟随系统三种模式；</li>
+<li>11 套配色（平衡 6 套、鲜艳 5 套），深色卡片底色三档可选；</li>
+<li>沉浸式顶栏：下滑时标题栏收起，上滑立刻回来，可关闭；</li>
+<li>通知标题可以自定义，提醒文案池也能改。</li>
+</ul>
+<p>　　底部四个入口：Todo &#x2F; 归档 &#x2F; 设置 &#x2F; 关于。关于页能「检查更新」，发现新版直接下载安装。</p>
+<table>
+<tr>
+<td align="center" width="50%"><img src="/img/oneline/settings.jpg" srcset="/img/loading.gif" lazyload width="300" alt="设置页面"/><br/><b>设置页面</b><br/>提醒可靠性 · 通知 · 外观</td>
+<td align="center" width="50%"><img src="/img/oneline/about.jpg" srcset="/img/loading.gif" lazyload width="300" alt="关于页面"/><br/><b>关于页面</b><br/>版本 · 包名 · 检查更新</td>
+</tr>
+</table>
+
+<h2 id="七、已知限制"><a href="#七、已知限制" class="headerlink" title="七、已知限制"></a>七、已知限制</h2><ul>
+<li>最低 Android 8.0，低于此版本无法安装；</li>
+<li>通知上的「完成」按钮，在部分国产系统里要展开通知才看得到；</li>
+<li>除了检查更新，应用不联网。</li>
+</ul>
+<h2 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h2><ul>
+<li>代码仓库：<a target="_blank" rel="noopener" href="https://github.com/zuige66/todo">https://github.com/zuige66/todo</a></li>
+<li>问题反馈：<a target="_blank" rel="noopener" href="https://github.com/zuige66/todo/issues">GitHub Issues</a></li>
+<li>设计文档：<a target="_blank" rel="noopener" href="https://github.com/zuige66/todo/blob/main/DESIGN.md">DESIGN.md</a></li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%8A%80%E6%9C%AF/" class="category-chain-item">技术</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Android/" class="print-no-link">#Android</a>
+      
+        <a href="/tags/%E5%BE%85%E5%8A%9E/" class="print-no-link">#待办</a>
+      
+        <a href="/tags/%E6%95%88%E7%8E%87/" class="print-no-link">#效率</a>
+      
+        <a href="/tags/Kotlin/" class="print-no-link">#Kotlin</a>
+      
+        <a href="/tags/Compose/" class="print-no-link">#Compose</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Todo一句话待办软件</div>
+      <div>https://blog.zuiges.com/2026/10/22/todo-app/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>post.copyright.author</div>
+          <div>zuige</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>post.copyright.posted</div>
+          <div>2026年10月22日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>post.copyright.licensed</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="post.copyright.BY">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2026/10/20/2026-10-20-she/" title="她">
+                        <span class="hidden-mobile">她</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+    <div id="giscus" class="giscus"></div>
+    <script type="text/javascript">
+      Fluid.utils.loadComments('#giscus', function() {
+        var options = {"repo":"zuige66/hexo","repo-id":"R_kgDOUNLYKw","category":"Announcements","category-id":"DIC_kwDOUNLYK84DE1jw","theme-light":"light","theme-dark":"dark","mapping":"pathname","reactions-enabled":1,"emit-metadata":0,"input-position":"top","lang":"zh-CN","strict":0};
+        var attributes = {};
+        for (let option in options) {
+          if (!option.startsWith('theme-')) {
+            var key = option.startsWith('data-') ? option : 'data-' + option;
+            attributes[key] = options[option];
+          }
+        }
+        var light = 'light';
+        var dark = 'dark';
+        window.GiscusThemeLight = light;
+        window.GiscusThemeDark = dark;
+        attributes['data-theme'] = document.documentElement.getAttribute('data-user-color-scheme') === 'dark' ? dark : light;
+        for (let attribute in attributes) {
+          var value = attributes[attribute];
+          if (value === undefined || value === null || value === '') {
+            delete attributes[attribute];
+          }
+        }
+        var s = document.createElement('script');
+        s.setAttribute('src', 'https://giscus.app/client.js');
+        s.setAttribute('crossorigin', 'anonymous');
+        for (let attribute in attributes) {
+          s.setAttribute(attribute, attributes[attribute]);
+        }
+        var ss = document.getElementsByTagName('script');
+        var e = ss.length > 0 ? ss[ss.length - 1] : document.head || document.documentElement;
+        e.parentNode.insertBefore(s, e.nextSibling);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <br> <span style="font-size: 0.85em; opacity: .65;">首页云海动画改编自 Shadertoy 作品 <a href="https://www.shadertoy.com/view/Ndc3zl" target="_blank" rel="nofollow noopener">Up in the Cloud Sea</a>（原作 mdb，移植 Tyson Zhou，CC BY-NC-SA 3.0）</span> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        站点访问量：
+        <span id="busuanzi_value_site_pv"></span>
+        
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        访客数量：
+        <span id="busuanzi_value_site_uv"></span>
+        
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    function isExpandAllEnabled() {
+      return CONFIG.toc && CONFIG.toc.expand_all === true;
+    }
+    function expandAllToc() {
+      if (!isExpandAllEnabled()) { return; }
+      jQuery('#toc-body .tocbot-is-collapsed').removeClass('tocbot-is-collapsed');
+    }
+    function updateTocToggle($li, $childList) {
+      var $toggle = $li.children('.toc-line').children('.toc-toggle');
+      if ($toggle.length === 0) { return; }
+      var collapsed = $childList.hasClass('tocbot-is-collapsed');
+      $toggle
+        .toggleClass('toc-toggle-collapsed', collapsed)
+        .toggleClass('toc-toggle-expanded', !collapsed)
+        .attr('aria-expanded', String(!collapsed))
+        .attr('aria-label', collapsed ? '展开子目录' : '收起子目录');
+      $childList.attr('aria-hidden', String(collapsed));
+    }
+    function bindTocToggle() {
+      if (!isExpandAllEnabled()) { return; }
+      jQuery('#toc-body .toc-list-item').each(function() {
+        var $li = jQuery(this);
+        var $childList = $li.children('ol');
+        var $line = $li.children('.toc-line');
+        var $link = $li.children('.tocbot-link');
+
+        if ($line.length === 0 && $link.length > 0) {
+          $link.wrap('<div class="toc-line"></div>');
+          $line = $li.children('.toc-line');
+        }
+
+        $li.children('.toc-toggle').remove();
+        $line.children('.toc-toggle').remove();
+        if ($childList.length === 0) {
+          $line.addClass('toc-line-leaf');
+          return;
+        }
+
+        $line.removeClass('toc-line-leaf');
+        $line.prepend('<span class="toc-toggle toc-toggle-expanded" role="button" tabindex="0">›</span>');
+        updateTocToggle($li, $childList);
+      });
+      jQuery('#toc-body').off('click.tocToggle').on('click.tocToggle', '.toc-toggle', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var $li = jQuery(this).closest('.toc-list-item');
+        var $childList = $li.children('ol');
+        if ($childList.length === 0) { return; }
+        $childList.toggleClass('tocbot-is-collapsed');
+        updateTocToggle($li, $childList);
+      });
+      jQuery('#toc-body').off('keydown.tocToggle').on('keydown.tocToggle', '.toc-toggle', function(e) {
+        if (e.key !== 'Enter' && e.key !== ' ') { return; }
+        e.preventDefault();
+        jQuery(this).trigger('click');
+      });
+      if (window.__tocToggleObserver) {
+        window.__tocToggleObserver.disconnect();
+      }
+      window.__tocToggleObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          if (mutation.type !== 'attributes' || mutation.attributeName !== 'class') { return; }
+          var $list = jQuery(mutation.target);
+          var $li = $list.parent('.toc-list-item');
+          if ($li.length === 0) { return; }
+          updateTocToggle($li, $list);
+        });
+      });
+      jQuery('#toc-body ol').each(function() {
+        window.__tocToggleObserver.observe(this, { attributes: true });
+      });
+    }
+    var tocConfig = Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc);
+    if (isExpandAllEnabled()) {
+      tocConfig.collapseDepth = 6;
+    }
+    window.tocbot.init(tocConfig);
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+    expandAllToc();
+    bindTocToggle();
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+        expandAllToc();
+        bindTocToggle();
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="/js/site-interactions.js?v=3.js"></script>
+<script src="/js/azure-sea.js?v=4.js"></script>
+<script src="/js/soft-nav.js?v=7.js"></script>
+<script src="/js/moments.js?v=2.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">noscript_warning</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,1093 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/avatar.jpg">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="zuige">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Hyper MeloLock，为澎湃 OS 3 打造的锁屏沉浸音乐模块：专辑封面铺成真壁纸、时钟跟随取色、完整播放控制，附下载地址与安装步骤。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hyper MeloLock 沉浸式音乐锁屏">
+<meta property="og:url" content="https://blog.zuiges.com/2026/10/09/hyper-melolock-lockscreen-cover/index.html">
+<meta property="og:site_name" content="zuige&#39;s blog">
+<meta property="og:description" content="Hyper MeloLock，为澎湃 OS 3 打造的锁屏沉浸音乐模块：专辑封面铺成真壁纸、时钟跟随取色、完整播放控制，附下载地址与安装步骤。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog.zuiges.com/img/hyper-melolock/lockscreen-colors.jpg">
+<meta property="og:image" content="https://blog.zuiges.com/img/hyper-melolock/app-home.jpg?v=2">
+<meta property="og:image" content="https://blog.zuiges.com/img/hyper-melolock/app-about.jpg?v=2">
+<meta property="og:image" content="https://blog.zuiges.com/img/hyper-melolock/app-appearance.jpg?v=2">
+<meta property="og:image" content="https://blog.zuiges.com/img/hyper-melolock/app-appearance-picker.jpg?v=2">
+<meta property="article:published_time" content="2026-10-09T06:00:00.000Z">
+<meta property="article:modified_time" content="2026-10-20T04:50:20.979Z">
+<meta property="article:author" content="zuige">
+<meta property="article:tag" content="LSPosed">
+<meta property="article:tag" content="Xposed">
+<meta property="article:tag" content="模块">
+<meta property="article:tag" content="澎湃OS">
+<meta property="article:tag" content="红米Note9 Pro">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://blog.zuiges.com/img/hyper-melolock/lockscreen-colors.jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Hyper MeloLock 沉浸式音乐锁屏 - zuige&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/home-sidebar.css?v=7.css">
+<link rel="stylesheet" href="/css/site-motion.css?v=19.css">
+<link rel="stylesheet" href="/css/moments.css?v=3.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"blog.zuiges.com","root":"/","version":"1.9.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"expand_all":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"openkounter":{"server_url":"https://open-kounter.mintimate.cn","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.2"><link rel="alternate" href="/atom.xml" title="zuige's blog" type="application/atom+xml">
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>zuige&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content (desktop) -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/guestbook/" target="_self">
+                <i class="nav-icon-guestbook"></i>
+                <span>留言</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile grid menu overlay -->
+<div id="mobile-grid-menu" class="d-lg-none">
+  <div class="mobile-grid-menu-inner">
+    <div class="container">
+      <div class="row">
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-home-fill"></i>
+                  <span>首页</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/archives/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-archive-fill"></i>
+                  <span>归档</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/guestbook/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="nav-icon-guestbook"></i>
+                  <span>留言</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/categories/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-category-fill"></i>
+                  <span>分类</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/tags/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-tags-fill"></i>
+                  <span>标签</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/links/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-link-fill"></i>
+                  <span>友链</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/about/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-user-fill"></i>
+                  <span>关于</span>
+                </div>
+              </a>
+            </div>
+          
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-search-btn">
+            <a href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-search"></i>
+                <span>搜索</span>
+              </div>
+            </a>
+          </div>
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-color-toggle-btn"
+               data-label-light="开灯"
+               data-label-dark="关灯">
+            <a href="javascript:;" aria-label="Color Toggle">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-dark" id="mobile-color-toggle-icon"></i>
+                <span id="mobile-color-toggle-label">关灯</span>
+              </div>
+            </a>
+          </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+  
+
+
+<div id="banner" class="banner" parallax=true
+     style="background: linear-gradient(180deg, #5b7fd0 0%, #7898dc 26%, #c2d6ff 46%, #d8e8ff 50%, #b0cdf0 58%, #88aede 74%, #6a92c4 88%, #4a6a96 100%);">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up banner-text-shadow">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Hyper MeloLock 沉浸式音乐锁屏">Hyper MeloLock 沉浸式音乐锁屏</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-10-09 14:00" pubdate>
+          2026年10月9日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          18 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Hyper MeloLock 沉浸式音乐锁屏</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>　　Hyper MeloLock 是一个开源免费的澎湃 OS 3 锁屏音乐模块：正在播放音乐时，锁屏会换成大号时间、铺满全屏的专辑封面和完整播放控制条。封面是真正的壁纸，不是叠在锁屏上的一层图，所以系统的液态玻璃时钟、通知卡毛玻璃都能取到专辑的颜色。</p>
+<p>　　模块通过 Vector &#x2F; LSPosed 框架注入系统界面，不修改任何音乐播放器，也不改系统 APK。默认关闭、失败关闭：找不到锁屏视图或媒体数据无效时，立刻恢复原生锁屏。</p>
+<p><img src="/img/hyper-melolock/lockscreen-colors.jpg" srcset="/img/loading.gif" lazyload alt="四种配色方案的锁屏效果"></p>
+<h2 id="一、下载安装"><a href="#一、下载安装" class="headerlink" title="一、下载安装"></a>一、下载安装</h2><h3 id="下载地址"><a href="#下载地址" class="headerlink" title="下载地址"></a>下载地址</h3><ul>
+<li>GitHub 发布页：<a target="_blank" rel="noopener" href="https://github.com/zuige66/Hyper-MeloLock/releases">Hyper-MeloLock Releases</a>（含历史版本与校验信息）</li>
+<li>最新版国内直链：<a href="/downloads/melolock/Hyper-MeloLock-v0.3.5.apk">Hyper-MeloLock-v0.3.5.apk</a></li>
+</ul>
+<p>　　只从 GitHub Releases 或本博客直链下载正式签名包。模块作用于系统锁屏界面，来源不明的二次打包版本有风险。</p>
+<h3 id="安装前提"><a href="#安装前提" class="headerlink" title="安装前提"></a>安装前提</h3><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>要求</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>系统</td>
+<td>澎湃 OS 3（Android 16）</td>
+</tr>
+<tr>
+<td>设备</td>
+<td>Redmi Note 9 Pro（<code>gauguinpro</code>）</td>
+</tr>
+<tr>
+<td>框架</td>
+<td>Vector &#x2F; LSPosed（SukiSU Ultra 提供）</td>
+</tr>
+<tr>
+<td>播放器</td>
+<td>任何提供标准媒体会话的音乐应用</td>
+</tr>
+</tbody></table>
+<p>　　v0.3.5 起版本门禁已移除：其他机型、其他澎湃 OS 3 小版本也会尝试启用；找不到目标界面时模块会主动让位给原生锁屏，不会造成黑屏或卡死。遇到显示异常请打开「调试」分组的诊断报告，一键复制后反馈。</p>
+<h3 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h3><ul>
+<li>安装 APK 后，在 Vector 管理器里启用 Hyper MeloLock，作用域勾选这两项，缺一项对应功能就不生效：<ul>
+<li><code>com.android.systemui</code>——锁屏覆盖层本体，必须勾选；</li>
+<li><code>com.miui.miwallpaper</code>——封面壁纸化，不勾则封面取不到系统毛玻璃效果。</li>
+</ul>
+</li>
+<li>重启手机。管理器里勾上作用域只是声明，进程没重启就不会注入。</li>
+<li>打开 Hyper MeloLock 应用，点首页状态卡开启模块开关，确认显示「已激活」。</li>
+<li>在「应用」页勾选实际使用的音乐播放器。默认一个都不勾，没勾选的播放器不会触发锁屏接管。</li>
+<li>播放一首带封面的歌曲，熄屏再点亮。</li>
+</ul>
+<p>　　成功标志：锁屏出现大号时间和全屏封面，底部有播放控制条；配置端首页显示系统版本与「已激活」。</p>
+<table>
+<tr>
+<td align="center" width="50%"><img src="/img/hyper-melolock/app-home.jpg?v=2" srcset="/img/loading.gif" lazyload width="300" alt="配置端首页"/><br/><b>配置端首页</b><br/>开关状态 · 已开启应用 · 系统信息</td>
+<td align="center" width="50%"><img src="/img/hyper-melolock/app-about.jpg?v=2" srcset="/img/loading.gif" lazyload width="300" alt="关于页"/><br/><b>关于页</b><br/>开发者信息 · 检查更新</td>
+</tr>
+</table>
+
+<h2 id="二、使用说明"><a href="#二、使用说明" class="headerlink" title="二、使用说明"></a>二、使用说明</h2><p>　　装好之后，日常使用按下面四步操作。</p>
+<ol>
+<li><strong>激活模块与作用域</strong>：在 LSPosed &#x2F; Vector 管理器里勾选并激活 Hyper MeloLock，作用域要勾选 <code>com.android.systemui</code>（必须）与 <code>com.miui.miwallpaper</code>（封面壁纸化）；之后重启手机生效。</li>
+<li><strong>勾选音乐应用</strong>：打开 Hyper MeloLock，在「应用」页勾选实际使用的音乐播放器，默认一个都不勾。</li>
+<li><strong>调整外观</strong>：在「外观」页调个性搭配，详见下方「外观调整」与「取色」说明。</li>
+<li><strong>开关模块</strong>：首页左上角显示「已激活」的地方点击一下即可关闭模块，再点一下重新开启。</li>
+</ol>
+<h3 id="外观调整"><a href="#外观调整" class="headerlink" title="外观调整"></a>外观调整</h3><p>　　「外观」页里每一项都能实时调整，改完回到锁屏立即生效，不需要重启。基础可调项：</p>
+<ul>
+<li>时间：字号、粗细、圆润、颜色、上间距，还可以单独加描边；</li>
+<li>封面：缩放、圆角；</li>
+<li>播放器卡片：圆角、上间距、底色（七档，含跟随封面动态取色）；</li>
+<li>时钟上方可加一行「公历 + 周几 + 农历」日期和自定义签名，各自独立开关。</li>
+</ul>
+<table>
+<tr>
+<td align="center" width="50%"><img src="/img/hyper-melolock/app-appearance.jpg?v=2" srcset="/img/loading.gif" lazyload width="300" alt="外观分组页"/><br/><b>外观分组</b><br/>取色 · 日期 · 签名 · 时间 · 封面 · 播放器</td>
+<td align="center" width="50%"><img src="/img/hyper-melolock/app-appearance-picker.jpg?v=2" srcset="/img/loading.gif" lazyload width="300" alt="时间取色设置"/><br/><b>时间取色</b><br/>跟随封面 / 固定色 · 取色风格（M3E / 鲜艳原色）</td>
+</tr>
+</table>
+
+<h3 id="全局取色"><a href="#全局取色" class="headerlink" title="全局取色"></a>全局取色</h3><p>　　除了直接选颜色，时间、日期行、签名行、播放器底色、入口文字和入口背景都<strong>能单独开关「跟随专辑封面」自动取色</strong>，切换歌曲时颜色跟着封面一起变，不用手动改。取色作用于所有跟随档，保证整屏色调统一。</p>
+<p>　　取色风格有两种，观感差别明显：</p>
+<ul>
+<li><strong>低饱和磨砂（M3E）</strong>：从封面取出主色后压暗、降饱和，得到莫兰迪一类的柔和色。大号时间压在这种底色上更耐看，长时间看也不刺眼；</li>
+<li><strong>鲜艳原色直出</strong>：直接取封面里的主色，颜色更跳、更接近海报感，适合封面本身配色干净的专辑。</li>
+</ul>
+<p>　　主色从封面的哪里挑，有三种选择：</p>
+<ul>
+<li><strong>最鲜艳优先</strong>：直接取整张图里最鲜艳的那个颜色；</li>
+<li><strong>占比优先</strong>：直接取占比最大的色块，也就是封面主体面积最大的颜色，贴近专辑主色调；</li>
+<li><strong>色族占比</strong>：把相近颜色按色相归并成族再比各族总占比，避免照片类封面上小块鲜艳色抢走主色、或大片绿草被拆散，整体色调更稳。</li>
+</ul>
+<p>　　不跟封面时，时间颜色和播放器底色各有固定色档：时间有白、黑、浅灰、暖黄、天蓝、粉；播放器底色七档，其中一档同样是跟随封面动态取色。</p>
+<h2 id="三、已知限制"><a href="#三、已知限制" class="headerlink" title="三、已知限制"></a>三、已知限制</h2><ul>
+<li>目前只在 Redmi Note 9 Pro（<code>gauguinpro</code>）+ 澎湃 OS 3 这套环境上完整测试过；v0.3.5 起其他机型 &#x2F; 系统小版本也会尝试启用（多机型测试期），显示异常时自动保持原生锁屏，欢迎带诊断报告反馈。</li>
+<li>「Xposed 框架」一行固定显示「未知」，是读取方式的限制，不是故障。</li>
+</ul>
+<h2 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h2><ul>
+<li>代码仓库：<a target="_blank" rel="noopener" href="https://github.com/zuige66/Hyper-MeloLock">https://github.com/zuige66/Hyper-MeloLock</a></li>
+<li>问题反馈：<a target="_blank" rel="noopener" href="https://github.com/zuige66/Hyper-MeloLock/issues">GitHub Issues</a></li>
+<li>项目基于 AGPL-3.0 开源，界面组件来自 HyperIsland（MIT License）</li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%8A%80%E6%9C%AF/" class="category-chain-item">技术</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%BE%8E%E6%B9%83OS/" class="print-no-link">#澎湃OS</a>
+      
+        <a href="/tags/LSPosed/" class="print-no-link">#LSPosed</a>
+      
+        <a href="/tags/Xposed/" class="print-no-link">#Xposed</a>
+      
+        <a href="/tags/%E6%A8%A1%E5%9D%97/" class="print-no-link">#模块</a>
+      
+        <a href="/tags/%E7%BA%A2%E7%B1%B3Note9-Pro/" class="print-no-link">#红米Note9 Pro</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Hyper MeloLock 沉浸式音乐锁屏</div>
+      <div>https://blog.zuiges.com/2026/10/09/hyper-melolock-lockscreen-cover/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>post.copyright.author</div>
+          <div>zuige</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>post.copyright.posted</div>
+          <div>2026年10月9日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>post.copyright.licensed</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="post.copyright.BY">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2026/10/20/Hermes%E8%BF%9E%E6%8E%A5%E5%BE%AE%E4%BF%A1/" title="Hermes连接微信">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Hermes连接微信</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2026/10/07/redmi-note9-pro-hyperos3-root/" title="红米Note9Pro刷澎湃OS3+Root">
+                        <span class="hidden-mobile">红米Note9Pro刷澎湃OS3+Root</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+    <div id="giscus" class="giscus"></div>
+    <script type="text/javascript">
+      Fluid.utils.loadComments('#giscus', function() {
+        var options = {"repo":"zuige66/hexo","repo-id":"R_kgDOUNLYKw","category":"Announcements","category-id":"DIC_kwDOUNLYK84DE1jw","theme-light":"light","theme-dark":"dark","mapping":"pathname","reactions-enabled":1,"emit-metadata":0,"input-position":"top","lang":"zh-CN","strict":0};
+        var attributes = {};
+        for (let option in options) {
+          if (!option.startsWith('theme-')) {
+            var key = option.startsWith('data-') ? option : 'data-' + option;
+            attributes[key] = options[option];
+          }
+        }
+        var light = 'light';
+        var dark = 'dark';
+        window.GiscusThemeLight = light;
+        window.GiscusThemeDark = dark;
+        attributes['data-theme'] = document.documentElement.getAttribute('data-user-color-scheme') === 'dark' ? dark : light;
+        for (let attribute in attributes) {
+          var value = attributes[attribute];
+          if (value === undefined || value === null || value === '') {
+            delete attributes[attribute];
+          }
+        }
+        var s = document.createElement('script');
+        s.setAttribute('src', 'https://giscus.app/client.js');
+        s.setAttribute('crossorigin', 'anonymous');
+        for (let attribute in attributes) {
+          s.setAttribute(attribute, attributes[attribute]);
+        }
+        var ss = document.getElementsByTagName('script');
+        var e = ss.length > 0 ? ss[ss.length - 1] : document.head || document.documentElement;
+        e.parentNode.insertBefore(s, e.nextSibling);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <br> <span style="font-size: 0.85em; opacity: .65;">首页云海动画改编自 Shadertoy 作品 <a href="https://www.shadertoy.com/view/Ndc3zl" target="_blank" rel="nofollow noopener">Up in the Cloud Sea</a>（原作 mdb，移植 Tyson Zhou，CC BY-NC-SA 3.0）</span> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        站点访问量：
+        <span id="busuanzi_value_site_pv"></span>
+        
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        访客数量：
+        <span id="busuanzi_value_site_uv"></span>
+        
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    function isExpandAllEnabled() {
+      return CONFIG.toc && CONFIG.toc.expand_all === true;
+    }
+    function expandAllToc() {
+      if (!isExpandAllEnabled()) { return; }
+      jQuery('#toc-body .tocbot-is-collapsed').removeClass('tocbot-is-collapsed');
+    }
+    function updateTocToggle($li, $childList) {
+      var $toggle = $li.children('.toc-line').children('.toc-toggle');
+      if ($toggle.length === 0) { return; }
+      var collapsed = $childList.hasClass('tocbot-is-collapsed');
+      $toggle
+        .toggleClass('toc-toggle-collapsed', collapsed)
+        .toggleClass('toc-toggle-expanded', !collapsed)
+        .attr('aria-expanded', String(!collapsed))
+        .attr('aria-label', collapsed ? '展开子目录' : '收起子目录');
+      $childList.attr('aria-hidden', String(collapsed));
+    }
+    function bindTocToggle() {
+      if (!isExpandAllEnabled()) { return; }
+      jQuery('#toc-body .toc-list-item').each(function() {
+        var $li = jQuery(this);
+        var $childList = $li.children('ol');
+        var $line = $li.children('.toc-line');
+        var $link = $li.children('.tocbot-link');
+
+        if ($line.length === 0 && $link.length > 0) {
+          $link.wrap('<div class="toc-line"></div>');
+          $line = $li.children('.toc-line');
+        }
+
+        $li.children('.toc-toggle').remove();
+        $line.children('.toc-toggle').remove();
+        if ($childList.length === 0) {
+          $line.addClass('toc-line-leaf');
+          return;
+        }
+
+        $line.removeClass('toc-line-leaf');
+        $line.prepend('<span class="toc-toggle toc-toggle-expanded" role="button" tabindex="0">›</span>');
+        updateTocToggle($li, $childList);
+      });
+      jQuery('#toc-body').off('click.tocToggle').on('click.tocToggle', '.toc-toggle', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var $li = jQuery(this).closest('.toc-list-item');
+        var $childList = $li.children('ol');
+        if ($childList.length === 0) { return; }
+        $childList.toggleClass('tocbot-is-collapsed');
+        updateTocToggle($li, $childList);
+      });
+      jQuery('#toc-body').off('keydown.tocToggle').on('keydown.tocToggle', '.toc-toggle', function(e) {
+        if (e.key !== 'Enter' && e.key !== ' ') { return; }
+        e.preventDefault();
+        jQuery(this).trigger('click');
+      });
+      if (window.__tocToggleObserver) {
+        window.__tocToggleObserver.disconnect();
+      }
+      window.__tocToggleObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          if (mutation.type !== 'attributes' || mutation.attributeName !== 'class') { return; }
+          var $list = jQuery(mutation.target);
+          var $li = $list.parent('.toc-list-item');
+          if ($li.length === 0) { return; }
+          updateTocToggle($li, $list);
+        });
+      });
+      jQuery('#toc-body ol').each(function() {
+        window.__tocToggleObserver.observe(this, { attributes: true });
+      });
+    }
+    var tocConfig = Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc);
+    if (isExpandAllEnabled()) {
+      tocConfig.collapseDepth = 6;
+    }
+    window.tocbot.init(tocConfig);
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+    expandAllToc();
+    bindTocToggle();
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+        expandAllToc();
+        bindTocToggle();
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="/js/site-interactions.js?v=3.js"></script>
+<script src="/js/azure-sea.js?v=4.js"></script>
+<script src="/js/soft-nav.js?v=7.js"></script>
+<script src="/js/moments.js?v=2.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">noscript_warning</div>
+  </noscript>
+</body>
+</html>

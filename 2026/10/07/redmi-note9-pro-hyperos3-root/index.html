@@ -1,0 +1,1136 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/avatar.jpg">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="zuige">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="记录 Redmi Note 9 Pro（gauguin）从 MIUI 14 线刷澎湃 OS 3，并通过 SukiSU Ultra 确认内核 Root 状态的过程。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="红米Note9Pro刷澎湃OS3+Root">
+<meta property="og:url" content="https://blog.zuiges.com/2026/10/07/redmi-note9-pro-hyperos3-root/index.html">
+<meta property="og:site_name" content="zuige&#39;s blog">
+<meta property="og:description" content="记录 Redmi Note 9 Pro（gauguin）从 MIUI 14 线刷澎湃 OS 3，并通过 SukiSU Ultra 确认内核 Root 状态的过程。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog.zuiges.com/img/redmi-note9-pro-hyperos3/miflash-success.png">
+<meta property="og:image" content="https://blog.zuiges.com/img/redmi-note9-pro-hyperos3/hyperos-version.jpg">
+<meta property="og:image" content="https://blog.zuiges.com/img/redmi-note9-pro-hyperos3/sukisu-root.jpg">
+<meta property="article:published_time" content="2026-10-07T12:00:00.000Z">
+<meta property="article:modified_time" content="2026-10-20T04:50:20.983Z">
+<meta property="article:author" content="zuige">
+<meta property="article:tag" content="Android">
+<meta property="article:tag" content="Root">
+<meta property="article:tag" content="刷机">
+<meta property="article:tag" content="澎湃OS">
+<meta property="article:tag" content="红米Note9 Pro">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://blog.zuiges.com/img/redmi-note9-pro-hyperos3/miflash-success.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>红米Note9Pro刷澎湃OS3+Root - zuige&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/home-sidebar.css?v=7.css">
+<link rel="stylesheet" href="/css/site-motion.css?v=19.css">
+<link rel="stylesheet" href="/css/moments.css?v=3.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"blog.zuiges.com","root":"/","version":"1.9.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"expand_all":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"openkounter":{"server_url":"https://open-kounter.mintimate.cn","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.2"><link rel="alternate" href="/atom.xml" title="zuige's blog" type="application/atom+xml">
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>zuige&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content (desktop) -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/guestbook/" target="_self">
+                <i class="nav-icon-guestbook"></i>
+                <span>留言</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile grid menu overlay -->
+<div id="mobile-grid-menu" class="d-lg-none">
+  <div class="mobile-grid-menu-inner">
+    <div class="container">
+      <div class="row">
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-home-fill"></i>
+                  <span>首页</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/archives/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-archive-fill"></i>
+                  <span>归档</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/guestbook/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="nav-icon-guestbook"></i>
+                  <span>留言</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/categories/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-category-fill"></i>
+                  <span>分类</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/tags/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-tags-fill"></i>
+                  <span>标签</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/links/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-link-fill"></i>
+                  <span>友链</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/about/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-user-fill"></i>
+                  <span>关于</span>
+                </div>
+              </a>
+            </div>
+          
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-search-btn">
+            <a href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-search"></i>
+                <span>搜索</span>
+              </div>
+            </a>
+          </div>
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-color-toggle-btn"
+               data-label-light="开灯"
+               data-label-dark="关灯">
+            <a href="javascript:;" aria-label="Color Toggle">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-dark" id="mobile-color-toggle-icon"></i>
+                <span id="mobile-color-toggle-label">关灯</span>
+              </div>
+            </a>
+          </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+  
+
+
+<div id="banner" class="banner" parallax=true
+     style="background: linear-gradient(180deg, #5b7fd0 0%, #7898dc 26%, #c2d6ff 46%, #d8e8ff 50%, #b0cdf0 58%, #88aede 74%, #6a92c4 88%, #4a6a96 100%);">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up banner-text-shadow">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="红米Note9Pro刷澎湃OS3+Root">红米Note9Pro刷澎湃OS3+Root</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-10-07 20:00" pubdate>
+          2026年10月7日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.9k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          24 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">红米Note9Pro刷澎湃OS3+Root</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>　　这次在 REDMI Note 9 Pro 上，从 MIUI 14 线刷到澎湃 OS 3，并确认内核 Root 可以被 SukiSU Ultra 正常识别。系统页显示版本为 <code>3.0.303.0.WJSCNXM.C06</code>，Root 管理器显示 Android 16、内核 <code>4.19.157-moon-gc5e300589</code>。</p>
+<p>　　本文只记录这台设备的实际流程。刷机包目录中包含 <code>gauguin</code>，因此<strong>仅适用于设备代号同为 <code>gauguin</code>，且刷机包明确写明适配的机型</strong>。Redmi Note 9 Pro 存在不同地区和硬件版本；型号名称相同不代表分区、内核和刷机包通用。未确认代号前，不要继续线刷。</p>
+<blockquote>
+<p><strong>警告：这不是“保留数据”的无损操作。</strong> 解锁 BL 与 MiFlash 的“全部删除”都会清空手机数据。刷入第三方系统和 Root 也可能影响 OTA 更新、金融类应用、DRM 与保修状态。开始前完成备份，并自行承担刷机风险。</p>
+</blockquote>
+<h2 id="一、准备工作"><a href="#一、准备工作" class="headerlink" title="一、准备工作"></a>一、准备工作</h2><h3 id="确认设备和包"><a href="#确认设备和包" class="headerlink" title="确认设备和包"></a>确认设备和包</h3><p>　　本次实际设备信息如下：</p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>本次记录</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>设备</td>
+<td>REDMI Note 9 Pro</td>
+</tr>
+<tr>
+<td>处理器</td>
+<td>高通骁龙 750G</td>
+</tr>
+<tr>
+<td>刷机包代号</td>
+<td><code>gauguin</code></td>
+</tr>
+<tr>
+<td>原系统</td>
+<td>MIUI 14</td>
+</tr>
+<tr>
+<td>刷入后版本</td>
+<td><code>3.0.303.0.WJSCNXM.C06</code></td>
+</tr>
+<tr>
+<td>电脑系统</td>
+<td>Windows</td>
+</tr>
+</tbody></table>
+<p>　　刷机前先核对以下三项：</p>
+<ol>
+<li>在手机“设置 → 我的设备 → 全部参数”中确认型号与处理器信息。</li>
+<li>在刷机包说明、文件夹名称和发布页中确认设备代号为 <code>gauguin</code>。</li>
+<li>确认刷机包来自原作者发布页，而不是二次打包的网盘或转存链接。本次使用的适配包发布者页面为 <a target="_blank" rel="noopener" href="https://www.coolapk.com/u/1184948">酷安：某滑稽苟</a>。</li>
+</ol>
+<h3 id="准备工具和备份"><a href="#准备工具和备份" class="headerlink" title="准备工具和备份"></a>准备工具和备份</h3><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a target="_blank" rel="noopener" href="https://www.mi.com/global/unlock/">小米 BL 解锁工具</a></td>
+<td>完成官方解锁流程</td>
+</tr>
+<tr>
+<td>小米 MiFlash</td>
+<td>在 Fastboot 模式下线刷系统</td>
+</tr>
+<tr>
+<td>与机型完全匹配的第三方刷机包</td>
+<td>刷入澎湃 OS 3</td>
+</tr>
+<tr>
+<td>同设备代号的官方 Fastboot 救砖包</td>
+<td>出现异常时恢复官方系统</td>
+</tr>
+<tr>
+<td>可靠数据线</td>
+<td>连接电脑与手机</td>
+</tr>
+</tbody></table>
+<p>　　将刷机包、官方救砖包解压到纯英文路径，例如：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">D:\ROM\gauguin\hyperos3<br></code></pre></td></tr></table></figure>
+
+<p>　　路径不要包含中文、空格或特殊符号。线刷前备份照片、下载文件、验证码、聊天记录和需要迁移的应用数据；解锁 BL 与“全部删除”都会抹掉本机数据。</p>
+<h2 id="二、解锁-BL"><a href="#二、解锁-BL" class="headerlink" title="二、解锁 BL"></a>二、解锁 BL</h2><p>　　第三方 Fastboot 包需要已解锁的 BL。小米账号的等待时间以解锁工具显示为准；本次流程中显示为 7 天，其他账号或设备可能不同。</p>
+<h3 id="在手机绑定账号"><a href="#在手机绑定账号" class="headerlink" title="在手机绑定账号"></a>在手机绑定账号</h3><ol>
+<li>打开“设置 → 我的设备”，连续点击“OS 版本”或“MIUI 版本”，直到出现开发者模式已开启的提示。</li>
+<li>返回“设置 → 更多设置 → 开发者选项”。</li>
+<li>打开“设备解锁状态”，登录小米账号并完成“绑定账号和设备”。</li>
+<li>记下系统或解锁工具提示的等待时间。等待期间不要退出账号、解绑设备或恢复出厂设置。</li>
+</ol>
+<h3 id="用解锁工具完成解锁"><a href="#用解锁工具完成解锁" class="headerlink" title="用解锁工具完成解锁"></a>用解锁工具完成解锁</h3><ol>
+<li>关闭手机，同时按住“电源键 + 音量下键”，进入 Fastboot 模式。</li>
+<li>用数据线连接 Windows 电脑，打开小米 BL 解锁工具并登录同一个小米账号。</li>
+<li>按工具页面提示执行解锁，等待状态显示解锁成功。</li>
+<li>手机会清空数据并重启；重新进入系统后完成基础设置。</li>
+</ol>
+<p>　　成功标志：解锁工具显示成功，或 Fastboot 屏幕底部显示设备已解锁。失败时先确认账号绑定、等待时间、数据线和网络，不要反复刷写分区文件。</p>
+<h2 id="三、线刷澎湃-OS-3"><a href="#三、线刷澎湃-OS-3" class="headerlink" title="三、线刷澎湃 OS 3"></a>三、线刷澎湃 OS 3</h2><h3 id="进入-Fastboot"><a href="#进入-Fastboot" class="headerlink" title="进入 Fastboot"></a>进入 Fastboot</h3><p>　　关闭手机，同时按住“电源键 + 音量下键”进入 Fastboot。使用稳定的数据线直连电脑 USB 接口，避免通过扩展坞或松动的数据线刷机。</p>
+<h3 id="在-MiFlash-选择刷机包"><a href="#在-MiFlash-选择刷机包" class="headerlink" title="在 MiFlash 选择刷机包"></a>在 MiFlash 选择刷机包</h3><ol>
+<li>打开 MiFlash，点击“选择”，定位到解压后的刷机包目录。</li>
+<li>点击“加载设备”或刷新，确认列表出现设备序列号。</li>
+<li>确认所选目录中的脚本是该包自带的 <code>flash_all.bat</code>，而不是其他机型的目录。</li>
+<li>在窗口底部选择 <strong>全部删除（clean all）</strong>。</li>
+</ol>
+<blockquote>
+<p><strong>不要选择“全部删除并 lock（clean all and lock）”。</strong> 第三方系统包重新上锁 BL，可能导致无法开机或无法再次进入正常刷机流程。</p>
+</blockquote>
+<p>　　确认设备代号、包目录和清除选项后，点击“刷机”。过程中不要拔线、关闭电脑或让手机断电。首次启动时间通常比日常开机更长。</p>
+<p><img src="/img/redmi-note9-pro-hyperos3/miflash-success.png" srcset="/img/loading.gif" lazyload alt="MiFlash 显示 flash done 与 success"></p>
+<p>　　上图是本次线刷完成状态：MiFlash 显示 <code>flash done</code> 和 <code>success</code>，耗时约 342 秒。不同电脑、数据线和包体大小会导致耗时不同。</p>
+<h2 id="四、确认系统版本"><a href="#四、确认系统版本" class="headerlink" title="四、确认系统版本"></a>四、确认系统版本</h2><p>　　系统首次进入桌面后，打开“设置 → 我的设备”，检查设备名称和 OS 版本。以下截图显示本次刷入后的设备状态：</p>
+<p><img src="/img/redmi-note9-pro-hyperos3/hyperos-version.jpg" srcset="/img/loading.gif" lazyload alt="澎湃 OS 3 系统版本与设备信息"></p>
+<p>　　需要确认的内容：</p>
+<ol>
+<li>设备名称仍为 REDMI Note 9 Pro。</li>
+<li>OS 版本显示为 <code>3.0.303.0.WJSCNXM.C06</code>。</li>
+<li>基础通信、Wi-Fi、相机、充电和指纹功能可以正常使用。</li>
+</ol>
+<p>　　如出现长时间停在开机动画、反复重启或触控异常，先强制关机并重新进入 Fastboot；使用与设备代号一致的官方 Fastboot 救砖包，在 MiFlash 中选择“全部删除”恢复。恢复过程同样会清空数据。</p>
+<h2 id="五、确认-Root-状态"><a href="#五、确认-Root-状态" class="headerlink" title="五、确认 Root 状态"></a>五、确认 Root 状态</h2><p>　　本次使用的第三方包已在内核中集成 Root 支持，因此没有额外刷入 Magisk 或修补 <code>boot</code> 镜像。Root 管理器只用于确认状态和后续授权；不要把任意管理器 APK 当作通用 Root 方案。</p>
+<h3 id="安装-SukiSU-Ultra"><a href="#安装-SukiSU-Ultra" class="headerlink" title="安装 SukiSU Ultra"></a>安装 SukiSU Ultra</h3><p>　　从 <a target="_blank" rel="noopener" href="https://github.com/SukiSU-Ultra/SukiSU-Ultra">SukiSU Ultra 官方项目</a> 的发布页获取管理器，并安装到手机。首次打开后，管理器会读取当前内核是否提供兼容的 Root 接口。</p>
+<h3 id="检查状态页"><a href="#检查状态页" class="headerlink" title="检查状态页"></a>检查状态页</h3><p>　　本次状态页显示“工作中”，设备为 REDMI Note 9 Pro，SELinux 为“强制执行”；KPM 显示“不支持（内核未配置）”。KPM 未配置不影响已经集成在该内核中的 Root 状态，但不应因此安装不匹配的 KPM 模块。</p>
+<p><img src="/img/redmi-note9-pro-hyperos3/sukisu-root.jpg" srcset="/img/loading.gif" lazyload alt="SukiSU Ultra 显示 Root 工作中"></p>
+<p>　　出现以下状态时停止继续安装模块：</p>
+<ul>
+<li>管理器显示未工作或无法读取内核状态。</li>
+<li>系统反复弹出 Root 授权请求。</li>
+<li>安装模块后出现开机循环、应用闪退或网络异常。</li>
+</ul>
+<p>　　先卸载最近添加的模块；无法进入系统时，回到 Fastboot 使用救砖包恢复。金融、支付、企业管理类应用可能会检测 Root 或解锁状态，是否可用取决于应用自身策略。</p>
+<h2 id="六、常见问题"><a href="#六、常见问题" class="headerlink" title="六、常见问题"></a>六、常见问题</h2><h3 id="MiFlash-不识别设备"><a href="#MiFlash-不识别设备" class="headerlink" title="MiFlash 不识别设备"></a>MiFlash 不识别设备</h3><p>　　确认手机停留在 Fastboot 兔子界面后，再点击“加载设备”。更换数据线和电脑 USB 接口，重新安装 MiFlash 自带驱动后重试。设备列表始终为空时，不要执行刷机。</p>
+<h3 id="刷机完成却无法开机"><a href="#刷机完成却无法开机" class="headerlink" title="刷机完成却无法开机"></a>刷机完成却无法开机</h3><p>　　首次开机先等待 10 分钟。仍卡在开机动画时，优先核对刷机包代号、版本和分区要求；确认包不匹配后，使用同设备代号的官方 Fastboot 包恢复。不要在第三方包上执行重新上锁。</p>
+<h3 id="Root-管理器没有工作"><a href="#Root-管理器没有工作" class="headerlink" title="Root 管理器没有工作"></a>Root 管理器没有工作</h3><p>　　确认刷入的包本身声明集成 SukiSU 或兼容 Root 内核。不要随机刷入别的 <code>boot</code>、内核或模块来“补 Root”，这类操作最容易造成版本不匹配。</p>
+<h2 id="七、完成后的检查"><a href="#七、完成后的检查" class="headerlink" title="七、完成后的检查"></a>七、完成后的检查</h2><ul>
+<li>BL 已解锁，且没有在第三方系统上重新上锁。</li>
+<li>MiFlash 的结果为 <code>success</code>，系统可以进入桌面。</li>
+<li>系统版本、设备名称与刷机包说明一致。</li>
+<li>SukiSU Ultra 显示“工作中”。</li>
+<li>通信、Wi-Fi、相机、充电、指纹等基础功能已测试。</li>
+<li>官方 Fastboot 救砖包仍保留在电脑中。</li>
+</ul>
+<p>　　这台骁龙 750G 的 REDMI Note 9 Pro 刷入澎湃 OS 3 后，动画和后台体验比 MIUI 14 更符合预期。Root 已由内核提供，后续只在明确用途时授予应用权限，避免为了模块而继续叠加不兼容的修改。</p>
+<h2 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.mi.com/global/unlock/">小米 BL 解锁工具</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/SukiSU-Ultra/SukiSU-Ultra">SukiSU Ultra 官方项目</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.coolapk.com/u/1184948">酷安：某滑稽苟</a></li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%8A%80%E6%9C%AF/" class="category-chain-item">技术</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%BE%8E%E6%B9%83OS/" class="print-no-link">#澎湃OS</a>
+      
+        <a href="/tags/%E7%BA%A2%E7%B1%B3Note9-Pro/" class="print-no-link">#红米Note9 Pro</a>
+      
+        <a href="/tags/Root/" class="print-no-link">#Root</a>
+      
+        <a href="/tags/%E5%88%B7%E6%9C%BA/" class="print-no-link">#刷机</a>
+      
+        <a href="/tags/Android/" class="print-no-link">#Android</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>红米Note9Pro刷澎湃OS3+Root</div>
+      <div>https://blog.zuiges.com/2026/10/07/redmi-note9-pro-hyperos3-root/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>post.copyright.author</div>
+          <div>zuige</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>post.copyright.posted</div>
+          <div>2026年10月7日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>post.copyright.licensed</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="post.copyright.BY">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2026/10/09/hyper-melolock-lockscreen-cover/" title="Hyper MeloLock 沉浸式音乐锁屏">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Hyper MeloLock 沉浸式音乐锁屏</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2026/10/04/domain-three-sites-server-github-pages/" title="低价购买顶级域名">
+                        <span class="hidden-mobile">低价购买顶级域名</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+    <div id="giscus" class="giscus"></div>
+    <script type="text/javascript">
+      Fluid.utils.loadComments('#giscus', function() {
+        var options = {"repo":"zuige66/hexo","repo-id":"R_kgDOUNLYKw","category":"Announcements","category-id":"DIC_kwDOUNLYK84DE1jw","theme-light":"light","theme-dark":"dark","mapping":"pathname","reactions-enabled":1,"emit-metadata":0,"input-position":"top","lang":"zh-CN","strict":0};
+        var attributes = {};
+        for (let option in options) {
+          if (!option.startsWith('theme-')) {
+            var key = option.startsWith('data-') ? option : 'data-' + option;
+            attributes[key] = options[option];
+          }
+        }
+        var light = 'light';
+        var dark = 'dark';
+        window.GiscusThemeLight = light;
+        window.GiscusThemeDark = dark;
+        attributes['data-theme'] = document.documentElement.getAttribute('data-user-color-scheme') === 'dark' ? dark : light;
+        for (let attribute in attributes) {
+          var value = attributes[attribute];
+          if (value === undefined || value === null || value === '') {
+            delete attributes[attribute];
+          }
+        }
+        var s = document.createElement('script');
+        s.setAttribute('src', 'https://giscus.app/client.js');
+        s.setAttribute('crossorigin', 'anonymous');
+        for (let attribute in attributes) {
+          s.setAttribute(attribute, attributes[attribute]);
+        }
+        var ss = document.getElementsByTagName('script');
+        var e = ss.length > 0 ? ss[ss.length - 1] : document.head || document.documentElement;
+        e.parentNode.insertBefore(s, e.nextSibling);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <br> <span style="font-size: 0.85em; opacity: .65;">首页云海动画改编自 Shadertoy 作品 <a href="https://www.shadertoy.com/view/Ndc3zl" target="_blank" rel="nofollow noopener">Up in the Cloud Sea</a>（原作 mdb，移植 Tyson Zhou，CC BY-NC-SA 3.0）</span> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        站点访问量：
+        <span id="busuanzi_value_site_pv"></span>
+        
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        访客数量：
+        <span id="busuanzi_value_site_uv"></span>
+        
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    function isExpandAllEnabled() {
+      return CONFIG.toc && CONFIG.toc.expand_all === true;
+    }
+    function expandAllToc() {
+      if (!isExpandAllEnabled()) { return; }
+      jQuery('#toc-body .tocbot-is-collapsed').removeClass('tocbot-is-collapsed');
+    }
+    function updateTocToggle($li, $childList) {
+      var $toggle = $li.children('.toc-line').children('.toc-toggle');
+      if ($toggle.length === 0) { return; }
+      var collapsed = $childList.hasClass('tocbot-is-collapsed');
+      $toggle
+        .toggleClass('toc-toggle-collapsed', collapsed)
+        .toggleClass('toc-toggle-expanded', !collapsed)
+        .attr('aria-expanded', String(!collapsed))
+        .attr('aria-label', collapsed ? '展开子目录' : '收起子目录');
+      $childList.attr('aria-hidden', String(collapsed));
+    }
+    function bindTocToggle() {
+      if (!isExpandAllEnabled()) { return; }
+      jQuery('#toc-body .toc-list-item').each(function() {
+        var $li = jQuery(this);
+        var $childList = $li.children('ol');
+        var $line = $li.children('.toc-line');
+        var $link = $li.children('.tocbot-link');
+
+        if ($line.length === 0 && $link.length > 0) {
+          $link.wrap('<div class="toc-line"></div>');
+          $line = $li.children('.toc-line');
+        }
+
+        $li.children('.toc-toggle').remove();
+        $line.children('.toc-toggle').remove();
+        if ($childList.length === 0) {
+          $line.addClass('toc-line-leaf');
+          return;
+        }
+
+        $line.removeClass('toc-line-leaf');
+        $line.prepend('<span class="toc-toggle toc-toggle-expanded" role="button" tabindex="0">›</span>');
+        updateTocToggle($li, $childList);
+      });
+      jQuery('#toc-body').off('click.tocToggle').on('click.tocToggle', '.toc-toggle', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var $li = jQuery(this).closest('.toc-list-item');
+        var $childList = $li.children('ol');
+        if ($childList.length === 0) { return; }
+        $childList.toggleClass('tocbot-is-collapsed');
+        updateTocToggle($li, $childList);
+      });
+      jQuery('#toc-body').off('keydown.tocToggle').on('keydown.tocToggle', '.toc-toggle', function(e) {
+        if (e.key !== 'Enter' && e.key !== ' ') { return; }
+        e.preventDefault();
+        jQuery(this).trigger('click');
+      });
+      if (window.__tocToggleObserver) {
+        window.__tocToggleObserver.disconnect();
+      }
+      window.__tocToggleObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          if (mutation.type !== 'attributes' || mutation.attributeName !== 'class') { return; }
+          var $list = jQuery(mutation.target);
+          var $li = $list.parent('.toc-list-item');
+          if ($li.length === 0) { return; }
+          updateTocToggle($li, $list);
+        });
+      });
+      jQuery('#toc-body ol').each(function() {
+        window.__tocToggleObserver.observe(this, { attributes: true });
+      });
+    }
+    var tocConfig = Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc);
+    if (isExpandAllEnabled()) {
+      tocConfig.collapseDepth = 6;
+    }
+    window.tocbot.init(tocConfig);
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+    expandAllToc();
+    bindTocToggle();
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+        expandAllToc();
+        bindTocToggle();
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="/js/site-interactions.js?v=3.js"></script>
+<script src="/js/azure-sea.js?v=4.js"></script>
+<script src="/js/soft-nav.js?v=7.js"></script>
+<script src="/js/moments.js?v=2.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">noscript_warning</div>
+  </noscript>
+</body>
+</html>
