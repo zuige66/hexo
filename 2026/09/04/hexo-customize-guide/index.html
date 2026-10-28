@@ -27,7 +27,7 @@
 <meta property="og:description" content="前言　　博客搭好了，但怎么改标题、加图标、管理分类标签？本文以当前博客为例，讲解 Hexo + Fluid 的目录结构和常用配置。 一、常用命令速查　　以下命令都在博客根目录下执行。    作用 命令    新建文章 hexo new &quot;文章标题&quot;   新建独立页面 hexo new page &quot;页面名&quot;   新建草稿 hexo new draft &amp;quo">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-09-03T16:00:00.000Z">
-<meta property="article:modified_time" content="2026-10-20T14:07:36.578Z">
+<meta property="article:modified_time" content="2026-10-24T04:17:54.387Z">
 <meta property="article:author" content="zuige">
 <meta property="article:tag" content="Fluid">
 <meta property="article:tag" content="Hexo">
@@ -368,7 +368,7 @@
 
 
 <div id="banner" class="banner" parallax=true
-     style="background: linear-gradient(180deg, #5b7fd0 0%, #7898dc 26%, #c2d6ff 46%, #d8e8ff 50%, #b0cdf0 58%, #88aede 74%, #6a92c4 88%, #4a6a96 100%);">
+     style="background: linear-gradient(180deg, #6f9bd8 0%, #c39bb4 52%, #eab487 100%);">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up banner-text-shadow">
@@ -397,7 +397,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          11k 字
+          12k 字
         
       </span>
     
@@ -408,7 +408,7 @@
         
         
         
-          88 分钟
+          98 分钟
         
       </span>
     
@@ -784,6 +784,61 @@
 <blockquote>
 <p>提醒：<code>moments.css</code> 的任何改动都要同步 bump <code>_config.fluid.yml</code> 里的版本号（如 <code>?v=1</code> → <code>?v=2</code>），否则访客浏览器会用缓存的旧样式，表现为「改了没生效」。</p>
 </blockquote>
+<h2 id="十八、隐藏文章（仅归档可见）"><a href="#十八、隐藏文章（仅归档可见）" class="headerlink" title="十八、隐藏文章（仅归档可见）"></a>十八、隐藏文章（仅归档可见）</h2><p>　　有些内容（如文献整理、草稿碎片）不想挤占首页，但又希望保留在归档、分类、标签里随时可查。给文章 front-matter 加一行 <code>home: false</code> 即可：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-meta">---</span><br><span class="hljs-attr">title:</span> <span class="hljs-string">某篇文献整理</span><br><span class="hljs-attr">date:</span> <span class="hljs-number">2026-10-24 10:00:00</span><br><span class="hljs-attr">home:</span> <span class="hljs-literal">false</span>          <span class="hljs-comment"># ← 加了这行：不进首页 / 侧栏「最近文章」/ RSS，但归档/分类/标签照常</span><br><span class="hljs-attr">tags:</span><br>  <span class="hljs-bullet">-</span> <span class="hljs-string">文献</span><br><span class="hljs-attr">categories:</span><br>  <span class="hljs-bullet">-</span> <span class="hljs-string">技术</span><br><span class="hljs-meta">---</span><br></code></pre></td></tr></table></figure>
+
+<p>　　效果：</p>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>是否出现</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>首页文章列表</td>
+<td>❌ 不出现</td>
+</tr>
+<tr>
+<td>侧栏「最近文章」</td>
+<td>❌ 不出现</td>
+</tr>
+<tr>
+<td>RSS &#x2F; Atom 订阅（<code>atom.xml</code>）</td>
+<td>❌ 不出现</td>
+</tr>
+<tr>
+<td>归档页 &#x2F; 分类页 &#x2F; 标签页</td>
+<td>✅ 正常出现</td>
+</tr>
+<tr>
+<td>文章独立页（直接访问 URL）</td>
+<td>✅ 可访问</td>
+</tr>
+</tbody></table>
+<p>　　实现由两处改动组成，二者配合才完整：</p>
+<table>
+<thead>
+<tr>
+<th>文件</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>scripts/exclude-home.js</code></td>
+<td>核心。在 <code>before_generate</code> 阶段改写 Fluid 主题提供的 <code>index_posts</code>（首页数据源），在<strong>分页之前</strong>剔除 <code>home: false</code> 的文章，因此首页不会留空位、页码也不会错位；RSS 生成器在此外包一层同样过滤</td>
+</tr>
+<tr>
+<td><code>themes/fluid/layout/index.ejs</code></td>
+<td>首页侧栏「最近文章」由 <code>site.posts</code> 渲染，脚本里额外 <code>.filter(p =&gt; p.home !== false)</code> 把它也排除</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>红线（2026-10-24 定）</strong>：不要把隐藏逻辑写进「替换 index 生成器」——Fluid 主题自己也在 <code>themes/fluid/scripts/generators/pages.js</code> 注册了 <code>index</code> 生成器，且加载顺序晚于站点 <code>scripts/</code>，会覆盖你的注册。正确做法是在 <code>before_generate</code> 阶段改写 <code>index_posts</code> 这个数据源（优先级用 <code>20</code>，晚于主题的 <code>post-filter</code> 默认 <code>10</code>），让主题的生成器在已被过滤的数据上做分页。</p>
+<p>主题自带的 <code>archive: true</code> 标记只隐藏首页、仍会出现在 RSS 与侧栏「最近文章」，与本机制的 <code>home: false</code>（全隐藏）不同，别混用。</p>
+</blockquote>
+<p>　　<strong>已知次要泄漏（按需再拓展）</strong>：<code>home: false</code> 的文章仍会出现在「另一篇文章页的上一篇&#x2F;下一篇导航」与本地搜索索引 <code>local-search.xml</code> 中——这两处由 Hexo 核心按全部文章顺序生成，不在上述三处过滤范围内。若需要彻底只进归档，再单独处理 post 生成器的 prev&#x2F;next 与 search 生成器即可。</p>
+<p>　　<strong>文件名别用下划线开头</strong>：Hexo 默认把 <code>_</code> 开头的文件当私有&#x2F;include 文件、不参与渲染。隐藏文章用普通文件名（如 <code>2026-10-24-literature-xxx.md</code>），只靠 front-matter 的 <code>home: false</code> 控制可见性。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>　　核心就两个文件：</p>
 <ul>
 <li><code>_config.yml</code> 管全局设置</li>
@@ -884,9 +939,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2026/09/05/some%20thoughts/" title="我沉默了，他以为我不想读研">
+                      <a href="/2026/09/04/hexo-giscus-guide/" title="Giscus，让博客接入评论">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">我沉默了，他以为我不想读研</span>
+                        <span class="hidden-mobile">Giscus，让博客接入评论</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -894,8 +949,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2026/09/04/hexo-giscus-guide/" title="Giscus，让博客接入评论">
-                        <span class="hidden-mobile">Giscus，让博客接入评论</span>
+                      <a href="/2026/09/04/markdown-guide/" title="Markdown 语法规则">
+                        <span class="hidden-mobile">Markdown 语法规则</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -1304,7 +1359,7 @@
 
   
 <script src="/js/site-interactions.js?v=3.js"></script>
-<script src="/js/azure-sea.js?v=4.js"></script>
+<script src="/js/cloud-sea.js?v=10.js"></script>
 <script src="/js/soft-nav.js?v=7.js"></script>
 <script src="/js/moments.js?v=2.js"></script>
 
