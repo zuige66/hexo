@@ -235,7 +235,7 @@ font:
 # Specify the path of your custom js file, support list. The path is relative to the source directory, such as `/js/custom.js` corresponding to the directory `source/js/custom.js`
 custom_js:
   - /js/site-interactions.js?v=3
-  - /js/azure-sea.js?v=4
+  - /js/cloud-sea.js?v=10
   - /js/soft-nav.js?v=7
   - /js/moments.js?v=2
 
@@ -522,8 +522,8 @@ index:
   # 头图黑色蒙版的不透明度，available: 0 - 1.0，1 是完全不透明
   # Opacity of the banner mask, 1.0 is completely opaque
   # Available: 0 - 1.0
-  # 「蓝天白云」场景是亮画面：0.3 的黑蒙版会把白色压成灰、蓝色压闷，
-  # 所以降到 0.12 保通透；标题可读性改由 .banner-text-shadow 的文字阴影保证
+  # 「云海」场景整体偏亮（天空浅蓝、云层发白），0.3 的黑蒙版会把云压成灰、
+  # 把暖色夕阳压闷，所以保持 0.12 保通透；标题可读性改由 .banner-text-shadow 的文字阴影保证
   # （见 source/css/site-motion.css）。
   banner_mask_alpha: 0.12
 
