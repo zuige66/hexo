@@ -41,6 +41,12 @@ categories:
 
 　　写完一篇文章的标准流程：`hexo new "标题"` 新建 → 编辑 `source/_posts/` 下对应的 md → `hexo generate -d` 发布。
 
+> **线上生效有延迟，别误判成没部署成功（2026-11-02 实测）**：`hexo deploy` 只是把 `public/` 推到 `gh-pages`，之后 **GitHub Pages 还要构建 1–2 分钟**，这段时间新增的文件路径会一直 404；构建完成后，Cloudflare 上还有 `Cache-Control: max-age=600`（10 分钟）的整页缓存。
+>
+> - 验证命令必须带随机查询串绕开 CDN：`curl -s "https://blog.zuiges.com/archives/?cb=$RANDOM"`，否则拿到的可能是十分钟前的旧页面。
+> - **新增图片即使带查询串也可能先被 CDN 记一次 404（负缓存）**，现象是「文字已经更新、图片仍然 404」，通常 5 分钟左右自愈，不需要重新部署。
+> - 判断是否真的推上去了，看 `git ls-remote origin gh-pages` 的 commit 与本地 `npx hexo deploy` 输出的 hash 是否一致，而不是看浏览器。
+
 ## 二、项目结构
 
 ```
