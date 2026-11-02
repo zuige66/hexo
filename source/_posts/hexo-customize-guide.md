@@ -404,15 +404,18 @@ links:
 ```yaml
 - date: '2026-10-19 00:50'
   content: |
-    我创建了动态板块
+    我创建了动态板块，配图也行：![图](/img/xxx.png)
 ```
 
 | 字段 | 说明 |
 |------|------|
-| `date` | 必填，建议加英文单引号写成字符串，格式 `YYYY-MM-DD HH:mm`（不写时间则只显示日期） |
-| `content` | 必填，正文，支持 Markdown 与 HTML |
+| `date` | 必填，建议加英文单引号写成字符串，格式 `YYYY-MM-DD HH:mm`。**时间不能省**——模板固定按 `YYYY-MM-DD HH:mm` 输出，只写日期会显示成 `00:00` |
+| `content` | 必填，正文，支持 Markdown 与 HTML（含图片语法） |
 
 - 新增一条：复制模板放到列表**最前面**（模板渲染时按 `date` 倒序，新的在上）。
+- **配图**：`content` 里写 `![alt](/img/xxx.png)` 即可，图片文件放 `source/img/` 下（可建子目录）。卡片样式已适配——`.moment-content img { max-width: 100%; border-radius: .35rem }`，超宽图会自动缩到卡片宽度、不再溢出。
+  - 图片会随 `hexo deploy` 一起推到 `gh-pages`，无需外部图床。
+  - 侧栏「最新动态」预览卡是纯文本（`momentPlain()` 抽掉标记），所以配图的动态在侧栏只显示文字，图只在归档页/首页动态视图里出现。
 - 选数据文件而非「文章 + `moment: true` 标记」，是为了**不污染文章归档的统计口径与分页**——动态数不计入「共计 N 篇文章」，也不会挤占归档分页。
 
 ### 17.2 渲染：复用归档页的 partial
@@ -455,6 +458,47 @@ links:
 - 侧栏列表复用既有的 `.home-recent-list` 样式（自带单行 ellipsis），动态过长不会撑破卡片。
 
 > 提醒：`moments.css` 的任何改动都要同步 bump `_config.fluid.yml` 里的版本号（如 `?v=1` → `?v=2`），否则访客浏览器会用缓存的旧样式，表现为「改了没生效」。
+
+## 十八、隐藏文章（仅归档可见）
+
+　　有些内容（如文献整理、草稿碎片）不想挤占首页，但又希望保留在归档、分类、标签里随时可查。给文章 front-matter 加一行 `home: false` 即可：
+
+```yaml
+---
+title: 某篇文献整理
+date: 2026-10-24 10:00:00
+home: false          # ← 加了这行：不进首页 / 侧栏「最近文章」/ RSS，但归档/分类/标签照常
+tags:
+  - 文献
+categories:
+  - 技术
+---
+```
+
+　　效果：
+
+| 位置 | 是否出现 |
+|------|----------|
+| 首页文章列表 | ❌ 不出现 |
+| 侧栏「最近文章」 | ❌ 不出现 |
+| RSS / Atom 订阅（`atom.xml`） | ❌ 不出现 |
+| 归档页 / 分类页 / 标签页 | ✅ 正常出现 |
+| 文章独立页（直接访问 URL） | ✅ 可访问 |
+
+　　实现由两处改动组成，二者配合才完整：
+
+| 文件 | 作用 |
+|------|------|
+| `scripts/exclude-home.js` | 核心。在 `before_generate` 阶段改写 Fluid 主题提供的 `index_posts`（首页数据源），在**分页之前**剔除 `home: false` 的文章，因此首页不会留空位、页码也不会错位；RSS 生成器在此外包一层同样过滤 |
+| `themes/fluid/layout/index.ejs` | 首页侧栏「最近文章」由 `site.posts` 渲染，脚本里额外 `.filter(p => p.home !== false)` 把它也排除 |
+
+> **红线（2026-10-24 定）**：不要把隐藏逻辑写进「替换 index 生成器」——Fluid 主题自己也在 `themes/fluid/scripts/generators/pages.js` 注册了 `index` 生成器，且加载顺序晚于站点 `scripts/`，会覆盖你的注册。正确做法是在 `before_generate` 阶段改写 `index_posts` 这个数据源（优先级用 `20`，晚于主题的 `post-filter` 默认 `10`），让主题的生成器在已被过滤的数据上做分页。
+>
+> 主题自带的 `archive: true` 标记只隐藏首页、仍会出现在 RSS 与侧栏「最近文章」，与本机制的 `home: false`（全隐藏）不同，别混用。
+
+　　**已知次要泄漏（按需再拓展）**：`home: false` 的文章仍会出现在「另一篇文章页的上一篇/下一篇导航」与本地搜索索引 `local-search.xml` 中——这两处由 Hexo 核心按全部文章顺序生成，不在上述三处过滤范围内。若需要彻底只进归档，再单独处理 post 生成器的 prev/next 与 search 生成器即可。
+
+　　**文件名别用下划线开头**：Hexo 默认把 `_` 开头的文件当私有/include 文件、不参与渲染。隐藏文章用普通文件名（如 `2026-10-24-literature-xxx.md`），只靠 front-matter 的 `home: false` 控制可见性。
 
 ## 总结
 
