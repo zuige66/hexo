@@ -37,7 +37,7 @@ var tagItems = site.tags.sort('length', -1).toArray().sort(function (a, b) {
   return a.name.localeCompare(b.name, 'zh-Hans-CN')
 })
 var topTags = tagItems.slice(0, tagLimit)
-var recentPosts = sitePosts.slice(0, 5)
+var recentPosts = sitePosts.filter(function (p) { return p.home !== false; }).slice(0, 5)
 var elapsedDays = Math.max(1, Math.floor((today - siteStart) / 86400000) + 1)
 
 // 动态（Moments）：数据来自 source/_data/moments.yml，按时间倒序（新的在前）
