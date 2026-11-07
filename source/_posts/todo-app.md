@@ -23,7 +23,7 @@ categories:
 ### 下载地址
 
 - GitHub 发布页：[Todo Releases](https://github.com/zuige66/todo/releases)（含历史版本）
-- 最新版国内直链：[todo-0.9.3.apk](/downloads/oneline/todo-0.9.3.apk)
+- 最新版国内直链：[todo-1.0.14.apk](/downloads/oneline/todo-1.0.14.apk)（v1.0.14 / versionCode 48）
 
 　　只从 GitHub Releases 或本博客直链下载正式签名包。
 
