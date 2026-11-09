@@ -1,21 +1,20 @@
-name: Circle Feed Update
+name: Circle Feed Update & Deploy
 
+# 任何推送到 main 的改动都会抓一次 RSS 并重新构建部署（含文章、CSS、主题配置）。
+# 定时 cron 只在【仓库默认分支】上生效：默认分支必须设为 main，否则 schedule 永远不会触发。
+# GitHub Pages 仍从 gh-pages 分支部署，与默认分支互不影响。
 on:
   schedule:
     - cron: '17 22 * * *'        # 每天 UTC 22:17 更新（避开整点）
   workflow_dispatch:            # 允许手动触发
   push:
     branches: [main]
-    paths:
-      - 'circle-feeds.json'
-      - 'tools/circle_fetch.py'
-      - 'package.json'
-      - 'pnpm-lock.yaml'
-      - 'pnpm-workspace.yaml'
-      - '.github/workflows/circle.yml'
+    # 故意不写 paths：改文章 / CSS / 主题配置也要自动部署。
 
 jobs:
   build:
+    # 本任务写回 circle.json 的提交带 [skip ci]，这里再挡一层，避免自触发死循环。
+    if: github.event_name != 'push' || !contains(github.event.head_commit.message, '[skip ci]')
     runs-on: ubuntu-latest
     env:
       GIT_AUTHOR_NAME: github-actions[bot]
@@ -55,10 +54,10 @@ jobs:
           printf '%s\n' "$DEPLOY_KEY" > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
           export GIT_SSH_COMMAND="ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=accept-new"
+          # after_generate 阶段的 scripts/asset-version.js 会自动给 CSS/JS 加内容 hash 版本号
           npx hexo generate -d
           # 把累积归档 + 展示数据写回 main，跨运行持久化。
-          # circle-archive.json 与 source/circle/circle.json 都不在 push.paths 内，
-          # 不会触发本工作流二次运行；[skip ci] 双保险。
+          # 提交信息带 [skip ci]；配合上面的 job 级 if，确保不会再触发一次本工作流。
           git add circle-archive.json source/circle/circle.json
           if [ -z "$(git status --porcelain circle-archive.json source/circle/circle.json)" ]; then
             echo "circle 数据无变化，跳过提交"

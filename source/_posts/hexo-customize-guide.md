@@ -41,6 +41,8 @@ categories:
 
 　　写完一篇文章的标准流程：`hexo new "标题"` 新建 → 编辑 `source/_posts/` 下对应的 md → `hexo generate -d` 发布。
 
+> **推送 `main` 会自动部署（2026-11-09 起）**：`.github/workflows/circle.yml` 已去掉 `push.paths` 白名单，任何推送到 `main` 的改动（文章、CSS、主题配置、动态）都会触发 Actions：抓一次友链 RSS → `npx hexo generate -d` → 把站点推到 `gh-pages`。因此只 `git push` 也能上线，本地 `hexo generate -d` 依旧可用；两者别同时跑，避免互相覆盖 `gh-pages`。自动部署同样要经历下面的 Pages / CDN 延迟。工作流写回数据的提交带 `[skip ci]`，配合 job 级 `if` 判断，不会自触发死循环。详见「十九、自动部署与静态资源版本号」。
+
 > **线上生效有延迟，别误判成没部署成功（2026-11-02 实测）**：`hexo deploy` 只是把 `public/` 推到 `gh-pages`，之后 **GitHub Pages 还要构建 1–2 分钟**，这段时间新增的文件路径会一直 404；构建完成后，Cloudflare 上还有 `Cache-Control: max-age=600`（10 分钟）的整页缓存。
 >
 > - 验证命令必须带随机查询串绕开 CDN：`curl -s "https://blog.zuiges.com/archives/?cb=$RANDOM"`，否则拿到的可能是十分钟前的旧页面。
@@ -294,6 +296,8 @@ custom_css:
 }
 ```
 
+> 自定义 CSS / JS 的版本号已自动化：`custom_css` / `custom_js` 里写的 `?v=1` 只是占位，构建时会按文件内容 hash 自动替换，**不必手动递增**。见「十九、自动部署与静态资源版本号」。
+
 ## 十一、颜色主题
 
 ```yaml
@@ -349,9 +353,13 @@ links:
 - 数据源：`circle-feeds.json`（仓库根目录），只列带 `rss` 的友链，每项含 `name` / `link` / `rss` / `avatar`。
 - 生成器：`tools/circle_fetch.py`，纯标准库实现，运行后写出两份文件：
   - `circle-archive.json`（仓库根目录，**入库、不进 `.gitignore`**）：累积归档，每次运行按文章 URL 去重合并新文章，每人上限 100 篇、跨运行一直留存，是「朋友圈一直存在」的来源。
-  - `source/circle/circle.json`（**已进 `.gitignore`，不入库**；部署后地址为 `/circle/circle.json`）：展示用扁平数据，取全部文章按时间倒序前 60 条。
+  - `source/circle/circle.json`（**已作为基线数据入库**，部署后地址为 `/circle/circle.json`）：展示用扁平数据，取全部文章按时间倒序前 60 条。入库是为了保证任何一次干净检出 / `hexo deploy` 都带这份数据，不再出现「朋友圈空白」。
 - 渲染：`source/js/circle-feed.js` 由 `themes/fluid/layout/links.ejs` 在友链卡片之后引入，拉取 `/circle/circle.json` 后**一篇文章一张小卡片**：标题在上，左下角圆形头像 + 站点名，右下角日期；卡片样式在 `source/css/site-motion.css` 的 `#circle-feed` / `.feed-card` 段（CSS Grid 排布，避免重叠）。
-- 自动化：`.github/workflows/circle.yml` 每天 UTC 22:17 定时运行，也可在仓库 Actions 页手动触发；`circle-feeds.json`、`tools/circle_fetch.py` 等变动会触发重新部署。每次运行结束会把最新的 `circle-archive.json` 提交回 `main`，因此归档跨运行持续累积。
+- 自动化：`.github/workflows/circle.yml` 每天 UTC 22:17 定时运行，也可在 Actions 页手动触发；**任何推送到 `main` 的改动**都会触发一次「抓 RSS → `hexo generate -d` → 写回归档」。每次运行把 `circle-archive.json` 与 `source/circle/circle.json` 提交回 `main`，归档跨运行持续累积；提交信息带 `[skip ci]`，配合 job 级 `if` 防止自触发循环。
+
+> **红线：定时抓取曾「一天都没跑过」（2026-11-09 排查）**。查 GitHub Actions 的 12 次运行记录，全部是 `push` / `workflow_dispatch`，**没有一次 `schedule`**；线上 `circle.json` 的 `generated` 停在 2026-10-19。根因是仓库把 **`gh-pages` 设成了默认分支**（Pages 源分支），而 `circle.yml` 只存在于 `main`——GitHub 的定时 `cron` **只在默认分支生效**。修法：GitHub → Settings → Branches 把默认分支改回 `main`；**GitHub Pages 仍从 `gh-pages` 分支部署，与默认分支互不影响**，改完次日 UTC 22:17 起自动生效。在改默认分支之前，每次 push 仍会刷新数据，只是不保证「每天」。
+>
+> 另一个旧坑：早期 `push.paths` 白名单只列 `circle-feeds.json`、`tools/circle_fetch.py` 等，改文章 / CSS / 主题配置不会触发自动部署，线上像是「一直不更新」——该白名单已删除。
 
 　　新增一个友链的动态：在 `circle-feeds.json` 加一项（填上对方 RSS 地址）即可，其余由流水线自动完成。本地预览可用 `bash tools/deploy-circle.sh` 一键抓数据并部署。
 
@@ -371,7 +379,7 @@ links:
 |------|------|
 | `themes/fluid/layout/index.ejs` | 把「分类」「部分标签」「最近文章」三个 `<section>` 整体包进 `<div class="home-side-sticky">`；上半部分（个人卡片/统计/发文记录）留在容器外，走正常流自然滚走 |
 | `source/css/home-sidebar.css` | `.home-sidebar { align-self: stretch }`（拉满 Grid 行高，sticky 子元素才有整页高度可钉）；`.home-side-sticky { position: sticky; top: 76px; max-height: calc(100vh - 76px - 16px); overflow-y: auto; }`，`top` 是常数，不靠 JS |
-| `_config.fluid.yml` | `custom_css` 里 `home-sidebar.css` 带版本号（改 CSS 必须 bump） |
+| `_config.fluid.yml` | `custom_css` 里登记 `home-sidebar.css`；`?v=N` 只是占位，构建时按内容 hash 自动替换（见十九） |
 
 　　原理：`.home-side-sticky` 的 `top: 76px` 是固定值（76 ≈ 导航栏高度 + 间距），它的**上边缘**就是锁定位置——也就是「分类」卡片的顶部。上半部分卡片不在容器里，所以会先滚走；容器本身是 sticky，等上边缘碰到 76px 处就锁住。`top` 是常数，iPad 上也不会漂移。内容若高于视口，仅容器内部滚动（`overflow-y: auto`），**不影响已滚走的上半栏**——这与「整体吸顶 + 内部滚动」的坑不同（旧法会把上半栏卷进内部视口，看起来像消失）。
 
@@ -424,6 +432,18 @@ links:
   - 侧栏「最新动态」预览卡是纯文本（`momentPlain()` 抽掉标记），所以配图的动态在侧栏只显示文字，图只在归档页/首页动态视图里出现。
 - 选数据文件而非「文章 + `moment: true` 标记」，是为了**不污染文章归档的统计口径与分页**——动态数不计入「共计 N 篇文章」，也不会挤占归档分页。
 
+　　发一条动态的完整流程（**没有后台，就是改文件 + git**）：
+
+```bash
+# 1. 编辑 source/_data/moments.yml，新条目放列表最前面；配图放 source/img/moments/
+rm -f db.json && npx hexo generate      # 2. 本地验证（_data 变更保险起见全量重建）
+git add source/_data/moments.yml source/img/moments/
+git commit -m "content(moments): 新动态"
+git push origin main                     # 3. 推送后 Actions 自动部署；或本地 npx hexo generate -d
+```
+
+　　只 commit 不部署 → 线上不变；只部署不 commit → 源码会丢。线上还有 Pages 构建 1–2 分钟 + Cloudflare 页面缓存 10 分钟的延迟，验证时给 URL 加随机查询串。
+
 ### 17.2 渲染：复用归档页的 partial
 
 　　渲染逻辑在 `themes/fluid/layout/_partials/archive-list.ejs`。该 partial 同时被归档页 / 分类页 / 标签页复用，因此用 `params.key === 'archive'` 判断，**只在归档页**挂载切换控件与动态时间线。
@@ -439,11 +459,11 @@ links:
 
 关键坑：软导航换入 `#board` 后**内联 `<script>` 不会执行**，所以这里用 `document` 级事件委托绑定点击，并监听 `soft-nav.js` 派发的 `softnav:loaded` 事件重新初始化——否则从其他页面软导航进归档页后，切换按钮会失效。
 
-> **红线（2026-10-20 补）**：软导航「只换 `#board.innerHTML`」的假设只在「同类 layout 页面间」成立。本博客 `is_post` 文章页的 `#board` 外层是 `col-lg-8>#board-ctn`（窄列），非文章页是 `.container.nopadding-x-md`（全宽）。从文章页（整页加载）点导航软导航回首页时，只换 innerHTML 会让首页内容残留塞进文章页窄列、整页变窄。因此 `soft-nav.js` 换正文前必须**连 `#board` 的外层父链一起同步**（把 `#board` 节点整体移入目标页外层容器并 `replaceChild` 替换旧外层）。改 `soft-nav.js` 后务必 bump `?v=N`。
+> **红线（2026-10-20 补）**：软导航「只换 `#board.innerHTML`」的假设只在「同类 layout 页面间」成立。本博客 `is_post` 文章页的 `#board` 外层是 `col-lg-8>#board-ctn`（窄列），非文章页是 `.container.nopadding-x-md`（全宽）。从文章页（整页加载）点导航软导航回首页时，只换 innerHTML 会让首页内容残留塞进文章页窄列、整页变窄。因此 `soft-nav.js` 换正文前必须**连 `#board` 的外层父链一起同步**（把 `#board` 节点整体移入目标页外层容器并 `replaceChild` 替换旧外层）。改 `soft-nav.js` 后无需手改版本号，`scripts/asset-version.js` 会按内容 hash 自动更新（见十九）。
 
 ### 17.4 资源注入与文案
 
-- CSS / JS 需登记在 `_config.fluid.yml` 的 `custom_css` / `custom_js` 列表里；**改动后记得 bump 版本号**（如 `?v=1` → `?v=2`）以失效浏览器缓存。
+- CSS / JS 需登记在 `_config.fluid.yml` 的 `custom_css` / `custom_js` 列表里；`?v=N` 只是占位符，**改动后不必手动递增**，`scripts/asset-version.js` 会按文件内容 hash 自动替换（见十九）。
 - 统计文案在 `source/_data/languages/zh-CN.yml` 的 `moments.post_total`（「共计 %d 条动态」）。
 
 ### 17.5 首页切换与侧栏预览
@@ -463,7 +483,7 @@ links:
 - 改动展示条数：编辑 `index.ejs` 顶部的 `sideMomentLimit`（侧栏）。
 - 侧栏列表复用既有的 `.home-recent-list` 样式（自带单行 ellipsis），动态过长不会撑破卡片。
 
-> 提醒：`moments.css` 的任何改动都要同步 bump `_config.fluid.yml` 里的版本号（如 `?v=1` → `?v=2`），否则访客浏览器会用缓存的旧样式，表现为「改了没生效」。
+> 提醒：`moments.css` 改动后无需手动 bump，但它**必须先登记在 `custom_css` 里**，否则页面根本不会引用这个文件；版本号由构建脚本自动注入（见十九）。
 
 ## 十八、隐藏文章（仅归档可见）
 
@@ -506,6 +526,59 @@ categories:
 
 　　**文件名别用下划线开头**：Hexo 默认把 `_` 开头的文件当私有/include 文件、不参与渲染。隐藏文章用普通文件名（如 `2026-10-24-literature-xxx.md`），只靠 front-matter 的 `home: false` 控制可见性。
 
+## 十九、自动部署与静态资源版本号（2026-11-09）
+
+### 19.1 「改了没生效 / 数据不更新」的四层原因
+
+　　这是排查 2026-11-09 那次「朋友圈停在 10-19、CSS 时灵时不灵」时理清的链路，四层叠加，按这个顺序看：
+
+| 层 | 原因 | 现状 |
+|----|------|------|
+| 触发 | 旧工作流 `push.paths` 白名单只有 `circle-feeds.json` 等，改文章 / CSS / 主题配置**不会触发自动部署** | 白名单已删除，推送 `main` 即部署 |
+| 定时 | 仓库默认分支是 `gh-pages`，`schedule` cron 只在默认分支生效，朋友圈数据 21 天没刷新 | 需在 GitHub 改默认分支，见 19.4 |
+| 缓存破坏 | `?v=N` 靠手改，忘 bump 则 URL 不变；Cloudflare 静态资源 `max-age=14400`（4h），浏览器也用旧副本 | 已改为按内容 hash 自动注入，见 19.3 |
+| 生效延迟 | Pages 构建 1–2 分钟 + CF 页面 `max-age=600`、CSS `max-age=14400` | 无法消除，验证时给 URL 加随机查询串 |
+
+### 19.2 工作流：推送即部署
+
+　　`.github/workflows/circle.yml` 的三个触发口：
+
+| 触发 | 行为 |
+|------|------|
+| `push` 到 `main` | 抓 RSS → `npx hexo generate -d` 部署到 `gh-pages` → 写回数据 |
+| `schedule` 每天 UTC 22:17 | 同上，保证没推送的日子也刷新朋友圈（**需默认分支为 `main`**） |
+| `workflow_dispatch` | Actions 页手动跑一次 |
+
+　　写回 `circle.json` 的提交信息带 `[skip ci]`，job 上还有 `if` 判断兜底，避免「Actions 提交 → 又触发 Actions」的死循环。本地 `npx hexo generate -d` 仍然可用；别和自动部署同时跑，避免互相覆盖 `gh-pages`。
+
+### 19.3 CSS / JS 版本号自动化
+
+　　`scripts/asset-version.js` 在 `after_render:html` 阶段，把 HTML 里站内 `/css/`、`/js/` 资源的 `?v=任意值` 替换成**该文件内容的 md5 前 10 位**。内容不变则 URL 不变（缓存照常命中），内容一变则 URL 自动变，`_config.fluid.yml` 里的 `?v=19` 从此只是占位符。
+
+> **红线：别改回 `after_generate`。** Hexo 8 的 `generate` 顺序是 `load()` → `_generate()`（其中触发 `before_generate` / `after_generate`）→ `firstGenerate()` **才写盘**。在 `after_generate` 里改 `public/` 的旧 HTML，随后会被重新写盘覆盖，实测「脚本日志显示重写了 85 个文件，但产物依旧是旧版本号」。`after_render:html` 返回的字符串才是最终写盘内容。
+
+> **为什么增量生成也不用删 `db.json`**：`writeFile()` 用渲染结果的 sha1 和 Cache 里的旧 hash 比较。CSS 内容一变，每个页面渲染出的 HTML 里 `?v=` 都跟着变 → hash 不同 → **所有页面自动重写**，因此绕开了「主题配置变化不触发重渲染」的老坑，也不需要 `hexo clean`。
+
+　　边界：只处理 `href` / `src` 属性里以 `/css/`、`/js/` 开头的站内 `.css` / `.js`；CDN 外链、图片 `?v=2`、APK 直链 `?v=48`、头像 `?v=4`、`circle.json` 的按小时破坏符都原样保留；并保留 Hexo `js()` / `css()` helper 生成的 `?v=19.css` 查询串后缀。**新增自定义 CSS / JS 仍需登记进 `custom_css` / `custom_js`**，否则页面不会引用它。
+
+　　验证：
+
+```bash
+npx hexo generate
+grep -o 'site-motion.css?v=[0-9a-f]*' public/index.html | head -1
+# 改动 source/css/ 下任一文件后再跑一次 generate，哈希应当变化；恢复文件后再跑，哈希回到原值
+```
+
+### 19.4 一次性设置：把默认分支改回 `main`
+
+　　这一步要在 GitHub 网页操作，本地命令行（无 `gh` CLI / 无 API token）代劳不了：
+
+1. 仓库 → **Settings → Branches → Default branch** 切到 `main`。
+2. **Settings → Pages** 保持 `Deploy from a branch` = `gh-pages` / `root`，**不要改**。Pages 源分支与默认分支是两回事，切换后站点照常访问。
+3. 次日 UTC 22:17（北京时间 06:17）起，每天自动抓取一次；可在 Actions 页看运行记录的 `event` 是否出现 `schedule`。
+4. **改完就保持 `main`，不要再切回 `gh-pages`。** Pages 的「部署分支」和仓库的「默认分支」是两套独立设置：前者决定站点读哪份静态文件，后者决定 clone / PR 基准以及定时任务在哪条分支上跑。切回去不会让站点有任何变化，只会让 `schedule` 再次失效、朋友圈重新停更。
+5. 自检：`git ls-remote --symref origin HEAD` 应返回 `ref: refs/heads/main	HEAD`；若仍是 `gh-pages`，说明网页上的修改没保存成功（选完下拉后还要点 **Update** 并在弹窗里确认）。
+
 ## 总结
 
 　　核心就两个文件：
@@ -513,4 +586,4 @@ categories:
 - `_config.yml` 管全局设置
 - `_config.fluid.yml` 管主题样式
 
-　　改完配置执行 `hexo generate -d` 即可生成并部署。日常命令见开头「一、常用命令速查」。
+　　改完配置可以本地执行 `hexo generate -d`，也可以直接 `git push origin main` 交给 Actions 自动部署（见十九）。日常命令见开头「一、常用命令速查」。
