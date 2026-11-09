@@ -5,6 +5,21 @@
     "rss": "https://blog.amamo.top/rss.xml",
     "posts": [
       {
+        "title": "机房装 Node.js 记",
+        "url": "https://blog.amamo.top/posts/life/%E6%9C%BA%E6%88%BF%E8%A3%85nodejs%E8%AE%B0/",
+        "date": "2026-11-07T00:00:00+00:00"
+      },
+      {
+        "title": "评论图片直传图床：Waline + EdgeOne 边缘函数踩坑记",
+        "url": "https://blog.amamo.top/posts/waline-image-upload-edgeone/",
+        "date": "2026-11-07T00:00:00+00:00"
+      },
+      {
+        "title": "这套全新的博客风格：纸底、墨线、一种黄",
+        "url": "https://blog.amamo.top/posts/2026-10-30-%E8%BF%99%E5%A5%97%E5%85%A8%E6%96%B0%E7%9A%84%E5%8D%9A%E5%AE%A2%E9%A3%8E%E6%A0%BC/",
+        "date": "2026-10-30T00:00:00+00:00"
+      },
+      {
         "title": "AI短剧越来越low，为什么？",
         "url": "https://blog.amamo.top/posts/fk-ai-potboiler/",
         "date": "2026-10-06T00:00:00+00:00"
@@ -72,6 +87,31 @@
     "rss": "https://lengxiqwq.com/rss.xml",
     "posts": [
       {
+        "title": "Apple Music Windows 真是拉了坨大的",
+        "url": "https://lengxiqwq.com/posts/apple-music-windows-%E7%9C%9F%E6%98%AF%E6%8B%89%E4%BA%86%E5%9D%A8%E5%A4%A7%E7%9A%84/",
+        "date": "2026-10-30T01:00:00+00:00"
+      },
+      {
+        "title": "给软件换个图标，怎么比写软件还难？",
+        "url": "https://lengxiqwq.com/posts/%E7%BB%99%E8%BD%AF%E4%BB%B6%E6%8D%A2%E4%B8%AA%E5%9B%BE%E6%A0%87%E6%80%8E%E4%B9%88%E6%AF%94%E5%86%99%E8%BD%AF%E4%BB%B6%E8%BF%98%E9%9A%BE/",
+        "date": "2026-10-26T09:32:00+00:00"
+      },
+      {
+        "title": "评论系统 Twikoo 好多 bug！被迫换成了 Waline",
+        "url": "https://lengxiqwq.com/posts/%E8%AF%84%E8%AE%BA%E7%B3%BB%E7%BB%9F-twikoo-%E5%A5%BD%E5%A4%9A-bug%E8%A2%AB%E8%BF%AB%E6%8D%A2%E6%88%90%E4%BA%86-waline/",
+        "date": "2026-10-22T18:55:00+00:00"
+      },
+      {
+        "title": "Windows 又逼我重装系统了",
+        "url": "https://lengxiqwq.com/posts/windows-%E5%8F%88%E9%80%BC%E6%88%91%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F%E4%BA%86/",
+        "date": "2026-10-22T07:22:00+00:00"
+      },
+      {
+        "title": "我原本真的只想导出一个歌单",
+        "url": "https://lengxiqwq.com/posts/%E6%88%91%E5%8E%9F%E6%9C%AC%E7%9C%9F%E7%9A%84%E5%8F%AA%E6%83%B3%E5%AF%BC%E5%87%BA%E4%B8%80%E4%B8%AA%E6%AD%8C%E5%8D%95/",
+        "date": "2026-10-18T09:28:00+00:00"
+      },
+      {
         "title": "我想要的 Windows 输入法切换到底是什么样？",
         "url": "https://lengxiqwq.com/posts/%E6%88%91%E6%83%B3%E8%A6%81%E7%9A%84-windows-%E8%BE%93%E5%85%A5%E6%B3%95%E5%88%87%E6%8D%A2%E5%88%B0%E5%BA%95%E6%98%AF%E4%BB%80%E4%B9%88%E6%A0%B7/",
         "date": "2026-09-20T18:30:00+00:00"
@@ -93,6 +133,66 @@
     "avatar": "https://avatars.githubusercontent.com/u/232055116?v=4",
     "rss": "https://pureskyblog.dpdns.org/rss.xml",
     "posts": [
+      {
+        "title": "常驻智能体：记忆只是持久状态的一小块",
+        "url": "https://pureskyblog.dpdns.org/posts/always-on-agents/",
+        "date": "2026-11-08T00:00:00+00:00"
+      },
+      {
+        "title": "Geist 设计系统全览：Vercel 的界面语言、令牌与 74 个组件",
+        "url": "https://pureskyblog.dpdns.org/posts/geist-design-system/",
+        "date": "2026-11-08T00:00:00+00:00"
+      },
+      {
+        "title": "Nginx（其一）：什么是 Nginx 与安装",
+        "url": "https://pureskyblog.dpdns.org/posts/post-20261108/",
+        "date": "2026-11-08T00:00:00+00:00"
+      },
+      {
+        "title": "Nginx（其二）：进程模型和服务启停",
+        "url": "https://pureskyblog.dpdns.org/posts/post-20261108-2/",
+        "date": "2026-11-08T00:00:00+00:00"
+      },
+      {
+        "title": "力扣解题笔记：再谈快慢指针",
+        "url": "https://pureskyblog.dpdns.org/posts/post-20261108-3/",
+        "date": "2026-11-08T00:00:00+00:00"
+      },
+      {
+        "title": "用 Claude Code：把投入花在刀刃上",
+        "url": "https://pureskyblog.dpdns.org/posts/spending-your-effort/",
+        "date": "2026-11-08T00:00:00+00:00"
+      },
+      {
+        "title": "从 AGI 到 ASI：超级智能未必是一次跃迁",
+        "url": "https://pureskyblog.dpdns.org/posts/from-agi-to-asi/",
+        "date": "2026-11-07T00:00:00+00:00"
+      },
+      {
+        "title": "YAML 和 TOML",
+        "url": "https://pureskyblog.dpdns.org/posts/post-20261106/",
+        "date": "2026-11-06T00:00:00+00:00"
+      },
+      {
+        "title": "图论（其二）：图的存储",
+        "url": "https://pureskyblog.dpdns.org/posts/post-20261106-2/",
+        "date": "2026-11-06T00:00:00+00:00"
+      },
+      {
+        "title": "为什么 AI 生成的语言这么难懂",
+        "url": "https://pureskyblog.dpdns.org/posts/ai-language-intelligibility/",
+        "date": "2026-11-05T00:00:00+00:00"
+      },
+      {
+        "title": "嗨，杰森（json）",
+        "url": "https://pureskyblog.dpdns.org/posts/post-20261105/",
+        "date": "2026-11-05T00:00:00+00:00"
+      },
+      {
+        "title": "Super-agent 设计探索：迈向更自主的 Agent 系统",
+        "url": "https://pureskyblog.dpdns.org/posts/deepseek-super-agent/",
+        "date": "2026-11-04T00:00:00+00:00"
+      },
       {
         "title": "稀疏矩阵的压缩与运算优化（其二）：行单链表、十字链表",
         "url": "https://pureskyblog.dpdns.org/posts/post-20261019/",
@@ -233,6 +333,16 @@
     "rss": "https://blog.fqzlr.top/rss.xml",
     "posts": [
       {
+        "title": "拼图纹理、角色喵声与默认皮肤：这轮站点打磨的零额外负担做法",
+        "url": "https://blog.fqzlr.top/posts/tech/texture-character-default-theme/",
+        "date": "2026-11-01T02:50:00+00:00"
+      },
+      {
+        "title": "从一张明信片到五幕横滑：mmz 首页复刻的取舍",
+        "url": "https://blog.fqzlr.top/posts/tech/mmz-home-postcard-replica/",
+        "date": "2026-11-01T02:20:00+00:00"
+      },
+      {
         "title": "🔒 制作流程",
         "url": "https://blog.fqzlr.top/posts/notes/zhi-zuo-liu-cheng/",
         "date": "2026-10-06T00:00:00+00:00"
@@ -300,6 +410,26 @@
     "rss": "https://tblog.mmzhiku.xyz/rss.xml",
     "posts": [
       {
+        "title": "Super Agent 学习",
+        "url": "https://tblog.mmzhiku.xyz/posts/ai-deepseek-super-agent/",
+        "date": "2026-11-06T00:00:00+00:00"
+      },
+      {
+        "title": "本站 MDX 组件介绍与使用方法",
+        "url": "https://tblog.mmzhiku.xyz/posts/others-blog-mdx-components/",
+        "date": "2026-10-22T00:00:00+00:00"
+      },
+      {
+        "title": "关掉博客的 3D 音乐可视化",
+        "url": "https://tblog.mmzhiku.xyz/posts/why-remove-3d-music-visualization/",
+        "date": "2026-10-22T00:00:00+00:00"
+      },
+      {
+        "title": "2026 大肥鱼 QQ 机器人部署方案：LLBot + AstrBot 与 DSH 双路线",
+        "url": "https://tblog.mmzhiku.xyz/posts/ai-dafeiyu-qqbot-deployment-2026/",
+        "date": "2026-10-21T00:00:00+00:00"
+      },
+      {
         "title": "Java 枚举策略模式：用枚举替换 if-else 分发的三种绑定方式",
         "url": "https://tblog.mmzhiku.xyz/posts/details-java-enum-strategy-pattern/",
         "date": "2026-09-13T00:00:00+00:00"
@@ -366,6 +496,11 @@
     "avatar": "https://www.nanzhiy.cn/upload/IMG_20260412_164454.ico",
     "rss": "https://www.nanzhiy.cn/rss.xml",
     "posts": [
+      {
+        "title": "给 Halo 写了个打赏插件",
+        "url": "https://www.nanzhiy.cn/archives/sAy8QKMV",
+        "date": "2026-11-09T15:11:53+00:00"
+      },
       {
         "title": "全新文档站已上线！",
         "url": "https://www.nanzhiy.cn/archives/7LHLVEEp",
@@ -497,6 +632,31 @@
     "avatar": "https://x1shang.top/assets/img/x1shang-avatar.webp",
     "rss": "https://www.x1shang.top/feed",
     "posts": [
+      {
+        "title": "Two Points to the Goal: A Noise-Conditioned Mixture Density Network for Probabilistic Penalty Kick Prediction",
+        "url": "https://x1shang.top/academic/two-points-to-the-goal/",
+        "date": "2026-11-08T16:00:00+00:00"
+      },
+      {
+        "title": "为了让你们成为某种特定的样子，它（基础教育）从范围广阔的材料中作了非常狭窄的筛选。而筛选的过程本身，就包含了许多预先设定的价值判断。如果一开始就把这些判断放在前面，是会有问题的。",
+        "url": "https://x1shang.top/assertions/shenxincheng/",
+        "date": "2026-11-05T16:00:00+00:00"
+      },
+      {
+        "title": "朋友圈点赞的三年",
+        "url": "https://x1shang.top/academic/moments-likes-three-years/",
+        "date": "2026-11-01T16:00:00+00:00"
+      },
+      {
+        "title": "x1shang-10月份月报",
+        "url": "https://x1shang.top/articles/october-report/",
+        "date": "2026-10-29T16:00:00+00:00"
+      },
+      {
+        "title": "“第三次AI寒冬没有来，取而代之的是AI全球变暖。”（李飞飞）",
+        "url": "https://x1shang.top/assertions/warmingai/",
+        "date": "2026-10-20T16:00:00+00:00"
+      },
       {
         "title": "小的时候，午夜还是神秘的，想象着狼人与鬼怪；现在，午夜是亲切的，代码还在跑，ddl已经过了。大抵鬼怪们也同渡渡鸟一起绝灭了吧。",
         "url": "https://x1shang.top/assertions/midnight/",
