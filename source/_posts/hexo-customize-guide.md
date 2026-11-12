@@ -549,7 +549,16 @@ categories:
 | `schedule` 每天 UTC 22:17 | 同上，保证没推送的日子也刷新朋友圈（**需默认分支为 `main`**） |
 | `workflow_dispatch` | Actions 页手动跑一次 |
 
-　　写回 `circle.json` 的提交信息带 `[skip ci]`，job 上还有 `if` 判断兜底，避免「Actions 提交 → 又触发 Actions」的死循环。本地 `npx hexo generate -d` 仍然可用；别和自动部署同时跑，避免互相覆盖 `gh-pages`。
+　　写回 `circle.json` 的提交信息带 `[skip ci]`，job 上还有 `if` 判断兜底，避免「Actions 提交 → 又触发 Actions」的死循环。
+
+> **红线（2026-11-12 实测）：日常发文章只 `git push origin main`，不要本地 `npx hexo deploy`。**
+>
+> 推送 `main` 会立刻触发 Actions 走完整链路（抓 RSS → `hexo generate -d` → 回写数据），本地再 deploy 一次必然要 `force update` 覆盖它，实测会出现连锁反应：
+>
+> - `gh-pages` 上出现 `+ xxx...yyy HEAD -> gh-pages (forced update)`，等于把 Actions 刚抓的新鲜 `circle.json` 换成本地几小时前的旧数据。
+> - Actions 回写 `[skip ci]` 提交会抢占 `main`，导致紧接着的 `git push origin main` 报 `non-fast-forward`；解法是 `git fetch && git rebase origin/main`（有未提交改动先 `git stash push -- <文件>`）。
+>
+> 本地 `hexo deploy` 只剩两个正当用途：调试产物、Actions 挂了时的应急。用之前先确认没有正在跑的 workflow。
 
 ### 19.3 CSS / JS 版本号自动化
 
@@ -578,6 +587,51 @@ grep -o 'site-motion.css?v=[0-9a-f]*' public/index.html | head -1
 3. 次日 UTC 22:17（北京时间 06:17）起，每天自动抓取一次；可在 Actions 页看运行记录的 `event` 是否出现 `schedule`。
 4. **改完就保持 `main`，不要再切回 `gh-pages`。** Pages 的「部署分支」和仓库的「默认分支」是两套独立设置：前者决定站点读哪份静态文件，后者决定 clone / PR 基准以及定时任务在哪条分支上跑。切回去不会让站点有任何变化，只会让 `schedule` 再次失效、朋友圈重新停更。
 5. 自检：`git ls-remote --symref origin HEAD` 应返回 `ref: refs/heads/main	HEAD`；若仍是 `gh-pages`，说明网页上的修改没保存成功（选完下拉后还要点 **Update** 并在弹窗里确认）。
+
+## 二十、数学公式与 LaTeX（2026-11-12）
+
+　　本站用 `hexo-renderer-marked` 渲染 Markdown，而 marked 不认 LaTeX。直接写 `$...$` / `$$...$$` 会被当成普通 Markdown 处理：`x_1` 变成 `x<em>1</em>`、`\begin{cases}` 里的 `\\` 少一个反斜杠、`*` 被当斜体——等 MathJax 拿到时公式已经碎了。
+
+### 20.1 三层配合，缺一不可
+
+| 层 | 位置 | 作用 |
+|----|------|------|
+| 保护 | `scripts/math-protect.js` | `before_post_render` 阶段把公式换成纯字母数字占位符（`CMCMATHPROTECT0ENDCMCMATH`），marked 渲染完再换回原始 LaTeX 并把 `< > &` 转义成实体，浏览器解析后 `textContent` 恰好是原公式 |
+| 渲染 | `_config.fluid.yml` 的 `post.math` | `enable: true` + `specific: true`，只有在 front-matter 写 `math: true` 的文章才加载 MathJax，旧文章零开销 |
+| 开关 | 文章 front-matter | `math: true` |
+
+　　占位符必须纯字母数字——含 `$ \ _ * { }` 任一个都会被 Markdown / Nunjucks 二次处理。
+
+### 20.2 目录锚点红线：别用 GitHub 风格的 slug
+
+　　手写目录 `[标题](#锚点)` 时，锚点必须和 marked 生成的 `id` 完全一致。**marked 的标题 id 会保留中文标点与全角括号，只把空格和 ASCII 标点（`+` `/` 等）换掉**；GitHub 的习惯是删掉所有标点，两者不一致会点了没反应。
+
+| 标题 | marked 生成的 id | GitHub 风格（会失效） |
+|------|-----------------|---------------------|
+| `## 2. 恒定电流场中，为什么电流不能中断` | `2-恒定电流场中，为什么电流不能中断` | `2-恒定电流场中为什么电流不能中断` |
+| `## 7. 能量 & 能量密度：静电场 & 磁场` | `7-能量-能量密度：静电场-磁场` | `7-能量--能量密度静电场--磁场` |
+
+　　可靠做法：先 `npx hexo generate`，再从产物里读真实 id 回填 href（`grep -o '<h2 id="[^"]*"'`），并做一次比对：
+
+```bash
+python - <<'EOF'
+import re, io
+from urllib.parse import unquote
+h = io.open(r'public/<路径>/index.html', encoding='utf-8').read()
+ids = set(re.findall(r'<h2 id="([^"]+)"', h))
+bad = [x for x in re.findall(r'<li><a href="#([^"]+)"', h) if unquote(x) not in ids]
+print("失效锚点:", bad or "无")
+EOF
+```
+
+### 20.3 验收标准
+
+| 检查项 | 期望 |
+|--------|------|
+| 页面残留 `CMCMATHPROTECT` | 0（有残留说明 after_post_render 没跑到） |
+| 正文残留 `$$` 原文 | 0（用浏览器 `innerText` 数，不是数 HTML 源码） |
+| `mjx-container` 数量 | 与公式条数一致（MathJax 排版产物） |
+| 目录锚点 | 全部能命中 `h2 id` |
 
 ## 总结
 
