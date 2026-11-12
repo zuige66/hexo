@@ -1,7 +1,39 @@
 {
-  "generated": "2026-11-09T16:31:14.498699+00:00",
-  "total_archived": 130,
+  "generated": "2026-11-12T03:03:40.147776+00:00",
+  "total_archived": 136,
   "posts": [
+    {
+      "title": "Nginx（其四）：进一步配置文件与配置自签名证书",
+      "url": "https://pureskyblog.dpdns.org/posts/post-20261110/",
+      "date": "2026-11-10T00:00:00+00:00",
+      "name": "puresky-blog",
+      "link": "https://pureskyblog.dpdns.org",
+      "avatar": "https://avatars.githubusercontent.com/u/232055116?v=4"
+    },
+    {
+      "title": "Nginx（其五）：正向代理，反向代理和负载均衡",
+      "url": "https://pureskyblog.dpdns.org/posts/post-20261110-2/",
+      "date": "2026-11-10T00:00:00+00:00",
+      "name": "puresky-blog",
+      "link": "https://pureskyblog.dpdns.org",
+      "avatar": "https://avatars.githubusercontent.com/u/232055116?v=4"
+    },
+    {
+      "title": "力扣解题笔记：重新认识二叉树前、中、后序遍历",
+      "url": "https://pureskyblog.dpdns.org/posts/post-20261110-3/",
+      "date": "2026-11-10T00:00:00+00:00",
+      "name": "puresky-blog",
+      "link": "https://pureskyblog.dpdns.org",
+      "avatar": "https://avatars.githubusercontent.com/u/232055116?v=4"
+    },
+    {
+      "title": "世界 PyTorch 大会：开源 AI 社区的年度聚会",
+      "url": "https://pureskyblog.dpdns.org/posts/pytorch-conference/",
+      "date": "2026-11-10T00:00:00+00:00",
+      "name": "puresky-blog",
+      "link": "https://pureskyblog.dpdns.org",
+      "avatar": "https://avatars.githubusercontent.com/u/232055116?v=4"
+    },
     {
       "title": "给 Halo 写了个打赏插件",
       "url": "https://www.nanzhiy.cn/archives/sAy8QKMV",
@@ -9,6 +41,22 @@
       "name": "楠枝小笺",
       "link": "https://www.nanzhiy.cn",
       "avatar": "https://www.nanzhiy.cn/upload/IMG_20260412_164454.ico"
+    },
+    {
+      "title": "力扣刷题笔记：对链表进行递归操作",
+      "url": "https://pureskyblog.dpdns.org/posts/post-20261109/",
+      "date": "2026-11-09T00:00:00+00:00",
+      "name": "puresky-blog",
+      "link": "https://pureskyblog.dpdns.org",
+      "avatar": "https://avatars.githubusercontent.com/u/232055116?v=4"
+    },
+    {
+      "title": "Nginx（其三）：静态站点部署",
+      "url": "https://pureskyblog.dpdns.org/posts/post-20261109-3/",
+      "date": "2026-11-09T00:00:00+00:00",
+      "name": "puresky-blog",
+      "link": "https://pureskyblog.dpdns.org",
+      "avatar": "https://avatars.githubusercontent.com/u/232055116?v=4"
     },
     {
       "title": "Two Points to the Goal: A Noise-Conditioned Mixture Density Network for Probabilistic Penalty Kick Prediction",
@@ -433,54 +481,6 @@
       "name": "puresky-blog",
       "link": "https://pureskyblog.dpdns.org",
       "avatar": "https://avatars.githubusercontent.com/u/232055116?v=4"
-    },
-    {
-      "title": "纯 HTML 文章测试（测试样例）",
-      "url": "https://x1shang.top/articles/test-html/",
-      "date": "2026-10-10T16:00:00+00:00",
-      "name": "x1shang-山与回响",
-      "link": "https://www.x1shang.top",
-      "avatar": "https://x1shang.top/assets/img/x1shang-avatar.webp"
-    },
-    {
-      "title": "标记语言渲染测试（测试样例）",
-      "url": "https://x1shang.top/articles/test-markdown/",
-      "date": "2026-10-10T16:00:00+00:00",
-      "name": "x1shang-山与回响",
-      "link": "https://www.x1shang.top",
-      "avatar": "https://x1shang.top/assets/img/x1shang-avatar.webp"
-    },
-    {
-      "title": "[郑钦文击败安德烈耶娃，生涯1000赛夺冠。](https://mp.weixin.qq.com/s/8DUe9k4tggiaUx3b42ITxQ)",
-      "url": "https://x1shang.top/assertions/dengqinwenwon/",
-      "date": "2026-10-10T16:00:00+00:00",
-      "name": "x1shang-山与回响",
-      "link": "https://www.x1shang.top",
-      "avatar": "https://x1shang.top/assets/img/x1shang-avatar.webp"
-    },
-    {
-      "title": "学术条目测试样例：一个不太严肃的小问题",
-      "url": "https://x1shang.top/academic/test-paper/",
-      "date": "2026-10-10T16:00:00+00:00",
-      "name": "x1shang-山与回响",
-      "link": "https://www.x1shang.top",
-      "avatar": "https://x1shang.top/assets/img/x1shang-avatar.webp"
-    },
-    {
-      "title": "纯文本文章测试（测试样例）",
-      "url": "https://x1shang.top/articles/test-plain/",
-      "date": "2026-10-08T16:00:00+00:00",
-      "name": "x1shang-山与回响",
-      "link": "https://www.x1shang.top",
-      "avatar": "https://x1shang.top/assets/img/x1shang-avatar.webp"
-    },
-    {
-      "title": "花了一天时间用AI做了一个博客",
-      "url": "https://qwwp.top/blog/ai-built-blog-in-a-day",
-      "date": "2026-10-08T00:00:00+00:00",
-      "name": "qwwp",
-      "link": "https://qwwp.top",
-      "avatar": "https://qwwp.top/images/avatar.jpg"
     }
   ]
 }
