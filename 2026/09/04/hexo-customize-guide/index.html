@@ -27,7 +27,7 @@
 <meta property="og:description" content="前言　　博客搭好了，但怎么改标题、加图标、管理分类标签？本文以当前博客为例，讲解 Hexo + Fluid 的目录结构和常用配置。 一、常用命令速查　　以下命令都在博客根目录下执行。    作用 命令    新建文章 hexo new &quot;文章标题&quot;   新建独立页面 hexo new page &quot;页面名&quot;   新建草稿 hexo new draft &amp;quo">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-09-03T16:00:00.000Z">
-<meta property="article:modified_time" content="2026-11-02T15:08:32.423Z">
+<meta property="article:modified_time" content="2026-11-09T16:30:27.728Z">
 <meta property="article:author" content="zuige">
 <meta property="article:tag" content="Fluid">
 <meta property="article:tag" content="Hexo">
@@ -73,9 +73,9 @@
 
 
   
-<link rel="stylesheet" href="/css/home-sidebar.css?v=7.css">
-<link rel="stylesheet" href="/css/site-motion.css?v=19.css">
-<link rel="stylesheet" href="/css/moments.css?v=3.css">
+<link rel="stylesheet" href="/css/home-sidebar.css?v=4dc81e3bc3.css">
+<link rel="stylesheet" href="/css/site-motion.css?v=4ad63a30d4.css">
+<link rel="stylesheet" href="/css/moments.css?v=1ec5e1019e.css">
 
 
 
@@ -397,7 +397,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          12k 字
+          16k 字
         
       </span>
     
@@ -408,7 +408,7 @@
         
         
         
-          104 分钟
+          135 分钟
         
       </span>
     
@@ -519,9 +519,12 @@
 <p><code>hexo generate</code> 默认增量构建，只重新生成改动过的文章以及受影响的归档、分类、标签页，日常发一两篇不会慢。真正会触发全量重建的是 <code>hexo clean</code>——它删除缓存 <code>db.json</code> 和 <code>public/</code>，下次生成只能从头来。只在换主题、大改配置或升级后输出异常时才跑 <code>hexo clean</code>，平时不要加。</p>
 <p>　　写完一篇文章的标准流程：<code>hexo new &quot;标题&quot;</code> 新建 → 编辑 <code>source/_posts/</code> 下对应的 md → <code>hexo generate -d</code> 发布。</p>
 <blockquote>
+<p><strong>推送 <code>main</code> 会自动部署（2026-11-09 起）</strong>：<code>.github/workflows/circle.yml</code> 已去掉 <code>push.paths</code> 白名单，任何推送到 <code>main</code> 的改动（文章、CSS、主题配置、动态）都会触发 Actions：抓一次友链 RSS → <code>npx hexo generate -d</code> → 把站点推到 <code>gh-pages</code>。因此只 <code>git push</code> 也能上线，本地 <code>hexo generate -d</code> 依旧可用；两者别同时跑，避免互相覆盖 <code>gh-pages</code>。自动部署同样要经历下面的 Pages &#x2F; CDN 延迟。工作流写回数据的提交带 <code>[skip ci]</code>，配合 job 级 <code>if</code> 判断，不会自触发死循环。详见「十九、自动部署与静态资源版本号」。</p>
+</blockquote>
+<blockquote>
 <p><strong>线上生效有延迟，别误判成没部署成功（2026-11-02 实测）</strong>：<code>hexo deploy</code> 只是把 <code>public/</code> 推到 <code>gh-pages</code>，之后 <strong>GitHub Pages 还要构建 1–2 分钟</strong>，这段时间新增的文件路径会一直 404；构建完成后，Cloudflare 上还有 <code>Cache-Control: max-age=600</code>（10 分钟）的整页缓存。</p>
 <ul>
-<li>验证命令必须带随机查询串绕开 CDN：<code>curl -s &quot;https://blog.zuiges.com/archives/?cb=$RANDOM&quot;</code>，否则拿到的可能是十分钟前的旧页面。</li>
+<li>页面缓存可尝试带随机查询串：<code>curl -s &quot;https://blog.zuiges.com/archives/?cb=$RANDOM&quot;</code>，否则可能拿到十分钟前的旧页面。<strong>2026-11-10 实测更正</strong>：随机串未必绕得开，Fastly 层会返回 <code>x-cache: HIT</code> 且 <code>Age</code> 持续增长，最长仍需等 <code>max-age=600</code> 过期。要立刻判断部署是否成功，应直接读 <strong><code>gh-pages</code> 分支原文件</strong>（不经过 Pages 构建与 CDN）：<code>https://raw.githubusercontent.com/zuige66/hexo/gh-pages/links/index.html</code>。</li>
 <li><strong>新增图片即使带查询串也可能先被 CDN 记一次 404（负缓存）</strong>，现象是「文字已经更新、图片仍然 404」，通常 5 分钟左右自愈，不需要重新部署。</li>
 <li>判断是否真的推上去了，看 <code>git ls-remote origin gh-pages</code> 的 commit 与本地 <code>npx hexo deploy</code> 输出的 hash 是否一致，而不是看浏览器。</li>
 </ul>
@@ -592,6 +595,9 @@
 <p>　　然后在 <code>source/css/custom.css</code> 中编写样式：</p>
 <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-comment">/* 修改文章标题颜色 */</span><br><span class="hljs-selector-class">.post-title</span> <span class="hljs-selector-tag">a</span> &#123;<br>  <span class="hljs-attribute">color</span>: <span class="hljs-number">#2c3e50</span>;<br>&#125;<br><br><span class="hljs-comment">/* 修改正文行高 */</span><br><span class="hljs-selector-class">.post-body</span> &#123;<br>  <span class="hljs-attribute">line-height</span>: <span class="hljs-number">2</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 
+<blockquote>
+<p>自定义 CSS &#x2F; JS 的版本号已自动化：<code>custom_css</code> &#x2F; <code>custom_js</code> 里写的 <code>?v=1</code> 只是占位，构建时会按文件内容 hash 自动替换，<strong>不必手动递增</strong>。见「十九、自动部署与静态资源版本号」。</p>
+</blockquote>
 <h2 id="十一、颜色主题"><a href="#十一、颜色主题" class="headerlink" title="十一、颜色主题"></a>十一、颜色主题</h2><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">color:</span><br>  <span class="hljs-attr">body_bg_color:</span> <span class="hljs-string">&quot;#f5f5f5&quot;</span>       <span class="hljs-comment"># 页面背景</span><br>  <span class="hljs-attr">navbar_bg_color:</span> <span class="hljs-string">&quot;#2f4154&quot;</span>     <span class="hljs-comment"># 导航栏背景</span><br>  <span class="hljs-attr">navbar_text_color:</span> <span class="hljs-string">&quot;#fff&quot;</span>      <span class="hljs-comment"># 导航栏文字</span><br>  <span class="hljs-attr">text_color:</span> <span class="hljs-string">&quot;#3c4858&quot;</span>          <span class="hljs-comment"># 正文文字</span><br>  <span class="hljs-attr">post_text_color:</span> <span class="hljs-string">&quot;#2c3e50&quot;</span>     <span class="hljs-comment"># 文章文字</span><br>  <span class="hljs-attr">post_heading_color:</span> <span class="hljs-string">&quot;#1a202c&quot;</span>  <span class="hljs-comment"># 文章标题</span><br>  <span class="hljs-attr">post_link_color:</span> <span class="hljs-string">&quot;#0366d6&quot;</span>     <span class="hljs-comment"># 文章链接</span><br>  <span class="hljs-attr">link_hover_color:</span> <span class="hljs-string">&quot;#30a9de&quot;</span>    <span class="hljs-comment"># 链接悬浮</span><br>  <span class="hljs-attr">board_color:</span> <span class="hljs-string">&quot;#fff&quot;</span>            <span class="hljs-comment"># 卡片背景</span><br></code></pre></td></tr></table></figure>
 
 <h2 id="十二、常用配置速查"><a href="#十二、常用配置速查" class="headerlink" title="十二、常用配置速查"></a>十二、常用配置速查</h2><table>
@@ -658,12 +664,16 @@
 <li>数据源：<code>circle-feeds.json</code>（仓库根目录），只列带 <code>rss</code> 的友链，每项含 <code>name</code> &#x2F; <code>link</code> &#x2F; <code>rss</code> &#x2F; <code>avatar</code>。</li>
 <li>生成器：<code>tools/circle_fetch.py</code>，纯标准库实现，运行后写出两份文件：<ul>
 <li><code>circle-archive.json</code>（仓库根目录，<strong>入库、不进 <code>.gitignore</code></strong>）：累积归档，每次运行按文章 URL 去重合并新文章，每人上限 100 篇、跨运行一直留存，是「朋友圈一直存在」的来源。</li>
-<li><code>source/circle/circle.json</code>（<strong>已进 <code>.gitignore</code>，不入库</strong>；部署后地址为 <code>/circle/circle.json</code>）：展示用扁平数据，取全部文章按时间倒序前 60 条。</li>
+<li><code>source/circle/circle.json</code>（<strong>已作为基线数据入库</strong>，部署后地址为 <code>/circle/circle.json</code>）：展示用扁平数据，取全部文章按时间倒序前 60 条。入库是为了保证任何一次干净检出 &#x2F; <code>hexo deploy</code> 都带这份数据，不再出现「朋友圈空白」。</li>
 </ul>
 </li>
 <li>渲染：<code>source/js/circle-feed.js</code> 由 <code>themes/fluid/layout/links.ejs</code> 在友链卡片之后引入，拉取 <code>/circle/circle.json</code> 后<strong>一篇文章一张小卡片</strong>：标题在上，左下角圆形头像 + 站点名，右下角日期；卡片样式在 <code>source/css/site-motion.css</code> 的 <code>#circle-feed</code> &#x2F; <code>.feed-card</code> 段（CSS Grid 排布，避免重叠）。</li>
-<li>自动化：<code>.github/workflows/circle.yml</code> 每天 UTC 22:17 定时运行，也可在仓库 Actions 页手动触发；<code>circle-feeds.json</code>、<code>tools/circle_fetch.py</code> 等变动会触发重新部署。每次运行结束会把最新的 <code>circle-archive.json</code> 提交回 <code>main</code>，因此归档跨运行持续累积。</li>
+<li>自动化：<code>.github/workflows/circle.yml</code> 每天 UTC 22:17 定时运行，也可在 Actions 页手动触发；<strong>任何推送到 <code>main</code> 的改动</strong>都会触发一次「抓 RSS → <code>hexo generate -d</code> → 写回归档」。每次运行把 <code>circle-archive.json</code> 与 <code>source/circle/circle.json</code> 提交回 <code>main</code>，归档跨运行持续累积；提交信息带 <code>[skip ci]</code>，配合 job 级 <code>if</code> 防止自触发循环。</li>
 </ul>
+<blockquote>
+<p><strong>红线：定时抓取曾「一天都没跑过」（2026-11-09 排查）</strong>。查 GitHub Actions 的 12 次运行记录，全部是 <code>push</code> &#x2F; <code>workflow_dispatch</code>，<strong>没有一次 <code>schedule</code></strong>；线上 <code>circle.json</code> 的 <code>generated</code> 停在 2026-10-19。根因是仓库把 <strong><code>gh-pages</code> 设成了默认分支</strong>（Pages 源分支），而 <code>circle.yml</code> 只存在于 <code>main</code>——GitHub 的定时 <code>cron</code> <strong>只在默认分支生效</strong>。修法：GitHub → Settings → Branches 把默认分支改回 <code>main</code>；<strong>GitHub Pages 仍从 <code>gh-pages</code> 分支部署，与默认分支互不影响</strong>，改完次日 UTC 22:17 起自动生效。在改默认分支之前，每次 push 仍会刷新数据，只是不保证「每天」。</p>
+<p>另一个旧坑：早期 <code>push.paths</code> 白名单只列 <code>circle-feeds.json</code>、<code>tools/circle_fetch.py</code> 等，改文章 &#x2F; CSS &#x2F; 主题配置不会触发自动部署，线上像是「一直不更新」——该白名单已删除。</p>
+</blockquote>
 <p>　　新增一个友链的动态：在 <code>circle-feeds.json</code> 加一项（填上对方 RSS 地址）即可，其余由流水线自动完成。本地预览可用 <code>bash tools/deploy-circle.sh</code> 一键抓数据并部署。</p>
 <h2 id="十五、首页侧栏吸顶（粘性侧边栏）"><a href="#十五、首页侧栏吸顶（粘性侧边栏）" class="headerlink" title="十五、首页侧栏吸顶（粘性侧边栏）"></a>十五、首页侧栏吸顶（粘性侧边栏）</h2><p>　　首页左栏（个人卡片、统计、发文记录、分类、标签、最近文章）在下滑时会跟着一起滚走。用 <strong>粘性侧边栏（sticky sidebar）</strong> 可以让它滚到某个位置后锁住不动，之后只有右栏的文章列表继续滚动。</p>
 <p>　　技术上靠 CSS 的 <strong><code>position: sticky</code></strong>——它跟 <code>position: fixed</code> 不同：<code>fixed</code> 是一开始就钉死在窗口，<code>sticky</code> 是「没滚到之前正常跟着走，滚到了才吸住」，正好是想要的效果。</p>
@@ -686,7 +696,7 @@
 </tr>
 <tr>
 <td><code>_config.fluid.yml</code></td>
-<td><code>custom_css</code> 里 <code>home-sidebar.css</code> 带版本号（改 CSS 必须 bump）</td>
+<td><code>custom_css</code> 里登记 <code>home-sidebar.css</code>；<code>?v=N</code> 只是占位，构建时按内容 hash 自动替换（见十九）</td>
 </tr>
 </tbody></table>
 <p>　　原理：<code>.home-side-sticky</code> 的 <code>top: 76px</code> 是固定值（76 ≈ 导航栏高度 + 间距），它的<strong>上边缘</strong>就是锁定位置——也就是「分类」卡片的顶部。上半部分卡片不在容器里，所以会先滚走；容器本身是 sticky，等上边缘碰到 76px 处就锁住。<code>top</code> 是常数，iPad 上也不会漂移。内容若高于视口，仅容器内部滚动（<code>overflow-y: auto</code>），<strong>不影响已滚走的上半栏</strong>——这与「整体吸顶 + 内部滚动」的坑不同（旧法会把上半栏卷进内部视口，看起来像消失）。</p>
@@ -741,6 +751,10 @@
 </li>
 <li>选数据文件而非「文章 + <code>moment: true</code> 标记」，是为了<strong>不污染文章归档的统计口径与分页</strong>——动态数不计入「共计 N 篇文章」，也不会挤占归档分页。</li>
 </ul>
+<p>　　发一条动态的完整流程（<strong>没有后台，就是改文件 + git</strong>）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 1. 编辑 source/_data/moments.yml，新条目放列表最前面；配图放 source/img/moments/</span><br><span class="hljs-built_in">rm</span> -f db.json &amp;&amp; npx hexo generate      <span class="hljs-comment"># 2. 本地验证（_data 变更保险起见全量重建）</span><br>git add <span class="hljs-built_in">source</span>/_data/moments.yml <span class="hljs-built_in">source</span>/img/moments/<br>git commit -m <span class="hljs-string">&quot;content(moments): 新动态&quot;</span><br>git push origin main                     <span class="hljs-comment"># 3. 推送后 Actions 自动部署；或本地 npx hexo generate -d</span><br></code></pre></td></tr></table></figure>
+
+<p>　　只 commit 不部署 → 线上不变；只部署不 commit → 源码会丢。线上还有 Pages 构建 1–2 分钟 + Cloudflare 页面缓存 10 分钟的延迟，验证时给 URL 加随机查询串。</p>
 <h3 id="17-2-渲染：复用归档页的-partial"><a href="#17-2-渲染：复用归档页的-partial" class="headerlink" title="17.2 渲染：复用归档页的 partial"></a>17.2 渲染：复用归档页的 partial</h3><p>　　渲染逻辑在 <code>themes/fluid/layout/_partials/archive-list.ejs</code>。该 partial 同时被归档页 &#x2F; 分类页 &#x2F; 标签页复用，因此用 <code>params.key === &#39;archive&#39;</code> 判断，<strong>只在归档页</strong>挂载切换控件与动态时间线。</p>
 <p>　　两个视图的 DOM 会一次性渲染（<code>archive-panel-posts</code> &#x2F; <code>archive-panel-moments</code>），切换只是显隐，不重新请求数据。</p>
 <h3 id="17-3-样式与交互"><a href="#17-3-样式与交互" class="headerlink" title="17.3 样式与交互"></a>17.3 样式与交互</h3><table>
@@ -761,10 +775,10 @@
 </tbody></table>
 <p>关键坑：软导航换入 <code>#board</code> 后<strong>内联 <code>&lt;script&gt;</code> 不会执行</strong>，所以这里用 <code>document</code> 级事件委托绑定点击，并监听 <code>soft-nav.js</code> 派发的 <code>softnav:loaded</code> 事件重新初始化——否则从其他页面软导航进归档页后，切换按钮会失效。</p>
 <blockquote>
-<p><strong>红线（2026-10-20 补）</strong>：软导航「只换 <code>#board.innerHTML</code>」的假设只在「同类 layout 页面间」成立。本博客 <code>is_post</code> 文章页的 <code>#board</code> 外层是 <code>col-lg-8&gt;#board-ctn</code>（窄列），非文章页是 <code>.container.nopadding-x-md</code>（全宽）。从文章页（整页加载）点导航软导航回首页时，只换 innerHTML 会让首页内容残留塞进文章页窄列、整页变窄。因此 <code>soft-nav.js</code> 换正文前必须<strong>连 <code>#board</code> 的外层父链一起同步</strong>（把 <code>#board</code> 节点整体移入目标页外层容器并 <code>replaceChild</code> 替换旧外层）。改 <code>soft-nav.js</code> 后务必 bump <code>?v=N</code>。</p>
+<p><strong>红线（2026-10-20 补）</strong>：软导航「只换 <code>#board.innerHTML</code>」的假设只在「同类 layout 页面间」成立。本博客 <code>is_post</code> 文章页的 <code>#board</code> 外层是 <code>col-lg-8&gt;#board-ctn</code>（窄列），非文章页是 <code>.container.nopadding-x-md</code>（全宽）。从文章页（整页加载）点导航软导航回首页时，只换 innerHTML 会让首页内容残留塞进文章页窄列、整页变窄。因此 <code>soft-nav.js</code> 换正文前必须<strong>连 <code>#board</code> 的外层父链一起同步</strong>（把 <code>#board</code> 节点整体移入目标页外层容器并 <code>replaceChild</code> 替换旧外层）。改 <code>soft-nav.js</code> 后无需手改版本号，<code>scripts/asset-version.js</code> 会按内容 hash 自动更新（见十九）。</p>
 </blockquote>
 <h3 id="17-4-资源注入与文案"><a href="#17-4-资源注入与文案" class="headerlink" title="17.4 资源注入与文案"></a>17.4 资源注入与文案</h3><ul>
-<li>CSS &#x2F; JS 需登记在 <code>_config.fluid.yml</code> 的 <code>custom_css</code> &#x2F; <code>custom_js</code> 列表里；<strong>改动后记得 bump 版本号</strong>（如 <code>?v=1</code> → <code>?v=2</code>）以失效浏览器缓存。</li>
+<li>CSS &#x2F; JS 需登记在 <code>_config.fluid.yml</code> 的 <code>custom_css</code> &#x2F; <code>custom_js</code> 列表里；<code>?v=N</code> 只是占位符，<strong>改动后不必手动递增</strong>，<code>scripts/asset-version.js</code> 会按文件内容 hash 自动替换（见十九）。</li>
 <li>统计文案在 <code>source/_data/languages/zh-CN.yml</code> 的 <code>moments.post_total</code>（「共计 %d 条动态」）。</li>
 </ul>
 <h3 id="17-5-首页切换与侧栏预览"><a href="#17-5-首页切换与侧栏预览" class="headerlink" title="17.5 首页切换与侧栏预览"></a>17.5 首页切换与侧栏预览</h3><p>　　归档页与首页右栏各有一组<strong>居中的胶囊切换按钮</strong>（<code>文章 / 动态</code>），视觉与逻辑完全一致：</p>
@@ -795,7 +809,7 @@
 <li>侧栏列表复用既有的 <code>.home-recent-list</code> 样式（自带单行 ellipsis），动态过长不会撑破卡片。</li>
 </ul>
 <blockquote>
-<p>提醒：<code>moments.css</code> 的任何改动都要同步 bump <code>_config.fluid.yml</code> 里的版本号（如 <code>?v=1</code> → <code>?v=2</code>），否则访客浏览器会用缓存的旧样式，表现为「改了没生效」。</p>
+<p>提醒：<code>moments.css</code> 改动后无需手动 bump，但它<strong>必须先登记在 <code>custom_css</code> 里</strong>，否则页面根本不会引用这个文件；版本号由构建脚本自动注入（见十九）。</p>
 </blockquote>
 <h2 id="十八、隐藏文章（仅归档可见）"><a href="#十八、隐藏文章（仅归档可见）" class="headerlink" title="十八、隐藏文章（仅归档可见）"></a>十八、隐藏文章（仅归档可见）</h2><p>　　有些内容（如文献整理、草稿碎片）不想挤占首页，但又希望保留在归档、分类、标签里随时可查。给文章 front-matter 加一行 <code>home: false</code> 即可：</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-meta">---</span><br><span class="hljs-attr">title:</span> <span class="hljs-string">某篇文献整理</span><br><span class="hljs-attr">date:</span> <span class="hljs-number">2026-10-24 10:00:00</span><br><span class="hljs-attr">home:</span> <span class="hljs-literal">false</span>          <span class="hljs-comment"># ← 加了这行：不进首页 / 侧栏「最近文章」/ RSS，但归档/分类/标签照常</span><br><span class="hljs-attr">tags:</span><br>  <span class="hljs-bullet">-</span> <span class="hljs-string">文献</span><br><span class="hljs-attr">categories:</span><br>  <span class="hljs-bullet">-</span> <span class="hljs-string">技术</span><br><span class="hljs-meta">---</span><br></code></pre></td></tr></table></figure>
@@ -852,12 +866,83 @@
 </blockquote>
 <p>　　<strong>已知次要泄漏（按需再拓展）</strong>：<code>home: false</code> 的文章仍会出现在「另一篇文章页的上一篇&#x2F;下一篇导航」与本地搜索索引 <code>local-search.xml</code> 中——这两处由 Hexo 核心按全部文章顺序生成，不在上述三处过滤范围内。若需要彻底只进归档，再单独处理 post 生成器的 prev&#x2F;next 与 search 生成器即可。</p>
 <p>　　<strong>文件名别用下划线开头</strong>：Hexo 默认把 <code>_</code> 开头的文件当私有&#x2F;include 文件、不参与渲染。隐藏文章用普通文件名（如 <code>2026-10-24-literature-xxx.md</code>），只靠 front-matter 的 <code>home: false</code> 控制可见性。</p>
+<h2 id="十九、自动部署与静态资源版本号（2026-11-09）"><a href="#十九、自动部署与静态资源版本号（2026-11-09）" class="headerlink" title="十九、自动部署与静态资源版本号（2026-11-09）"></a>十九、自动部署与静态资源版本号（2026-11-09）</h2><h3 id="19-1-「改了没生效-数据不更新」的四层原因"><a href="#19-1-「改了没生效-数据不更新」的四层原因" class="headerlink" title="19.1 「改了没生效 &#x2F; 数据不更新」的四层原因"></a>19.1 「改了没生效 &#x2F; 数据不更新」的四层原因</h3><p>　　这是排查 2026-11-09 那次「朋友圈停在 10-19、CSS 时灵时不灵」时理清的链路，四层叠加，按这个顺序看：</p>
+<table>
+<thead>
+<tr>
+<th>层</th>
+<th>原因</th>
+<th>现状</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>触发</td>
+<td>旧工作流 <code>push.paths</code> 白名单只有 <code>circle-feeds.json</code> 等，改文章 &#x2F; CSS &#x2F; 主题配置<strong>不会触发自动部署</strong></td>
+<td>白名单已删除，推送 <code>main</code> 即部署</td>
+</tr>
+<tr>
+<td>定时</td>
+<td>仓库默认分支是 <code>gh-pages</code>，<code>schedule</code> cron 只在默认分支生效，朋友圈数据 21 天没刷新</td>
+<td>需在 GitHub 改默认分支，见 19.4</td>
+</tr>
+<tr>
+<td>缓存破坏</td>
+<td><code>?v=N</code> 靠手改，忘 bump 则 URL 不变；Cloudflare 静态资源 <code>max-age=14400</code>（4h），浏览器也用旧副本</td>
+<td>已改为按内容 hash 自动注入，见 19.3</td>
+</tr>
+<tr>
+<td>生效延迟</td>
+<td>Pages 构建 1–2 分钟 + CF 页面 <code>max-age=600</code>、CSS <code>max-age=14400</code></td>
+<td>无法消除，验证时给 URL 加随机查询串</td>
+</tr>
+</tbody></table>
+<h3 id="19-2-工作流：推送即部署"><a href="#19-2-工作流：推送即部署" class="headerlink" title="19.2 工作流：推送即部署"></a>19.2 工作流：推送即部署</h3><p>　　<code>.github/workflows/circle.yml</code> 的三个触发口：</p>
+<table>
+<thead>
+<tr>
+<th>触发</th>
+<th>行为</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>push</code> 到 <code>main</code></td>
+<td>抓 RSS → <code>npx hexo generate -d</code> 部署到 <code>gh-pages</code> → 写回数据</td>
+</tr>
+<tr>
+<td><code>schedule</code> 每天 UTC 22:17</td>
+<td>同上，保证没推送的日子也刷新朋友圈（<strong>需默认分支为 <code>main</code></strong>）</td>
+</tr>
+<tr>
+<td><code>workflow_dispatch</code></td>
+<td>Actions 页手动跑一次</td>
+</tr>
+</tbody></table>
+<p>　　写回 <code>circle.json</code> 的提交信息带 <code>[skip ci]</code>，job 上还有 <code>if</code> 判断兜底，避免「Actions 提交 → 又触发 Actions」的死循环。本地 <code>npx hexo generate -d</code> 仍然可用；别和自动部署同时跑，避免互相覆盖 <code>gh-pages</code>。</p>
+<h3 id="19-3-CSS-JS-版本号自动化"><a href="#19-3-CSS-JS-版本号自动化" class="headerlink" title="19.3 CSS &#x2F; JS 版本号自动化"></a>19.3 CSS &#x2F; JS 版本号自动化</h3><p>　　<code>scripts/asset-version.js</code> 在 <code>after_render:html</code> 阶段，把 HTML 里站内 <code>/css/</code>、<code>/js/</code> 资源的 <code>?v=任意值</code> 替换成<strong>该文件内容的 md5 前 10 位</strong>。内容不变则 URL 不变（缓存照常命中），内容一变则 URL 自动变，<code>_config.fluid.yml</code> 里的 <code>?v=19</code> 从此只是占位符。</p>
+<blockquote>
+<p><strong>红线：别改回 <code>after_generate</code>。</strong> Hexo 8 的 <code>generate</code> 顺序是 <code>load()</code> → <code>_generate()</code>（其中触发 <code>before_generate</code> &#x2F; <code>after_generate</code>）→ <code>firstGenerate()</code> <strong>才写盘</strong>。在 <code>after_generate</code> 里改 <code>public/</code> 的旧 HTML，随后会被重新写盘覆盖，实测「脚本日志显示重写了 85 个文件，但产物依旧是旧版本号」。<code>after_render:html</code> 返回的字符串才是最终写盘内容。</p>
+</blockquote>
+<blockquote>
+<p><strong>为什么增量生成也不用删 <code>db.json</code></strong>：<code>writeFile()</code> 用渲染结果的 sha1 和 Cache 里的旧 hash 比较。CSS 内容一变，每个页面渲染出的 HTML 里 <code>?v=</code> 都跟着变 → hash 不同 → <strong>所有页面自动重写</strong>，因此绕开了「主题配置变化不触发重渲染」的老坑，也不需要 <code>hexo clean</code>。</p>
+</blockquote>
+<p>　　边界：只处理 <code>href</code> &#x2F; <code>src</code> 属性里以 <code>/css/</code>、<code>/js/</code> 开头的站内 <code>.css</code> &#x2F; <code>.js</code>；CDN 外链、图片 <code>?v=2</code>、APK 直链 <code>?v=48</code>、头像 <code>?v=4</code>、<code>circle.json</code> 的按小时破坏符都原样保留；并保留 Hexo <code>js()</code> &#x2F; <code>css()</code> helper 生成的 <code>?v=19.css</code> 查询串后缀。<strong>新增自定义 CSS &#x2F; JS 仍需登记进 <code>custom_css</code> &#x2F; <code>custom_js</code></strong>，否则页面不会引用它。</p>
+<p>　　验证：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">npx hexo generate<br>grep -o <span class="hljs-string">&#x27;site-motion.css?v=[0-9a-f]*&#x27;</span> public/index.html | <span class="hljs-built_in">head</span> -1<br><span class="hljs-comment"># 改动 source/css/ 下任一文件后再跑一次 generate，哈希应当变化；恢复文件后再跑，哈希回到原值</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="19-4-一次性设置：把默认分支改回-main"><a href="#19-4-一次性设置：把默认分支改回-main" class="headerlink" title="19.4 一次性设置：把默认分支改回 main"></a>19.4 一次性设置：把默认分支改回 <code>main</code></h3><p>　　这一步要在 GitHub 网页操作，本地命令行（无 <code>gh</code> CLI &#x2F; 无 API token）代劳不了：</p>
+<ol>
+<li>仓库 → <strong>Settings → Branches → Default branch</strong> 切到 <code>main</code>。</li>
+<li><strong>Settings → Pages</strong> 保持 <code>Deploy from a branch</code> &#x3D; <code>gh-pages</code> &#x2F; <code>root</code>，<strong>不要改</strong>。Pages 源分支与默认分支是两回事，切换后站点照常访问。</li>
+<li>次日 UTC 22:17（北京时间 06:17）起，每天自动抓取一次；可在 Actions 页看运行记录的 <code>event</code> 是否出现 <code>schedule</code>。</li>
+<li><strong>改完就保持 <code>main</code>，不要再切回 <code>gh-pages</code>。</strong> Pages 的「部署分支」和仓库的「默认分支」是两套独立设置：前者决定站点读哪份静态文件，后者决定 clone &#x2F; PR 基准以及定时任务在哪条分支上跑。切回去不会让站点有任何变化，只会让 <code>schedule</code> 再次失效、朋友圈重新停更。</li>
+<li>自检：<code>git ls-remote --symref origin HEAD</code> 应返回 <code>ref: refs/heads/main	HEAD</code>；若仍是 <code>gh-pages</code>，说明网页上的修改没保存成功（选完下拉后还要点 <strong>Update</strong> 并在弹窗里确认）。</li>
+</ol>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>　　核心就两个文件：</p>
 <ul>
 <li><code>_config.yml</code> 管全局设置</li>
 <li><code>_config.fluid.yml</code> 管主题样式</li>
 </ul>
-<p>　　改完配置执行 <code>hexo generate -d</code> 即可生成并部署。日常命令见开头「一、常用命令速查」。</p>
+<p>　　改完配置可以本地执行 <code>hexo generate -d</code>，也可以直接 <code>git push origin main</code> 交给 Actions 自动部署（见十九）。日常命令见开头「一、常用命令速查」。</p>
 
                 
               </div>
@@ -962,8 +1047,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2026/09/04/opencode-tutorial/" title="OpenCode 上手">
-                        <span class="hidden-mobile">OpenCode 上手</span>
+                      <a href="/2026/09/04/hexo-giscus-guide/" title="Giscus，让博客接入评论">
+                        <span class="hidden-mobile">Giscus，让博客接入评论</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -1371,10 +1456,10 @@
 
 
   
-<script src="/js/site-interactions.js?v=3.js"></script>
-<script src="/js/cloud-sea.js?v=10.js"></script>
-<script src="/js/soft-nav.js?v=7.js"></script>
-<script src="/js/moments.js?v=2.js"></script>
+<script src="/js/site-interactions.js?v=a7465d7a48.js"></script>
+<script src="/js/cloud-sea.js?v=d6052e9506.js"></script>
+<script src="/js/soft-nav.js?v=6c62df5654.js"></script>
+<script src="/js/moments.js?v=11ac23c2a6.js"></script>
 
 
 
