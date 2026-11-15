@@ -1,7 +1,79 @@
 {
-  "generated": "2026-11-12T11:02:17.845693+00:00",
-  "total_archived": 136,
+  "generated": "2026-11-15T14:24:50.725080+00:00",
+  "total_archived": 145,
   "posts": [
+    {
+      "title": "koffi 在 Alpine 上直接 abort：一次 musl 预编译排查",
+      "url": "https://blog.amamo.top/posts/koffi-musl-alpine-abort/",
+      "date": "2026-11-15T00:00:00+00:00",
+      "name": "年华",
+      "link": "https://blog.amamo.top",
+      "avatar": "https://q1.qlogo.cn/g?b=qq&nk=1323860289&s=640"
+    },
+    {
+      "title": "面向人机交互的 18 条设计指南：从 150 条建议到一张可检验的表",
+      "url": "https://pureskyblog.dpdns.org/posts/amershi-guidelines/",
+      "date": "2026-11-14T00:00:00+00:00",
+      "name": "puresky-blog",
+      "link": "https://pureskyblog.dpdns.org",
+      "avatar": "https://avatars.githubusercontent.com/u/232055116?v=4"
+    },
+    {
+      "title": "要怎么最轮椅地理解四大链表指针操作核心形式",
+      "url": "https://pureskyblog.dpdns.org/posts/linked-list-pointer-forms/",
+      "date": "2026-11-14T00:00:00+00:00",
+      "name": "puresky-blog",
+      "link": "https://pureskyblog.dpdns.org",
+      "avatar": "https://avatars.githubusercontent.com/u/232055116?v=4"
+    },
+    {
+      "title": "力扣解题笔记：虚拟头节点真的非要不可吗？",
+      "url": "https://pureskyblog.dpdns.org/posts/post-20261114/",
+      "date": "2026-11-14T00:00:00+00:00",
+      "name": "puresky-blog",
+      "link": "https://pureskyblog.dpdns.org",
+      "avatar": "https://avatars.githubusercontent.com/u/232055116?v=4"
+    },
+    {
+      "title": "靠梦想还是靠计划：CHI 投稿的五个写作建议",
+      "url": "https://pureskyblog.dpdns.org/posts/chi-submission-tips/",
+      "date": "2026-11-13T00:00:00+00:00",
+      "name": "puresky-blog",
+      "link": "https://pureskyblog.dpdns.org",
+      "avatar": "https://avatars.githubusercontent.com/u/232055116?v=4"
+    },
+    {
+      "title": "要怎么在数据结构期末从 Java 切到 C++",
+      "url": "https://pureskyblog.dpdns.org/posts/java-to-cpp-dsa-exam/",
+      "date": "2026-11-13T00:00:00+00:00",
+      "name": "puresky-blog",
+      "link": "https://pureskyblog.dpdns.org",
+      "avatar": "https://avatars.githubusercontent.com/u/232055116?v=4"
+    },
+    {
+      "title": "力扣解题笔记：求一棵树的节点数",
+      "url": "https://pureskyblog.dpdns.org/posts/post-20261113/",
+      "date": "2026-11-13T00:00:00+00:00",
+      "name": "puresky-blog",
+      "link": "https://pureskyblog.dpdns.org",
+      "avatar": "https://avatars.githubusercontent.com/u/232055116?v=4"
+    },
+    {
+      "title": "HCI 的七种研究贡献类型：一篇论文到底贡献了什么",
+      "url": "https://pureskyblog.dpdns.org/posts/research-contribution-types/",
+      "date": "2026-11-13T00:00:00+00:00",
+      "name": "puresky-blog",
+      "link": "https://pureskyblog.dpdns.org",
+      "avatar": "https://avatars.githubusercontent.com/u/232055116?v=4"
+    },
+    {
+      "title": "数据库基础（其一）：认识数据库",
+      "url": "https://pureskyblog.dpdns.org/posts/post-20261112/",
+      "date": "2026-11-12T00:00:00+00:00",
+      "name": "puresky-blog",
+      "link": "https://pureskyblog.dpdns.org",
+      "avatar": "https://avatars.githubusercontent.com/u/232055116?v=4"
+    },
     {
       "title": "Nginx（其四）：进一步配置文件与配置自签名证书",
       "url": "https://pureskyblog.dpdns.org/posts/post-20261110/",
@@ -409,78 +481,6 @@
       "name": "x1shang-山与回响",
       "link": "https://www.x1shang.top",
       "avatar": "https://x1shang.top/assets/img/x1shang-avatar.webp"
-    },
-    {
-      "title": "AGI时代已经不远，测试AI看的将不再是跑分，而是工程能力。很好的一个例子就是友链中的[711 Night](https://rain.ptsfdtz.top/)。",
-      "url": "https://x1shang.top/assertions/testingai/",
-      "date": "2026-10-13T16:00:00+00:00",
-      "name": "x1shang-山与回响",
-      "link": "https://www.x1shang.top",
-      "avatar": "https://x1shang.top/assets/img/x1shang-avatar.webp"
-    },
-    {
-      "title": "你真的了解git worktree吗？",
-      "url": "https://pureskyblog.dpdns.org/posts/post-20261013/",
-      "date": "2026-10-13T00:00:00+00:00",
-      "name": "puresky-blog",
-      "link": "https://pureskyblog.dpdns.org",
-      "avatar": "https://avatars.githubusercontent.com/u/232055116?v=4"
-    },
-    {
-      "title": "Qoder CN 免费喝奶茶，Qwen3.8-Flash 限时免费使用",
-      "url": "https://qwwp.top/blog/qoder-cn-free-milk-tea",
-      "date": "2026-10-13T00:00:00+00:00",
-      "name": "qwwp",
-      "link": "https://qwwp.top",
-      "avatar": "https://qwwp.top/images/avatar.jpg"
-    },
-    {
-      "title": "AxisNow 免费CDN（非广告）",
-      "url": "https://qwwp.top/blog/axisnow-free-cdn",
-      "date": "2026-10-13T00:00:00+00:00",
-      "name": "qwwp",
-      "link": "https://qwwp.top",
-      "avatar": "https://qwwp.top/images/avatar.jpg"
-    },
-    {
-      "title": "链表归并：递归还是迭代？",
-      "url": "https://pureskyblog.dpdns.org/posts/post-20261012/",
-      "date": "2026-10-12T00:00:00+00:00",
-      "name": "puresky-blog",
-      "link": "https://pureskyblog.dpdns.org",
-      "avatar": "https://avatars.githubusercontent.com/u/232055116?v=4"
-    },
-    {
-      "title": "PAT：GitHub 个人访问令牌是什么",
-      "url": "https://pureskyblog.dpdns.org/posts/post-20261012-2/",
-      "date": "2026-10-12T00:00:00+00:00",
-      "name": "puresky-blog",
-      "link": "https://pureskyblog.dpdns.org",
-      "avatar": "https://avatars.githubusercontent.com/u/232055116?v=4"
-    },
-    {
-      "title": "GitHub Actions：.workflow里面到底有什么——CI篇",
-      "url": "https://pureskyblog.dpdns.org/posts/post-20261011/",
-      "date": "2026-10-11T00:00:00+00:00",
-      "name": "puresky-blog",
-      "link": "https://pureskyblog.dpdns.org",
-      "avatar": "https://avatars.githubusercontent.com/u/232055116?v=4"
-    },
-    {
-      "title": "力扣解题笔记：重排链表",
-      "url": "https://pureskyblog.dpdns.org/posts/post-20261011-2/",
-      "date": "2026-10-11T00:00:00+00:00",
-      "name": "puresky-blog",
-      "link": "https://pureskyblog.dpdns.org",
-      "avatar": "https://avatars.githubusercontent.com/u/232055116?v=4"
-    },
-    {
-      "title": "力扣解题笔记：接雨水",
-      "url": "https://pureskyblog.dpdns.org/posts/post-20261011-3/",
-      "date": "2026-10-11T00:00:00+00:00",
-      "name": "puresky-blog",
-      "link": "https://pureskyblog.dpdns.org",
-      "avatar": "https://avatars.githubusercontent.com/u/232055116?v=4"
     }
   ]
 }

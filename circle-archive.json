@@ -5,6 +5,11 @@
     "rss": "https://blog.amamo.top/rss.xml",
     "posts": [
       {
+        "title": "koffi 在 Alpine 上直接 abort：一次 musl 预编译排查",
+        "url": "https://blog.amamo.top/posts/koffi-musl-alpine-abort/",
+        "date": "2026-11-15T00:00:00+00:00"
+      },
+      {
         "title": "机房装 Node.js 记",
         "url": "https://blog.amamo.top/posts/life/%E6%9C%BA%E6%88%BF%E8%A3%85nodejs%E8%AE%B0/",
         "date": "2026-11-07T00:00:00+00:00"
@@ -133,6 +138,46 @@
     "avatar": "https://avatars.githubusercontent.com/u/232055116?v=4",
     "rss": "https://pureskyblog.dpdns.org/rss.xml",
     "posts": [
+      {
+        "title": "面向人机交互的 18 条设计指南：从 150 条建议到一张可检验的表",
+        "url": "https://pureskyblog.dpdns.org/posts/amershi-guidelines/",
+        "date": "2026-11-14T00:00:00+00:00"
+      },
+      {
+        "title": "要怎么最轮椅地理解四大链表指针操作核心形式",
+        "url": "https://pureskyblog.dpdns.org/posts/linked-list-pointer-forms/",
+        "date": "2026-11-14T00:00:00+00:00"
+      },
+      {
+        "title": "力扣解题笔记：虚拟头节点真的非要不可吗？",
+        "url": "https://pureskyblog.dpdns.org/posts/post-20261114/",
+        "date": "2026-11-14T00:00:00+00:00"
+      },
+      {
+        "title": "靠梦想还是靠计划：CHI 投稿的五个写作建议",
+        "url": "https://pureskyblog.dpdns.org/posts/chi-submission-tips/",
+        "date": "2026-11-13T00:00:00+00:00"
+      },
+      {
+        "title": "要怎么在数据结构期末从 Java 切到 C++",
+        "url": "https://pureskyblog.dpdns.org/posts/java-to-cpp-dsa-exam/",
+        "date": "2026-11-13T00:00:00+00:00"
+      },
+      {
+        "title": "力扣解题笔记：求一棵树的节点数",
+        "url": "https://pureskyblog.dpdns.org/posts/post-20261113/",
+        "date": "2026-11-13T00:00:00+00:00"
+      },
+      {
+        "title": "HCI 的七种研究贡献类型：一篇论文到底贡献了什么",
+        "url": "https://pureskyblog.dpdns.org/posts/research-contribution-types/",
+        "date": "2026-11-13T00:00:00+00:00"
+      },
+      {
+        "title": "数据库基础（其一）：认识数据库",
+        "url": "https://pureskyblog.dpdns.org/posts/post-20261112/",
+        "date": "2026-11-12T00:00:00+00:00"
+      },
       {
         "title": "Nginx（其四）：进一步配置文件与配置自签名证书",
         "url": "https://pureskyblog.dpdns.org/posts/post-20261110/",
