@@ -32,7 +32,7 @@
 <meta property="og:image" content="https://blog.zuiges.com/img/hyper-melolock/app-appearance.jpg?v=2">
 <meta property="og:image" content="https://blog.zuiges.com/img/hyper-melolock/app-appearance-picker.jpg?v=2">
 <meta property="article:published_time" content="2026-10-09T06:00:00.000Z">
-<meta property="article:modified_time" content="2026-10-23T17:16:36.743Z">
+<meta property="article:modified_time" content="2026-11-15T14:17:29.670Z">
 <meta property="article:author" content="zuige">
 <meta property="article:tag" content="LSPosed">
 <meta property="article:tag" content="Xposed">
@@ -405,7 +405,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.6k 字
+          3k 字
         
       </span>
     
@@ -416,7 +416,7 @@
         
         
         
-          22 分钟
+          25 分钟
         
       </span>
     
@@ -465,7 +465,7 @@
 <p><img src="/img/hyper-melolock/lockscreen-colors.jpg" srcset="/img/loading.gif" lazyload alt="四种配色方案的锁屏效果"></p>
 <h2 id="一、下载安装"><a href="#一、下载安装" class="headerlink" title="一、下载安装"></a>一、下载安装</h2><h3 id="下载地址"><a href="#下载地址" class="headerlink" title="下载地址"></a>下载地址</h3><ul>
 <li>GitHub 发布页：<a target="_blank" rel="noopener" href="https://github.com/zuige66/Hyper-MeloLock/releases">Hyper-MeloLock Releases</a>（含历史版本与校验信息）</li>
-<li>最新版国内直链：<a href="/downloads/melolock/Hyper-MeloLock-v0.3.6.apk">Hyper-MeloLock-v0.3.6.apk</a></li>
+<li>最新版国内直链：<a href="/downloads/melolock/Hyper-MeloLock-v0.3.9.apk">Hyper-MeloLock-v0.3.9.apk</a></li>
 </ul>
 <p>　　只从 GitHub Releases 或本博客直链下载正式签名包。模块作用于系统锁屏界面，来源不明的二次打包版本有风险。</p>
 <h3 id="安装前提"><a href="#安装前提" class="headerlink" title="安装前提"></a>安装前提</h3><table>
@@ -561,6 +561,13 @@
 <li><strong>修复</strong>：通知页退出后媒体卡偶发残留染色、时钟小时数偶发消失、快速亮屏或解锁时闪一下原生壁纸。</li>
 </ul>
 <p>　　上面两个新开关默认就是打开的状态，装上升级即是新样子；想回到旧版外观，在「播放器」分组里关掉即可。</p>
+<h2 id="五、v0-3-9-更新说明"><a href="#五、v0-3-9-更新说明" class="headerlink" title="五、v0.3.9 更新说明"></a>五、v0.3.9 更新说明</h2><p>　　这一版主要解决屏下指纹机型的一个实际干扰，并把此前两个未正式发布的版本一起带出。</p>
+<ul>
+<li><strong>可隐藏底部「展开通知」胶囊</strong>：在「设置 → 通知入口」打开「隐藏通知入口」，底部那颗胶囊连同触摸区域一起消失，屏下指纹（尤其超声波）机型不再被挡手。默认关闭，不影响其他用户。<strong>注意：这颗胶囊也是「播放器 ↔ 通知页」来回切换的入口，隐藏后就不能再这样切页了</strong>，通知仍从系统下拉查看。</li>
+<li><strong>拦截网易云音乐自己的锁屏歌词页</strong>：锁屏不会再被网易云那个右划页面盖住。需要在框架管理器里给本模块补勾「网易云音乐」作用域，并重启一次网易云。</li>
+<li><strong>诊断报告增强</strong>：点「复制报告」时会顺带抓一份当时的播放现场，能分清「确实没在放歌」和「读取失败」。</li>
+<li><strong>修复</strong>：歌词里的制作信息（编曲、录音工程师等）不再占掉主行；长歌名开始滚动时不再先跳一下；媒体监听偶尔注册不上时会自动重试。</li>
+</ul>
 <h2 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h2><ul>
 <li>代码仓库：<a target="_blank" rel="noopener" href="https://github.com/zuige66/Hyper-MeloLock">https://github.com/zuige66/Hyper-MeloLock</a></li>
 <li>问题反馈：<a target="_blank" rel="noopener" href="https://github.com/zuige66/Hyper-MeloLock/issues">GitHub Issues</a></li>

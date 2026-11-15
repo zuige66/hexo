@@ -27,7 +27,7 @@
 <meta property="og:description" content="前言　　博客搭好了，但怎么改标题、加图标、管理分类标签？本文以当前博客为例，讲解 Hexo + Fluid 的目录结构和常用配置。 一、常用命令速查　　以下命令都在博客根目录下执行。    作用 命令    新建文章 hexo new &quot;文章标题&quot;   新建独立页面 hexo new page &quot;页面名&quot;   新建草稿 hexo new draft &amp;quo">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-09-03T16:00:00.000Z">
-<meta property="article:modified_time" content="2026-11-09T16:30:27.728Z">
+<meta property="article:modified_time" content="2026-11-12T11:01:42.659Z">
 <meta property="article:author" content="zuige">
 <meta property="article:tag" content="Fluid">
 <meta property="article:tag" content="Hexo">
@@ -397,7 +397,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          16k 字
+          18k 字
         
       </span>
     
@@ -408,7 +408,7 @@
         
         
         
-          135 分钟
+          150 分钟
         
       </span>
     
@@ -917,7 +917,16 @@
 <td>Actions 页手动跑一次</td>
 </tr>
 </tbody></table>
-<p>　　写回 <code>circle.json</code> 的提交信息带 <code>[skip ci]</code>，job 上还有 <code>if</code> 判断兜底，避免「Actions 提交 → 又触发 Actions」的死循环。本地 <code>npx hexo generate -d</code> 仍然可用；别和自动部署同时跑，避免互相覆盖 <code>gh-pages</code>。</p>
+<p>　　写回 <code>circle.json</code> 的提交信息带 <code>[skip ci]</code>，job 上还有 <code>if</code> 判断兜底，避免「Actions 提交 → 又触发 Actions」的死循环。</p>
+<blockquote>
+<p><strong>红线（2026-11-12 实测）：日常发文章只 <code>git push origin main</code>，不要本地 <code>npx hexo deploy</code>。</strong></p>
+<p>推送 <code>main</code> 会立刻触发 Actions 走完整链路（抓 RSS → <code>hexo generate -d</code> → 回写数据），本地再 deploy 一次必然要 <code>force update</code> 覆盖它，实测会出现连锁反应：</p>
+<ul>
+<li><code>gh-pages</code> 上出现 <code>+ xxx...yyy HEAD -&gt; gh-pages (forced update)</code>，等于把 Actions 刚抓的新鲜 <code>circle.json</code> 换成本地几小时前的旧数据。</li>
+<li>Actions 回写 <code>[skip ci]</code> 提交会抢占 <code>main</code>，导致紧接着的 <code>git push origin main</code> 报 <code>non-fast-forward</code>；解法是 <code>git fetch &amp;&amp; git rebase origin/main</code>（有未提交改动先 <code>git stash push -- &lt;文件&gt;</code>）。</li>
+</ul>
+<p>本地 <code>hexo deploy</code> 只剩两个正当用途：调试产物、Actions 挂了时的应急。用之前先确认没有正在跑的 workflow。</p>
+</blockquote>
 <h3 id="19-3-CSS-JS-版本号自动化"><a href="#19-3-CSS-JS-版本号自动化" class="headerlink" title="19.3 CSS &#x2F; JS 版本号自动化"></a>19.3 CSS &#x2F; JS 版本号自动化</h3><p>　　<code>scripts/asset-version.js</code> 在 <code>after_render:html</code> 阶段，把 HTML 里站内 <code>/css/</code>、<code>/js/</code> 资源的 <code>?v=任意值</code> 替换成<strong>该文件内容的 md5 前 10 位</strong>。内容不变则 URL 不变（缓存照常命中），内容一变则 URL 自动变，<code>_config.fluid.yml</code> 里的 <code>?v=19</code> 从此只是占位符。</p>
 <blockquote>
 <p><strong>红线：别改回 <code>after_generate</code>。</strong> Hexo 8 的 <code>generate</code> 顺序是 <code>load()</code> → <code>_generate()</code>（其中触发 <code>before_generate</code> &#x2F; <code>after_generate</code>）→ <code>firstGenerate()</code> <strong>才写盘</strong>。在 <code>after_generate</code> 里改 <code>public/</code> 的旧 HTML，随后会被重新写盘覆盖，实测「脚本日志显示重写了 85 个文件，但产物依旧是旧版本号」。<code>after_render:html</code> 返回的字符串才是最终写盘内容。</p>
@@ -937,6 +946,79 @@
 <li><strong>改完就保持 <code>main</code>，不要再切回 <code>gh-pages</code>。</strong> Pages 的「部署分支」和仓库的「默认分支」是两套独立设置：前者决定站点读哪份静态文件，后者决定 clone &#x2F; PR 基准以及定时任务在哪条分支上跑。切回去不会让站点有任何变化，只会让 <code>schedule</code> 再次失效、朋友圈重新停更。</li>
 <li>自检：<code>git ls-remote --symref origin HEAD</code> 应返回 <code>ref: refs/heads/main	HEAD</code>；若仍是 <code>gh-pages</code>，说明网页上的修改没保存成功（选完下拉后还要点 <strong>Update</strong> 并在弹窗里确认）。</li>
 </ol>
+<h2 id="二十、数学公式与-LaTeX（2026-11-12）"><a href="#二十、数学公式与-LaTeX（2026-11-12）" class="headerlink" title="二十、数学公式与 LaTeX（2026-11-12）"></a>二十、数学公式与 LaTeX（2026-11-12）</h2><p>　　本站用 <code>hexo-renderer-marked</code> 渲染 Markdown，而 marked 不认 LaTeX。直接写 <code>$...$</code> &#x2F; <code>$$...$$</code> 会被当成普通 Markdown 处理：<code>x_1</code> 变成 <code>x&lt;em&gt;1&lt;/em&gt;</code>、<code>\begin{cases}</code> 里的 <code>\\</code> 少一个反斜杠、<code>*</code> 被当斜体——等 MathJax 拿到时公式已经碎了。</p>
+<h3 id="20-1-三层配合，缺一不可"><a href="#20-1-三层配合，缺一不可" class="headerlink" title="20.1 三层配合，缺一不可"></a>20.1 三层配合，缺一不可</h3><table>
+<thead>
+<tr>
+<th>层</th>
+<th>位置</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>保护</td>
+<td><code>scripts/math-protect.js</code></td>
+<td><code>before_post_render</code> 阶段把公式换成纯字母数字占位符（<code>$$...$$</code>），marked 渲染完再换回原始 LaTeX 并把 <code>&lt; &gt; &amp;</code> 转义成实体，浏览器解析后 <code>textContent</code> 恰好是原公式</td>
+</tr>
+<tr>
+<td>渲染</td>
+<td><code>_config.fluid.yml</code> 的 <code>post.math</code></td>
+<td><code>enable: true</code> + <code>specific: true</code>，只有在 front-matter 写 <code>math: true</code> 的文章才加载 MathJax，旧文章零开销</td>
+</tr>
+<tr>
+<td>开关</td>
+<td>文章 front-matter</td>
+<td><code>math: true</code></td>
+</tr>
+</tbody></table>
+<p>　　占位符必须纯字母数字——含 <code>$ \ _ * { }</code> 任一个都会被 Markdown &#x2F; Nunjucks 二次处理。</p>
+<h3 id="20-2-目录锚点红线：别用-GitHub-风格的-slug"><a href="#20-2-目录锚点红线：别用-GitHub-风格的-slug" class="headerlink" title="20.2 目录锚点红线：别用 GitHub 风格的 slug"></a>20.2 目录锚点红线：别用 GitHub 风格的 slug</h3><p>　　手写目录 <code>[标题](#锚点)</code> 时，锚点必须和 marked 生成的 <code>id</code> 完全一致。<strong>marked 的标题 id 会保留中文标点与全角括号，只把空格和 ASCII 标点（<code>+</code> <code>/</code> 等）换掉</strong>；GitHub 的习惯是删掉所有标点，两者不一致会点了没反应。</p>
+<table>
+<thead>
+<tr>
+<th>标题</th>
+<th>marked 生成的 id</th>
+<th>GitHub 风格（会失效）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>## 2. 恒定电流场中，为什么电流不能中断</code></td>
+<td><code>2-恒定电流场中，为什么电流不能中断</code></td>
+<td><code>2-恒定电流场中为什么电流不能中断</code></td>
+</tr>
+<tr>
+<td><code>## 7. 能量 &amp; 能量密度：静电场 &amp; 磁场</code></td>
+<td><code>7-能量-能量密度：静电场-磁场</code></td>
+<td><code>7-能量--能量密度静电场--磁场</code></td>
+</tr>
+</tbody></table>
+<p>　　可靠做法：先 <code>npx hexo generate</code>，再从产物里读真实 id 回填 href（<code>grep -o &#39;&lt;h2 id=&quot;[^&quot;]*&quot;&#39;</code>），并做一次比对：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash">python - &lt;&lt;<span class="hljs-string">&#x27;EOF&#x27;</span><br>import re, io<br>from urllib.parse import unquote<br>h = io.open(r<span class="hljs-string">&#x27;public/&lt;路径&gt;/index.html&#x27;</span>, encoding=<span class="hljs-string">&#x27;utf-8&#x27;</span>).<span class="hljs-built_in">read</span>()<br>ids = <span class="hljs-built_in">set</span>(re.findall(r<span class="hljs-string">&#x27;&lt;h2 id=&quot;([^&quot;]+)&quot;&#x27;</span>, h))<br>bad = [x <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> re.findall(r<span class="hljs-string">&#x27;&lt;li&gt;&lt;a href=&quot;#([^&quot;]+)&quot;&#x27;</span>, h) <span class="hljs-keyword">if</span> unquote(x) not <span class="hljs-keyword">in</span> ids]<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;失效锚点:&quot;</span>, bad or <span class="hljs-string">&quot;无&quot;</span>)<br>EOF<br></code></pre></td></tr></table></figure>
+
+<h3 id="20-3-验收标准"><a href="#20-3-验收标准" class="headerlink" title="20.3 验收标准"></a>20.3 验收标准</h3><table>
+<thead>
+<tr>
+<th>检查项</th>
+<th>期望</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>页面残留 <code>CMCMATHPROTECT</code></td>
+<td>0（有残留说明 after_post_render 没跑到）</td>
+</tr>
+<tr>
+<td>正文残留 <code>$$</code> 原文</td>
+<td>0（用浏览器 <code>innerText</code> 数，不是数 HTML 源码）</td>
+</tr>
+<tr>
+<td><code>mjx-container</code> 数量</td>
+<td>与公式条数一致（MathJax 排版产物）</td>
+</tr>
+<tr>
+<td>目录锚点</td>
+<td>全部能命中 <code>h2 id</code></td>
+</tr>
+</tbody></table>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>　　核心就两个文件：</p>
 <ul>
 <li><code>_config.yml</code> 管全局设置</li>
