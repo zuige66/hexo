@@ -1,7 +1,23 @@
 {
-  "generated": "2026-11-15T14:24:50.725080+00:00",
-  "total_archived": 145,
+  "generated": "2026-11-17T14:56:40.591502+00:00",
+  "total_archived": 151,
   "posts": [
+    {
+      "title": "力扣解题笔记：摘一颗链表节点",
+      "url": "https://pureskyblog.dpdns.org/posts/post-20261116/",
+      "date": "2026-11-16T00:00:00+00:00",
+      "name": "puresky-blog",
+      "link": "https://pureskyblog.dpdns.org",
+      "avatar": "https://avatars.githubusercontent.com/u/232055116?v=4"
+    },
+    {
+      "title": "逆波兰表达式",
+      "url": "https://pureskyblog.dpdns.org/posts/post-20261116-2/",
+      "date": "2026-11-16T00:00:00+00:00",
+      "name": "puresky-blog",
+      "link": "https://pureskyblog.dpdns.org",
+      "avatar": "https://avatars.githubusercontent.com/u/232055116?v=4"
+    },
     {
       "title": "koffi 在 Alpine 上直接 abort：一次 musl 预编译排查",
       "url": "https://blog.amamo.top/posts/koffi-musl-alpine-abort/",
@@ -9,6 +25,38 @@
       "name": "年华",
       "link": "https://blog.amamo.top",
       "avatar": "https://q1.qlogo.cn/g?b=qq&nk=1323860289&s=640"
+    },
+    {
+      "title": "Amuse：把画面、文字和现成音乐变成和弦的 AI 写歌伙伴",
+      "url": "https://pureskyblog.dpdns.org/posts/amuse/",
+      "date": "2026-11-15T00:00:00+00:00",
+      "name": "puresky-blog",
+      "link": "https://pureskyblog.dpdns.org",
+      "avatar": "https://avatars.githubusercontent.com/u/232055116?v=4"
+    },
+    {
+      "title": "Concordia：生成式智能体建模，靠游戏主持人把语言动作落成现实",
+      "url": "https://pureskyblog.dpdns.org/posts/concordia/",
+      "date": "2026-11-15T00:00:00+00:00",
+      "name": "puresky-blog",
+      "link": "https://pureskyblog.dpdns.org",
+      "avatar": "https://avatars.githubusercontent.com/u/232055116?v=4"
+    },
+    {
+      "title": "力扣解题笔记：将你的链表复制到数组里面",
+      "url": "https://pureskyblog.dpdns.org/posts/post-20261115/",
+      "date": "2026-11-15T00:00:00+00:00",
+      "name": "puresky-blog",
+      "link": "https://pureskyblog.dpdns.org",
+      "avatar": "https://avatars.githubusercontent.com/u/232055116?v=4"
+    },
+    {
+      "title": "从人设到个性化：角色扮演语言智能体综述",
+      "url": "https://pureskyblog.dpdns.org/posts/rpla-survey/",
+      "date": "2026-11-15T00:00:00+00:00",
+      "name": "puresky-blog",
+      "link": "https://pureskyblog.dpdns.org",
+      "avatar": "https://avatars.githubusercontent.com/u/232055116?v=4"
     },
     {
       "title": "面向人机交互的 18 条设计指南：从 150 条建议到一张可检验的表",
@@ -433,54 +481,6 @@
       "name": "Pasule Blog",
       "link": "https://pasule.com",
       "avatar": "https://tu.pasule.com/file/wallpaper/1784014500478.png"
-    },
-    {
-      "title": "AxisNow 调度与优选内容补充",
-      "url": "https://qwwp.top/blog/axisnow-scheduling-optimization",
-      "date": "2026-10-15T00:00:00+00:00",
-      "name": "qwwp",
-      "link": "https://qwwp.top",
-      "avatar": "https://qwwp.top/images/avatar.jpg"
-    },
-    {
-      "title": "你需要扩大你的上下文窗口",
-      "url": "https://pureskyblog.dpdns.org/posts/post-20261014/",
-      "date": "2026-10-14T00:00:00+00:00",
-      "name": "puresky-blog",
-      "link": "https://pureskyblog.dpdns.org",
-      "avatar": "https://avatars.githubusercontent.com/u/232055116?v=4"
-    },
-    {
-      "title": "四季虫歌（转载）",
-      "url": "https://pureskyblog.dpdns.org/posts/post-20261014-2/",
-      "date": "2026-10-14T00:00:00+00:00",
-      "name": "puresky-blog",
-      "link": "https://pureskyblog.dpdns.org",
-      "avatar": "https://avatars.githubusercontent.com/u/232055116?v=4"
-    },
-    {
-      "title": "KMP算法入门向讲解",
-      "url": "https://pureskyblog.dpdns.org/posts/post-20261014-3/",
-      "date": "2026-10-14T00:00:00+00:00",
-      "name": "puresky-blog",
-      "link": "https://pureskyblog.dpdns.org",
-      "avatar": "https://avatars.githubusercontent.com/u/232055116?v=4"
-    },
-    {
-      "title": "我的(随意)工作模式",
-      "url": "https://qwwp.top/blog/my-casual-workflow",
-      "date": "2026-10-14T00:00:00+00:00",
-      "name": "qwwp",
-      "link": "https://qwwp.top",
-      "avatar": "https://qwwp.top/images/avatar.jpg"
-    },
-    {
-      "title": "小的时候，午夜还是神秘的，想象着狼人与鬼怪；现在，午夜是亲切的，代码还在跑，ddl已经过了。大抵鬼怪们也同渡渡鸟一起绝灭了吧。",
-      "url": "https://x1shang.top/assertions/midnight/",
-      "date": "2026-10-13T16:00:00+00:00",
-      "name": "x1shang-山与回响",
-      "link": "https://www.x1shang.top",
-      "avatar": "https://x1shang.top/assets/img/x1shang-avatar.webp"
     }
   ]
 }

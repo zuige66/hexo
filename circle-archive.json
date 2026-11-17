@@ -139,6 +139,36 @@
     "rss": "https://pureskyblog.dpdns.org/rss.xml",
     "posts": [
       {
+        "title": "力扣解题笔记：摘一颗链表节点",
+        "url": "https://pureskyblog.dpdns.org/posts/post-20261116/",
+        "date": "2026-11-16T00:00:00+00:00"
+      },
+      {
+        "title": "逆波兰表达式",
+        "url": "https://pureskyblog.dpdns.org/posts/post-20261116-2/",
+        "date": "2026-11-16T00:00:00+00:00"
+      },
+      {
+        "title": "Amuse：把画面、文字和现成音乐变成和弦的 AI 写歌伙伴",
+        "url": "https://pureskyblog.dpdns.org/posts/amuse/",
+        "date": "2026-11-15T00:00:00+00:00"
+      },
+      {
+        "title": "Concordia：生成式智能体建模，靠游戏主持人把语言动作落成现实",
+        "url": "https://pureskyblog.dpdns.org/posts/concordia/",
+        "date": "2026-11-15T00:00:00+00:00"
+      },
+      {
+        "title": "力扣解题笔记：将你的链表复制到数组里面",
+        "url": "https://pureskyblog.dpdns.org/posts/post-20261115/",
+        "date": "2026-11-15T00:00:00+00:00"
+      },
+      {
+        "title": "从人设到个性化：角色扮演语言智能体综述",
+        "url": "https://pureskyblog.dpdns.org/posts/rpla-survey/",
+        "date": "2026-11-15T00:00:00+00:00"
+      },
+      {
         "title": "面向人机交互的 18 条设计指南：从 150 条建议到一张可检验的表",
         "url": "https://pureskyblog.dpdns.org/posts/amershi-guidelines/",
         "date": "2026-11-14T00:00:00+00:00"
