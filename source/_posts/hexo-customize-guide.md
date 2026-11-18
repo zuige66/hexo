@@ -683,7 +683,37 @@ EOF
 
 > 红线：以后改 `soft-nav.js` 的 popstate 逻辑，务必回归测试「文章页点右侧目录」——hash 变化与真正的前进/后退在这个事件里是无法靠 event 对象区分的，只能靠 pathname+search 快照比对。
 
-### 20.4 验收标准
+### 20.4 右侧目录当前项：蓝色卡片 + 跳转落在视口 1/3（2026-11-19 修）
+
+> 需求：右侧目录用淡蓝卡片标出当前阅读位置，卡片不随 hover 浮起；点击跳转后目标标题停在视口上 1/3、下面留 2/3 正文。
+
+两处改动，缺一不可：
+
+1. `source/css/site-motion.css` 新增 `#toc-body .tocbot-link.tocbot-active-link`：淡蓝底 + 蓝字 + 1px 内描边，`transform: none !important` 压掉 `.is-hovered` 的横移和 `:active` 的位移；深色模式另设更浓的底色。**必须用 `#toc-body` 抬高精度**——否则和后面 `@media (hover)` 里的 `.tocbot-link.is-hovered` 同优先级，后定义者会赢。
+
+2. `themes/fluid/layout/_partials/post/toc.ejs`：
+
+   ```js
+   var readOffset = Math.round(window.innerHeight / 3);
+   // ...
+   headingsOffset     : -boardTop + readOffset,
+   scrollSmoothOffset : -readOffset,
+   ```
+
+> **红线：`headingsOffset` 里的 `-boardTop` 绝不能删。**
+> tocbot 4.x 判定 active 时拿 `heading.offsetTop`（相对文章容器，实测 2215）和文档 `scrollTop`（实测 2513）比较，两者基准差一个 `boardTop`（容器到文档顶的距离，约 598）。Fluid 原本的 `-boardTop` 就是补偿它，使高亮边界落在视口 top≈10px。若直接把 `headingsOffset` 换成 `readOffset`，高亮会整整错位一节（实测点「三」亮「四」）。
+> 正确做法是在原补偿上**加** `readOffset`，把高亮边界从视口顶部平移到 1/3；`scrollSmoothOffset` 是独立配置，只管点击落点，取负值（目标滚动位置 = 标题文档位置 + offset，负 1/3 视口高度才能让标题停在距顶 1/3 处）。
+
+**实测验收**（1440×900 无头 Chrome，长文 `hexo-customize-guide`）：
+
+- 点「三、修改站点信息」：标题 `top=300`（= 900/3），active 正好是「三」，`transform:none`，背景 `rgba(48,169,222,.14)`。
+- 鼠标停在 active 项上：`transform` 仍为 `none`（不浮起）。
+- 手动滚「六、管理分类」到 `top=300`：active 自动跟随为「六」。
+- 全程 `window.__wbMarker` 未被清掉 → 没有整页 reload；无 JS 错误。
+
+> 附带发现：tocbot 4.20.1 实际没给 active 的 `<li>` 加 `is-active-li` 类，主题里那条左侧蓝竖条本来就 `visibility:hidden`、不会显示。CSS 里仍留一条 `display:none` 兜底，防止将来版本加上类后与卡片重复。
+
+### 20.5 验收标准
 
 | 检查项 | 期望 |
 |--------|------|
@@ -692,6 +722,8 @@ EOF
 | `mjx-container` 数量 | 与公式条数一致（MathJax 排版产物） |
 | 目录锚点 | 全部能命中 `h2 id` |
 | 点右侧目录后 | 页面滚到目标标题且不回顶（无整页 reload） |
+| 目录当前项 | 淡蓝卡片、蓝字，hover 时不浮起 |
+| 目录跳转落点 | 目标标题 `top ≈ 视口高度/3`，active 与点击项一致 |
 
 ## 总结
 

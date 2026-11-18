@@ -135,6 +135,34 @@
     background-color 180ms ease;
 }
 
+/* 右侧目录「当前阅读位置」= 淡蓝卡片 + 蓝字，不浮起。
+   用 #toc-body 抬高精度，压过后面 @media(hover) 里 .tocbot-link.is-hovered 的
+   translateX / 背景色；transform:none !important 同时压掉 :active 的位移。 */
+#toc-body .tocbot-link.tocbot-active-link {
+  color: var(--link-hover-color);
+  background-color: rgba(48, 169, 222, .14);
+  font-weight: 700;
+  transform: none !important;
+  box-shadow: inset 0 0 0 1px rgba(48, 169, 222, .22);
+}
+
+:root[data-user-color-scheme="dark"] #toc-body .tocbot-link.tocbot-active-link {
+  background-color: rgba(48, 169, 222, .22);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-user-color-scheme]) #toc-body .tocbot-link.tocbot-active-link {
+    background-color: rgba(48, 169, 222, .22);
+  }
+}
+
+/* 主题原本的 is-active-li 左侧小竖条：实测 tocbot 4.20.1 并未给 active 的 li 加该类，
+   竖条本来就 visibility:hidden 不显示；这里保留 display:none 作兜底，
+   防止将来版本加上类后与卡片重复。 */
+#toc-body .toc-list-item.is-active-li::before {
+  display: none !important;
+}
+
 /* 由站内搜索跳转到文章时，突出显示首次命中的关键词。 */
 .search-hit {
   color: inherit;
