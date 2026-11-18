@@ -14,6 +14,39 @@
 #           （时间不要省，卡片固定按 HH:mm 输出，只写日期会显示 00:00）
 #   content 必填，正文，支持 Markdown 与 HTML；配图写 ![alt](/img/xxx.png)
 #           图片放 source/img/ 下，会随 deploy 一起上线
+#   images  选填，配图轮播。写了它就**不要**再在 content 里写 ![](...)，
+#           否则同一张图会出现两次。每张可带 alt：
+#             images:
+#               - src: /img/moments/a.jpg
+#                 alt: 图片说明
+#           只写一行字符串也可以（- /img/moments/a.jpg），但 alt 会为空。
+#           结构见 themes/fluid/layout/_partials/moment-carousel.ejs
+#           （固定高度 contain 不裁切，左右箭头/圆点/计数，点图看原图）
+
+- date: '2026-11-17 22:30'
+  content: |
+    deepseek这次突然限额给一些人整破防了。有人也是厉害一个对话能聊6000多条，上下文不得爆炸。然后就跑去应用商店刷差评，在xhs dy发帖谩骂，这种行为也是难评😂我以为类似"大肥鱼"这种人设对话都是用chatbot之类的，毕竟要管理记忆什么的，没想到还有在网页玩的。
+
+    其实这次限额是有前兆的，前两天ds才开源了chat-demo还有个api全家桶，就是想用户自己去搭一个。
+
+    不过这次限额确实挺严重的，今天用来做工程电磁场复习，两个钟聊的就没额度了，转头问豆姐，发现豆姐的吐字速度相当慢。归根结底，还是国内算力不足，这个时候还是希望华为的算力芯片啊。
+
+    说实在的，这几周ds老是崩，加上这样限额，不如彻底关闭c端，将所有算力拿去训练v4.1pro或者v5，直接顶出下一代模型。
+
+    > "我们没有在 C 端上花很多力气，甚至一度我们都不想维护那些用户了，但是用户赶都赶不走"
+
+    还是好好让你梁文锋叔叔去训练AGI吧
+
+    构建AGI，务必做好！
+  images:
+    - src: /img/moments/ds-agi-meme.jpg
+      alt: 海绵宝宝表情包：去别的地方玩，不要耽误 AGI 训练
+    - src: /img/moments/ds-rant.jpg
+      alt: 黑底绿字刷屏「DeepSeek 官方，一茬又一茬，你到底想干什么？我恨死你了」
+    - src: /img/moments/ds-real-users.jpg
+      alt: 「你以为被 DeepSeek 限制的用户」对比「实际上被限制的用户」
+    - src: /img/moments/ds-app-store.jpg
+      alt: 应用商店评分 3.1，4 万条评论里 2 万条选了不推荐
 
 - date: '2026-11-02 22:50'
   content: |
