@@ -236,7 +236,10 @@
 .moment-carousel-btn {
   position: absolute;
   top: 50%;
-  transform: translateY(-50%);
+  /* 用负 margin 垂直居中，不用 transform——避免被 site-motion.css 的
+     button.is-hovered { transform: translateY(-3px) scale(1.06) } 覆盖，
+     导致 hover 时按钮猛地下沉半个身位。 */
+  margin-top: -1.125rem;
   width: 2.25rem;
   height: 2.25rem;
   padding: 0;

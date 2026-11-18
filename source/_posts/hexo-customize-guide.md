@@ -325,8 +325,10 @@ color:
 | 改导航栏 | `_config.fluid.yml` → `navbar.menu` |
 | 改颜色 | `_config.fluid.yml` → `color` |
 | 改字体 | `_config.fluid.yml` → `font` |
-| 改悬停、浮起与搜索高亮动效 | `source/css/site-motion.css` |
+| 改悬停、浮起与搜索高亮动效 | `source/css/site-motion.css` + `source/js/hover-intent.js`（悬停滤波，见下） |
 | 改站内搜索定位效果 | `themes/fluid/source/js/local-search.js` 与 `source/js/site-interactions.js` |
+
+> **悬停浮起的滤波红线（2026-11-18 新增）**：卡片/按钮的 `:hover { transform: translateY(-Npx) }` 会产生**几何反馈环**——鼠标停在元素下边缘 → 元素上浮脱离鼠标 → hover 失效下沉 → 鼠标又进入，无限抖动。现在位移统一由 `source/js/hover-intent.js` 加的 `.is-hovered` 类驱动（进入延迟 80ms、离开延迟 140ms，离开时还复查指针是否在扩展 12px 的命中区内），**不要再把这些选择器改回 `:hover`**。键盘可达靠 `:focus-visible` 直接驱动位移，与 JS 并存，两者缺一不可。`hover-intent.js` 用 document 事件委托，软导航换页重建 DOM 后无需重绑；仅精确指针（鼠标）启用，触屏与 reduced-motion 自动跳过。新增需要浮起的元素时，要同时在 `hover-intent.js` 的 `LIFT_SELECTOR` 和 CSS 的 `.is-hovered` 选择器里登记，否则不会有鼠标浮起效果。
 
 ## 十三、管理友链
 
@@ -514,6 +516,8 @@ git push origin main                     # 3. 推送后 Actions 自动部署；�
 > **红线一：幻灯片里的图必须手动摘掉懒加载属性。** Fluid 的 `img-lazyload.js` 给每张图挂 `srcset=loading.gif lazyload`，靠 IntersectionObserver 等到「可见」才摘。轮播里除第一张外全是 `display:none`，**永远等不到回调**——不处理的话切到第 2 张会一直显示 loading.gif。`moments.js` 的 `initCarousels()` 里对每张图 `removeAttribute('srcset')` / `removeAttribute('lazyload')`，别删。
 
 > **红线二：改主题模板后要 `rm -f db.json` 再 generate。** 只加 `?cb=` 之外最容易踩的是「产物没变」：Hexo 增量构建对 `themes/` 下 layout 的改动**不一定失效缓存**，实测改完 partial 直接 `hexo generate`，产物里仍是旧结构（`grep moment-carousel-bar` 为 0）。改 `_partials/*.ejs`、`index.ejs` 这类模板时，一律 `rm -f db.json && npx hexo generate`。
+
+> **红线三：轮播箭头必须用 `margin-top` 垂直居中，不能用 `transform: translateY(-50%)`。** 后者会被 `site-motion.css` 的全局 `button.is-hovered { transform: translateY(-3px) scale(1.06) }` 整个覆盖——鼠标一碰箭头就从居中位置猛地下沉半个身位，移开又弹回，看起来像严重抖动。现在 `.moment-carousel-btn` 用 `margin-top: -1.125rem`（高度 2.25rem 的一半）居中，并在 `site-motion.css` 里对该类显式 `transform: none`。**改全局按钮位移规则时，务必回归测试轮播箭头的 hover 位置。**
 
 **验收清单**（用无头浏览器真实点击，不看源码猜）
 

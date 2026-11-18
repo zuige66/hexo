@@ -179,62 +179,72 @@ button,
     opacity 180ms ease;
 }
 
+/* 悬停位移：鼠标走 JS hover-intent.js 的 .is-hovered（带进入/离开延迟 + 边缘滞后容差，
+   根治卡片在边缘反复上浮下沉的反馈环）；键盘 focus 仍走 :focus-visible 直接生效。
+   两套选择器并存，缺一不可：去掉 .is-hovered 会没有鼠标反馈，去掉 :focus-visible 会破坏键盘可达。 */
 @media (hover: hover) and (pointer: fine) {
-  .home-post-list .index-card:hover,
+  .home-post-list .index-card.is-hovered,
   .home-post-list .index-card:focus-within {
     transform: translateY(-7px) scale(1.008);
     background-color: var(--board-bg-color);
     box-shadow: var(--motion-shadow-strong);
   }
 
-  .home-post-list .index-card:hover .index-img img,
+  .home-post-list .index-card.is-hovered .index-img img,
   .home-post-list .index-card:focus-within .index-img img {
     transform: scale(1.055);
     filter: saturate(1.06) brightness(1.03);
     box-shadow: none;
   }
 
-  .list-group-item:not(.category-item):not(.category-subitem):hover,
+  .list-group-item:not(.category-item):not(.category-subitem).is-hovered,
   .list-group-item:not(.category-item):not(.category-subitem):focus-visible,
-  .category-heading-row:hover,
+  .category-heading-row.is-hovered,
   .category-heading-row:focus-within,
-  .links .card:hover,
+  .links .card.is-hovered,
   .links .card:focus-within {
     transform: translateY(-5px) scale(1.01);
     box-shadow: var(--motion-shadow);
     z-index: 2;
   }
 
-  .links .card:hover .link-avatar img,
+  .links .card.is-hovered .link-avatar img,
   .links .card:focus-within .link-avatar img {
     transform: scale(1.08) rotate(2deg);
   }
 
-  .home-social-links a:hover,
+  .home-social-links a.is-hovered,
   .home-social-links a:focus-visible,
-  .about-icons a:hover,
+  .about-icons a.is-hovered,
   .about-icons a:focus-visible,
-  .pagination a:hover,
+  .pagination a.is-hovered,
   .pagination a:focus-visible,
-  .btn:hover,
+  .btn.is-hovered,
   .btn:focus-visible,
-  button:hover,
+  button.is-hovered,
   button:focus-visible,
-  .scroll-down-bar:hover,
-  #scroll-top-button:hover {
+  .scroll-down-bar.is-hovered,
+  #scroll-top-button.is-hovered {
     transform: translateY(-3px) scale(1.06);
   }
 
-  .home-taxonomy-list a:hover,
+  /* 轮播箭头靠 transform 之外的方式居中（margin-top），且自身有 is-hovered 背景反馈；
+     排除全局按钮位移，避免覆盖后产生下沉跳变。 */
+  .moment-carousel-btn.is-hovered,
+  .moment-carousel-btn:focus-visible {
+    transform: none;
+  }
+
+  .home-taxonomy-list a.is-hovered,
   .home-taxonomy-list a:focus-visible,
-  .home-recent-list a:hover,
+  .home-recent-list a.is-hovered,
   .home-recent-list a:focus-visible,
-  .tocbot-link:hover,
+  .tocbot-link.is-hovered,
   .tocbot-link:focus-visible {
     transform: translateX(5px);
   }
 
-  .tocbot-link:hover,
+  .tocbot-link.is-hovered,
   .tocbot-link:focus-visible {
     color: var(--link-hover-color);
     background-color: var(--link-hover-bg-color);
@@ -321,7 +331,7 @@ button:active {
   transition: color 180ms ease, transform 220ms var(--motion-spring), box-shadow 220ms var(--motion-smooth);
 }
 
-.links .card .link-rss:hover,
+.links .card .link-rss.is-hovered,
 .links .card .link-rss:focus-visible {
   color: #c9701a;
   transform: translateY(-2px) scale(1.08);
@@ -332,7 +342,7 @@ button:active {
   .links .card .link-rss {
     color: #f0a857;
   }
-  .links .card .link-rss:hover,
+  .links .card .link-rss.is-hovered,
   .links .card .link-rss:focus-visible {
     color: #ffbf73;
   }
@@ -397,7 +407,7 @@ button:active {
   will-change: transform;
 }
 
-.feed-card:hover,
+.feed-card.is-hovered,
 .feed-card:focus-visible {
   transform: translateY(-4px);
   box-shadow: var(--motion-shadow);
@@ -472,7 +482,7 @@ button:active {
     background-color 200ms ease;
 }
 
-.circle-feed-toggle:hover,
+.circle-feed-toggle.is-hovered,
 .circle-feed-toggle:focus-visible {
   color: var(--link-hover-color, #1c7fb0);
   border-color: var(--link-hover-color, #30a9de);

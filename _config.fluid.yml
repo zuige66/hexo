@@ -241,6 +241,7 @@ custom_js:
   - /js/cloud-sea.js?v=10
   - /js/soft-nav.js?v=7
   - /js/moments.js?v=2
+  - /js/hover-intent.js?v=1
 
 # 指定自定义 .css 文件路径，用法和 custom_js 相同
 # The usage is the same as custom_js
