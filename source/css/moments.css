@@ -99,7 +99,7 @@
   background: rgba(127, 140, 159, .1);
   box-shadow: 0 6px 18px rgba(38, 51, 65, .08);
   transition:
-    transform 260ms var(--motion-spring, cubic-bezier(.34, 1.56, .64, 1)),
+    transform 130ms var(--motion-spring, cubic-bezier(.34, 1.56, .64, 1)),
     box-shadow 260ms var(--motion-smooth, cubic-bezier(.22, 1, .36, 1));
 }
 

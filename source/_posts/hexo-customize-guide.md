@@ -328,9 +328,9 @@ color:
 | 改悬停、浮起与搜索高亮动效 | `source/css/site-motion.css` + `source/js/hover-intent.js`（悬停滤波，见下） |
 | 改站内搜索定位效果 | `themes/fluid/source/js/local-search.js` 与 `source/js/site-interactions.js` |
 
-> **悬浮幅度（2026-11-18 二次调整）**：zuige 觉得默认浮起太夸张，所有位移与 scale 幅度已统一减半（卡片 -7px→-3.5px、按钮 -3px→-1.5px、scale 1.06→1.03 等）。调幅度时只改数值，别把 `.is-hovered` 改回 `:hover`。
+> **悬浮幅度与速度（2026-11-18 二次调整）**：zuige 觉得默认浮起太夸张，所有位移与 scale 幅度已统一减半（卡片 -7px→-3.5px、按钮 -3px→-1.5px、scale 1.06→1.03 等）；随后又反馈"放上去过一会才浮起"，于是进入延迟 80ms→**0**、CSS `transform` 过渡时长全部减半（320→160、240→120ms 等）。现在从鼠标放上到浮到位约 50ms。调幅度/速度时只改数值，别把 `.is-hovered` 改回 `:hover`。
 
-> **悬停浮起的滤波红线（2026-11-18 新增）**：卡片/按钮的 `:hover { transform: translateY(-Npx) }` 会产生**几何反馈环**——鼠标停在元素下边缘 → 元素上浮脱离鼠标 → hover 失效下沉 → 鼠标又进入，无限抖动。现在位移统一由 `source/js/hover-intent.js` 加的 `.is-hovered` 类驱动（进入延迟 80ms、离开延迟 140ms，离开时还复查指针是否在扩展 12px 的命中区内），**不要再把这些选择器改回 `:hover`**。键盘可达靠 `:focus-visible` 直接驱动位移，与 JS 并存，两者缺一不可。`hover-intent.js` 用 document 事件委托，软导航换页重建 DOM 后无需重绑；仅精确指针（鼠标）启用，触屏与 reduced-motion 自动跳过。新增需要浮起的元素时，要同时在 `hover-intent.js` 的 `LIFT_SELECTOR` 和 CSS 的 `.is-hovered` 选择器里登记，否则不会有鼠标浮起效果。
+> **悬停浮起的滤波红线（2026-11-18 新增）**：卡片/按钮的 `:hover { transform: translateY(-Npx) }` 会产生**几何反馈环**——鼠标停在元素下边缘 → 元素上浮脱离鼠标 → hover 失效下沉 → 鼠标又进入，无限抖动。现在位移统一由 `source/js/hover-intent.js` 加的 `.is-hovered` 类驱动（**进入零延迟**、离开延迟 140ms，离开时还复查指针是否在扩展 12px 的命中区内）。**防抖靠的是离开延迟+容差，不是进入延迟**——别为了"滤快速掠过"把进入延迟加回去，那会直接造成放上去迟钝；真要滤误碰也只能给个位数毫秒。键盘可达靠 `:focus-visible` 直接驱动位移，与 JS 并存，两者缺一不可。`hover-intent.js` 用 document 事件委托，软导航换页重建 DOM 后无需重绑；仅精确指针（鼠标）启用，触屏与 reduced-motion 自动跳过。新增需要浮起的元素时，要同时在 `hover-intent.js` 的 `LIFT_SELECTOR` 和 CSS 的 `.is-hovered` 选择器里登记，否则不会有鼠标浮起效果。
 
 ## 十三、管理友链
 
