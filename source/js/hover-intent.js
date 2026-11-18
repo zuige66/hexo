@@ -45,7 +45,7 @@
 
   var ENTER_DELAY = 80;
   var LEAVE_DELAY = 140;
-  var EDGE_TOLERANCE = 12; // 必须大于 CSS 里最大的 translateY(-7px)
+  var EDGE_TOLERANCE = 12; // 大于任何上浮位移（当前最大 3.5px），留足边缘滞后余量
 
   var active = null;
   var enterTimer = 0;

@@ -18,6 +18,12 @@
   var POST_RE = /^\/\d{4}\/\d{2}\//; // Hexo permalink: :year/:month/:day/:title/
   var SKIP_RE = /^(mailto:|tel:|javascript:)/i;
 
+  // 记录「上一次稳定位置」的 pathname+search（不含 hash）。
+  // 用途：hash 变化（目录锚点跳转）也会触发 popstate，但那不是换页——
+  // 若不排除，文章页会被 POST_RE 判定为真而整页 reload，把目录跳转的滚动位置拉回 0。
+  function locKey() { return location.pathname + location.search; }
+  var lastKey = locKey();
+
   // 注入正文淡入样式（尊重系统减弱动效）
   var style = document.createElement('style');
   style.textContent =
@@ -204,7 +210,10 @@
         board.classList.remove('softnav-in');
         void board.offsetWidth; // 重启动画
         board.classList.add('softnav-in');
-        if (push) history.pushState({ softnav: true }, '', url);
+        if (push) {
+          history.pushState({ softnav: true }, '', url);
+          lastKey = locKey(); // 软导航换页后更新基准，供 popstate 区分纯 hash 变化
+        }
         var canvasAlive = (document.getElementById('azure-sea-canvas') ||
                            document.getElementById('cloud-sea-canvas')) ? 'canvas-alive' : 'canvas-gone';
         console.log('[soft-nav] loaded ' + url + ' (' + canvasAlive + ')');
@@ -248,6 +257,11 @@
 
     // 前进/后退
     window.addEventListener('popstate', function () {
+      var key = locKey();
+      // 纯 hash 变化（目录锚点跳转、页内 #xxx）：不是换页，交给浏览器原生锚点滚动，
+      // 千万别 reload——否则文章页点目录会跳一下就被拉回顶部。
+      if (key === lastKey) return;
+      lastKey = key;
       if (POST_RE.test(location.pathname)) { window.location.reload(); return; }
       softLoad(location.href, false);
     });

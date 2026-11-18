@@ -185,15 +185,15 @@ button,
 @media (hover: hover) and (pointer: fine) {
   .home-post-list .index-card.is-hovered,
   .home-post-list .index-card:focus-within {
-    transform: translateY(-7px) scale(1.008);
+    transform: translateY(-3.5px) scale(1.004);
     background-color: var(--board-bg-color);
     box-shadow: var(--motion-shadow-strong);
   }
 
   .home-post-list .index-card.is-hovered .index-img img,
   .home-post-list .index-card:focus-within .index-img img {
-    transform: scale(1.055);
-    filter: saturate(1.06) brightness(1.03);
+    transform: scale(1.0275);
+    filter: saturate(1.03) brightness(1.015);
     box-shadow: none;
   }
 
@@ -203,14 +203,14 @@ button,
   .category-heading-row:focus-within,
   .links .card.is-hovered,
   .links .card:focus-within {
-    transform: translateY(-5px) scale(1.01);
+    transform: translateY(-2.5px) scale(1.005);
     box-shadow: var(--motion-shadow);
     z-index: 2;
   }
 
   .links .card.is-hovered .link-avatar img,
   .links .card:focus-within .link-avatar img {
-    transform: scale(1.08) rotate(2deg);
+    transform: scale(1.04) rotate(1deg);
   }
 
   .home-social-links a.is-hovered,
@@ -225,7 +225,7 @@ button,
   button:focus-visible,
   .scroll-down-bar.is-hovered,
   #scroll-top-button.is-hovered {
-    transform: translateY(-3px) scale(1.06);
+    transform: translateY(-1.5px) scale(1.03);
   }
 
   /* 轮播箭头靠 transform 之外的方式居中（margin-top），且自身有 is-hovered 背景反馈；
@@ -241,7 +241,7 @@ button,
   .home-recent-list a:focus-visible,
   .tocbot-link.is-hovered,
   .tocbot-link:focus-visible {
-    transform: translateX(5px);
+    transform: translateX(2.5px);
   }
 
   .tocbot-link.is-hovered,
@@ -274,7 +274,7 @@ button,
 .pagination a:active,
 .btn:active,
 button:active {
-  transform: translateY(1px) scale(.98);
+  transform: translateY(.5px) scale(.99);
   transition-duration: 90ms;
 }
 
@@ -298,7 +298,7 @@ button:active {
   .home-post-list .index-card:active,
   .list-group-item:active,
   .links .card:active {
-    transform: scale(.985);
+    transform: scale(.9925);
   }
 }
 
@@ -334,7 +334,7 @@ button:active {
 .links .card .link-rss.is-hovered,
 .links .card .link-rss:focus-visible {
   color: #c9701a;
-  transform: translateY(-2px) scale(1.08);
+  transform: translateY(-1px) scale(1.04);
   box-shadow: var(--motion-shadow);
 }
 
@@ -409,7 +409,7 @@ button:active {
 
 .feed-card.is-hovered,
 .feed-card:focus-visible {
-  transform: translateY(-4px);
+  transform: translateY(-2px);
   box-shadow: var(--motion-shadow);
   border-color: var(--link-hover-color, #30a9de);
   color: var(--text-color, #2c3e50);
@@ -486,13 +486,13 @@ button:active {
 .circle-feed-toggle:focus-visible {
   color: var(--link-hover-color, #1c7fb0);
   border-color: var(--link-hover-color, #30a9de);
-  transform: translateY(-2px);
+  transform: translateY(-1px);
   box-shadow: var(--motion-shadow);
   outline: none;
 }
 
 .circle-feed-toggle:active {
-  transform: translateY(1px) scale(.98);
+  transform: translateY(.5px) scale(.99);
   transition-duration: 90ms;
 }
 

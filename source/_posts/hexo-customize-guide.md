@@ -328,6 +328,8 @@ color:
 | 改悬停、浮起与搜索高亮动效 | `source/css/site-motion.css` + `source/js/hover-intent.js`（悬停滤波，见下） |
 | 改站内搜索定位效果 | `themes/fluid/source/js/local-search.js` 与 `source/js/site-interactions.js` |
 
+> **悬浮幅度（2026-11-18 二次调整）**：zuige 觉得默认浮起太夸张，所有位移与 scale 幅度已统一减半（卡片 -7px→-3.5px、按钮 -3px→-1.5px、scale 1.06→1.03 等）。调幅度时只改数值，别把 `.is-hovered` 改回 `:hover`。
+
 > **悬停浮起的滤波红线（2026-11-18 新增）**：卡片/按钮的 `:hover { transform: translateY(-Npx) }` 会产生**几何反馈环**——鼠标停在元素下边缘 → 元素上浮脱离鼠标 → hover 失效下沉 → 鼠标又进入，无限抖动。现在位移统一由 `source/js/hover-intent.js` 加的 `.is-hovered` 类驱动（进入延迟 80ms、离开延迟 140ms，离开时还复查指针是否在扩展 12px 的命中区内），**不要再把这些选择器改回 `:hover`**。键盘可达靠 `:focus-visible` 直接驱动位移，与 JS 并存，两者缺一不可。`hover-intent.js` 用 document 事件委托，软导航换页重建 DOM 后无需重绑；仅精确指针（鼠标）启用，触屏与 reduced-motion 自动跳过。新增需要浮起的元素时，要同时在 `hover-intent.js` 的 `LIFT_SELECTOR` 和 CSS 的 `.is-hovered` 选择器里登记，否则不会有鼠标浮起效果。
 
 ## 十三、管理友链
@@ -671,7 +673,17 @@ print("失效锚点:", bad or "无")
 EOF
 ```
 
-### 20.3 验收标准
+### 20.3 右侧目录点击后被拉回顶部：popstate 红线（2026-11-18 修）
+
+> 现象：文章页点右侧目录，跳一下就被拉回顶部，或点了没反应。
+
+根因不是目录本身，而是 **`hash` 变化也会触发 `popstate`**：`soft-nav.js` 的 popstate 处理里原本 `POST_RE.test(pathname)` 对文章页为真就 `window.location.reload()`，于是「点目录 → tocbot 滚动成功 → hash 变化触发 popstate → 整页重载 → 滚动回 0」。
+
+修法：在 `soft-nav.js` 模块级维护 `lastKey = pathname + search`（不含 hash），每次软导航 `pushState` 后更新它；popstate 开头判断 `if (locKey() === lastKey) return`——**纯 hash 变化（锚点跳转）直接放行，不 reload、不走软导航**，交给浏览器原生锚点滚动。
+
+> 红线：以后改 `soft-nav.js` 的 popstate 逻辑，务必回归测试「文章页点右侧目录」——hash 变化与真正的前进/后退在这个事件里是无法靠 event 对象区分的，只能靠 pathname+search 快照比对。
+
+### 20.4 验收标准
 
 | 检查项 | 期望 |
 |--------|------|
@@ -679,6 +691,7 @@ EOF
 | 正文残留 `$$` 原文 | 0（用浏览器 `innerText` 数，不是数 HTML 源码） |
 | `mjx-container` 数量 | 与公式条数一致（MathJax 排版产物） |
 | 目录锚点 | 全部能命中 `h2 id` |
+| 点右侧目录后 | 页面滚到目标标题且不回顶（无整页 reload） |
 
 ## 总结
 
