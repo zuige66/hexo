@@ -1157,6 +1157,18 @@ links:
       avatar: "https://x1shang.top/assets/img/x1shang-avatar.webp",
       rss: "https://www.x1shang.top/feed"
     }
+    - {
+      title: "yikuae の 小站",
+      intro: "辞江寄晓序，承烬赴星遐",
+      link: "https://www.yikuae.top",
+      avatar: "https://www.yikuae.top/avatar.jpg"
+    }
+    - {
+      title: "cwzbb's blog",
+      intro: "索雷阿给动 · 信息安全专业，热爱生活、记录生活，欢迎随时交流喵。",
+      link: "https://cuiwenzhe1.github.io",
+      avatar: "https://cuiwenzhe1.github.io/img/touxiang.webp"
+    }
 
   # 当成员头像加载失败时，替换为指定图片
   # When the member avatar fails to load, replace the specified image
