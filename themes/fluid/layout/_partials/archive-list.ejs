@@ -56,6 +56,7 @@ var postTotal = isArchive ? posts.length : params.postTotal;
         <div class="moment-card">
           <time class="moment-time"><%= m.date ? date(m.date, 'YYYY-MM-DD HH:mm') : '' %></time>
           <div class="moment-content"><%- markdown(m.content) %></div>
+          <%- partial('_partials/moment-carousel', { m: m }) %>
         </div>
       </article>
     <% }) %>

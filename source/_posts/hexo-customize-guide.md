@@ -419,12 +419,22 @@ links:
 - date: '2026-10-19 00:50'
   content: |
     我创建了动态板块，配图也行：![图](/img/xxx.png)
+
+# 多图轮播：用 images 字段，别在 content 里写 ![](...)
+- date: '2026-11-17 22:30'
+  content: |
+    正文照常写 Markdown。
+  images:
+    - src: /img/moments/a.jpg
+      alt: 图片说明
+    - src: /img/moments/b.jpg
 ```
 
 | 字段 | 说明 |
 |------|------|
 | `date` | 必填，建议加英文单引号写成字符串，格式 `YYYY-MM-DD HH:mm`。**时间不能省**——模板固定按 `YYYY-MM-DD HH:mm` 输出，只写日期会显示成 `00:00` |
 | `content` | 必填，正文，支持 Markdown 与 HTML（含图片语法） |
+| `images` | 选填，配图轮播（见 17.6）。写了它**就不要再在 content 里写 `![]()`**，否则同一张图出现两次 |
 
 - 新增一条：复制模板放到列表**最前面**（模板渲染时按 `date` 倒序，新的在上）。
 - **配图**：`content` 里写 `![alt](/img/xxx.png)` 即可，图片文件放 `source/img/` 下（可建子目录）。卡片样式已适配——`.moment-content img { max-width: 100%; border-radius: .35rem }`，超宽图会自动缩到卡片宽度、不再溢出。
@@ -484,6 +494,39 @@ git push origin main                     # 3. 推送后 Actions 自动部署；�
 - 侧栏列表复用既有的 `.home-recent-list` 样式（自带单行 ellipsis），动态过长不会撑破卡片。
 
 > 提醒：`moments.css` 改动后无需手动 bump，但它**必须先登记在 `custom_css` 里**，否则页面根本不会引用这个文件；版本号由构建脚本自动注入（见十九）。
+
+### 17.6 多图轮播（2026-11-18 新增）
+
+　　一条动态塞四五张图时，竖着排会把卡片拉得很长，所以加了轮播：一次显示一张，左右箭头 / 底部圆点 / 触摸滑动切换，计数在右下，点图可看原图。数据用独立的 `images` 字段而不是 `content` 里的 `![]()`，这样「图」和「文」的职责分开，侧栏纯文本预览也不会被图片标记污染。
+
+| 文件 | 职责 |
+|------|------|
+| `themes/fluid/layout/_partials/moment-carousel.ejs` | 渲染轮播结构，归档页与首页动态视图**共用**同一份，保证两处一致 |
+| `source/css/moments.css` 的「动态配图轮播」段 | 容器、箭头、圆点、计数栏、灯箱 |
+| `source/js/moments.js` 末尾的 IIFE | 切换、循环、圆点跳转、触摸滑动、灯箱开关 |
+
+**设计取舍**
+
+- 图片用 `contain`（等宽等高内居中）而不是 `cover`：长截图（如 1260×2800 的应用商店页）缩到 182×404 也不丢内容，看不清的字靠点图放大。
+- 容器固定高度（桌面 420px / 手机 260px），换图时卡片不跳动。
+- **圆点和计数放在图片下方的独立栏**，不叠在图上。叠图方案试过两次都不行：深色图片上深色胶囊糊成一片，浅色图片上白点直接消失；改成独立栏后两种主题都稳。
+
+> **红线一：幻灯片里的图必须手动摘掉懒加载属性。** Fluid 的 `img-lazyload.js` 给每张图挂 `srcset=loading.gif lazyload`，靠 IntersectionObserver 等到「可见」才摘。轮播里除第一张外全是 `display:none`，**永远等不到回调**——不处理的话切到第 2 张会一直显示 loading.gif。`moments.js` 的 `initCarousels()` 里对每张图 `removeAttribute('srcset')` / `removeAttribute('lazyload')`，别删。
+
+> **红线二：改主题模板后要 `rm -f db.json` 再 generate。** 只加 `?cb=` 之外最容易踩的是「产物没变」：Hexo 增量构建对 `themes/` 下 layout 的改动**不一定失效缓存**，实测改完 partial 直接 `hexo generate`，产物里仍是旧结构（`grep moment-carousel-bar` 为 0）。改 `_partials/*.ejs`、`index.ejs` 这类模板时，一律 `rm -f db.json && npx hexo generate`。
+
+**验收清单**（用无头浏览器真实点击，不看源码猜）
+
+| 检查项 | 期望 |
+|--------|------|
+| 各幻灯片的 `img` 是否还有 `lazyload` / `srcset` | 都是 `false` |
+| 每张图 `naturalWidth` | > 0（真加载，不是占位图） |
+| 第 1 张点「上一张」 | 回到最后一张（循环） |
+| 点圆点 / 箭头后 `data-index` 与计数 | 同步 |
+| 点图 | 灯箱打开、`body` 锁定滚动；ESC 或点背景关闭 |
+| 暗色模式 | 引用块与正文同色（实测 `rgb(196,198,201)` on `rgb(24,28,39)`，≈10:1） |
+
+　　验证脚本的坑：无头 Chrome（软件渲染）连续 `Page.captureScreenshot` 几次后会**卡死**，尤其切到超高图片时。稳妥做法是**一次导航只截一张图**，或在 Nav 后用 `Network.setCacheDisabled` + `?cb=` 避免拿到旧的 HTML/CSS。
 
 ## 十八、隐藏文章（仅归档可见）
 

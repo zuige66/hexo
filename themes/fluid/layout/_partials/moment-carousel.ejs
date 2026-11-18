@@ -1,0 +1,49 @@
+<%#
+  动态配图轮播（Moments carousel）
+
+  数据来自 source/_data/moments.yml 里某条动态的 images 字段：
+    images:
+      - src: /img/moments/xxx.jpg
+        alt: 图片说明（可省略）
+    （也兼容纯字符串写法：- /img/moments/xxx.jpg）
+
+  归档页 /archives/ 与首页右栏的动态视图共用本 partial，保证两处显示一致。
+  样式见 source/css/moments.css 的「轮播」段，切换逻辑见 source/js/moments.js。
+
+  注意：幻灯片里的图除第一张外都是 display:none，Fluid 的懒加载靠
+  IntersectionObserver 判断可见性，隐藏的图永远等不到回调。所以 moments.js
+  初始化时会强制摘掉这些图上的 srcset / lazyload 属性，否则切到第 2 张会
+  一直停在 loading.gif。
+%>
+<%
+var imgs = (m.images || []).filter(function (x) { return x; });
+var list = imgs.map(function (x) {
+  return (typeof x === 'string') ? { src: x, alt: '' } : { src: x.src, alt: x.alt || '' };
+}).filter(function (x) { return x.src; });
+var multi = list.length > 1;
+%>
+<% if (list.length) { %>
+<div class="moment-carousel" data-carousel>
+  <div class="moment-carousel-track">
+    <% list.forEach(function (img, i) { %>
+      <figure class="moment-slide<%= i === 0 ? ' is-active' : '' %>">
+        <img src="<%= url_for(img.src) %>" alt="<%= img.alt %>" data-index="<%= i %>">
+      </figure>
+    <% }) %>
+  </div>
+
+  <% if (multi) { %>
+  <button class="moment-carousel-btn prev" type="button" aria-label="上一张">‹</button>
+  <button class="moment-carousel-btn next" type="button" aria-label="下一张">›</button>
+
+  <%# 圆点与计数放在图片下方的独立栏里，不叠在图上：
+      叠在图上时深色图片会让圆点糊成一片，浅色图片又会让白点消失 %>
+  <div class="moment-carousel-bar">
+    <div class="moment-carousel-dots">
+      <% list.forEach(function (_, i) { %><button class="moment-carousel-dot<%= i === 0 ? ' is-active' : '' %>" type="button" data-to="<%= i %>" aria-label="第 <%= i + 1 %> 张"></button><% }) %>
+    </div>
+    <span class="moment-carousel-count"><span class="cur">1</span>/<%= list.length %></span>
+  </div>
+  <% } %>
+</div>
+<% } %>
