@@ -116,6 +116,59 @@ import_script(`
     expandAllToc();
     bindTocToggle();
 
+    // 让右侧目录容器（.toc-body 有 overflow-y:auto）自动跟随当前阅读项：
+    // tocbot 只负责加 active 类，不会滚动这个内部容器，页面下滑时蓝色卡片会一路
+    // 贴到容器底部甚至被裁掉。这里在 active 项变化后把卡片平滑送回容器高度 1/3 处，
+    // 上留 1/3、下留 2/3，不贴边——只要偏离 1/3 就归位，不做「贴边才跟随」的舒适区，
+    // 否则卡片常停在容器顶部/25% 处，看起来就像没跟随。
+    // 手动滚轮/触摸目录后 2 秒内暂停跟随，避免被硬拽回。
+    var tocBody = document.getElementById('toc-body');
+    var manualUntil = 0;
+    var lastFollow = 0;
+    var ensureActiveVisible = function() {
+      if (!tocBody || Date.now() < manualUntil) { return; }
+      if (Date.now() - lastFollow < 300) { return; } // 节流，防止 smooth 滚动期间反复 scrollTo 打断动画
+      var active = tocBody.querySelector('.tocbot-active-link');
+      if (!active) { return; }
+      // 内容没超出容器（无内部滚动条）时 scrollTop 恒为 0，无需跟随。
+      if (tocBody.scrollHeight <= tocBody.clientHeight + 1) { return; }
+      var cRect = tocBody.getBoundingClientRect();
+      var aRect = active.getBoundingClientRect();
+      var pos = aRect.top - cRect.top; // 卡片顶部在容器可视区内的位置
+      var targetPos = cRect.height / 3; // 始终让卡片顶部停在容器 1/3 处
+      if (Math.abs(pos - targetPos) > 6) {
+        lastFollow = Date.now();
+        // scrollTop + pos = 卡片顶部相对容器内容顶的位置，减去 1/3 容器高即为目标 scrollTop。
+        var target = tocBody.scrollTop + pos - targetPos;
+        target = Math.max(0, Math.min(target, tocBody.scrollHeight - tocBody.clientHeight));
+        tocBody.scrollTo({ top: target, behavior: 'smooth' });
+      }
+    };
+    if (tocBody) {
+      tocBody.addEventListener('wheel', function() { manualUntil = Date.now() + 2000; }, { passive: true });
+      tocBody.addEventListener('touchstart', function() { manualUntil = Date.now() + 2000; }, { passive: true });
+      // 页面滚动停止后归位（主驱动）：不依赖 active 类变化的捕获时机。
+      // 只监听 window 滚动——tocBody 自身的 smooth 滚动不冒泡到这里，不会自激循环。
+      var scrollTimer = null;
+      window.addEventListener('scroll', function() {
+        if (scrollTimer) { clearTimeout(scrollTimer); }
+        scrollTimer = setTimeout(ensureActiveVisible, 160);
+      }, { passive: true });
+      // active 类变化立即响应一次（补充，减少等待感）；节流由 ensureActiveVisible 内部保证。
+      if (window.__tocActiveObserver) { window.__tocActiveObserver.disconnect(); }
+      window.__tocActiveObserver = new MutationObserver(function(muts) {
+        for (var i = 0; i < muts.length; i++) {
+          var t = muts[i].target;
+          if (t && t.classList && t.classList.contains('tocbot-active-link')) {
+            ensureActiveVisible();
+            break;
+          }
+        }
+      });
+      window.__tocActiveObserver.observe(tocBody, { attributes: true, subtree: true, attributeFilter: ['class'] });
+    }
+    setTimeout(ensureActiveVisible, 0);
+
     Fluid.events.registerRefreshCallback(function() {
       if ('tocbot' in window) {
         tocbot.refresh();
@@ -128,6 +181,7 @@ import_script(`
         }
         expandAllToc();
         bindTocToggle();
+        setTimeout(ensureActiveVisible, 0);
       }
     });
   });

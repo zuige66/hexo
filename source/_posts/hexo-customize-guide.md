@@ -683,11 +683,11 @@ EOF
 
 > 红线：以后改 `soft-nav.js` 的 popstate 逻辑，务必回归测试「文章页点右侧目录」——hash 变化与真正的前进/后退在这个事件里是无法靠 event 对象区分的，只能靠 pathname+search 快照比对。
 
-### 20.4 右侧目录当前项：蓝色卡片 + 跳转落在视口 1/3（2026-11-19 修）
+### 20.4 右侧目录当前项：蓝色卡片 + 跳转落在视口 1/3 + 容器跟随（2026-11-19 修）
 
-> 需求：右侧目录用淡蓝卡片标出当前阅读位置，卡片不随 hover 浮起；点击跳转后目标标题停在视口上 1/3、下面留 2/3 正文。
+> 需求：右侧目录用淡蓝卡片标出当前阅读位置，卡片不随 hover 浮起；点击跳转后目标标题停在视口上 1/3、下面留 2/3 正文；页面下滑时目录容器自动跟随，把蓝色卡片停在容器 1/3 处、上下留白。
 
-两处改动，缺一不可：
+三处改动，缺一不可：
 
 1. `source/css/site-motion.css` 新增 `#toc-body .tocbot-link.tocbot-active-link`：淡蓝底 + 蓝字 + 1px 内描边，`transform: none !important` 压掉 `.is-hovered` 的横移和 `:active` 的位移；深色模式另设更浓的底色。**必须用 `#toc-body` 抬高精度**——否则和后面 `@media (hover)` 里的 `.tocbot-link.is-hovered` 同优先级，后定义者会赢。
 
@@ -704,12 +704,55 @@ EOF
 > tocbot 4.x 判定 active 时拿 `heading.offsetTop`（相对文章容器，实测 2215）和文档 `scrollTop`（实测 2513）比较，两者基准差一个 `boardTop`（容器到文档顶的距离，约 598）。Fluid 原本的 `-boardTop` 就是补偿它，使高亮边界落在视口 top≈10px。若直接把 `headingsOffset` 换成 `readOffset`，高亮会整整错位一节（实测点「三」亮「四」）。
 > 正确做法是在原补偿上**加** `readOffset`，把高亮边界从视口顶部平移到 1/3；`scrollSmoothOffset` 是独立配置，只管点击落点，取负值（目标滚动位置 = 标题文档位置 + offset，负 1/3 视口高度才能让标题停在距顶 1/3 处）。
 
-**实测验收**（1440×900 无头 Chrome，长文 `hexo-customize-guide`）：
+3. 同文件在 `window.tocbot.init()` 之后新增**目录容器跟随**逻辑（这是「页面下滑侧栏不跟着动」的根治）：
+
+   ```js
+   // .toc-body 有 max-height:75vh + overflow-y:auto，是个独立滚动容器。
+   // tocbot 只加 active 类，不会滚动这个容器 → 长目录翻到深处时蓝色卡片会贴底/被裁掉。
+   var tocBody = document.getElementById('toc-body');
+   var manualUntil = 0, lastFollow = 0;
+   var ensureActiveVisible = function() {
+     if (!tocBody || Date.now() < manualUntil) { return; }
+     if (Date.now() - lastFollow < 300) { return; } // 节流，防 smooth 期间反复 scrollTo 打断动画
+     var active = tocBody.querySelector('.tocbot-active-link');
+     if (!active || tocBody.scrollHeight <= tocBody.clientHeight + 1) { return; }
+     var cRect = tocBody.getBoundingClientRect(), aRect = active.getBoundingClientRect();
+     var pos = aRect.top - cRect.top; // 卡片顶部在容器可视区里的位置
+     var targetPos = cRect.height / 3; // 始终让卡片停在容器 1/3 处
+     if (Math.abs(pos - targetPos) > 6) { // 只要偏离就归位，不做「贴边才跟随」的舒适区
+       lastFollow = Date.now();
+       var target = tocBody.scrollTop + pos - targetPos;
+       target = Math.max(0, Math.min(target, tocBody.scrollHeight - tocBody.clientHeight));
+       tocBody.scrollTo({ top: target, behavior: 'smooth' });
+     }
+   };
+   // 主驱动：window 滚动停止后归位。只监听 window，tocBody 自身 smooth 滚动不冒泡，不自激。
+   var scrollTimer = null;
+   window.addEventListener('scroll', function() {
+     if (scrollTimer) { clearTimeout(scrollTimer); }
+     scrollTimer = setTimeout(ensureActiveVisible, 160);
+   }, { passive: true });
+   // 补充：active 类变化立即响应一次，减少等待感。
+   window.__tocActiveObserver = new MutationObserver(function(muts){ /* 发现 active 则 ensureActiveVisible() */ });
+   window.__tocActiveObserver.observe(tocBody, { attributes: true, subtree: true, attributeFilter: ['class'] });
+   tocBody.addEventListener('wheel', () => manualUntil = Date.now() + 2000, { passive: true }); // 手动滚轮 2s 不打扰
+   setTimeout(ensureActiveVisible, 0);
+   // Fluid.events.registerRefreshCallback 里也要补一次 setTimeout(ensureActiveVisible, 0)。
+   ```
+
+> **关键点①：跟的是「容器 `.toc-body`」不是「页面 window」。** 两个独立滚动体：tocbot 的 `headingsOffset`/`scrollSmoothOffset` 管**页面**滚动与高亮判定；`tocBody.scrollTo` 管**目录容器内部**滚动。混淆就无效。
+> **关键点②：必须「始终归位 1/3」，不能用「贴边才跟随」。** 曾做过 `[25%,60%]` 舒适区版本，结果前段目录项（如「二」「五」）在 ratio 0~0.25 处也「不打扰」，看起来就是「没跟随」——用户要的是卡片恒定在 1/3。
+> **关键点③：主驱动用 window `scroll` 去抖（160ms），不能只靠 MutationObserver。** tocbot 刷新 active 类的时机与 observer 捕获存在竞争，前段目录项会漏触发；scroll 事件在页面停稳后必然归位一次，才可靠。
+> `target = scrollTop + pos - 容器高/3`：`scrollTop + pos` 是卡片相对容器内容顶的位置，减去 1/3 容器高即目标滚动量，clamp 到 `[0, scrollHeight-clientHeight]`。**首尾项 ratio 偏小是物理边界**（scrollTop 已到 0 或上限），无法把卡片推到 1/3，属正常，不要为此去掉 clamp。
+> **节流 300ms 必须有**：smooth 动画期间 observer/scroll 会反复触发，不节流会连续 `scrollTo` 把动画打断（实测卡在中间位置）。手动滚轮目录后 `manualUntil` 暂停 2s，避免硬拽回。
+
+**实测验收**（1440×900 无头 Chrome，长文 `hexo-customize-guide`，容器高 558px）：
 
 - 点「三、修改站点信息」：标题 `top=300`（= 900/3），active 正好是「三」，`transform:none`，背景 `rgba(48,169,222,.14)`。
 - 鼠标停在 active 项上：`transform` 仍为 `none`（不浮起）。
-- 手动滚「六、管理分类」到 `top=300`：active 自动跟随为「六」。
-- 全程 `window.__wbMarker` 未被清掉 → 没有整页 reload；无 JS 错误。
+- 渐进滚动采样（每次滚一屏等 1.6s）：「九/十三/十七」等中间项卡片 `ratio=0.33`（容器 1/3 处）、`visible=true`、active 与页面标题一致；首段「二/五」和末段「总结」因 scrollTop 到边界无法归位到 1/3，属物理限制；全程无 JS 错误。
+- 无头测试注意：① CDN 库（baomitu 的 jquery/tocbot 等）在无头沙箱里加载失败，需用 CDP `Fetch` 拦截喂本地文件，否则 tocbot 不 init、目录项数为 0；② 一次性跳 1.8 万像素后立刻采样，smooth 动画未完成会误判「没跟随」，要渐进滚动或等足动画时间。
+- **部署红线**：改完 EJS 只在本地 `hexo generate` 不够，线上看不到——必须 `git commit` + `git push origin main` 让 Actions 部署到 gh-pages。用户「还是没跟随」的头号原因就是只本地生成没 push。
 
 > 附带发现：tocbot 4.20.1 实际没给 active 的 `<li>` 加 `is-active-li` 类，主题里那条左侧蓝竖条本来就 `visibility:hidden`、不会显示。CSS 里仍留一条 `display:none` 兜底，防止将来版本加上类后与卡片重复。
 
@@ -724,6 +767,7 @@ EOF
 | 点右侧目录后 | 页面滚到目标标题且不回顶（无整页 reload） |
 | 目录当前项 | 淡蓝卡片、蓝字，hover 时不浮起 |
 | 目录跳转落点 | 目标标题 `top ≈ 视口高度/3`，active 与点击项一致 |
+| 目录容器跟随 | 页面下滑停稳后蓝色卡片归位到 `.toc-body` 高度 1/3 处（`ratio≈0.33`）、不被裁掉；手动滚轮 2s 内不被打断；改动已 push 部署（非仅本地 generate） |
 
 ## 总结
 
