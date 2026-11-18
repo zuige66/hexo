@@ -1,7 +1,15 @@
 {
-  "generated": "2026-11-17T14:56:40.591502+00:00",
-  "total_archived": 151,
+  "generated": "2026-11-18T08:53:59.809490+00:00",
+  "total_archived": 152,
   "posts": [
+    {
+      "title": "Claude Code 团队怎么考虑验证",
+      "url": "https://pureskyblog.dpdns.org/posts/claude-code-verification/",
+      "date": "2026-11-18T00:00:00+00:00",
+      "name": "puresky-blog",
+      "link": "https://pureskyblog.dpdns.org",
+      "avatar": "https://avatars.githubusercontent.com/u/232055116?v=4"
+    },
     {
       "title": "力扣解题笔记：摘一颗链表节点",
       "url": "https://pureskyblog.dpdns.org/posts/post-20261116/",
@@ -473,14 +481,6 @@
       "name": "qwwp",
       "link": "https://qwwp.top",
       "avatar": "https://qwwp.top/images/avatar.jpg"
-    },
-    {
-      "title": "博客部署折腾记：从 Actions 到 VPS + EdgeOne 自动发布",
-      "url": "https://pasule.com/posts/%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E6%8A%98%E8%85%BE%E8%AE%B0/",
-      "date": "2026-10-15T00:00:00+00:00",
-      "name": "Pasule Blog",
-      "link": "https://pasule.com",
-      "avatar": "https://tu.pasule.com/file/wallpaper/1784014500478.png"
     }
   ]
 }

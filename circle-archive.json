@@ -139,6 +139,11 @@
     "rss": "https://pureskyblog.dpdns.org/rss.xml",
     "posts": [
       {
+        "title": "Claude Code 团队怎么考虑验证",
+        "url": "https://pureskyblog.dpdns.org/posts/claude-code-verification/",
+        "date": "2026-11-18T00:00:00+00:00"
+      },
+      {
         "title": "力扣解题笔记：摘一颗链表节点",
         "url": "https://pureskyblog.dpdns.org/posts/post-20261116/",
         "date": "2026-11-16T00:00:00+00:00"
