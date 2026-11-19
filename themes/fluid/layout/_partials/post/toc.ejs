@@ -159,7 +159,8 @@ import_script(`
       bot.style.height = needBot + 'px';
     };
 
-    var tocTarget = null, tocRaf = 0;
+    var tocTarget = null, tocRaf = 0, tocTweenRaf = 0;
+    var tocPinnedHref = null, tocPinTimer = 0;
     var tocStep = function () {
       if (!tocScroller || tocTarget === null) { tocRaf = 0; return; }
       var cur = tocScroller.scrollTop, d = tocTarget - cur;
@@ -168,11 +169,42 @@ import_script(`
       tocRaf = requestAnimationFrame(tocStep);
     };
 
+    var releaseTocPin = function () {
+      tocPinnedHref = null;
+      if (tocPinTimer) { clearTimeout(tocPinTimer); tocPinTimer = 0; }
+    };
+
+    // 点击跳转专用：固定时长 + easeOutCubic。
+    // 指数缓动（每帧 22%）尾巴很长：1120px 要走 27 帧，最后几十 px 拖 200ms+，
+    // 叠加「页面滚完 active 才变」的 420ms 空等，观感就是卡片慢半拍。
+    // 点击时目标是确定的（就是被点的那一项），不需要「追」，直接用时间轴控制。
+    // 320ms 与 tocbot 的 scrollSmoothDuration(420ms) 大体同步收尾，卡片略早到。
+    var tocTweenTo = function (to, dur) {
+      var from = tocScroller.scrollTop;
+      var t0 = (window.performance && performance.now) ? performance.now() : Date.now();
+      tocTarget = null;
+      if (tocRaf) { cancelAnimationFrame(tocRaf); tocRaf = 0; }
+      if (tocTweenRaf) { cancelAnimationFrame(tocTweenRaf); }
+      var step = function (now) {
+        var k = Math.min(1, (now - t0) / dur);
+        var e = 1 - Math.pow(1 - k, 3);
+        tocScroller.scrollTop = from + (to - from) * e;
+        if (k < 1) { tocTweenRaf = requestAnimationFrame(step); }
+        else { tocScroller.scrollTop = to; tocTweenRaf = 0; }
+      };
+      tocTweenRaf = requestAnimationFrame(step);
+    };
+
     // active 一变就算目标并立刻起缓动：滚动时连续跟手，而不是等停稳再动。
     var tocUpdate = function () {
       if (!tocBody || !tocScroller) { return; }
       var active = tocBody.querySelector('.tocbot-active-link');
       if (!active) { return; }
+      // 点击飞行途中（active 还停在旧项）不要抢目标，等 active 追上被点项再解锁
+      if (tocPinnedHref) {
+        if (active.getAttribute('href') !== tocPinnedHref) { return; }
+        releaseTocPin();
+      }
       var max = tocScroller.scrollHeight - tocScroller.clientHeight;
       if (max <= 0) { return; }
       var want = tocAbs(active) - tocScroller.clientHeight / 3;
@@ -198,14 +230,34 @@ import_script(`
         requestAnimationFrame(function () { tocUpdate(); tocTick = false; });
       }, { passive: true });
       // 用户自己滚侧栏时立刻让出控制权，避免和自动跟随抢
+      var yieldToc = function () {
+        releaseTocPin();
+        tocTarget = null;
+        if (tocRaf) { cancelAnimationFrame(tocRaf); tocRaf = 0; }
+        if (tocTweenRaf) { cancelAnimationFrame(tocTweenRaf); tocTweenRaf = 0; }
+      };
       if (tocPanel) {
-        var yieldToc = function () {
-          tocTarget = null;
-          if (tocRaf) { cancelAnimationFrame(tocRaf); tocRaf = 0; }
-        };
         tocPanel.addEventListener('wheel', yieldToc, { passive: true });
         tocPanel.addEventListener('touchstart', yieldToc, { passive: true });
       }
+      // 点击目录项：此刻目标就确定了，不必等 tocbot 在 scroll 结束后才改 active。
+      // 直接从被点链接算目标、320ms 时间轴出发，和页面平滑滚动几乎同时收尾。
+      tocBody.addEventListener('click', function (e) {
+        var a = e.target && e.target.closest ? e.target.closest('a.tocbot-link') : null;
+        if (!a) { return; }
+        // 宽度不足等情况下 tocScroller 可能就是 tocBody 自身，逻辑一致
+        var max = tocScroller.scrollHeight - tocScroller.clientHeight;
+        if (max <= 0) { return; }
+        var to = Math.max(0, Math.min(tocAbs(a) - tocScroller.clientHeight / 3, max));
+        var href = a.getAttribute('href');
+        tocPinnedHref = href || null;
+        if (tocPinTimer) { clearTimeout(tocPinTimer); }
+        // 安全阀：万一 active 没追上（锚点失效等），1.2s 后放开，别把跟随永久锁死
+        tocPinTimer = setTimeout(releaseTocPin, 1200);
+        tocTweenTo(to, 320);
+      });
+      // 飞行途中用户滚了页面 → 放弃这次定位，交还给普通跟随
+      window.addEventListener('wheel', releaseTocPin, { passive: true });
       // 窗口尺寸变化：可视高变了，spacer 与目标都要重算
       window.addEventListener('resize', function () {
         ensureTocSpacers();

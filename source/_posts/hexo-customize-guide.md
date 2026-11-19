@@ -687,7 +687,7 @@ EOF
 
 ### 20.4 右侧目录当前项：蓝色卡片 + 跳转落在视口 1/3 + 容器跟随（2026-11-19 修）
 
-> 需求：右侧目录用淡蓝卡片标出当前阅读位置，卡片不随 hover 浮起；点击跳转后目标标题停在视口上 1/3、下面留 2/3 正文；页面下滑时目录自动跟随，把蓝色卡片连续停在「侧栏 1/3」处、上下留白；并且**侧栏本身能独立上下滚动**（滚轮停在侧栏上只滚目录）。
+> 需求：右侧目录用淡蓝卡片标出当前阅读位置，卡片不随 hover 浮起；点击跳转后目标标题停在视口上 1/3、下面留 2/3 正文，且**卡片要跟页面一起到位、不能慢半拍**；页面下滑时目录自动跟随，把蓝色卡片连续停在「侧栏 1/3」处、上下留白；并且**侧栏本身能独立上下滚动**（滚轮停在侧栏上只滚目录）。
 
 三处改动，缺一不可：
 
@@ -764,13 +764,47 @@ EOF
 > **关键点②：抽搐的真凶是「等待」，不是「跳动」。** 上一版用「active 稳定 180ms + 10% 死区」防抖，逻辑上很合理，但用户感知是「滚动时它故意不动，停下才猛地滑一下」——就是这个 `一卡一卡`。现在**去掉死区、去掉 settle 延时**：active 一换就立即以 22%/帧缓动过去，平滑完全交给缓动本身。`tocAbs()` 在滚动中恒定（`er.top` 与 `scrollTop` 反向抵消），所以不会像 `offsetTop` 那样读到中间态产生目标横跳。
 > **关键点③：首尾章必须有 spacer，且高度按整栏算。** 第一章 scrollTop 顶到 0、最后一章顶到 scrollHeight 上限，没有垫白物理上到不了 1/3。顶部垫 `h/3 - 首项位置`、底部垫到「末项能落在 h/3」。**先清零再量**，否则多次 resize 后高度会累加跑飞。**spacer 插在列表内部**而非给 `.toc-body` 加 padding（后者 `box-sizing:content-box`，padding 会把盒子撑到 ~1.7 倍）。`tocbot.refresh()` 重建内容会冲掉 spacer，`registerRefreshCallback` 里要重插。
 
+4. **点击跳转的卡片动效单独走时间轴**（2026-11-19 第三次补，用户：「点击跳转时蓝色卡片动效偏慢」）：
+
+   ```js
+   // 点击时目标已确定，不必等 tocbot 在平滑滚动结束后才改 active
+   tocBody.addEventListener('click', function (e) {
+     var a = e.target.closest('a.tocbot-link'); if (!a) return;
+     var max = tocScroller.scrollHeight - tocScroller.clientHeight;
+     if (max <= 0) return;
+     var to = Math.max(0, Math.min(tocAbs(a) - tocScroller.clientHeight / 3, max));
+     tocPinnedHref = a.getAttribute('href');            // 上锁：飞行途中别被 scroll 兜底抢
+     tocPinTimer = setTimeout(releaseTocPin, 1200);     // 安全阀
+     tocTweenTo(to, 320);                               // 固定时长 + easeOutCubic
+   });
+   // tocUpdate() 开头：pinned 且 active 还没追上被点项 → 直接 return
+   ```
+
+   ```js
+   var tocTweenTo = function (to, dur) {
+     var from = tocScroller.scrollTop, t0 = performance.now();
+     tocTarget = null;
+     if (tocRaf) { cancelAnimationFrame(tocRaf); tocRaf = 0; }
+     var step = function (now) {
+       var k = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - k, 3);  // easeOutCubic
+       tocScroller.scrollTop = from + (to - from) * e;
+       if (k < 1) { tocTweenRaf = requestAnimationFrame(step); } else { tocScroller.scrollTop = to; tocTweenRaf = 0; }
+     };
+     tocTweenRaf = requestAnimationFrame(step);
+   };
+   ```
+
+> **关键点④：点击「偏慢」是两段延迟叠加。** 无头逐帧实测（改前）：页面 `420–450ms` 滚到位，但卡片 `454–495ms` 才开始动，再花 `400–800ms` 滑完，总耗时 `0.85–1.26s`。两个原因：① tocbot 在整个平滑滚动期间**只改一次 active**（跳到终点才改），而我们的目标是从 active 算的，所以那 420ms 卡片完全空等；② 每帧 22% 的**指数缓动尾巴很长**（1120px 要走 27 帧，最后几十 px 拖 200ms+）。对策：点击时直接用被点链接算目标 + 固定时长 `easeOutCubic`，改后卡片 `274–290ms` 到位（页面还在滚的途中就到），总耗时降到 `0.48–0.49s`。
+> **关键点⑤：必须有 pin（上锁），否则会被 scroll 兜底拽回去。** 飞行途中 active 还停在旧项，`window scroll` 每帧兜底调用 `tocUpdate()` 会按**旧 active** 算目标、把卡片往回拽。所以点击时记下 `href`，`tocUpdate()` 发现「pinned 且当前 active ≠ 被点项」就直接 return，等 active 追上再解锁（另有 1.2s 安全阀 + 用户 wheel 时立即解锁）。锁释放后重算的目标与 tween 终点重合（差 0），不会二次回弹。
+
 **实测验收**（1440×900 无头 Chrome，长文 `hexo-customize-guide`，45 个目录项）：
 
 - 结构：`panelH=652 / panelScrollH=1828 / overflowY=auto / boxSizing=border-box`，`tocBodyOverflow=visible`（内层确实不再滚），spacer 已插。
 - 点「三、修改站点信息」：标题 `top=300`（= 900/3），active 正好是「三」，`transform:none`，背景 `rgba(48,169,222,.14)`；鼠标停在 active 项上 `transform` 仍为 `none`（不浮起）。
 - 全篇扫描（页面滚动 f=0→1 取 11 个采样点，含首章「前言」与末章「总结」）：卡片 `ratio` 全部 0.33–0.34，`scrollTop` 从 0 连续增长到 1174，无一次越界或回弹。
 - **连续跟手验证**（60px/帧模拟滚轮，逐帧记录侧栏 `scrollTop`）：最大单帧跳变 28px、最长「完全不动」连续帧数 26 帧（≈0.43s，且发生在页面刚开始滚、active 还没切的阶段），全程平滑推进，判定 PASS——不再有「停很久再猛跳」。
-- 无头测试注意：① CDN 库（baomitu 的 jquery/tocbot 等）在无头沙箱里加载失败，需用 CDP `Fetch` 拦截喂本地文件，否则 tocbot 不 init、目录项数为 0；② 别用 `window.scrollTo` 瞬间跳 1.8 万像素测——会触发「前言→十六→十七」非真实三连跳，要按 60px/帧渐进滚动模拟真实滚轮。
+- **点击动效验证**（点第 4 / 23 / 43 项，逐帧采样）：页面 `424–441ms` 到位，卡片 `274–290ms` 到位（改前 `821–1161ms`），停稳后 `ratio` 仍是 `0.333`，无二次回弹；中距那次目标本来就在 1/3，卡片位移 600px 也在 283ms 内完成。
+- 无头测试注意：① CDN 库（baomitu 的 jquery/tocbot 等）在无头沙箱里加载失败，需用 CDP `Fetch` **拦截全部请求**（本地 `127.0.0.1` 放行、其它外链回空 200）——只拦 `*baomitu.com*` 不够，`busuanzi` 那个统计脚本卡在 `<head>` 里会让解析器停在 body 之前（`readyState` 永远 `loading`、`document.body` 为 `null`、目录项数 0）；② 别用 `window.scrollTo` 瞬间跳 1.8 万像素测——会触发「前言→十六→十七」非真实三连跳，要按 60px/帧渐进滚动模拟真实滚轮。
 - **部署红线**：改完 EJS/CSS 只在本地 `hexo generate` 不够，线上看不到——必须 `git commit` + `git push origin main` 让 Actions 部署到 gh-pages。用户「还是没跟随」的头号原因就是只本地生成没 push。
 
 > 附带发现：tocbot 4.20.1 实际没给 active 的 `<li>` 加 `is-active-li` 类，主题里那条左侧蓝竖条本来就 `visibility:hidden`、不会显示。CSS 里仍留一条 `display:none` 兜底，防止将来版本加上类后与卡片重复。
@@ -788,6 +822,7 @@ EOF
 | 目录跳转落点 | 目标标题 `top ≈ 视口高度/3`，active 与点击项一致 |
 | 侧栏可独立滚动 | 鼠标在右侧栏上滚滚轮，只滚目录不动正文；侧栏有细滚动条，`max-height` 铺满一屏、吸顶不跑 |
 | 目录跟随 | 蓝色卡片连续跟手停在「整栏可视高」1/3 处（含首章/末章，`ratio 0.33–0.34`），滚动中不顿不跳；改动已 push 部署（非仅本地 generate） |
+| 点击跳转 | 卡片约 300ms 内到位，与页面平滑滚动几乎同时收尾，不出现「页面停了卡片还在溜」 |
 | 主页 banner | 从文章页软导航回首页后，banner 不再残留「字数 / 阅读时长」 |
 
 ## 总结
