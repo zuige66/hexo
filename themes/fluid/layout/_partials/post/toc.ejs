@@ -137,24 +137,24 @@ import_script(`
       return (er.top - pr.top) + tocScroller.scrollTop;
     };
 
-    // 列表上下垫空白：顶部让第一项能落到 1/3，底部让最后一项也能落到 1/3。
-    // 依据的是滚动容器（整栏）的可视高，而不是 toc-body 的小框。
+    // 列表底部垫白：让最后一项也能落到 1/3。
+    // 顶部**故意不垫**（2026-11-19 改）：垫到 1/3 会让文章刚打开时「目录」标题与第一项
+    // 之间空出半屏，非常难看。现在第一项紧贴标题；因为目标值有 clamp(0)，
+    // 前几项自动退化成「列表不动、高亮往下走」，等某一行自然越过 1/3 才开始滚，衔接是连续的。
     var ensureTocSpacers = function () {
       if (!tocBody || !tocScroller) { return; }
       var items = tocBody.querySelectorAll('li.toc-list-item');
       if (!items.length) { return; }
-      var top = tocBody.querySelector('.toc-spacer-top');
+      // 清掉可能残留的顶部 spacer（旧版本会插）
+      var stale = tocBody.querySelector('.toc-spacer-top');
+      if (stale) { stale.parentNode.removeChild(stale); }
       var bot = tocBody.querySelector('.toc-spacer-bottom');
-      if (!top) { top = document.createElement('div'); top.className = 'toc-spacer-top'; tocBody.insertBefore(top, tocBody.firstChild); }
       if (!bot) { bot = document.createElement('div'); bot.className = 'toc-spacer-bottom'; tocBody.appendChild(bot); }
-      // 先清零再量，避免上一次的 spacer 高度累加误差
-      top.style.height = '0px';
-      bot.style.height = '0px';
+      bot.style.height = '0px';  // 先清零再量，避免上一次的高度累加误差
       var h = tocScroller.clientHeight;
       // 目录本身没超出可视区（短文/少标题）：不垫空白、不跟随，避免无谓的大片留白
       if (tocScroller.scrollHeight <= h + 4) { return; }
-      var first = items[0], last = items[items.length - 1];
-      top.style.height = Math.max(0, Math.round(h / 3 - tocAbs(first))) + 'px';
+      var last = items[items.length - 1];
       var needBot = Math.max(0, Math.round(tocAbs(last) + h * 2 / 3 - tocScroller.scrollHeight));
       bot.style.height = needBot + 'px';
     };

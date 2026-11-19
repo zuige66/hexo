@@ -687,7 +687,7 @@ EOF
 
 ### 20.4 右侧目录当前项：蓝色卡片 + 跳转落在视口 1/3 + 容器跟随（2026-11-19 修）
 
-> 需求：右侧目录用淡蓝卡片标出当前阅读位置，卡片不随 hover 浮起；点击跳转后目标标题停在视口上 1/3、下面留 2/3 正文，且**卡片要跟页面一起到位、不能慢半拍**；页面下滑时目录自动跟随，把蓝色卡片连续停在「侧栏 1/3」处、上下留白；并且**侧栏本身能独立上下滚动**（滚轮停在侧栏上只滚目录）。
+> 需求：右侧目录用淡蓝卡片标出当前阅读位置，卡片不随 hover 浮起；点击跳转后目标标题停在视口上 1/3、下面留 2/3 正文，且**卡片要跟页面一起到位、不能慢半拍**；页面下滑时目录自动跟随，越过 1/3 后蓝色卡片连续钉在「侧栏 1/3」处，**但文章刚打开时顶部不要空一大块**；并且**侧栏本身能独立上下滚动**（滚轮停在侧栏上只滚目录）。
 
 三处改动，缺一不可：
 
@@ -735,11 +735,13 @@ EOF
 
    var ensureTocSpacers = function () {
      var items = tocBody.querySelectorAll('li.toc-list-item');
-     var top = /* 确保 .toc-spacer-top / .toc-spacer-bottom 存在 */;
-     top.style.height = bot.style.height = '0px';        // 先清零再量，避免累加误差
+     var stale = tocBody.querySelector('.toc-spacer-top');   // 旧版本残留，删掉
+     if (stale) { stale.parentNode.removeChild(stale); }
+     var bot = /* 确保 .toc-spacer-bottom 存在 */;
+     bot.style.height = '0px';                           // 先清零再量，避免累加误差
      var h = tocScroller.clientHeight;                   // 参照的是「整栏可视高」
      if (tocScroller.scrollHeight <= h + 4) { return; }   // 目录没溢出：不垫空白、不跟随
-     top.style.height = Math.max(0, Math.round(h / 3 - tocAbs(items[0]))) + 'px';
+     // 只垫底部：末项也要能落到 1/3。顶部不垫，否则开头一大块空白。
      bot.style.height = Math.max(0, Math.round(tocAbs(last) + h * 2 / 3 - tocScroller.scrollHeight)) + 'px';
    };
 
@@ -762,7 +764,8 @@ EOF
 
 > **关键点①：跟随的参照物是「能看到的整栏」，不是 `.toc-body` 那个小框。** 旧版让 `.toc-body`（`max-height:75vh`）自己滚，1/3 只能按它算，观感上卡片落到屏幕约 41%；而且它本身不是吸顶元素，页面滚起来它是被动跟着走。改成整栏滚动后，1/3 就是「你眼睛看到的侧栏 1/3」，且整栏是 `position:sticky` 常驻的。**也顺带满足了「侧栏可以单独滑动」**——鼠标停在侧栏上滚轮只滚目录，不带动正文。
 > **关键点②：抽搐的真凶是「等待」，不是「跳动」。** 上一版用「active 稳定 180ms + 10% 死区」防抖，逻辑上很合理，但用户感知是「滚动时它故意不动，停下才猛地滑一下」——就是这个 `一卡一卡`。现在**去掉死区、去掉 settle 延时**：active 一换就立即以 22%/帧缓动过去，平滑完全交给缓动本身。`tocAbs()` 在滚动中恒定（`er.top` 与 `scrollTop` 反向抵消），所以不会像 `offsetTop` 那样读到中间态产生目标横跳。
-> **关键点③：首尾章必须有 spacer，且高度按整栏算。** 第一章 scrollTop 顶到 0、最后一章顶到 scrollHeight 上限，没有垫白物理上到不了 1/3。顶部垫 `h/3 - 首项位置`、底部垫到「末项能落在 h/3」。**先清零再量**，否则多次 resize 后高度会累加跑飞。**spacer 插在列表内部**而非给 `.toc-body` 加 padding（后者 `box-sizing:content-box`，padding 会把盒子撑到 ~1.7 倍）。`tocbot.refresh()` 重建内容会冲掉 spacer，`registerRefreshCallback` 里要重插。
+> **关键点③：只在列表底部垫白，顶部不垫。** 最后一章 scrollTop 顶到 scrollHeight 上限，没有底部垫白物理上到不了 1/3，所以底部垫到「末项能落在 h/3」。**顶部故意不垫**（2026-11-19 改，用户：「刚开始的时候可以不要留白这么多吗」）——早期版本为了「第一项也停在 1/3」在顶部垫了 `h/3 - 首项位置`（实测 108px），结果文章一打开，「目录」标题和第一条之间空出一大块，很难看。去掉顶部垫白后靠 clamp 天然衔接：前几项目标算出来是负数 → `Math.max(0, …)` 归零 → 列表不动、高亮往下走，等某条自然越过 1/3 才开始滚，全程连续无跳变（实测 ratio 从 0.13 平滑升到 0.34）。
+> **先清零再量**，否则多次 resize 后高度会累加跑飞。**spacer 插在列表内部**而非给 `.toc-body` 加 padding（后者 `box-sizing:content-box`，padding 会把盒子撑到 ~1.7 倍）。`tocbot.refresh()` 重建内容会冲掉 spacer，`registerRefreshCallback` 里要重插；同时要**顺手删掉可能残留的 `.toc-spacer-top`**（旧版本会插）。
 
 4. **点击跳转的卡片动效单独走时间轴**（2026-11-19 第三次补，用户：「点击跳转时蓝色卡片动效偏慢」）：
 
@@ -799,9 +802,10 @@ EOF
 
 **实测验收**（1440×900 无头 Chrome，长文 `hexo-customize-guide`，45 个目录项）：
 
-- 结构：`panelH=652 / panelScrollH=1828 / overflowY=auto / boxSizing=border-box`，`tocBodyOverflow=visible`（内层确实不再滚），spacer 已插。
+- 结构：`panelH=652 / panelScrollH=1711 / overflowY=auto / boxSizing=border-box`，`tocBodyOverflow=visible`（内层确实不再滚），只垫底部 spacer（`hasSpacer-top=false`）。
 - 点「三、修改站点信息」：标题 `top=300`（= 900/3），active 正好是「三」，`transform:none`，背景 `rgba(48,169,222,.14)`；鼠标停在 active 项上 `transform` 仍为 `none`（不浮起）。
-- 全篇扫描（页面滚动 f=0→1 取 11 个采样点，含首章「前言」与末章「总结」）：卡片 `ratio` 全部 0.33–0.34，`scrollTop` 从 0 连续增长到 1174，无一次越界或回弹。
+- 全篇扫描（页面滚动 f=0→1 取 9 个采样点）：`f=0` 时首章「前言」`ratio 0.16`（贴近目录标题，不再空一大块），`f=0.1` 升到 `0.32`，`f≥0.25` 起稳定在 `0.34` 直到末章「总结」，`scrollTop` 0→1057 单调增长，无越界回弹。**前段 0.16→0.34 是连续爬升**（clamp 归零导致），不是跳变。
+- 顶部留白（`engineering-electromagnetic-field-review`，60 个目录项，栏高 624）：首项距侧栏顶 **208px → 80px**，省掉 128px 空白。
 - **连续跟手验证**（60px/帧模拟滚轮，逐帧记录侧栏 `scrollTop`）：最大单帧跳变 28px、最长「完全不动」连续帧数 26 帧（≈0.43s，且发生在页面刚开始滚、active 还没切的阶段），全程平滑推进，判定 PASS——不再有「停很久再猛跳」。
 - **点击动效验证**（点第 4 / 23 / 43 项，逐帧采样）：页面 `424–441ms` 到位，卡片 `274–290ms` 到位（改前 `821–1161ms`），停稳后 `ratio` 仍是 `0.333`，无二次回弹；中距那次目标本来就在 1/3，卡片位移 600px 也在 283ms 内完成。
 - 无头测试注意：① CDN 库（baomitu 的 jquery/tocbot 等）在无头沙箱里加载失败，需用 CDP `Fetch` **拦截全部请求**（本地 `127.0.0.1` 放行、其它外链回空 200）——只拦 `*baomitu.com*` 不够，`busuanzi` 那个统计脚本卡在 `<head>` 里会让解析器停在 body 之前（`readyState` 永远 `loading`、`document.body` 为 `null`、目录项数 0）；② 别用 `window.scrollTo` 瞬间跳 1.8 万像素测——会触发「前言→十六→十七」非真实三连跳，要按 60px/帧渐进滚动模拟真实滚轮。
@@ -821,7 +825,7 @@ EOF
 | 目录当前项 | 淡蓝卡片、蓝字，hover 时不浮起 |
 | 目录跳转落点 | 目标标题 `top ≈ 视口高度/3`，active 与点击项一致 |
 | 侧栏可独立滚动 | 鼠标在右侧栏上滚滚轮，只滚目录不动正文；侧栏有细滚动条，`max-height` 铺满一屏、吸顶不跑 |
-| 目录跟随 | 蓝色卡片连续跟手停在「整栏可视高」1/3 处（含首章/末章，`ratio 0.33–0.34`），滚动中不顿不跳；改动已 push 部署（非仅本地 generate） |
+| 目录跟随 | 蓝色卡片连续跟手：前段贴近目录标题（`ratio` 从 0.13/0.16 连续爬升），越过 1/3 后稳定钉在「整栏可视高」1/3 处直到末章（`ratio 0.34`），滚动中不顿不跳；**开头不留大片空白**；改动已 push 部署（非仅本地 generate） |
 | 点击跳转 | 卡片约 300ms 内到位，与页面平滑滚动几乎同时收尾，不出现「页面停了卡片还在溜」 |
 | 主页 banner | 从文章页软导航回首页后，banner 不再残留「字数 / 阅读时长」 |
 
