@@ -473,6 +473,8 @@ git push origin main                     # 3. 推送后 Actions 自动部署；�
 
 关键坑：软导航换入 `#board` 后**内联 `<script>` 不会执行**，所以这里用 `document` 级事件委托绑定点击，并监听 `soft-nav.js` 派发的 `softnav:loaded` 事件重新初始化——否则从其他页面软导航进归档页后，切换按钮会失效。
 
+> **红线（2026-11-19 补）：banner 里的文章元信息必须随软导航整块增删。** 文章页 banner 的作者/日期/字数/阅读时长由 `banner.ejs` 在 `is_post()` 时渲染（现包在 `#banner-post-meta` 容器里），首页没有；而 banner 在 `#board` 之外，软导航只换 `#board` 不会动它。于是「文章页 → 软导航回首页」时，上一篇文章的「11k 字 / 93 分钟」会残留在首页 banner 上。修法：`soft-nav.js` 的 `syncBannerChrome()` 里按目标页有无 `#banner-post-meta` 做增/删/替换（与滚动箭头同一套逻辑）。改动 `banner.ejs` 结构后必须回归测这条。
+
 > **红线（2026-10-20 补）**：软导航「只换 `#board.innerHTML`」的假设只在「同类 layout 页面间」成立。本博客 `is_post` 文章页的 `#board` 外层是 `col-lg-8>#board-ctn`（窄列），非文章页是 `.container.nopadding-x-md`（全宽）。从文章页（整页加载）点导航软导航回首页时，只换 innerHTML 会让首页内容残留塞进文章页窄列、整页变窄。因此 `soft-nav.js` 换正文前必须**连 `#board` 的外层父链一起同步**（把 `#board` 节点整体移入目标页外层容器并 `replaceChild` 替换旧外层）。改 `soft-nav.js` 后无需手改版本号，`scripts/asset-version.js` 会按内容 hash 自动更新（见十九）。
 
 ### 17.4 资源注入与文案
@@ -685,7 +687,7 @@ EOF
 
 ### 20.4 右侧目录当前项：蓝色卡片 + 跳转落在视口 1/3 + 容器跟随（2026-11-19 修）
 
-> 需求：右侧目录用淡蓝卡片标出当前阅读位置，卡片不随 hover 浮起；点击跳转后目标标题停在视口上 1/3、下面留 2/3 正文；页面下滑时目录容器自动跟随，把蓝色卡片停在容器 1/3 处、上下留白。
+> 需求：右侧目录用淡蓝卡片标出当前阅读位置，卡片不随 hover 浮起；点击跳转后目标标题停在视口上 1/3、下面留 2/3 正文；页面下滑时目录自动跟随，把蓝色卡片连续停在「侧栏 1/3」处、上下留白；并且**侧栏本身能独立上下滚动**（滚轮停在侧栏上只滚目录）。
 
 三处改动，缺一不可：
 
@@ -704,70 +706,72 @@ EOF
 > tocbot 4.x 判定 active 时拿 `heading.offsetTop`（相对文章容器，实测 2215）和文档 `scrollTop`（实测 2513）比较，两者基准差一个 `boardTop`（容器到文档顶的距离，约 598）。Fluid 原本的 `-boardTop` 就是补偿它，使高亮边界落在视口 top≈10px。若直接把 `headingsOffset` 换成 `readOffset`，高亮会整整错位一节（实测点「三」亮「四」）。
 > 正确做法是在原补偿上**加** `readOffset`，把高亮边界从视口顶部平移到 1/3；`scrollSmoothOffset` 是独立配置，只管点击落点，取负值（目标滚动位置 = 标题文档位置 + offset，负 1/3 视口高度才能让标题停在距顶 1/3 处）。
 
-3. 同文件在 `window.tocbot.init()` 之后新增**目录容器跟随**逻辑（这是「页面下滑侧栏不跟着动」的根治）：
+3. **整栏当滚动容器**（2026-11-19 第二轮重写，当前线上方案）。`source/css/site-motion.css` 在 `@media (min-width: 992px)` 内让 `aside.sidebar` 自己滚：
 
-   ```js
-   // 蓝色卡片始终「钉」在 .toc-body 高度 1/3 处。tocbot 只加 active 类、不滚容器。
-   var tocBody = document.getElementById('toc-body');
-   // 列表内上下插 spacer（顶部 1/3、底部 2/3 容器高），否则首尾章 scrollTop 到边界，
-   // 物理上无法把卡片推到 1/3。注意不能给 .toc-body 加 padding——它 box-sizing:content-box，
-   // padding 会把容器盒子撑高到 ~1.7 倍，让「容器 1/3」参照失真。
-   var ensureTocSpacers = function() {
-     var h = tocBody.clientHeight;
-     var top = tocBody.querySelector('.toc-spacer-top'), bot = tocBody.querySelector('.toc-spacer-bottom');
-     if (!top) { top = document.createElement('div'); top.className = 'toc-spacer-top'; tocBody.insertBefore(top, tocBody.firstChild); }
-     if (!bot) { bot = document.createElement('div'); bot.className = 'toc-spacer-bottom'; tocBody.appendChild(bot); }
-     top.style.height = Math.round(h / 3) + 'px';
-     bot.style.height = Math.round(h * 2 / 3) + 'px';
-   };
-   // 平滑跟随（防抽搐）：active 稳定后 rAF 缓动把卡片送到 1/3，每帧逼近 15%。
-   var tocTarget = null, tocActiveId = null, tocSettleTimer = null;
-   var tocStep = function() {                 // 唯一写 scrollTop 的地方
-     if (!tocBody || tocTarget === null) { return; }
-     var cur = tocBody.scrollTop, delta = tocTarget - cur;
-     if (Math.abs(delta) < 0.5) { tocBody.scrollTop = tocTarget; tocTarget = null; return; }
-     tocBody.scrollTop = cur + delta * 0.15;
-     requestAnimationFrame(tocStep);
-   };
-   var alignToActive = function() {
-     var active = tocBody.querySelector('.tocbot-active-link');
-     if (!active) { return; }
-     var cRect = tocBody.getBoundingClientRect(), aRect = active.getBoundingClientRect();
-     var cardAbs = tocBody.scrollTop + (aRect.top - cRect.top); // 卡片相对内容顶的绝对位置
-     var max = tocBody.scrollHeight - tocBody.clientHeight;
-     var want = Math.max(0, Math.min(cardAbs - tocBody.clientHeight / 3, max));
-     var gap = want - tocBody.scrollTop;
-     // 死区 10%：相邻子标题来回切时目标只差几十 px，每次都归位会 32↔42↔48 反复横跳（抽搐）。
-     if (Math.abs(gap) < tocBody.clientHeight * 0.10) { return; }
-     tocTarget = want;
-     requestAnimationFrame(tocStep);
-   };
-   // active 稳定 180ms 才对齐；只用 observer 驱动，不叠 window scroll 兜底（两个计时器互相重置会震荡）。
-   var requestAlign = function() {
-     var active = tocBody.querySelector('.tocbot-active-link');
-     var id = active ? (active.getAttribute('href') || active.textContent) : '';
-     if (id === tocActiveId) { return; }
-     tocActiveId = id;
-     if (tocSettleTimer) { clearTimeout(tocSettleTimer); }
-     tocSettleTimer = setTimeout(alignToActive, 180);
-   };
-   window.__tocActiveObserver = new MutationObserver(function(muts){ /* 发现 active 则 requestAlign() */ });
-   window.__tocActiveObserver.observe(tocBody, { attributes: true, subtree: true, attributeFilter: ['class'] });
-   // init 和 registerRefreshCallback 里都要 ensureTocSpacers() + requestAlign()。
+   ```css
+   aside.sidebar {
+     box-sizing: border-box;
+     max-height: calc(100vh - 2rem - 1rem);  /* 扣掉 sticky top 2rem + 底部留 1rem */
+     overflow-y: auto;
+     scrollbar-width: thin;                  /* 细滚动条，别抢戏 */
+   }
+   aside.sidebar .toc-body { max-height: none; overflow: visible; }  /* 内层不再滚，避免双滚动条 */
    ```
 
-> **关键点①：跟的是「容器 `.toc-body`」不是「页面 window」。** 两个独立滚动体：tocbot 的 `headingsOffset`/`scrollSmoothOffset` 管**页面**滚动与高亮判定；容器滚动管目录内部。混淆就无效。
-> **关键点②：防抽搐三件套，缺一不可。** 用户反馈「一卡一卡」的根因与对策：① **每帧瞬间 `scrollTop += diff`** → 改 rAF 缓动（每帧逼近 15%）；② **scroll + MutationObserver 双驱动** → 只留 observer 一个触发源、`tocStep` 一个写入口；③ **相邻 active 来回切导致目标横跳**（实测 32↔42↔48 震荡）→ 加 **10% 死区**，小差异不动，只跨节大切换才归位。另加 180ms 稳定判定，滚动途中频繁切 active 不打扰。
-> **关键点③：首尾章必须有 spacer。** 第一/最后一章时 scrollTop 顶到 0 或 scrollHeight 上限，没有 spacer 物理上到不了 1/3。顶部垫 1/3、底部垫 2/3 容器高，让任意章节都能停在 1/3（实测 ratio 恒 0.34）。**spacer 必须插在列表内部**而非给 `.toc-body` 加 padding（后者 box-sizing:content-box 会把容器撑高）。refresh 重建目录后 spacer 被冲掉，回调里要重插。
+   JS（`toc.ejs`，`window.tocbot.init()` 之后）：
 
-**实测验收**（1440×900 无头 Chrome，长文 `hexo-customize-guide`，容器高 558px）：
+   ```js
+   var tocBody = document.getElementById('toc-body');
+   var tocPanel = tocBody ? tocBody.closest('aside.sidebar') : null;
+   if (tocPanel && getComputedStyle(tocPanel).overflowY !== 'auto') { tocPanel = null; } // CSS 不生效时退回
+   var tocScroller = tocPanel || tocBody;
 
-- 点「三、修改站点信息」：标题 `top=300`（= 900/3），active 正好是「三」，`transform:none`，背景 `rgba(48,169,222,.14)`。
-- 鼠标停在 active 项上：`transform` 仍为 `none`（不浮起）。
-- 渐进滚动采样（每次滚一屏等 1.6s）：「二/五/九/十三/十七/总结」全部采样点卡片 `ratio=0.34`、`posInView≈188`（容器 558 的 1/3）、`visible=true`、active 与页面标题一致——含首尾章（靠 spacer 实现）。
-- **防抽搐验证**：慢速滚动（60px/帧）停止后，容器 `scrollTop` 连续 20 帧稳定不震荡（旧版会在 32↔42↔48 间反复横跳）；整体最大单帧跳变 ≤28px（初始归位的平滑缓动）。靠死区 10% + 180ms 稳定 + 单一 observer 驱动实现。
-- 无头测试注意：① CDN 库（baomitu 的 jquery/tocbot 等）在无头沙箱里加载失败，需用 CDP `Fetch` 拦截喂本地文件，否则 tocbot 不 init、目录项数为 0；② 别用 `window.scrollTo` 瞬间跳 1.8 万像素测——会触发「前言→十六→十七」非真实三连跳，要渐进滚动模拟真实滚轮。
-- **部署红线**：改完 EJS 只在本地 `hexo generate` 不够，线上看不到——必须 `git commit` + `git push origin main` 让 Actions 部署到 gh-pages。用户「还是没跟随」的头号原因就是只本地生成没 push。
+   // 元素相对「滚动容器内容顶」的绝对位置 —— 该值在滚动/缓动过程中恒定，
+   // 所以不会读到中间态、不会来回跳。
+   var tocAbs = function (el) {
+     var pr = tocScroller.getBoundingClientRect(), er = el.getBoundingClientRect();
+     return (er.top - pr.top) + tocScroller.scrollTop;
+   };
+
+   var ensureTocSpacers = function () {
+     var items = tocBody.querySelectorAll('li.toc-list-item');
+     var top = /* 确保 .toc-spacer-top / .toc-spacer-bottom 存在 */;
+     top.style.height = bot.style.height = '0px';        // 先清零再量，避免累加误差
+     var h = tocScroller.clientHeight;                   // 参照的是「整栏可视高」
+     if (tocScroller.scrollHeight <= h + 4) { return; }   // 目录没溢出：不垫空白、不跟随
+     top.style.height = Math.max(0, Math.round(h / 3 - tocAbs(items[0]))) + 'px';
+     bot.style.height = Math.max(0, Math.round(tocAbs(last) + h * 2 / 3 - tocScroller.scrollHeight)) + 'px';
+   };
+
+   var tocTarget = null, tocRaf = 0;
+   var tocStep = function () {                    // 唯一写 scrollTop 的地方
+     var cur = tocScroller.scrollTop, d = tocTarget - cur;
+     if (Math.abs(d) < 0.5) { tocScroller.scrollTop = tocTarget; tocTarget = null; tocRaf = 0; return; }
+     tocScroller.scrollTop = cur + d * 0.22;      // 每帧逼近 22%
+     tocRaf = requestAnimationFrame(tocStep);
+   };
+   var tocUpdate = function () {                  // active 一变立刻算目标并起缓动
+     var want = tocAbs(active) - tocScroller.clientHeight / 3;
+     tocTarget = Math.max(0, Math.min(want, tocScroller.scrollHeight - tocScroller.clientHeight));
+     if (!tocRaf) { tocRaf = requestAnimationFrame(tocStep); }
+   };
+   // 主驱动：MutationObserver 看 active 类；兜底：window scroll rAF 节流再校一次
+   // 用户滚侧栏：wheel / touchstart → 取消目标，自动跟随立刻让位
+   // resize → ensureTocSpacers() + tocUpdate()
+   ```
+
+> **关键点①：跟随的参照物是「能看到的整栏」，不是 `.toc-body` 那个小框。** 旧版让 `.toc-body`（`max-height:75vh`）自己滚，1/3 只能按它算，观感上卡片落到屏幕约 41%；而且它本身不是吸顶元素，页面滚起来它是被动跟着走。改成整栏滚动后，1/3 就是「你眼睛看到的侧栏 1/3」，且整栏是 `position:sticky` 常驻的。**也顺带满足了「侧栏可以单独滑动」**——鼠标停在侧栏上滚轮只滚目录，不带动正文。
+> **关键点②：抽搐的真凶是「等待」，不是「跳动」。** 上一版用「active 稳定 180ms + 10% 死区」防抖，逻辑上很合理，但用户感知是「滚动时它故意不动，停下才猛地滑一下」——就是这个 `一卡一卡`。现在**去掉死区、去掉 settle 延时**：active 一换就立即以 22%/帧缓动过去，平滑完全交给缓动本身。`tocAbs()` 在滚动中恒定（`er.top` 与 `scrollTop` 反向抵消），所以不会像 `offsetTop` 那样读到中间态产生目标横跳。
+> **关键点③：首尾章必须有 spacer，且高度按整栏算。** 第一章 scrollTop 顶到 0、最后一章顶到 scrollHeight 上限，没有垫白物理上到不了 1/3。顶部垫 `h/3 - 首项位置`、底部垫到「末项能落在 h/3」。**先清零再量**，否则多次 resize 后高度会累加跑飞。**spacer 插在列表内部**而非给 `.toc-body` 加 padding（后者 `box-sizing:content-box`，padding 会把盒子撑到 ~1.7 倍）。`tocbot.refresh()` 重建内容会冲掉 spacer，`registerRefreshCallback` 里要重插。
+
+**实测验收**（1440×900 无头 Chrome，长文 `hexo-customize-guide`，45 个目录项）：
+
+- 结构：`panelH=652 / panelScrollH=1828 / overflowY=auto / boxSizing=border-box`，`tocBodyOverflow=visible`（内层确实不再滚），spacer 已插。
+- 点「三、修改站点信息」：标题 `top=300`（= 900/3），active 正好是「三」，`transform:none`，背景 `rgba(48,169,222,.14)`；鼠标停在 active 项上 `transform` 仍为 `none`（不浮起）。
+- 全篇扫描（页面滚动 f=0→1 取 11 个采样点，含首章「前言」与末章「总结」）：卡片 `ratio` 全部 0.33–0.34，`scrollTop` 从 0 连续增长到 1174，无一次越界或回弹。
+- **连续跟手验证**（60px/帧模拟滚轮，逐帧记录侧栏 `scrollTop`）：最大单帧跳变 28px、最长「完全不动」连续帧数 26 帧（≈0.43s，且发生在页面刚开始滚、active 还没切的阶段），全程平滑推进，判定 PASS——不再有「停很久再猛跳」。
+- 无头测试注意：① CDN 库（baomitu 的 jquery/tocbot 等）在无头沙箱里加载失败，需用 CDP `Fetch` 拦截喂本地文件，否则 tocbot 不 init、目录项数为 0；② 别用 `window.scrollTo` 瞬间跳 1.8 万像素测——会触发「前言→十六→十七」非真实三连跳，要按 60px/帧渐进滚动模拟真实滚轮。
+- **部署红线**：改完 EJS/CSS 只在本地 `hexo generate` 不够，线上看不到——必须 `git commit` + `git push origin main` 让 Actions 部署到 gh-pages。用户「还是没跟随」的头号原因就是只本地生成没 push。
 
 > 附带发现：tocbot 4.20.1 实际没给 active 的 `<li>` 加 `is-active-li` 类，主题里那条左侧蓝竖条本来就 `visibility:hidden`、不会显示。CSS 里仍留一条 `display:none` 兜底，防止将来版本加上类后与卡片重复。
 
@@ -782,7 +786,9 @@ EOF
 | 点右侧目录后 | 页面滚到目标标题且不回顶（无整页 reload） |
 | 目录当前项 | 淡蓝卡片、蓝字，hover 时不浮起 |
 | 目录跳转落点 | 目标标题 `top ≈ 视口高度/3`，active 与点击项一致 |
-| 目录容器跟随 | active 稳定后蓝色卡片平滑归位到 `.toc-body` 高度 1/3 处（含首尾章，`ratio≈0.34`），停稳后不震荡、无抽搐；改动已 push 部署（非仅本地 generate） |
+| 侧栏可独立滚动 | 鼠标在右侧栏上滚滚轮，只滚目录不动正文；侧栏有细滚动条，`max-height` 铺满一屏、吸顶不跑 |
+| 目录跟随 | 蓝色卡片连续跟手停在「整栏可视高」1/3 处（含首章/末章，`ratio 0.33–0.34`），滚动中不顿不跳；改动已 push 部署（非仅本地 generate） |
+| 主页 banner | 从文章页软导航回首页后，banner 不再残留「字数 / 阅读时长」 |
 
 ## 总结
 

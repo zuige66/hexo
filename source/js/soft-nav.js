@@ -67,6 +67,20 @@
     var fromB = doc.querySelector('#banner');
     var toB = document.querySelector('#banner');
     if (fromB && toB && fromB.style.backgroundImage) toB.style.backgroundImage = fromB.style.backgroundImage;
+    // 文章 banner 的元信息（作者/日期/字数/阅读时长）：只有文章页渲染，
+    // 首页等非文章页没有。软导航回首页时必须整块移除，否则会残留上一篇的字数与阅读时长
+    // （用户反馈：首页 banner 出现「11k 字 / 93 分钟」）。
+    // 包容器 id 见 banner.ejs 的 #banner-post-meta。
+    var fromMeta = doc.getElementById('banner-post-meta');
+    var toMeta = document.getElementById('banner-post-meta');
+    if (!fromMeta && toMeta) {
+      toMeta.remove();
+    } else if (fromMeta && !toMeta) {
+      var metaHost = document.querySelector('#banner .banner-text');
+      if (metaHost) { metaHost.appendChild(document.importNode(fromMeta, true)); }
+    } else if (fromMeta && toMeta) {
+      toMeta.parentNode.replaceChild(document.importNode(fromMeta, true), toMeta);
+    }
     // 滚动箭头：仅 banner ≥80vh 的页面（首页）由 banner.ejs 渲染该元素，
     // 软导航后残留会让 60vh 页面在 banner 底部露出箭头；按目标页有无进行增删
     var fromArrow = doc.querySelector('#banner .scroll-down-bar');

@@ -116,97 +116,107 @@ import_script(`
     expandAllToc();
     bindTocToggle();
 
-    // 蓝色卡片始终「钉」在目录容器（.toc-body 有 overflow-y:auto）高度 1/3 处。
-    // tocbot 只加 active 类、不滚这个容器，需要自己把容器滚到让 active 卡片落在 1/3。
-    // 关键：不用 smooth、不用去抖，页面滚动时每帧直接定位（scrollTop 赋值），卡片才像钉住；
-    // smooth/延迟会让卡片滞后、晃动，看起来「没跟随」。
+    // ── 右侧目录跟随：整栏独立滚动 + 连续缓动 ───────────────────────────
+    // 结构（见 site-motion.css）：aside.sidebar 吸顶、max-height 铺满一屏、overflow-y:auto，
+    // 是唯一滚动容器；.toc-body 不再自己滚（max-height:none）。
+    // 目标：蓝色卡片稳定停在「你能看到的侧栏」高度 1/3 处；页面滚动时连续跟手，
+    //      不顿不跳。
+    // 旧版的教训：靠「active 稳定 180ms + 10% 死区」触发 → 滚动途中故意不动、停下才滑，
+    // 观感就是「一卡一卡」；这里改成 active 一换就立刻缓动过去（无死区、无等待），
+    // 缓动本身（每帧逼近 22%）负责消除瞬移感。
     var tocBody = document.getElementById('toc-body');
-    // 在目录列表内部上下各插入 1/3 容器高的空白 spacer：否则第一章/最后一章时
-    // scrollTop 已到 0 或上限，物理上无法把卡片推到 1/3。spacer 只增加可滚动范围，
-    // 不改变容器自身高度（注意不能给 .toc-body 加 padding——它 box-sizing:content-box，
-    // padding 会把容器盒子撑高到 ~1.7 倍，反而让「容器 1/3」变成错误的参照）。
-    var ensureTocSpacers = function() {
-      if (!tocBody) { return; }
-      var h = tocBody.clientHeight;
+    var tocPanel = tocBody ? tocBody.closest('aside.sidebar') : null;
+    // 没有 CSS 支持（如宽度不足侧栏隐藏）时退回 toc-body 自身滚动。
+    if (tocPanel && getComputedStyle(tocPanel).overflowY !== 'auto') { tocPanel = null; }
+    var tocScroller = tocPanel || tocBody;
+
+    // 元素相对「滚动容器内容顶」的绝对位置。该值在容器滚动/缓动过程中恒定不变
+    // （元素 top 与 scrollTop 反向同步变化），所以测量不会读到中间态、不会来回跳。
+    var tocAbs = function (el) {
+      var pr = tocScroller.getBoundingClientRect(), er = el.getBoundingClientRect();
+      return (er.top - pr.top) + tocScroller.scrollTop;
+    };
+
+    // 列表上下垫空白：顶部让第一项能落到 1/3，底部让最后一项也能落到 1/3。
+    // 依据的是滚动容器（整栏）的可视高，而不是 toc-body 的小框。
+    var ensureTocSpacers = function () {
+      if (!tocBody || !tocScroller) { return; }
+      var items = tocBody.querySelectorAll('li.toc-list-item');
+      if (!items.length) { return; }
       var top = tocBody.querySelector('.toc-spacer-top');
       var bot = tocBody.querySelector('.toc-spacer-bottom');
       if (!top) { top = document.createElement('div'); top.className = 'toc-spacer-top'; tocBody.insertBefore(top, tocBody.firstChild); }
       if (!bot) { bot = document.createElement('div'); bot.className = 'toc-spacer-bottom'; tocBody.appendChild(bot); }
-      // 顶部 1/3：让第一项能落到 1/3；底部 2/3：让最后一项也能落到 1/3
-      // （末项卡片下方需留 2/3 容器高，scrollTop 才能把它顶到 1/3 处）。
-      top.style.height = Math.round(h / 3) + 'px';
-      bot.style.height = Math.round(h * 2 / 3) + 'px';
-    };
-    // 平滑跟随：active 稳定后，用 rAF 缓动把卡片送到容器 1/3（每帧逼近 15%）。
-    // 只有 tocStep 一处写 scrollTop，不会双驱动；active 未稳定（滚动途中）不触发，
-    // 避免频繁切 active 导致目标乱跳。缓动中若来了新目标，直接替换（此时测量是准的：
-    // 卡片相对容器内容顶的绝对位置 = 当前 scrollTop + rect 差，与是否缓动无关）。
-    var tocTarget = null;      // 当前缓动目标（null = 空闲）
-    var tocActiveId = null;    // 上次处理的 active 标识
-    var tocSettleTimer = null; // active 稳定计时器
-
-    var tocStep = function() {
-      if (!tocBody || tocTarget === null) { return; }
-      var cur = tocBody.scrollTop;
-      var delta = tocTarget - cur;
-      if (Math.abs(delta) < 0.5) {
-        tocBody.scrollTop = tocTarget;
-        tocTarget = null;
-        return;
-      }
-      tocBody.scrollTop = cur + delta * 0.15; // 每帧逼近 15%，平滑到位
-      requestAnimationFrame(tocStep);
+      // 先清零再量，避免上一次的 spacer 高度累加误差
+      top.style.height = '0px';
+      bot.style.height = '0px';
+      var h = tocScroller.clientHeight;
+      // 目录本身没超出可视区（短文/少标题）：不垫空白、不跟随，避免无谓的大片留白
+      if (tocScroller.scrollHeight <= h + 4) { return; }
+      var first = items[0], last = items[items.length - 1];
+      top.style.height = Math.max(0, Math.round(h / 3 - tocAbs(first))) + 'px';
+      var needBot = Math.max(0, Math.round(tocAbs(last) + h * 2 / 3 - tocScroller.scrollHeight));
+      bot.style.height = needBot + 'px';
     };
 
-    // 测量 active 卡片相对容器内容顶的绝对位置，算出让它落在 1/3 的目标 scrollTop。
-    var alignToActive = function() {
-      if (!tocBody) { return; }
+    var tocTarget = null, tocRaf = 0;
+    var tocStep = function () {
+      if (!tocScroller || tocTarget === null) { tocRaf = 0; return; }
+      var cur = tocScroller.scrollTop, d = tocTarget - cur;
+      if (Math.abs(d) < 0.5) { tocScroller.scrollTop = tocTarget; tocTarget = null; tocRaf = 0; return; }
+      tocScroller.scrollTop = cur + d * 0.22; // 每帧逼近 22%
+      tocRaf = requestAnimationFrame(tocStep);
+    };
+
+    // active 一变就算目标并立刻起缓动：滚动时连续跟手，而不是等停稳再动。
+    var tocUpdate = function () {
+      if (!tocBody || !tocScroller) { return; }
       var active = tocBody.querySelector('.tocbot-active-link');
       if (!active) { return; }
-      var cRect = tocBody.getBoundingClientRect();
-      var aRect = active.getBoundingClientRect();
-      var cardAbs = tocBody.scrollTop + (aRect.top - cRect.top);
-      var max = tocBody.scrollHeight - tocBody.clientHeight;
-      var want = Math.max(0, Math.min(cardAbs - tocBody.clientHeight / 3, max));
-      var gap = want - tocBody.scrollTop;
-      // 死区：目标与当前差不到容器高 10% 就不动。相邻子标题来回切时目标只差几十 px，
-      // 若每次都归位，容器会在两个位置间反复横跳（32↔42↔48）——这就是抽搐。
-      // 死区让「大致钉在 1/3」稳定下来，只有跨节的大切换才触发平滑归位。
-      if (Math.abs(gap) < tocBody.clientHeight * 0.10) { return; }
-      tocTarget = want;
-      requestAnimationFrame(tocStep);
-    };
-
-    // active 稳定 180ms 才对齐：滚动途中 tocbot 频繁切 active 时不打扰，停稳后再动。
-    // 只用 observer 驱动，不叠 window scroll 兜底——两个计时器互相重置会持续触发、引起震荡。
-    var requestAlign = function() {
-      if (!tocBody) { return; }
-      var active = tocBody.querySelector('.tocbot-active-link');
-      var id = active ? (active.getAttribute('href') || active.textContent) : '';
-      if (id === tocActiveId) { return; }
-      tocActiveId = id;
-      if (tocSettleTimer) { clearTimeout(tocSettleTimer); }
-      tocSettleTimer = setTimeout(alignToActive, 180);
+      var max = tocScroller.scrollHeight - tocScroller.clientHeight;
+      if (max <= 0) { return; }
+      var want = tocAbs(active) - tocScroller.clientHeight / 3;
+      tocTarget = Math.max(0, Math.min(want, max));
+      if (!tocRaf) { tocRaf = requestAnimationFrame(tocStep); }
     };
 
     if (tocBody) {
+      // active 类变化 → 立即更新目标（tocbot 每次页面滚动都会重刷 active 类）
       if (window.__tocActiveObserver) { window.__tocActiveObserver.disconnect(); }
-      window.__tocActiveObserver = new MutationObserver(function(muts) {
+      window.__tocActiveObserver = new MutationObserver(function (muts) {
         for (var i = 0; i < muts.length; i++) {
           var t = muts[i].target;
-          if (t && t.classList && t.classList.contains('tocbot-active-link')) {
-            requestAlign();
-            break;
-          }
+          if (t && t.classList && t.classList.contains('tocbot-active-link')) { tocUpdate(); break; }
         }
       });
       window.__tocActiveObserver.observe(tocBody, { attributes: true, subtree: true, attributeFilter: ['class'] });
+      // 兜底：页面滚动时每帧再校一次（observer 漏掉时也能跟上），成本极低（目标多半已相等）
+      var tocTick = false;
+      window.addEventListener('scroll', function () {
+        if (tocTick) { return; }
+        tocTick = true;
+        requestAnimationFrame(function () { tocUpdate(); tocTick = false; });
+      }, { passive: true });
+      // 用户自己滚侧栏时立刻让出控制权，避免和自动跟随抢
+      if (tocPanel) {
+        var yieldToc = function () {
+          tocTarget = null;
+          if (tocRaf) { cancelAnimationFrame(tocRaf); tocRaf = 0; }
+        };
+        tocPanel.addEventListener('wheel', yieldToc, { passive: true });
+        tocPanel.addEventListener('touchstart', yieldToc, { passive: true });
+      }
+      // 窗口尺寸变化：可视高变了，spacer 与目标都要重算
+      window.addEventListener('resize', function () {
+        ensureTocSpacers();
+        tocUpdate();
+      }, { passive: true });
     }
-    setTimeout(function() {
+    setTimeout(function () {
       if (!tocBody) { return; }
       ensureTocSpacers();
-      requestAlign(); // 初始对齐也走稳定判定
-    }, 300);
+      tocUpdate();
+    }, 250);
 
     Fluid.events.registerRefreshCallback(function() {
       if ('tocbot' in window) {
@@ -223,8 +233,7 @@ import_script(`
         setTimeout(function() {
           if (!tocBody) { return; }
           ensureTocSpacers(); // refresh 会重建目录内容，spacer 被冲掉，需重插
-          tocActiveId = null;
-          requestAlign();
+          tocUpdate();
         }, 0);
       }
     });

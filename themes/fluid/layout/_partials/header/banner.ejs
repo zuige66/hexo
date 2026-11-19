@@ -52,7 +52,9 @@ var bannerBgStyle = isDefaultBanner
         </div>
 
         <% if (is_post()) { %>
-          <%- inject_point('postMetaTop') %>
+          <%# 包一层带 id 的容器：软导航（soft-nav.js）回首页/非文章页时要整块移除，
+              否则会残留上一篇文章的日期/字数/阅读时长。 %>
+          <div id="banner-post-meta"><%- inject_point('postMetaTop') %></div>
         <% } %>
       </div>
 

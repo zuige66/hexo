@@ -122,6 +122,33 @@
   }
 }
 
+/* 文章页右侧目录：整栏吸顶 + 独立滚动，作为唯一滚动容器。
+   原来 .toc-body 自己套一层 max-height:75vh 的滚动框，卡片只能停在「75vh 小框」的 1/3，
+   换算到屏幕约 41%，且首尾章滚到边界到不了 1/3，观感很别扭。
+   现在整栏铺满视口、自己滚，卡片停在「你能看到的侧栏」1/3（JS 里算）。
+   注意 box-sizing:border-box——主题的 .sidebar 有 padding:3rem 0，
+   content-box 下 max-height 只限内容高，加上 padding 会超出视口。 */
+@media (min-width: 992px) {
+  aside.sidebar {
+    box-sizing: border-box;
+    max-height: calc(100vh - 2rem - 1rem);
+    overflow-y: auto;
+    overscroll-behavior-y: auto; /* 滚到边界仍能把滚轮交给页面，不“吃掉”滚轮 */
+    scrollbar-width: thin;
+    scrollbar-color: rgba(128, 128, 128, .35) transparent;
+  }
+
+  aside.sidebar::-webkit-scrollbar { width: 6px; }
+  aside.sidebar::-webkit-scrollbar-thumb { background: rgba(128, 128, 128, .35); border-radius: 3px; }
+  aside.sidebar::-webkit-scrollbar-track { background: transparent; }
+
+  /* 目录列表不再自己滚，交给整栏 */
+  aside.sidebar .toc-body {
+    max-height: none;
+    overflow: visible;
+  }
+}
+
 /* 文章目录中的标题都是页内跳转链接。 */
 .tocbot-link {
   display: block;
