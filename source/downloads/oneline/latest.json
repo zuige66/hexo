@@ -1,6 +1,6 @@
 {
-  "versionCode": 49,
-  "versionName": "1.0.15",
-  "apkUrl": "https://blog.zuiges.com/downloads/oneline/todo-1.0.15.apk?v=49",
-  "changelog": "## 1.0.15\n\n**作业自动导入（雨课堂 / 课堂派）**：在你主动登录后，把作业 / 小测 / 考试连同科目、标题和绝对截止时间抓进待办并排好提醒；一键抓取 + 冷启动 / 回前台 / 后台周期三种自动触发；新作业通知；按平台编号去重、不覆盖手改、只导本学期未过期。账号密码只在平台自己的页面输入，App 不接触；数据只存本机，不上传。\n**数据库 v8 → v9**：todos 加 source / externalId 两列（带默认值、幂等），老数据落空串、行为零变化。\n**可靠性与体验**：修「同步时机」自我置灰死锁；设置页两级化；二级页滚动复位；截止时间 0 点归一。\n\n## 1.0.14 累积\n\n应用内自更新回归（GitHub Release 主源 + 博客兜底）、移除隐私同意门控；专注 / 统计 / 本地备份等此前改动见 release notes。\n\n详细发布说明：https://github.com/zuige66/todo/releases/tag/v1.0.15"
+  "versionCode": 50,
+  "versionName": "1.0.16",
+  "apkUrl": "https://blog.zuiges.com/downloads/oneline/todo-1.0.16.apk?v=50",
+  "changelog": "## 1.0.16\n\n**修复「检查更新提示后点下载无反应」**：v1.0.14 恢复应用内自更新时，补了网络权限与 FileProvider，却漏了下载服务的 Manifest 注册 —— 导致检查更新弹窗正常、但点下载不下载、无进度条、不拉起安装。本版补回该注册，下载链路恢复正常。\n\n## 1.0.15 累积\n\n作业自动导入（雨课堂 / 课堂派）：登录后把作业/小测/考试抓进待办并排提醒，一键 + 冷启动/回前台/后台周期自动抓取，新作业通知；DB v8→v9。可靠性与体验修复若干。\n\n## 1.0.14 累积\n\n应用内自更新回归（GitHub Release 主源 + 博客兜底）、移除隐私同意门控。\n\n详细发布说明：https://github.com/zuige66/todo/releases/tag/v1.0.16"
 }
