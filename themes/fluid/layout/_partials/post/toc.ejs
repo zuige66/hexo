@@ -137,31 +137,65 @@ import_script(`
       top.style.height = Math.round(h / 3) + 'px';
       bot.style.height = Math.round(h * 2 / 3) + 'px';
     };
-    var syncTocToThird = function() {
+    // 平滑跟随：active 稳定后，用 rAF 缓动把卡片送到容器 1/3（每帧逼近 15%）。
+    // 只有 tocStep 一处写 scrollTop，不会双驱动；active 未稳定（滚动途中）不触发，
+    // 避免频繁切 active 导致目标乱跳。缓动中若来了新目标，直接替换（此时测量是准的：
+    // 卡片相对容器内容顶的绝对位置 = 当前 scrollTop + rect 差，与是否缓动无关）。
+    var tocTarget = null;      // 当前缓动目标（null = 空闲）
+    var tocActiveId = null;    // 上次处理的 active 标识
+    var tocSettleTimer = null; // active 稳定计时器
+
+    var tocStep = function() {
+      if (!tocBody || tocTarget === null) { return; }
+      var cur = tocBody.scrollTop;
+      var delta = tocTarget - cur;
+      if (Math.abs(delta) < 0.5) {
+        tocBody.scrollTop = tocTarget;
+        tocTarget = null;
+        return;
+      }
+      tocBody.scrollTop = cur + delta * 0.15; // 每帧逼近 15%，平滑到位
+      requestAnimationFrame(tocStep);
+    };
+
+    // 测量 active 卡片相对容器内容顶的绝对位置，算出让它落在 1/3 的目标 scrollTop。
+    var alignToActive = function() {
       if (!tocBody) { return; }
       var active = tocBody.querySelector('.tocbot-active-link');
       if (!active) { return; }
       var cRect = tocBody.getBoundingClientRect();
       var aRect = active.getBoundingClientRect();
-      var diff = (aRect.top - cRect.top) - cRect.height / 3;
-      // 只改容器 scrollTop（直接定位，无动画）；此 scroll 不冒泡到 window，不自激。
-      if (Math.abs(diff) > 1) { tocBody.scrollTop = tocBody.scrollTop + diff; }
+      var cardAbs = tocBody.scrollTop + (aRect.top - cRect.top);
+      var max = tocBody.scrollHeight - tocBody.clientHeight;
+      var want = Math.max(0, Math.min(cardAbs - tocBody.clientHeight / 3, max));
+      var gap = want - tocBody.scrollTop;
+      // 死区：目标与当前差不到容器高 10% 就不动。相邻子标题来回切时目标只差几十 px，
+      // 若每次都归位，容器会在两个位置间反复横跳（32↔42↔48）——这就是抽搐。
+      // 死区让「大致钉在 1/3」稳定下来，只有跨节的大切换才触发平滑归位。
+      if (Math.abs(gap) < tocBody.clientHeight * 0.10) { return; }
+      tocTarget = want;
+      requestAnimationFrame(tocStep);
     };
+
+    // active 稳定 180ms 才对齐：滚动途中 tocbot 频繁切 active 时不打扰，停稳后再动。
+    // 只用 observer 驱动，不叠 window scroll 兜底——两个计时器互相重置会持续触发、引起震荡。
+    var requestAlign = function() {
+      if (!tocBody) { return; }
+      var active = tocBody.querySelector('.tocbot-active-link');
+      var id = active ? (active.getAttribute('href') || active.textContent) : '';
+      if (id === tocActiveId) { return; }
+      tocActiveId = id;
+      if (tocSettleTimer) { clearTimeout(tocSettleTimer); }
+      tocSettleTimer = setTimeout(alignToActive, 180);
+    };
+
     if (tocBody) {
-      // 页面滚动时每帧对齐一次（rAF 节流，跟手无延迟）。
-      var tocTicking = false;
-      window.addEventListener('scroll', function() {
-        if (tocTicking) { return; }
-        tocTicking = true;
-        requestAnimationFrame(function() { syncTocToThird(); tocTicking = false; });
-      }, { passive: true });
-      // active 类切换时立即对齐（rAF 确保新 active 已加类、布局已更新）。
       if (window.__tocActiveObserver) { window.__tocActiveObserver.disconnect(); }
       window.__tocActiveObserver = new MutationObserver(function(muts) {
         for (var i = 0; i < muts.length; i++) {
           var t = muts[i].target;
           if (t && t.classList && t.classList.contains('tocbot-active-link')) {
-            requestAnimationFrame(syncTocToThird);
+            requestAlign();
             break;
           }
         }
@@ -171,8 +205,8 @@ import_script(`
     setTimeout(function() {
       if (!tocBody) { return; }
       ensureTocSpacers();
-      requestAnimationFrame(syncTocToThird);
-    }, 0);
+      requestAlign(); // 初始对齐也走稳定判定
+    }, 300);
 
     Fluid.events.registerRefreshCallback(function() {
       if ('tocbot' in window) {
@@ -189,7 +223,8 @@ import_script(`
         setTimeout(function() {
           if (!tocBody) { return; }
           ensureTocSpacers(); // refresh 会重建目录内容，spacer 被冲掉，需重插
-          requestAnimationFrame(syncTocToThird);
+          tocActiveId = null;
+          requestAlign();
         }, 0);
       }
     });
