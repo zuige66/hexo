@@ -707,50 +707,47 @@ EOF
 3. 同文件在 `window.tocbot.init()` 之后新增**目录容器跟随**逻辑（这是「页面下滑侧栏不跟着动」的根治）：
 
    ```js
-   // .toc-body 有 max-height:75vh + overflow-y:auto，是个独立滚动容器。
-   // tocbot 只加 active 类，不会滚动这个容器 → 长目录翻到深处时蓝色卡片会贴底/被裁掉。
+   // 蓝色卡片始终「钉」在 .toc-body 高度 1/3 处。tocbot 只加 active 类、不滚容器。
    var tocBody = document.getElementById('toc-body');
-   var manualUntil = 0, lastFollow = 0;
-   var ensureActiveVisible = function() {
-     if (!tocBody || Date.now() < manualUntil) { return; }
-     if (Date.now() - lastFollow < 300) { return; } // 节流，防 smooth 期间反复 scrollTo 打断动画
-     var active = tocBody.querySelector('.tocbot-active-link');
-     if (!active || tocBody.scrollHeight <= tocBody.clientHeight + 1) { return; }
-     var cRect = tocBody.getBoundingClientRect(), aRect = active.getBoundingClientRect();
-     var pos = aRect.top - cRect.top; // 卡片顶部在容器可视区里的位置
-     var targetPos = cRect.height / 3; // 始终让卡片停在容器 1/3 处
-     if (Math.abs(pos - targetPos) > 6) { // 只要偏离就归位，不做「贴边才跟随」的舒适区
-       lastFollow = Date.now();
-       var target = tocBody.scrollTop + pos - targetPos;
-       target = Math.max(0, Math.min(target, tocBody.scrollHeight - tocBody.clientHeight));
-       tocBody.scrollTo({ top: target, behavior: 'smooth' });
-     }
+   // 列表内上下插 spacer（顶部 1/3、底部 2/3 容器高），否则首尾章 scrollTop 到边界，
+   // 物理上无法把卡片推到 1/3。注意不能给 .toc-body 加 padding——它 box-sizing:content-box，
+   // padding 会把容器盒子撑高到 ~1.7 倍，让「容器 1/3」参照失真。
+   var ensureTocSpacers = function() {
+     var h = tocBody.clientHeight;
+     var top = tocBody.querySelector('.toc-spacer-top'), bot = tocBody.querySelector('.toc-spacer-bottom');
+     if (!top) { top = document.createElement('div'); top.className = 'toc-spacer-top'; tocBody.insertBefore(top, tocBody.firstChild); }
+     if (!bot) { bot = document.createElement('div'); bot.className = 'toc-spacer-bottom'; tocBody.appendChild(bot); }
+     top.style.height = Math.round(h / 3) + 'px';
+     bot.style.height = Math.round(h * 2 / 3) + 'px';
    };
-   // 主驱动：window 滚动停止后归位。只监听 window，tocBody 自身 smooth 滚动不冒泡，不自激。
-   var scrollTimer = null;
+   var syncTocToThird = function() {
+     var active = tocBody.querySelector('.tocbot-active-link');
+     if (!active) { return; }
+     var cRect = tocBody.getBoundingClientRect(), aRect = active.getBoundingClientRect();
+     var diff = (aRect.top - cRect.top) - cRect.height / 3;
+     if (Math.abs(diff) > 1) { tocBody.scrollTop = tocBody.scrollTop + diff; } // 直接定位，无 smooth/去抖
+   };
+   // 页面滚动时每帧对齐（rAF 节流）；active 切换时 rAF 立即对齐。
+   var tocTicking = false;
    window.addEventListener('scroll', function() {
-     if (scrollTimer) { clearTimeout(scrollTimer); }
-     scrollTimer = setTimeout(ensureActiveVisible, 160);
+     if (tocTicking) { return; }
+     tocTicking = true;
+     requestAnimationFrame(function() { syncTocToThird(); tocTicking = false; });
    }, { passive: true });
-   // 补充：active 类变化立即响应一次，减少等待感。
-   window.__tocActiveObserver = new MutationObserver(function(muts){ /* 发现 active 则 ensureActiveVisible() */ });
+   window.__tocActiveObserver = new MutationObserver(function(muts){ /* 发现 active 则 rAF(syncTocToThird) */ });
    window.__tocActiveObserver.observe(tocBody, { attributes: true, subtree: true, attributeFilter: ['class'] });
-   tocBody.addEventListener('wheel', () => manualUntil = Date.now() + 2000, { passive: true }); // 手动滚轮 2s 不打扰
-   setTimeout(ensureActiveVisible, 0);
-   // Fluid.events.registerRefreshCallback 里也要补一次 setTimeout(ensureActiveVisible, 0)。
+   // init 和 registerRefreshCallback 里都要 ensureTocSpacers() + rAF(syncTocToThird)。
    ```
 
-> **关键点①：跟的是「容器 `.toc-body`」不是「页面 window」。** 两个独立滚动体：tocbot 的 `headingsOffset`/`scrollSmoothOffset` 管**页面**滚动与高亮判定；`tocBody.scrollTo` 管**目录容器内部**滚动。混淆就无效。
-> **关键点②：必须「始终归位 1/3」，不能用「贴边才跟随」。** 曾做过 `[25%,60%]` 舒适区版本，结果前段目录项（如「二」「五」）在 ratio 0~0.25 处也「不打扰」，看起来就是「没跟随」——用户要的是卡片恒定在 1/3。
-> **关键点③：主驱动用 window `scroll` 去抖（160ms），不能只靠 MutationObserver。** tocbot 刷新 active 类的时机与 observer 捕获存在竞争，前段目录项会漏触发；scroll 事件在页面停稳后必然归位一次，才可靠。
-> `target = scrollTop + pos - 容器高/3`：`scrollTop + pos` 是卡片相对容器内容顶的位置，减去 1/3 容器高即目标滚动量，clamp 到 `[0, scrollHeight-clientHeight]`。**首尾项 ratio 偏小是物理边界**（scrollTop 已到 0 或上限），无法把卡片推到 1/3，属正常，不要为此去掉 clamp。
-> **节流 300ms 必须有**：smooth 动画期间 observer/scroll 会反复触发，不节流会连续 `scrollTo` 把动画打断（实测卡在中间位置）。手动滚轮目录后 `manualUntil` 暂停 2s，避免硬拽回。
+> **关键点①：跟的是「容器 `.toc-body`」不是「页面 window」。** 两个独立滚动体：tocbot 的 `headingsOffset`/`scrollSmoothOffset` 管**页面**滚动与高亮判定；容器滚动管目录内部。混淆就无效。
+> **关键点②：要「钉在 1/3」就不要 smooth、不要去抖。** 曾试过 smooth + 160ms 停稳归位，卡片会滞后/晃动；改为 window `scroll` 里 `requestAnimationFrame` 每帧 `scrollTop += diff` 直接定位，才像钉住。容器 `scrollTop` 赋值不冒泡到 window，不自激。
+> **关键点③：首尾章必须有 spacer。** 第一/最后一章时 scrollTop 顶到 0 或 scrollHeight 上限，没有 spacer 物理上到不了 1/3。顶部垫 1/3、底部垫 2/3 容器高，让任意章节都能停在 1/3（实测 ratio 恒 0.33）。**spacer 必须插在列表内部**而非给 `.toc-body` 加 padding（后者 box-sizing:content-box 会把容器撑高）。refresh 重建目录后 spacer 被冲掉，回调里要重插。
 
 **实测验收**（1440×900 无头 Chrome，长文 `hexo-customize-guide`，容器高 558px）：
 
 - 点「三、修改站点信息」：标题 `top=300`（= 900/3），active 正好是「三」，`transform:none`，背景 `rgba(48,169,222,.14)`。
 - 鼠标停在 active 项上：`transform` 仍为 `none`（不浮起）。
-- 渐进滚动采样（每次滚一屏等 1.6s）：「九/十三/十七」等中间项卡片 `ratio=0.33`（容器 1/3 处）、`visible=true`、active 与页面标题一致；首段「二/五」和末段「总结」因 scrollTop 到边界无法归位到 1/3，属物理限制；全程无 JS 错误。
+- 渐进滚动采样（每次滚一屏等 1.6s）：「二/五/九/十三/十七/总结」全部采样点卡片 `ratio=0.33`、`posInView=186`（容器 558 的 1/3）、`visible=true`、active 与页面标题一致——含首尾章（靠 spacer 实现）；全程无 JS 错误。
 - 无头测试注意：① CDN 库（baomitu 的 jquery/tocbot 等）在无头沙箱里加载失败，需用 CDP `Fetch` 拦截喂本地文件，否则 tocbot 不 init、目录项数为 0；② 一次性跳 1.8 万像素后立刻采样，smooth 动画未完成会误判「没跟随」，要渐进滚动或等足动画时间。
 - **部署红线**：改完 EJS 只在本地 `hexo generate` 不够，线上看不到——必须 `git commit` + `git push origin main` 让 Actions 部署到 gh-pages。用户「还是没跟随」的头号原因就是只本地生成没 push。
 
@@ -767,7 +764,7 @@ EOF
 | 点右侧目录后 | 页面滚到目标标题且不回顶（无整页 reload） |
 | 目录当前项 | 淡蓝卡片、蓝字，hover 时不浮起 |
 | 目录跳转落点 | 目标标题 `top ≈ 视口高度/3`，active 与点击项一致 |
-| 目录容器跟随 | 页面下滑停稳后蓝色卡片归位到 `.toc-body` 高度 1/3 处（`ratio≈0.33`）、不被裁掉；手动滚轮 2s 内不被打断；改动已 push 部署（非仅本地 generate） |
+| 目录容器跟随 | 页面下滑时蓝色卡片实时钉在 `.toc-body` 高度 1/3 处（含首尾章，`ratio≈0.33`）、不被裁掉；改动已 push 部署（非仅本地 generate） |
 
 ## 总结
 
