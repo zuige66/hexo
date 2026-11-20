@@ -76,8 +76,8 @@
 
   
 <link rel="stylesheet" href="/css/home-sidebar.css?v=4dc81e3bc3.css">
-<link rel="stylesheet" href="/css/site-motion.css?v=4ad63a30d4.css">
-<link rel="stylesheet" href="/css/moments.css?v=1ec5e1019e.css">
+<link rel="stylesheet" href="/css/site-motion.css?v=fe4811f455.css">
+<link rel="stylesheet" href="/css/moments.css?v=18ea2e43ed.css">
 
 
 
@@ -382,6 +382,7 @@
 
         
           
+          <div id="banner-post-meta">
   <div class="mt-3">
     
     
@@ -419,7 +420,7 @@
     
   </div>
 
-
+</div>
         
       </div>
 
@@ -1228,17 +1229,24 @@
         window.__tocToggleObserver.observe(this, { attributes: true });
       });
     }
+    // 让「当前位置高亮」和「点击跳转落点」都对齐到视口上 1/3。
+    // 关键：tocbot 4.x 判定 active 时用 heading.offsetTop（相对文章容器），
+    // 比较基准却是文档 scrollTop，二者差一个 boardTop，所以必须保留 -boardTop 补偿，
+    // 否则高亮会错位一节。在这个补偿上再加 vh/3，把高亮边界从视口顶部移到 1/3 处。
+    // scrollSmoothOffset 独立控制点击落点：负值 = 目标标题停在视口下方这个距离。
+    var readOffset = Math.round(window.innerHeight / 3);
     var tocConfig = Object.assign({
-      tocSelector     : '#toc-body',
-      contentSelector : '.markdown-body',
-      linkClass       : 'tocbot-link',
-      activeLinkClass : 'tocbot-active-link',
-      listClass       : 'tocbot-list',
-      isCollapsedClass: 'tocbot-is-collapsed',
-      collapsibleClass: 'tocbot-is-collapsible',
-      scrollSmooth    : true,
-      includeTitleTags: true,
-      headingsOffset  : -boardTop,
+      tocSelector        : '#toc-body',
+      contentSelector    : '.markdown-body',
+      linkClass          : 'tocbot-link',
+      activeLinkClass    : 'tocbot-active-link',
+      listClass          : 'tocbot-list',
+      isCollapsedClass   : 'tocbot-is-collapsed',
+      collapsibleClass   : 'tocbot-is-collapsible',
+      scrollSmooth       : true,
+      includeTitleTags   : true,
+      headingsOffset     : -boardTop + readOffset,
+      scrollSmoothOffset : -readOffset,
     }, CONFIG.toc);
     if (isExpandAllEnabled()) {
       tocConfig.collapseDepth = 6;
@@ -1249,6 +1257,160 @@
     }
     expandAllToc();
     bindTocToggle();
+
+    // ── 右侧目录跟随：整栏独立滚动 + 连续缓动 ───────────────────────────
+    // 结构（见 site-motion.css）：aside.sidebar 吸顶、max-height 铺满一屏、overflow-y:auto，
+    // 是唯一滚动容器；.toc-body 不再自己滚（max-height:none）。
+    // 目标：蓝色卡片稳定停在「你能看到的侧栏」高度 1/3 处；页面滚动时连续跟手，
+    //      不顿不跳。
+    // 旧版的教训：靠「active 稳定 180ms + 10% 死区」触发 → 滚动途中故意不动、停下才滑，
+    // 观感就是「一卡一卡」；这里改成 active 一换就立刻缓动过去（无死区、无等待），
+    // 缓动本身（每帧逼近 22%）负责消除瞬移感。
+    var tocBody = document.getElementById('toc-body');
+    var tocPanel = tocBody ? tocBody.closest('aside.sidebar') : null;
+    // 没有 CSS 支持（如宽度不足侧栏隐藏）时退回 toc-body 自身滚动。
+    if (tocPanel && getComputedStyle(tocPanel).overflowY !== 'auto') { tocPanel = null; }
+    var tocScroller = tocPanel || tocBody;
+
+    // 元素相对「滚动容器内容顶」的绝对位置。该值在容器滚动/缓动过程中恒定不变
+    // （元素 top 与 scrollTop 反向同步变化），所以测量不会读到中间态、不会来回跳。
+    var tocAbs = function (el) {
+      var pr = tocScroller.getBoundingClientRect(), er = el.getBoundingClientRect();
+      return (er.top - pr.top) + tocScroller.scrollTop;
+    };
+
+    // 列表底部垫白：让最后一项也能落到 1/3。
+    // 顶部**故意不垫**（2026-11-19 改）：垫到 1/3 会让文章刚打开时「目录」标题与第一项
+    // 之间空出半屏，非常难看。现在第一项紧贴标题；因为目标值有 clamp(0)，
+    // 前几项自动退化成「列表不动、高亮往下走」，等某一行自然越过 1/3 才开始滚，衔接是连续的。
+    var ensureTocSpacers = function () {
+      if (!tocBody || !tocScroller) { return; }
+      var items = tocBody.querySelectorAll('li.toc-list-item');
+      if (!items.length) { return; }
+      // 清掉可能残留的顶部 spacer（旧版本会插）
+      var stale = tocBody.querySelector('.toc-spacer-top');
+      if (stale) { stale.parentNode.removeChild(stale); }
+      var bot = tocBody.querySelector('.toc-spacer-bottom');
+      if (!bot) { bot = document.createElement('div'); bot.className = 'toc-spacer-bottom'; tocBody.appendChild(bot); }
+      bot.style.height = '0px';  // 先清零再量，避免上一次的高度累加误差
+      var h = tocScroller.clientHeight;
+      // 目录本身没超出可视区（短文/少标题）：不垫空白、不跟随，避免无谓的大片留白
+      if (tocScroller.scrollHeight <= h + 4) { return; }
+      var last = items[items.length - 1];
+      var needBot = Math.max(0, Math.round(tocAbs(last) + h * 2 / 3 - tocScroller.scrollHeight));
+      bot.style.height = needBot + 'px';
+    };
+
+    var tocTarget = null, tocRaf = 0, tocTweenRaf = 0;
+    var tocPinnedHref = null, tocPinTimer = 0;
+    var tocStep = function () {
+      if (!tocScroller || tocTarget === null) { tocRaf = 0; return; }
+      var cur = tocScroller.scrollTop, d = tocTarget - cur;
+      if (Math.abs(d) < 0.5) { tocScroller.scrollTop = tocTarget; tocTarget = null; tocRaf = 0; return; }
+      tocScroller.scrollTop = cur + d * 0.22; // 每帧逼近 22%
+      tocRaf = requestAnimationFrame(tocStep);
+    };
+
+    var releaseTocPin = function () {
+      tocPinnedHref = null;
+      if (tocPinTimer) { clearTimeout(tocPinTimer); tocPinTimer = 0; }
+    };
+
+    // 点击跳转专用：固定时长 + easeOutCubic。
+    // 指数缓动（每帧 22%）尾巴很长：1120px 要走 27 帧，最后几十 px 拖 200ms+，
+    // 叠加「页面滚完 active 才变」的 420ms 空等，观感就是卡片慢半拍。
+    // 点击时目标是确定的（就是被点的那一项），不需要「追」，直接用时间轴控制。
+    // 320ms 与 tocbot 的 scrollSmoothDuration(420ms) 大体同步收尾，卡片略早到。
+    var tocTweenTo = function (to, dur) {
+      var from = tocScroller.scrollTop;
+      var t0 = (window.performance && performance.now) ? performance.now() : Date.now();
+      tocTarget = null;
+      if (tocRaf) { cancelAnimationFrame(tocRaf); tocRaf = 0; }
+      if (tocTweenRaf) { cancelAnimationFrame(tocTweenRaf); }
+      var step = function (now) {
+        var k = Math.min(1, (now - t0) / dur);
+        var e = 1 - Math.pow(1 - k, 3);
+        tocScroller.scrollTop = from + (to - from) * e;
+        if (k < 1) { tocTweenRaf = requestAnimationFrame(step); }
+        else { tocScroller.scrollTop = to; tocTweenRaf = 0; }
+      };
+      tocTweenRaf = requestAnimationFrame(step);
+    };
+
+    // active 一变就算目标并立刻起缓动：滚动时连续跟手，而不是等停稳再动。
+    var tocUpdate = function () {
+      if (!tocBody || !tocScroller) { return; }
+      var active = tocBody.querySelector('.tocbot-active-link');
+      if (!active) { return; }
+      // 点击飞行途中（active 还停在旧项）不要抢目标，等 active 追上被点项再解锁
+      if (tocPinnedHref) {
+        if (active.getAttribute('href') !== tocPinnedHref) { return; }
+        releaseTocPin();
+      }
+      var max = tocScroller.scrollHeight - tocScroller.clientHeight;
+      if (max <= 0) { return; }
+      var want = tocAbs(active) - tocScroller.clientHeight / 3;
+      tocTarget = Math.max(0, Math.min(want, max));
+      if (!tocRaf) { tocRaf = requestAnimationFrame(tocStep); }
+    };
+
+    if (tocBody) {
+      // active 类变化 → 立即更新目标（tocbot 每次页面滚动都会重刷 active 类）
+      if (window.__tocActiveObserver) { window.__tocActiveObserver.disconnect(); }
+      window.__tocActiveObserver = new MutationObserver(function (muts) {
+        for (var i = 0; i < muts.length; i++) {
+          var t = muts[i].target;
+          if (t && t.classList && t.classList.contains('tocbot-active-link')) { tocUpdate(); break; }
+        }
+      });
+      window.__tocActiveObserver.observe(tocBody, { attributes: true, subtree: true, attributeFilter: ['class'] });
+      // 兜底：页面滚动时每帧再校一次（observer 漏掉时也能跟上），成本极低（目标多半已相等）
+      var tocTick = false;
+      window.addEventListener('scroll', function () {
+        if (tocTick) { return; }
+        tocTick = true;
+        requestAnimationFrame(function () { tocUpdate(); tocTick = false; });
+      }, { passive: true });
+      // 用户自己滚侧栏时立刻让出控制权，避免和自动跟随抢
+      var yieldToc = function () {
+        releaseTocPin();
+        tocTarget = null;
+        if (tocRaf) { cancelAnimationFrame(tocRaf); tocRaf = 0; }
+        if (tocTweenRaf) { cancelAnimationFrame(tocTweenRaf); tocTweenRaf = 0; }
+      };
+      if (tocPanel) {
+        tocPanel.addEventListener('wheel', yieldToc, { passive: true });
+        tocPanel.addEventListener('touchstart', yieldToc, { passive: true });
+      }
+      // 点击目录项：此刻目标就确定了，不必等 tocbot 在 scroll 结束后才改 active。
+      // 直接从被点链接算目标、320ms 时间轴出发，和页面平滑滚动几乎同时收尾。
+      tocBody.addEventListener('click', function (e) {
+        var a = e.target && e.target.closest ? e.target.closest('a.tocbot-link') : null;
+        if (!a) { return; }
+        // 宽度不足等情况下 tocScroller 可能就是 tocBody 自身，逻辑一致
+        var max = tocScroller.scrollHeight - tocScroller.clientHeight;
+        if (max <= 0) { return; }
+        var to = Math.max(0, Math.min(tocAbs(a) - tocScroller.clientHeight / 3, max));
+        var href = a.getAttribute('href');
+        tocPinnedHref = href || null;
+        if (tocPinTimer) { clearTimeout(tocPinTimer); }
+        // 安全阀：万一 active 没追上（锚点失效等），1.2s 后放开，别把跟随永久锁死
+        tocPinTimer = setTimeout(releaseTocPin, 1200);
+        tocTweenTo(to, 320);
+      });
+      // 飞行途中用户滚了页面 → 放弃这次定位，交还给普通跟随
+      window.addEventListener('wheel', releaseTocPin, { passive: true });
+      // 窗口尺寸变化：可视高变了，spacer 与目标都要重算
+      window.addEventListener('resize', function () {
+        ensureTocSpacers();
+        tocUpdate();
+      }, { passive: true });
+    }
+    setTimeout(function () {
+      if (!tocBody) { return; }
+      ensureTocSpacers();
+      tocUpdate();
+    }, 250);
 
     Fluid.events.registerRefreshCallback(function() {
       if ('tocbot' in window) {
@@ -1262,6 +1424,11 @@
         }
         expandAllToc();
         bindTocToggle();
+        setTimeout(function() {
+          if (!tocBody) { return; }
+          ensureTocSpacers(); // refresh 会重建目录内容，spacer 被冲掉，需重插
+          tocUpdate();
+        }, 0);
       }
     });
   });
@@ -1331,8 +1498,9 @@
   
 <script src="/js/site-interactions.js?v=a7465d7a48.js"></script>
 <script src="/js/cloud-sea.js?v=d6052e9506.js"></script>
-<script src="/js/soft-nav.js?v=6c62df5654.js"></script>
-<script src="/js/moments.js?v=11ac23c2a6.js"></script>
+<script src="/js/soft-nav.js?v=ff5d0f2c3a.js"></script>
+<script src="/js/moments.js?v=aeb007fac3.js"></script>
+<script src="/js/hover-intent.js?v=748badec5e.js"></script>
 
 
 

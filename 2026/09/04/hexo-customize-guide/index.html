@@ -27,7 +27,7 @@
 <meta property="og:description" content="前言　　博客搭好了，但怎么改标题、加图标、管理分类标签？本文以当前博客为例，讲解 Hexo + Fluid 的目录结构和常用配置。 一、常用命令速查　　以下命令都在博客根目录下执行。    作用 命令    新建文章 hexo new &quot;文章标题&quot;   新建独立页面 hexo new page &quot;页面名&quot;   新建草稿 hexo new draft &amp;quo">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-09-03T16:00:00.000Z">
-<meta property="article:modified_time" content="2026-11-12T11:01:42.659Z">
+<meta property="article:modified_time" content="2026-11-19T11:54:39.000Z">
 <meta property="article:author" content="zuige">
 <meta property="article:tag" content="Fluid">
 <meta property="article:tag" content="Hexo">
@@ -74,8 +74,8 @@
 
   
 <link rel="stylesheet" href="/css/home-sidebar.css?v=4dc81e3bc3.css">
-<link rel="stylesheet" href="/css/site-motion.css?v=4ad63a30d4.css">
-<link rel="stylesheet" href="/css/moments.css?v=1ec5e1019e.css">
+<link rel="stylesheet" href="/css/site-motion.css?v=fe4811f455.css">
+<link rel="stylesheet" href="/css/moments.css?v=18ea2e43ed.css">
 
 
 
@@ -380,6 +380,7 @@
 
         
           
+          <div id="banner-post-meta">
   <div class="mt-3">
     
     
@@ -397,7 +398,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          18k 字
+          29k 字
         
       </span>
     
@@ -408,7 +409,7 @@
         
         
         
-          150 分钟
+          240 分钟
         
       </span>
     
@@ -417,7 +418,7 @@
     
   </div>
 
-
+</div>
         
       </div>
 
@@ -641,13 +642,19 @@
 </tr>
 <tr>
 <td>改悬停、浮起与搜索高亮动效</td>
-<td><code>source/css/site-motion.css</code></td>
+<td><code>source/css/site-motion.css</code> + <code>source/js/hover-intent.js</code>（悬停滤波，见下）</td>
 </tr>
 <tr>
 <td>改站内搜索定位效果</td>
 <td><code>themes/fluid/source/js/local-search.js</code> 与 <code>source/js/site-interactions.js</code></td>
 </tr>
 </tbody></table>
+<blockquote>
+<p><strong>悬浮幅度与速度（2026-11-18 二次调整）</strong>：zuige 觉得默认浮起太夸张，所有位移与 scale 幅度已统一减半（卡片 -7px→-3.5px、按钮 -3px→-1.5px、scale 1.06→1.03 等）；随后又反馈”放上去过一会才浮起”，于是进入延迟 80ms→<strong>0</strong>、CSS <code>transform</code> 过渡时长全部减半（320→160、240→120ms 等）。现在从鼠标放上到浮到位约 50ms。调幅度&#x2F;速度时只改数值，别把 <code>.is-hovered</code> 改回 <code>:hover</code>。</p>
+</blockquote>
+<blockquote>
+<p><strong>悬停浮起的滤波红线（2026-11-18 新增）</strong>：卡片&#x2F;按钮的 <code>:hover { transform: translateY(-Npx) }</code> 会产生<strong>几何反馈环</strong>——鼠标停在元素下边缘 → 元素上浮脱离鼠标 → hover 失效下沉 → 鼠标又进入，无限抖动。现在位移统一由 <code>source/js/hover-intent.js</code> 加的 <code>.is-hovered</code> 类驱动（<strong>进入零延迟</strong>、离开延迟 140ms，离开时还复查指针是否在扩展 12px 的命中区内）。<strong>防抖靠的是离开延迟+容差，不是进入延迟</strong>——别为了”滤快速掠过”把进入延迟加回去，那会直接造成放上去迟钝；真要滤误碰也只能给个位数毫秒。键盘可达靠 <code>:focus-visible</code> 直接驱动位移，与 JS 并存，两者缺一不可。<code>hover-intent.js</code> 用 document 事件委托，软导航换页重建 DOM 后无需重绑；仅精确指针（鼠标）启用，触屏与 reduced-motion 自动跳过。新增需要浮起的元素时，要同时在 <code>hover-intent.js</code> 的 <code>LIFT_SELECTOR</code> 和 CSS 的 <code>.is-hovered</code> 选择器里登记，否则不会有鼠标浮起效果。</p>
+</blockquote>
 <h2 id="十三、管理友链"><a href="#十三、管理友链" class="headerlink" title="十三、管理友链"></a>十三、管理友链</h2><p>友链配置在 <code>_config.fluid.yml</code> 的 <code>links.items</code>，每条是一个对象，字段如下：</p>
 <ul>
 <li><code>title</code>：站点名称</li>
@@ -724,7 +731,7 @@
 <h2 id="十七、动态（Moments）板块"><a href="#十七、动态（Moments）板块" class="headerlink" title="十七、动态（Moments）板块"></a>十七、动态（Moments）板块</h2><p>　　「动态」用来发短句、牢骚、随手记；「文章」则是成篇的正式内容。二者本质相同（都是 Markdown 内容），区别在于<strong>长度与语气</strong>，而不是技术形态。</p>
 <p>　　设计上<strong>不新增独立板块与路由</strong>：动态挂在已有归档页 <code>/archives/</code> 内，顶部新增一个胶囊切换按钮，在「文章归档」与「动态」两个视图之间切换。</p>
 <h3 id="17-1-数据：写在独立数据文件里"><a href="#17-1-数据：写在独立数据文件里" class="headerlink" title="17.1 数据：写在独立数据文件里"></a>17.1 数据：写在独立数据文件里</h3><p>　　动态内容放在 <code>source/_data/moments.yml</code>（列表，Hexo 会自动载入为 <code>site.data.moments</code>）：</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-bullet">-</span> <span class="hljs-attr">date:</span> <span class="hljs-string">&#x27;2026-10-19 00:50&#x27;</span><br>  <span class="hljs-attr">content:</span> <span class="hljs-string">|</span><br>    <span class="hljs-string">我创建了动态板块，配图也行：![图](/img/xxx.png)</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-bullet">-</span> <span class="hljs-attr">date:</span> <span class="hljs-string">&#x27;2026-10-19 00:50&#x27;</span><br>  <span class="hljs-attr">content:</span> <span class="hljs-string">|</span><br><span class="hljs-string">    我创建了动态板块，配图也行：![图](/img/xxx.png)</span><br><span class="hljs-string"></span><br><span class="hljs-comment"># 多图轮播：用 images 字段，别在 content 里写 ![](...)</span><br><span class="hljs-bullet">-</span> <span class="hljs-attr">date:</span> <span class="hljs-string">&#x27;2026-11-17 22:30&#x27;</span><br>  <span class="hljs-attr">content:</span> <span class="hljs-string">|</span><br><span class="hljs-string">    正文照常写 Markdown。</span><br><span class="hljs-string"></span>  <span class="hljs-attr">images:</span><br>    <span class="hljs-bullet">-</span> <span class="hljs-attr">src:</span> <span class="hljs-string">/img/moments/a.jpg</span><br>      <span class="hljs-attr">alt:</span> <span class="hljs-string">图片说明</span><br>    <span class="hljs-bullet">-</span> <span class="hljs-attr">src:</span> <span class="hljs-string">/img/moments/b.jpg</span><br></code></pre></td></tr></table></figure>
 
 <table>
 <thead>
@@ -740,6 +747,10 @@
 <tr>
 <td><code>content</code></td>
 <td>必填，正文，支持 Markdown 与 HTML（含图片语法）</td>
+</tr>
+<tr>
+<td><code>images</code></td>
+<td>选填，配图轮播（见 17.6）。写了它<strong>就不要再在 content 里写 <code>![]()</code></strong>，否则同一张图出现两次</td>
 </tr>
 </tbody></table>
 <ul>
@@ -774,6 +785,9 @@
 </tr>
 </tbody></table>
 <p>关键坑：软导航换入 <code>#board</code> 后<strong>内联 <code>&lt;script&gt;</code> 不会执行</strong>，所以这里用 <code>document</code> 级事件委托绑定点击，并监听 <code>soft-nav.js</code> 派发的 <code>softnav:loaded</code> 事件重新初始化——否则从其他页面软导航进归档页后，切换按钮会失效。</p>
+<blockquote>
+<p><strong>红线（2026-11-19 补）：banner 里的文章元信息必须随软导航整块增删。</strong> 文章页 banner 的作者&#x2F;日期&#x2F;字数&#x2F;阅读时长由 <code>banner.ejs</code> 在 <code>is_post()</code> 时渲染（现包在 <code>#banner-post-meta</code> 容器里），首页没有；而 banner 在 <code>#board</code> 之外，软导航只换 <code>#board</code> 不会动它。于是「文章页 → 软导航回首页」时，上一篇文章的「11k 字 &#x2F; 93 分钟」会残留在首页 banner 上。修法：<code>soft-nav.js</code> 的 <code>syncBannerChrome()</code> 里按目标页有无 <code>#banner-post-meta</code> 做增&#x2F;删&#x2F;替换（与滚动箭头同一套逻辑）。改动 <code>banner.ejs</code> 结构后必须回归测这条。</p>
+</blockquote>
 <blockquote>
 <p><strong>红线（2026-10-20 补）</strong>：软导航「只换 <code>#board.innerHTML</code>」的假设只在「同类 layout 页面间」成立。本博客 <code>is_post</code> 文章页的 <code>#board</code> 外层是 <code>col-lg-8&gt;#board-ctn</code>（窄列），非文章页是 <code>.container.nopadding-x-md</code>（全宽）。从文章页（整页加载）点导航软导航回首页时，只换 innerHTML 会让首页内容残留塞进文章页窄列、整页变窄。因此 <code>soft-nav.js</code> 换正文前必须<strong>连 <code>#board</code> 的外层父链一起同步</strong>（把 <code>#board</code> 节点整体移入目标页外层容器并 <code>replaceChild</code> 替换旧外层）。改 <code>soft-nav.js</code> 后无需手改版本号，<code>scripts/asset-version.js</code> 会按内容 hash 自动更新（见十九）。</p>
 </blockquote>
@@ -811,6 +825,76 @@
 <blockquote>
 <p>提醒：<code>moments.css</code> 改动后无需手动 bump，但它<strong>必须先登记在 <code>custom_css</code> 里</strong>，否则页面根本不会引用这个文件；版本号由构建脚本自动注入（见十九）。</p>
 </blockquote>
+<h3 id="17-6-多图轮播（2026-11-18-新增）"><a href="#17-6-多图轮播（2026-11-18-新增）" class="headerlink" title="17.6 多图轮播（2026-11-18 新增）"></a>17.6 多图轮播（2026-11-18 新增）</h3><p>　　一条动态塞四五张图时，竖着排会把卡片拉得很长，所以加了轮播：一次显示一张，左右箭头 &#x2F; 底部圆点 &#x2F; 触摸滑动切换，计数在右下，点图可看原图。数据用独立的 <code>images</code> 字段而不是 <code>content</code> 里的 <code>![]()</code>，这样「图」和「文」的职责分开，侧栏纯文本预览也不会被图片标记污染。</p>
+<table>
+<thead>
+<tr>
+<th>文件</th>
+<th>职责</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>themes/fluid/layout/_partials/moment-carousel.ejs</code></td>
+<td>渲染轮播结构，归档页与首页动态视图<strong>共用</strong>同一份，保证两处一致</td>
+</tr>
+<tr>
+<td><code>source/css/moments.css</code> 的「动态配图轮播」段</td>
+<td>容器、箭头、圆点、计数栏、灯箱</td>
+</tr>
+<tr>
+<td><code>source/js/moments.js</code> 末尾的 IIFE</td>
+<td>切换、循环、圆点跳转、触摸滑动、灯箱开关</td>
+</tr>
+</tbody></table>
+<p><strong>设计取舍</strong></p>
+<ul>
+<li>图片用 <code>contain</code>（等宽等高内居中）而不是 <code>cover</code>：长截图（如 1260×2800 的应用商店页）缩到 182×404 也不丢内容，看不清的字靠点图放大。</li>
+<li>容器固定高度（桌面 420px &#x2F; 手机 260px），换图时卡片不跳动。</li>
+<li><strong>圆点和计数放在图片下方的独立栏</strong>，不叠在图上。叠图方案试过两次都不行：深色图片上深色胶囊糊成一片，浅色图片上白点直接消失；改成独立栏后两种主题都稳。</li>
+</ul>
+<blockquote>
+<p><strong>红线一：幻灯片里的图必须手动摘掉懒加载属性。</strong> Fluid 的 <code>img-lazyload.js</code> 给每张图挂 <code>srcset=loading.gif lazyload</code>，靠 IntersectionObserver 等到「可见」才摘。轮播里除第一张外全是 <code>display:none</code>，<strong>永远等不到回调</strong>——不处理的话切到第 2 张会一直显示 loading.gif。<code>moments.js</code> 的 <code>initCarousels()</code> 里对每张图 <code>removeAttribute(&#39;srcset&#39;)</code> &#x2F; <code>removeAttribute(&#39;lazyload&#39;)</code>，别删。</p>
+</blockquote>
+<blockquote>
+<p><strong>红线二：改主题模板后要 <code>rm -f db.json</code> 再 generate。</strong> 只加 <code>?cb=</code> 之外最容易踩的是「产物没变」：Hexo 增量构建对 <code>themes/</code> 下 layout 的改动<strong>不一定失效缓存</strong>，实测改完 partial 直接 <code>hexo generate</code>，产物里仍是旧结构（<code>grep moment-carousel-bar</code> 为 0）。改 <code>_partials/*.ejs</code>、<code>index.ejs</code> 这类模板时，一律 <code>rm -f db.json &amp;&amp; npx hexo generate</code>。</p>
+</blockquote>
+<blockquote>
+<p><strong>红线三：轮播箭头必须用 <code>margin-top</code> 垂直居中，不能用 <code>transform: translateY(-50%)</code>。</strong> 后者会被 <code>site-motion.css</code> 的全局 <code>button.is-hovered { transform: translateY(-3px) scale(1.06) }</code> 整个覆盖——鼠标一碰箭头就从居中位置猛地下沉半个身位，移开又弹回，看起来像严重抖动。现在 <code>.moment-carousel-btn</code> 用 <code>margin-top: -1.125rem</code>（高度 2.25rem 的一半）居中，并在 <code>site-motion.css</code> 里对该类显式 <code>transform: none</code>。<strong>改全局按钮位移规则时，务必回归测试轮播箭头的 hover 位置。</strong></p>
+</blockquote>
+<p><strong>验收清单</strong>（用无头浏览器真实点击，不看源码猜）</p>
+<table>
+<thead>
+<tr>
+<th>检查项</th>
+<th>期望</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>各幻灯片的 <code>img</code> 是否还有 <code>lazyload</code> &#x2F; <code>srcset</code></td>
+<td>都是 <code>false</code></td>
+</tr>
+<tr>
+<td>每张图 <code>naturalWidth</code></td>
+<td>&gt; 0（真加载，不是占位图）</td>
+</tr>
+<tr>
+<td>第 1 张点「上一张」</td>
+<td>回到最后一张（循环）</td>
+</tr>
+<tr>
+<td>点圆点 &#x2F; 箭头后 <code>data-index</code> 与计数</td>
+<td>同步</td>
+</tr>
+<tr>
+<td>点图</td>
+<td>灯箱打开、<code>body</code> 锁定滚动；ESC 或点背景关闭</td>
+</tr>
+<tr>
+<td>暗色模式</td>
+<td>引用块与正文同色（实测 <code>rgb(196,198,201)</code> on <code>rgb(24,28,39)</code>，≈10:1）</td>
+</tr>
+</tbody></table>
+<p>　　验证脚本的坑：无头 Chrome（软件渲染）连续 <code>Page.captureScreenshot</code> 几次后会<strong>卡死</strong>，尤其切到超高图片时。稳妥做法是<strong>一次导航只截一张图</strong>，或在 Nav 后用 <code>Network.setCacheDisabled</code> + <code>?cb=</code> 避免拿到旧的 HTML&#x2F;CSS。</p>
 <h2 id="十八、隐藏文章（仅归档可见）"><a href="#十八、隐藏文章（仅归档可见）" class="headerlink" title="十八、隐藏文章（仅归档可见）"></a>十八、隐藏文章（仅归档可见）</h2><p>　　有些内容（如文献整理、草稿碎片）不想挤占首页，但又希望保留在归档、分类、标签里随时可查。给文章 front-matter 加一行 <code>home: false</code> 即可：</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-meta">---</span><br><span class="hljs-attr">title:</span> <span class="hljs-string">某篇文献整理</span><br><span class="hljs-attr">date:</span> <span class="hljs-number">2026-10-24 10:00:00</span><br><span class="hljs-attr">home:</span> <span class="hljs-literal">false</span>          <span class="hljs-comment"># ← 加了这行：不进首页 / 侧栏「最近文章」/ RSS，但归档/分类/标签照常</span><br><span class="hljs-attr">tags:</span><br>  <span class="hljs-bullet">-</span> <span class="hljs-string">文献</span><br><span class="hljs-attr">categories:</span><br>  <span class="hljs-bullet">-</span> <span class="hljs-string">技术</span><br><span class="hljs-meta">---</span><br></code></pre></td></tr></table></figure>
 
@@ -995,7 +1079,61 @@
 <p>　　可靠做法：先 <code>npx hexo generate</code>，再从产物里读真实 id 回填 href（<code>grep -o &#39;&lt;h2 id=&quot;[^&quot;]*&quot;&#39;</code>），并做一次比对：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash">python - &lt;&lt;<span class="hljs-string">&#x27;EOF&#x27;</span><br>import re, io<br>from urllib.parse import unquote<br>h = io.open(r<span class="hljs-string">&#x27;public/&lt;路径&gt;/index.html&#x27;</span>, encoding=<span class="hljs-string">&#x27;utf-8&#x27;</span>).<span class="hljs-built_in">read</span>()<br>ids = <span class="hljs-built_in">set</span>(re.findall(r<span class="hljs-string">&#x27;&lt;h2 id=&quot;([^&quot;]+)&quot;&#x27;</span>, h))<br>bad = [x <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> re.findall(r<span class="hljs-string">&#x27;&lt;li&gt;&lt;a href=&quot;#([^&quot;]+)&quot;&#x27;</span>, h) <span class="hljs-keyword">if</span> unquote(x) not <span class="hljs-keyword">in</span> ids]<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;失效锚点:&quot;</span>, bad or <span class="hljs-string">&quot;无&quot;</span>)<br>EOF<br></code></pre></td></tr></table></figure>
 
-<h3 id="20-3-验收标准"><a href="#20-3-验收标准" class="headerlink" title="20.3 验收标准"></a>20.3 验收标准</h3><table>
+<h3 id="20-3-右侧目录点击后被拉回顶部：popstate-红线（2026-11-18-修）"><a href="#20-3-右侧目录点击后被拉回顶部：popstate-红线（2026-11-18-修）" class="headerlink" title="20.3 右侧目录点击后被拉回顶部：popstate 红线（2026-11-18 修）"></a>20.3 右侧目录点击后被拉回顶部：popstate 红线（2026-11-18 修）</h3><blockquote>
+<p>现象：文章页点右侧目录，跳一下就被拉回顶部，或点了没反应。</p>
+</blockquote>
+<p>根因不是目录本身，而是 <strong><code>hash</code> 变化也会触发 <code>popstate</code></strong>：<code>soft-nav.js</code> 的 popstate 处理里原本 <code>POST_RE.test(pathname)</code> 对文章页为真就 <code>window.location.reload()</code>，于是「点目录 → tocbot 滚动成功 → hash 变化触发 popstate → 整页重载 → 滚动回 0」。</p>
+<p>修法：在 <code>soft-nav.js</code> 模块级维护 <code>lastKey = pathname + search</code>（不含 hash），每次软导航 <code>pushState</code> 后更新它；popstate 开头判断 <code>if (locKey() === lastKey) return</code>——<strong>纯 hash 变化（锚点跳转）直接放行，不 reload、不走软导航</strong>，交给浏览器原生锚点滚动。</p>
+<blockquote>
+<p>红线：以后改 <code>soft-nav.js</code> 的 popstate 逻辑，务必回归测试「文章页点右侧目录」——hash 变化与真正的前进&#x2F;后退在这个事件里是无法靠 event 对象区分的，只能靠 pathname+search 快照比对。</p>
+</blockquote>
+<h3 id="20-4-右侧目录当前项：蓝色卡片-跳转落在视口-1-3-容器跟随（2026-11-19-修）"><a href="#20-4-右侧目录当前项：蓝色卡片-跳转落在视口-1-3-容器跟随（2026-11-19-修）" class="headerlink" title="20.4 右侧目录当前项：蓝色卡片 + 跳转落在视口 1&#x2F;3 + 容器跟随（2026-11-19 修）"></a>20.4 右侧目录当前项：蓝色卡片 + 跳转落在视口 1&#x2F;3 + 容器跟随（2026-11-19 修）</h3><blockquote>
+<p>需求：右侧目录用淡蓝卡片标出当前阅读位置，卡片不随 hover 浮起；点击跳转后目标标题停在视口上 1&#x2F;3、下面留 2&#x2F;3 正文，且<strong>卡片要跟页面一起到位、不能慢半拍</strong>；页面下滑时目录自动跟随，越过 1&#x2F;3 后蓝色卡片连续钉在「侧栏 1&#x2F;3」处，<strong>但文章刚打开时顶部不要空一大块</strong>；并且<strong>侧栏本身能独立上下滚动</strong>（滚轮停在侧栏上只滚目录）。</p>
+</blockquote>
+<p>三处改动，缺一不可：</p>
+<ol>
+<li><p><code>source/css/site-motion.css</code> 新增 <code>#toc-body .tocbot-link.tocbot-active-link</code>：淡蓝底 + 蓝字 + 1px 内描边，<code>transform: none !important</code> 压掉 <code>.is-hovered</code> 的横移和 <code>:active</code> 的位移；深色模式另设更浓的底色。<strong>必须用 <code>#toc-body</code> 抬高精度</strong>——否则和后面 <code>@media (hover)</code> 里的 <code>.tocbot-link.is-hovered</code> 同优先级，后定义者会赢。</p>
+</li>
+<li><p><code>themes/fluid/layout/_partials/post/toc.ejs</code>：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> readOffset = <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">round</span>(<span class="hljs-variable language_">window</span>.<span class="hljs-property">innerHeight</span> / <span class="hljs-number">3</span>);<br><span class="hljs-comment">// ...</span><br>headingsOffset     : -boardTop + readOffset,<br>scrollSmoothOffset : -readOffset,<br></code></pre></td></tr></table></figure></li>
+</ol>
+<blockquote>
+<p><strong>红线：<code>headingsOffset</code> 里的 <code>-boardTop</code> 绝不能删。</strong><br>tocbot 4.x 判定 active 时拿 <code>heading.offsetTop</code>（相对文章容器，实测 2215）和文档 <code>scrollTop</code>（实测 2513）比较，两者基准差一个 <code>boardTop</code>（容器到文档顶的距离，约 598）。Fluid 原本的 <code>-boardTop</code> 就是补偿它，使高亮边界落在视口 top≈10px。若直接把 <code>headingsOffset</code> 换成 <code>readOffset</code>，高亮会整整错位一节（实测点「三」亮「四」）。<br>正确做法是在原补偿上<strong>加</strong> <code>readOffset</code>，把高亮边界从视口顶部平移到 1&#x2F;3；<code>scrollSmoothOffset</code> 是独立配置，只管点击落点，取负值（目标滚动位置 &#x3D; 标题文档位置 + offset，负 1&#x2F;3 视口高度才能让标题停在距顶 1&#x2F;3 处）。</p>
+</blockquote>
+<ol start="3">
+<li><p><strong>整栏当滚动容器</strong>（2026-11-19 第二轮重写，当前线上方案）。<code>source/css/site-motion.css</code> 在 <code>@media (min-width: 992px)</code> 内让 <code>aside.sidebar</code> 自己滚：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-tag">aside</span><span class="hljs-selector-class">.sidebar</span> &#123;<br>  <span class="hljs-attribute">box-sizing</span>: border-box;<br>  <span class="hljs-attribute">max-height</span>: <span class="hljs-built_in">calc</span>(<span class="hljs-number">100vh</span> - <span class="hljs-number">2rem</span> - <span class="hljs-number">1rem</span>);  <span class="hljs-comment">/* 扣掉 sticky top 2rem + 底部留 1rem */</span><br>  <span class="hljs-attribute">overflow-y</span>: auto;<br>  <span class="hljs-attribute">scrollbar-width</span>: thin;                  <span class="hljs-comment">/* 细滚动条，别抢戏 */</span><br>&#125;<br><span class="hljs-selector-tag">aside</span><span class="hljs-selector-class">.sidebar</span> <span class="hljs-selector-class">.toc-body</span> &#123; <span class="hljs-attribute">max-height</span>: none; <span class="hljs-attribute">overflow</span>: visible; &#125;  <span class="hljs-comment">/* 内层不再滚，避免双滚动条 */</span><br></code></pre></td></tr></table></figure>
+
+<p>JS（<code>toc.ejs</code>，<code>window.tocbot.init()</code> 之后）：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> tocBody = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;toc-body&#x27;</span>);<br><span class="hljs-keyword">var</span> tocPanel = tocBody ? tocBody.<span class="hljs-title function_">closest</span>(<span class="hljs-string">&#x27;aside.sidebar&#x27;</span>) : <span class="hljs-literal">null</span>;<br><span class="hljs-keyword">if</span> (tocPanel &amp;&amp; <span class="hljs-title function_">getComputedStyle</span>(tocPanel).<span class="hljs-property">overflowY</span> !== <span class="hljs-string">&#x27;auto&#x27;</span>) &#123; tocPanel = <span class="hljs-literal">null</span>; &#125; <span class="hljs-comment">// CSS 不生效时退回</span><br><span class="hljs-keyword">var</span> tocScroller = tocPanel || tocBody;<br><br><span class="hljs-comment">// 元素相对「滚动容器内容顶」的绝对位置 —— 该值在滚动/缓动过程中恒定，</span><br><span class="hljs-comment">// 所以不会读到中间态、不会来回跳。</span><br><span class="hljs-keyword">var</span> tocAbs = <span class="hljs-keyword">function</span> (<span class="hljs-params">el</span>) &#123;<br>  <span class="hljs-keyword">var</span> pr = tocScroller.<span class="hljs-title function_">getBoundingClientRect</span>(), er = el.<span class="hljs-title function_">getBoundingClientRect</span>();<br>  <span class="hljs-keyword">return</span> (er.<span class="hljs-property">top</span> - pr.<span class="hljs-property">top</span>) + tocScroller.<span class="hljs-property">scrollTop</span>;<br>&#125;;<br><br><span class="hljs-keyword">var</span> ensureTocSpacers = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">var</span> items = tocBody.<span class="hljs-title function_">querySelectorAll</span>(<span class="hljs-string">&#x27;li.toc-list-item&#x27;</span>);<br>  <span class="hljs-keyword">var</span> stale = tocBody.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">&#x27;.toc-spacer-top&#x27;</span>);   <span class="hljs-comment">// 旧版本残留，删掉</span><br>  <span class="hljs-keyword">if</span> (stale) &#123; stale.<span class="hljs-property">parentNode</span>.<span class="hljs-title function_">removeChild</span>(stale); &#125;<br>  <span class="hljs-keyword">var</span> bot = <span class="hljs-comment">/* 确保 .toc-spacer-bottom 存在 */</span>;<br>  bot.<span class="hljs-property">style</span>.<span class="hljs-property">height</span> = <span class="hljs-string">&#x27;0px&#x27;</span>;                           <span class="hljs-comment">// 先清零再量，避免累加误差</span><br>  <span class="hljs-keyword">var</span> h = tocScroller.<span class="hljs-property">clientHeight</span>;                   <span class="hljs-comment">// 参照的是「整栏可视高」</span><br>  <span class="hljs-keyword">if</span> (tocScroller.<span class="hljs-property">scrollHeight</span> &lt;= h + <span class="hljs-number">4</span>) &#123; <span class="hljs-keyword">return</span>; &#125;   <span class="hljs-comment">// 目录没溢出：不垫空白、不跟随</span><br>  <span class="hljs-comment">// 只垫底部：末项也要能落到 1/3。顶部不垫，否则开头一大块空白。</span><br>  bot.<span class="hljs-property">style</span>.<span class="hljs-property">height</span> = <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">max</span>(<span class="hljs-number">0</span>, <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">round</span>(<span class="hljs-title function_">tocAbs</span>(last) + h * <span class="hljs-number">2</span> / <span class="hljs-number">3</span> - tocScroller.<span class="hljs-property">scrollHeight</span>)) + <span class="hljs-string">&#x27;px&#x27;</span>;<br>&#125;;<br><br><span class="hljs-keyword">var</span> tocTarget = <span class="hljs-literal">null</span>, tocRaf = <span class="hljs-number">0</span>;<br><span class="hljs-keyword">var</span> tocStep = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;                    <span class="hljs-comment">// 唯一写 scrollTop 的地方</span><br>  <span class="hljs-keyword">var</span> cur = tocScroller.<span class="hljs-property">scrollTop</span>, d = tocTarget - cur;<br>  <span class="hljs-keyword">if</span> (<span class="hljs-title class_">Math</span>.<span class="hljs-title function_">abs</span>(d) &lt; <span class="hljs-number">0.5</span>) &#123; tocScroller.<span class="hljs-property">scrollTop</span> = tocTarget; tocTarget = <span class="hljs-literal">null</span>; tocRaf = <span class="hljs-number">0</span>; <span class="hljs-keyword">return</span>; &#125;<br>  tocScroller.<span class="hljs-property">scrollTop</span> = cur + d * <span class="hljs-number">0.22</span>;      <span class="hljs-comment">// 每帧逼近 22%</span><br>  tocRaf = <span class="hljs-title function_">requestAnimationFrame</span>(tocStep);<br>&#125;;<br><span class="hljs-keyword">var</span> tocUpdate = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;                  <span class="hljs-comment">// active 一变立刻算目标并起缓动</span><br>  <span class="hljs-keyword">var</span> want = <span class="hljs-title function_">tocAbs</span>(active) - tocScroller.<span class="hljs-property">clientHeight</span> / <span class="hljs-number">3</span>;<br>  tocTarget = <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">max</span>(<span class="hljs-number">0</span>, <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">min</span>(want, tocScroller.<span class="hljs-property">scrollHeight</span> - tocScroller.<span class="hljs-property">clientHeight</span>));<br>  <span class="hljs-keyword">if</span> (!tocRaf) &#123; tocRaf = <span class="hljs-title function_">requestAnimationFrame</span>(tocStep); &#125;<br>&#125;;<br><span class="hljs-comment">// 主驱动：MutationObserver 看 active 类；兜底：window scroll rAF 节流再校一次</span><br><span class="hljs-comment">// 用户滚侧栏：wheel / touchstart → 取消目标，自动跟随立刻让位</span><br><span class="hljs-comment">// resize → ensureTocSpacers() + tocUpdate()</span><br></code></pre></td></tr></table></figure></li>
+</ol>
+<blockquote>
+<p><strong>关键点①：跟随的参照物是「能看到的整栏」，不是 <code>.toc-body</code> 那个小框。</strong> 旧版让 <code>.toc-body</code>（<code>max-height:75vh</code>）自己滚，1&#x2F;3 只能按它算，观感上卡片落到屏幕约 41%；而且它本身不是吸顶元素，页面滚起来它是被动跟着走。改成整栏滚动后，1&#x2F;3 就是「你眼睛看到的侧栏 1&#x2F;3」，且整栏是 <code>position:sticky</code> 常驻的。<strong>也顺带满足了「侧栏可以单独滑动」</strong>——鼠标停在侧栏上滚轮只滚目录，不带动正文。<br><strong>关键点②：抽搐的真凶是「等待」，不是「跳动」。</strong> 上一版用「active 稳定 180ms + 10% 死区」防抖，逻辑上很合理，但用户感知是「滚动时它故意不动，停下才猛地滑一下」——就是这个 <code>一卡一卡</code>。现在<strong>去掉死区、去掉 settle 延时</strong>：active 一换就立即以 22%&#x2F;帧缓动过去，平滑完全交给缓动本身。<code>tocAbs()</code> 在滚动中恒定（<code>er.top</code> 与 <code>scrollTop</code> 反向抵消），所以不会像 <code>offsetTop</code> 那样读到中间态产生目标横跳。<br><strong>关键点③：只在列表底部垫白，顶部不垫。</strong> 最后一章 scrollTop 顶到 scrollHeight 上限，没有底部垫白物理上到不了 1&#x2F;3，所以底部垫到「末项能落在 h&#x2F;3」。<strong>顶部故意不垫</strong>（2026-11-19 改，用户：「刚开始的时候可以不要留白这么多吗」）——早期版本为了「第一项也停在 1&#x2F;3」在顶部垫了 <code>h/3 - 首项位置</code>（实测 108px），结果文章一打开，「目录」标题和第一条之间空出一大块，很难看。去掉顶部垫白后靠 clamp 天然衔接：前几项目标算出来是负数 → <code>Math.max(0, …)</code> 归零 → 列表不动、高亮往下走，等某条自然越过 1&#x2F;3 才开始滚，全程连续无跳变（实测 ratio 从 0.13 平滑升到 0.34）。<br><strong>先清零再量</strong>，否则多次 resize 后高度会累加跑飞。<strong>spacer 插在列表内部</strong>而非给 <code>.toc-body</code> 加 padding（后者 <code>box-sizing:content-box</code>，padding 会把盒子撑到 ~1.7 倍）。<code>tocbot.refresh()</code> 重建内容会冲掉 spacer，<code>registerRefreshCallback</code> 里要重插；同时要<strong>顺手删掉可能残留的 <code>.toc-spacer-top</code></strong>（旧版本会插）。</p>
+</blockquote>
+<ol start="4">
+<li><p><strong>点击跳转的卡片动效单独走时间轴</strong>（2026-11-19 第三次补，用户：「点击跳转时蓝色卡片动效偏慢」）：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// 点击时目标已确定，不必等 tocbot 在平滑滚动结束后才改 active</span><br>tocBody.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&#x27;click&#x27;</span>, <span class="hljs-keyword">function</span> (<span class="hljs-params">e</span>) &#123;<br>  <span class="hljs-keyword">var</span> a = e.<span class="hljs-property">target</span>.<span class="hljs-title function_">closest</span>(<span class="hljs-string">&#x27;a.tocbot-link&#x27;</span>); <span class="hljs-keyword">if</span> (!a) <span class="hljs-keyword">return</span>;<br>  <span class="hljs-keyword">var</span> max = tocScroller.<span class="hljs-property">scrollHeight</span> - tocScroller.<span class="hljs-property">clientHeight</span>;<br>  <span class="hljs-keyword">if</span> (max &lt;= <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span>;<br>  <span class="hljs-keyword">var</span> to = <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">max</span>(<span class="hljs-number">0</span>, <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">min</span>(<span class="hljs-title function_">tocAbs</span>(a) - tocScroller.<span class="hljs-property">clientHeight</span> / <span class="hljs-number">3</span>, max));<br>  tocPinnedHref = a.<span class="hljs-title function_">getAttribute</span>(<span class="hljs-string">&#x27;href&#x27;</span>);            <span class="hljs-comment">// 上锁：飞行途中别被 scroll 兜底抢</span><br>  tocPinTimer = <span class="hljs-built_in">setTimeout</span>(releaseTocPin, <span class="hljs-number">1200</span>);     <span class="hljs-comment">// 安全阀</span><br>  <span class="hljs-title function_">tocTweenTo</span>(to, <span class="hljs-number">320</span>);                               <span class="hljs-comment">// 固定时长 + easeOutCubic</span><br>&#125;);<br><span class="hljs-comment">// tocUpdate() 开头：pinned 且 active 还没追上被点项 → 直接 return</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> tocTweenTo = <span class="hljs-keyword">function</span> (<span class="hljs-params">to, dur</span>) &#123;<br>  <span class="hljs-keyword">var</span> <span class="hljs-keyword">from</span> = tocScroller.<span class="hljs-property">scrollTop</span>, t0 = performance.<span class="hljs-title function_">now</span>();<br>  tocTarget = <span class="hljs-literal">null</span>;<br>  <span class="hljs-keyword">if</span> (tocRaf) &#123; <span class="hljs-title function_">cancelAnimationFrame</span>(tocRaf); tocRaf = <span class="hljs-number">0</span>; &#125;<br>  <span class="hljs-keyword">var</span> step = <span class="hljs-keyword">function</span> (<span class="hljs-params">now</span>) &#123;<br>    <span class="hljs-keyword">var</span> k = <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">min</span>(<span class="hljs-number">1</span>, (now - t0) / dur), e = <span class="hljs-number">1</span> - <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">pow</span>(<span class="hljs-number">1</span> - k, <span class="hljs-number">3</span>);  <span class="hljs-comment">// easeOutCubic</span><br>    tocScroller.<span class="hljs-property">scrollTop</span> = <span class="hljs-keyword">from</span> + (to - <span class="hljs-keyword">from</span>) * e;<br>    <span class="hljs-keyword">if</span> (k &lt; <span class="hljs-number">1</span>) &#123; tocTweenRaf = <span class="hljs-title function_">requestAnimationFrame</span>(step); &#125; <span class="hljs-keyword">else</span> &#123; tocScroller.<span class="hljs-property">scrollTop</span> = to; tocTweenRaf = <span class="hljs-number">0</span>; &#125;<br>  &#125;;<br>  tocTweenRaf = <span class="hljs-title function_">requestAnimationFrame</span>(step);<br>&#125;;<br></code></pre></td></tr></table></figure></li>
+</ol>
+<blockquote>
+<p><strong>关键点④：点击「偏慢」是两段延迟叠加。</strong> 无头逐帧实测（改前）：页面 <code>420–450ms</code> 滚到位，但卡片 <code>454–495ms</code> 才开始动，再花 <code>400–800ms</code> 滑完，总耗时 <code>0.85–1.26s</code>。两个原因：① tocbot 在整个平滑滚动期间<strong>只改一次 active</strong>（跳到终点才改），而我们的目标是从 active 算的，所以那 420ms 卡片完全空等；② 每帧 22% 的<strong>指数缓动尾巴很长</strong>（1120px 要走 27 帧，最后几十 px 拖 200ms+）。对策：点击时直接用被点链接算目标 + 固定时长 <code>easeOutCubic</code>，改后卡片 <code>274–290ms</code> 到位（页面还在滚的途中就到），总耗时降到 <code>0.48–0.49s</code>。<br><strong>关键点⑤：必须有 pin（上锁），否则会被 scroll 兜底拽回去。</strong> 飞行途中 active 还停在旧项，<code>window scroll</code> 每帧兜底调用 <code>tocUpdate()</code> 会按<strong>旧 active</strong> 算目标、把卡片往回拽。所以点击时记下 <code>href</code>，<code>tocUpdate()</code> 发现「pinned 且当前 active ≠ 被点项」就直接 return，等 active 追上再解锁（另有 1.2s 安全阀 + 用户 wheel 时立即解锁）。锁释放后重算的目标与 tween 终点重合（差 0），不会二次回弹。</p>
+</blockquote>
+<p><strong>实测验收</strong>（1440×900 无头 Chrome，长文 <code>hexo-customize-guide</code>，45 个目录项）：</p>
+<ul>
+<li>结构：<code>panelH=652 / panelScrollH=1711 / overflowY=auto / boxSizing=border-box</code>，<code>tocBodyOverflow=visible</code>（内层确实不再滚），只垫底部 spacer（<code>hasSpacer-top=false</code>）。</li>
+<li>点「三、修改站点信息」：标题 <code>top=300</code>（&#x3D; 900&#x2F;3），active 正好是「三」，<code>transform:none</code>，背景 <code>rgba(48,169,222,.14)</code>；鼠标停在 active 项上 <code>transform</code> 仍为 <code>none</code>（不浮起）。</li>
+<li>全篇扫描（页面滚动 f&#x3D;0→1 取 9 个采样点）：<code>f=0</code> 时首章「前言」<code>ratio 0.16</code>（贴近目录标题，不再空一大块），<code>f=0.1</code> 升到 <code>0.32</code>，<code>f≥0.25</code> 起稳定在 <code>0.34</code> 直到末章「总结」，<code>scrollTop</code> 0→1057 单调增长，无越界回弹。<strong>前段 0.16→0.34 是连续爬升</strong>（clamp 归零导致），不是跳变。</li>
+<li>顶部留白（<code>engineering-electromagnetic-field-review</code>，60 个目录项，栏高 624）：首项距侧栏顶 <strong>208px → 80px</strong>，省掉 128px 空白。</li>
+<li><strong>连续跟手验证</strong>（60px&#x2F;帧模拟滚轮，逐帧记录侧栏 <code>scrollTop</code>）：最大单帧跳变 28px、最长「完全不动」连续帧数 26 帧（≈0.43s，且发生在页面刚开始滚、active 还没切的阶段），全程平滑推进，判定 PASS——不再有「停很久再猛跳」。</li>
+<li><strong>点击动效验证</strong>（点第 4 &#x2F; 23 &#x2F; 43 项，逐帧采样）：页面 <code>424–441ms</code> 到位，卡片 <code>274–290ms</code> 到位（改前 <code>821–1161ms</code>），停稳后 <code>ratio</code> 仍是 <code>0.333</code>，无二次回弹；中距那次目标本来就在 1&#x2F;3，卡片位移 600px 也在 283ms 内完成。</li>
+<li>无头测试注意：① CDN 库（baomitu 的 jquery&#x2F;tocbot 等）在无头沙箱里加载失败，需用 CDP <code>Fetch</code> <strong>拦截全部请求</strong>（本地 <code>127.0.0.1</code> 放行、其它外链回空 200）——只拦 <code>*baomitu.com*</code> 不够，<code>busuanzi</code> 那个统计脚本卡在 <code>&lt;head&gt;</code> 里会让解析器停在 body 之前（<code>readyState</code> 永远 <code>loading</code>、<code>document.body</code> 为 <code>null</code>、目录项数 0）；② 别用 <code>window.scrollTo</code> 瞬间跳 1.8 万像素测——会触发「前言→十六→十七」非真实三连跳，要按 60px&#x2F;帧渐进滚动模拟真实滚轮。</li>
+<li><strong>部署红线</strong>：改完 EJS&#x2F;CSS 只在本地 <code>hexo generate</code> 不够，线上看不到——必须 <code>git commit</code> + <code>git push origin main</code> 让 Actions 部署到 gh-pages。用户「还是没跟随」的头号原因就是只本地生成没 push。</li>
+</ul>
+<blockquote>
+<p>附带发现：tocbot 4.20.1 实际没给 active 的 <code>&lt;li&gt;</code> 加 <code>is-active-li</code> 类，主题里那条左侧蓝竖条本来就 <code>visibility:hidden</code>、不会显示。CSS 里仍留一条 <code>display:none</code> 兜底，防止将来版本加上类后与卡片重复。</p>
+</blockquote>
+<h3 id="20-5-验收标准"><a href="#20-5-验收标准" class="headerlink" title="20.5 验收标准"></a>20.5 验收标准</h3><table>
 <thead>
 <tr>
 <th>检查项</th>
@@ -1017,6 +1155,34 @@
 <tr>
 <td>目录锚点</td>
 <td>全部能命中 <code>h2 id</code></td>
+</tr>
+<tr>
+<td>点右侧目录后</td>
+<td>页面滚到目标标题且不回顶（无整页 reload）</td>
+</tr>
+<tr>
+<td>目录当前项</td>
+<td>淡蓝卡片、蓝字，hover 时不浮起</td>
+</tr>
+<tr>
+<td>目录跳转落点</td>
+<td>目标标题 <code>top ≈ 视口高度/3</code>，active 与点击项一致</td>
+</tr>
+<tr>
+<td>侧栏可独立滚动</td>
+<td>鼠标在右侧栏上滚滚轮，只滚目录不动正文；侧栏有细滚动条，<code>max-height</code> 铺满一屏、吸顶不跑</td>
+</tr>
+<tr>
+<td>目录跟随</td>
+<td>蓝色卡片连续跟手：前段贴近目录标题（<code>ratio</code> 从 0.13&#x2F;0.16 连续爬升），越过 1&#x2F;3 后稳定钉在「整栏可视高」1&#x2F;3 处直到末章（<code>ratio 0.34</code>），滚动中不顿不跳；<strong>开头不留大片空白</strong>；改动已 push 部署（非仅本地 generate）</td>
+</tr>
+<tr>
+<td>点击跳转</td>
+<td>卡片约 300ms 内到位，与页面平滑滚动几乎同时收尾，不出现「页面停了卡片还在溜」</td>
+</tr>
+<tr>
+<td>主页 banner</td>
+<td>从文章页软导航回首页后，banner 不再残留「字数 &#x2F; 阅读时长」</td>
 </tr>
 </tbody></table>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>　　核心就两个文件：</p>
@@ -1437,17 +1603,24 @@
         window.__tocToggleObserver.observe(this, { attributes: true });
       });
     }
+    // 让「当前位置高亮」和「点击跳转落点」都对齐到视口上 1/3。
+    // 关键：tocbot 4.x 判定 active 时用 heading.offsetTop（相对文章容器），
+    // 比较基准却是文档 scrollTop，二者差一个 boardTop，所以必须保留 -boardTop 补偿，
+    // 否则高亮会错位一节。在这个补偿上再加 vh/3，把高亮边界从视口顶部移到 1/3 处。
+    // scrollSmoothOffset 独立控制点击落点：负值 = 目标标题停在视口下方这个距离。
+    var readOffset = Math.round(window.innerHeight / 3);
     var tocConfig = Object.assign({
-      tocSelector     : '#toc-body',
-      contentSelector : '.markdown-body',
-      linkClass       : 'tocbot-link',
-      activeLinkClass : 'tocbot-active-link',
-      listClass       : 'tocbot-list',
-      isCollapsedClass: 'tocbot-is-collapsed',
-      collapsibleClass: 'tocbot-is-collapsible',
-      scrollSmooth    : true,
-      includeTitleTags: true,
-      headingsOffset  : -boardTop,
+      tocSelector        : '#toc-body',
+      contentSelector    : '.markdown-body',
+      linkClass          : 'tocbot-link',
+      activeLinkClass    : 'tocbot-active-link',
+      listClass          : 'tocbot-list',
+      isCollapsedClass   : 'tocbot-is-collapsed',
+      collapsibleClass   : 'tocbot-is-collapsible',
+      scrollSmooth       : true,
+      includeTitleTags   : true,
+      headingsOffset     : -boardTop + readOffset,
+      scrollSmoothOffset : -readOffset,
     }, CONFIG.toc);
     if (isExpandAllEnabled()) {
       tocConfig.collapseDepth = 6;
@@ -1458,6 +1631,160 @@
     }
     expandAllToc();
     bindTocToggle();
+
+    // ── 右侧目录跟随：整栏独立滚动 + 连续缓动 ───────────────────────────
+    // 结构（见 site-motion.css）：aside.sidebar 吸顶、max-height 铺满一屏、overflow-y:auto，
+    // 是唯一滚动容器；.toc-body 不再自己滚（max-height:none）。
+    // 目标：蓝色卡片稳定停在「你能看到的侧栏」高度 1/3 处；页面滚动时连续跟手，
+    //      不顿不跳。
+    // 旧版的教训：靠「active 稳定 180ms + 10% 死区」触发 → 滚动途中故意不动、停下才滑，
+    // 观感就是「一卡一卡」；这里改成 active 一换就立刻缓动过去（无死区、无等待），
+    // 缓动本身（每帧逼近 22%）负责消除瞬移感。
+    var tocBody = document.getElementById('toc-body');
+    var tocPanel = tocBody ? tocBody.closest('aside.sidebar') : null;
+    // 没有 CSS 支持（如宽度不足侧栏隐藏）时退回 toc-body 自身滚动。
+    if (tocPanel && getComputedStyle(tocPanel).overflowY !== 'auto') { tocPanel = null; }
+    var tocScroller = tocPanel || tocBody;
+
+    // 元素相对「滚动容器内容顶」的绝对位置。该值在容器滚动/缓动过程中恒定不变
+    // （元素 top 与 scrollTop 反向同步变化），所以测量不会读到中间态、不会来回跳。
+    var tocAbs = function (el) {
+      var pr = tocScroller.getBoundingClientRect(), er = el.getBoundingClientRect();
+      return (er.top - pr.top) + tocScroller.scrollTop;
+    };
+
+    // 列表底部垫白：让最后一项也能落到 1/3。
+    // 顶部**故意不垫**（2026-11-19 改）：垫到 1/3 会让文章刚打开时「目录」标题与第一项
+    // 之间空出半屏，非常难看。现在第一项紧贴标题；因为目标值有 clamp(0)，
+    // 前几项自动退化成「列表不动、高亮往下走」，等某一行自然越过 1/3 才开始滚，衔接是连续的。
+    var ensureTocSpacers = function () {
+      if (!tocBody || !tocScroller) { return; }
+      var items = tocBody.querySelectorAll('li.toc-list-item');
+      if (!items.length) { return; }
+      // 清掉可能残留的顶部 spacer（旧版本会插）
+      var stale = tocBody.querySelector('.toc-spacer-top');
+      if (stale) { stale.parentNode.removeChild(stale); }
+      var bot = tocBody.querySelector('.toc-spacer-bottom');
+      if (!bot) { bot = document.createElement('div'); bot.className = 'toc-spacer-bottom'; tocBody.appendChild(bot); }
+      bot.style.height = '0px';  // 先清零再量，避免上一次的高度累加误差
+      var h = tocScroller.clientHeight;
+      // 目录本身没超出可视区（短文/少标题）：不垫空白、不跟随，避免无谓的大片留白
+      if (tocScroller.scrollHeight <= h + 4) { return; }
+      var last = items[items.length - 1];
+      var needBot = Math.max(0, Math.round(tocAbs(last) + h * 2 / 3 - tocScroller.scrollHeight));
+      bot.style.height = needBot + 'px';
+    };
+
+    var tocTarget = null, tocRaf = 0, tocTweenRaf = 0;
+    var tocPinnedHref = null, tocPinTimer = 0;
+    var tocStep = function () {
+      if (!tocScroller || tocTarget === null) { tocRaf = 0; return; }
+      var cur = tocScroller.scrollTop, d = tocTarget - cur;
+      if (Math.abs(d) < 0.5) { tocScroller.scrollTop = tocTarget; tocTarget = null; tocRaf = 0; return; }
+      tocScroller.scrollTop = cur + d * 0.22; // 每帧逼近 22%
+      tocRaf = requestAnimationFrame(tocStep);
+    };
+
+    var releaseTocPin = function () {
+      tocPinnedHref = null;
+      if (tocPinTimer) { clearTimeout(tocPinTimer); tocPinTimer = 0; }
+    };
+
+    // 点击跳转专用：固定时长 + easeOutCubic。
+    // 指数缓动（每帧 22%）尾巴很长：1120px 要走 27 帧，最后几十 px 拖 200ms+，
+    // 叠加「页面滚完 active 才变」的 420ms 空等，观感就是卡片慢半拍。
+    // 点击时目标是确定的（就是被点的那一项），不需要「追」，直接用时间轴控制。
+    // 320ms 与 tocbot 的 scrollSmoothDuration(420ms) 大体同步收尾，卡片略早到。
+    var tocTweenTo = function (to, dur) {
+      var from = tocScroller.scrollTop;
+      var t0 = (window.performance && performance.now) ? performance.now() : Date.now();
+      tocTarget = null;
+      if (tocRaf) { cancelAnimationFrame(tocRaf); tocRaf = 0; }
+      if (tocTweenRaf) { cancelAnimationFrame(tocTweenRaf); }
+      var step = function (now) {
+        var k = Math.min(1, (now - t0) / dur);
+        var e = 1 - Math.pow(1 - k, 3);
+        tocScroller.scrollTop = from + (to - from) * e;
+        if (k < 1) { tocTweenRaf = requestAnimationFrame(step); }
+        else { tocScroller.scrollTop = to; tocTweenRaf = 0; }
+      };
+      tocTweenRaf = requestAnimationFrame(step);
+    };
+
+    // active 一变就算目标并立刻起缓动：滚动时连续跟手，而不是等停稳再动。
+    var tocUpdate = function () {
+      if (!tocBody || !tocScroller) { return; }
+      var active = tocBody.querySelector('.tocbot-active-link');
+      if (!active) { return; }
+      // 点击飞行途中（active 还停在旧项）不要抢目标，等 active 追上被点项再解锁
+      if (tocPinnedHref) {
+        if (active.getAttribute('href') !== tocPinnedHref) { return; }
+        releaseTocPin();
+      }
+      var max = tocScroller.scrollHeight - tocScroller.clientHeight;
+      if (max <= 0) { return; }
+      var want = tocAbs(active) - tocScroller.clientHeight / 3;
+      tocTarget = Math.max(0, Math.min(want, max));
+      if (!tocRaf) { tocRaf = requestAnimationFrame(tocStep); }
+    };
+
+    if (tocBody) {
+      // active 类变化 → 立即更新目标（tocbot 每次页面滚动都会重刷 active 类）
+      if (window.__tocActiveObserver) { window.__tocActiveObserver.disconnect(); }
+      window.__tocActiveObserver = new MutationObserver(function (muts) {
+        for (var i = 0; i < muts.length; i++) {
+          var t = muts[i].target;
+          if (t && t.classList && t.classList.contains('tocbot-active-link')) { tocUpdate(); break; }
+        }
+      });
+      window.__tocActiveObserver.observe(tocBody, { attributes: true, subtree: true, attributeFilter: ['class'] });
+      // 兜底：页面滚动时每帧再校一次（observer 漏掉时也能跟上），成本极低（目标多半已相等）
+      var tocTick = false;
+      window.addEventListener('scroll', function () {
+        if (tocTick) { return; }
+        tocTick = true;
+        requestAnimationFrame(function () { tocUpdate(); tocTick = false; });
+      }, { passive: true });
+      // 用户自己滚侧栏时立刻让出控制权，避免和自动跟随抢
+      var yieldToc = function () {
+        releaseTocPin();
+        tocTarget = null;
+        if (tocRaf) { cancelAnimationFrame(tocRaf); tocRaf = 0; }
+        if (tocTweenRaf) { cancelAnimationFrame(tocTweenRaf); tocTweenRaf = 0; }
+      };
+      if (tocPanel) {
+        tocPanel.addEventListener('wheel', yieldToc, { passive: true });
+        tocPanel.addEventListener('touchstart', yieldToc, { passive: true });
+      }
+      // 点击目录项：此刻目标就确定了，不必等 tocbot 在 scroll 结束后才改 active。
+      // 直接从被点链接算目标、320ms 时间轴出发，和页面平滑滚动几乎同时收尾。
+      tocBody.addEventListener('click', function (e) {
+        var a = e.target && e.target.closest ? e.target.closest('a.tocbot-link') : null;
+        if (!a) { return; }
+        // 宽度不足等情况下 tocScroller 可能就是 tocBody 自身，逻辑一致
+        var max = tocScroller.scrollHeight - tocScroller.clientHeight;
+        if (max <= 0) { return; }
+        var to = Math.max(0, Math.min(tocAbs(a) - tocScroller.clientHeight / 3, max));
+        var href = a.getAttribute('href');
+        tocPinnedHref = href || null;
+        if (tocPinTimer) { clearTimeout(tocPinTimer); }
+        // 安全阀：万一 active 没追上（锚点失效等），1.2s 后放开，别把跟随永久锁死
+        tocPinTimer = setTimeout(releaseTocPin, 1200);
+        tocTweenTo(to, 320);
+      });
+      // 飞行途中用户滚了页面 → 放弃这次定位，交还给普通跟随
+      window.addEventListener('wheel', releaseTocPin, { passive: true });
+      // 窗口尺寸变化：可视高变了，spacer 与目标都要重算
+      window.addEventListener('resize', function () {
+        ensureTocSpacers();
+        tocUpdate();
+      }, { passive: true });
+    }
+    setTimeout(function () {
+      if (!tocBody) { return; }
+      ensureTocSpacers();
+      tocUpdate();
+    }, 250);
 
     Fluid.events.registerRefreshCallback(function() {
       if ('tocbot' in window) {
@@ -1471,6 +1798,11 @@
         }
         expandAllToc();
         bindTocToggle();
+        setTimeout(function() {
+          if (!tocBody) { return; }
+          ensureTocSpacers(); // refresh 会重建目录内容，spacer 被冲掉，需重插
+          tocUpdate();
+        }, 0);
       }
     });
   });
@@ -1540,8 +1872,9 @@
   
 <script src="/js/site-interactions.js?v=a7465d7a48.js"></script>
 <script src="/js/cloud-sea.js?v=d6052e9506.js"></script>
-<script src="/js/soft-nav.js?v=6c62df5654.js"></script>
-<script src="/js/moments.js?v=11ac23c2a6.js"></script>
+<script src="/js/soft-nav.js?v=ff5d0f2c3a.js"></script>
+<script src="/js/moments.js?v=aeb007fac3.js"></script>
+<script src="/js/hover-intent.js?v=748badec5e.js"></script>
 
 
 

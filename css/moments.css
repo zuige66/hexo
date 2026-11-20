@@ -99,12 +99,12 @@
   background: rgba(127, 140, 159, .1);
   box-shadow: 0 6px 18px rgba(38, 51, 65, .08);
   transition:
-    transform 260ms var(--motion-spring, cubic-bezier(.34, 1.56, .64, 1)),
+    transform 130ms var(--motion-spring, cubic-bezier(.34, 1.56, .64, 1)),
     box-shadow 260ms var(--motion-smooth, cubic-bezier(.22, 1, .36, 1));
 }
 
 .moment-item:hover .moment-card {
-  transform: translateY(-3px);
+  transform: translateY(-1.5px);
   box-shadow: var(--motion-shadow, 0 14px 32px rgba(38, 51, 65, .16));
 }
 
@@ -129,6 +129,17 @@
 .moment-content p { margin-bottom: .6rem; }
 .moment-content img { max-width: 100%; border-radius: .35rem; }
 .moment-content a { word-break: break-all; }
+
+/* 引用块：动态里偶尔整段引用别人的话，给个竖线区分，别和正文糊在一起。
+   颜色不单独指定——跟着正文走，否则深色模式下 --sec-text-color 对比度不够 */
+.moment-content blockquote {
+  margin: .6rem 0;
+  padding: .1rem 0 .1rem .75rem;
+  border-left: 3px solid var(--link-hover-color, #30a9de);
+}
+
+.moment-content blockquote > :first-child { margin-top: 0; }
+.moment-content blockquote > :last-child { margin-bottom: 0; }
 
 /* ---------- 深色模式 ---------- */
 :root[data-user-color-scheme="dark"] .archive-tabs {
@@ -167,3 +178,238 @@
   .moment-card { transition: none; }
   .moment-item:hover .moment-card { transform: none; }
 }
+
+/* ==========================================================================
+   动态配图轮播（moment-carousel）
+   结构见 themes/fluid/layout/_partials/moment-carousel.ejs
+   交互见 source/js/moments.js
+
+   填充方式选的是 contain（等宽等高内居中对齐），不裁切：长截图（如
+   1260×2800 的应用商店页）会缩成窄条但不丢内容，配合点图放大看原图。
+   ========================================================================== */
+
+.moment-carousel {
+  position: relative;
+  margin-top: .8rem;
+  border-radius: .5rem;
+  overflow: hidden;
+  background: rgba(127, 140, 159, .10);
+  /* 触屏左右滑动时不要连带选中文字 */
+  -webkit-user-select: none;
+  user-select: none;
+  /* 触屏横向滑动交给 JS，纵向滚动仍归页面 */
+  touch-action: pan-y;
+}
+
+/* 固定高度容器：无论图片多大，卡片高度都稳定，不会一换图就跳 */
+.moment-carousel-track {
+  position: relative;
+  height: 420px;
+}
+
+.moment-slide {
+  display: none;
+  height: 100%;
+  margin: 0;
+  align-items: center;
+  justify-content: center;
+  padding: .5rem;
+  box-sizing: border-box;
+}
+
+.moment-slide.is-active {
+  display: flex;
+}
+
+.moment-slide img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  border-radius: .25rem;
+  cursor: zoom-in;
+  /* 抵消 .moment-content img 可能继承来的样式 */
+  box-shadow: none;
+}
+
+/* ---------- 左右箭头 ---------- */
+.moment-carousel-btn {
+  position: absolute;
+  top: 50%;
+  /* 用负 margin 垂直居中，不用 transform——避免被 site-motion.css 的
+     button.is-hovered { transform: translateY(-3px) scale(1.06) } 覆盖，
+     导致 hover 时按钮猛地下沉半个身位。 */
+  margin-top: -1.125rem;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(20, 24, 32, .5);
+  color: #fff;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* 常驻显示：contain 会留出上下留白，图片不一定铺满，
+     箭头若靠 hover 才浮现，用户根本不知道能点（触屏更是没有 hover） */
+  opacity: .82;
+  transition: opacity 200ms ease, background-color 200ms ease;
+}
+
+.moment-carousel-btn.prev { left: .55rem; }
+.moment-carousel-btn.next { right: .55rem; }
+
+.moment-carousel:hover .moment-carousel-btn,
+.moment-carousel-btn:focus-visible {
+  opacity: 1;
+}
+
+.moment-carousel-btn:hover {
+  background: rgba(20, 24, 32, .82);
+}
+
+.moment-carousel-btn:focus-visible {
+  outline: 2px solid var(--link-hover-color, #30a9de);
+  outline-offset: 2px;
+}
+
+/* ---------- 底部控制栏：圆点 + 计数 ---------- */
+/* 独立一条栏放在图片下方，不叠在图上。
+   叠图方案试过：深色图片上圆点糊成一片，浅色图片上白点直接消失。 */
+.moment-carousel-bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: .35rem 0;
+  background: rgba(127, 140, 159, .08);
+}
+
+.moment-carousel-dots {
+  display: flex;
+  align-items: center;
+  gap: .32rem;
+}
+
+.moment-carousel-dot {
+  width: .42rem;
+  height: .42rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(127, 140, 159, .5);
+  cursor: pointer;
+  transition: width 200ms ease, background-color 200ms ease;
+}
+
+.moment-carousel-dot.is-active {
+  width: 1.05rem;
+  border-radius: 999px;
+  background: var(--link-hover-color, #30a9de);
+}
+
+.moment-carousel-dot:focus-visible {
+  outline: 2px solid var(--link-hover-color, #30a9de);
+  outline-offset: 2px;
+}
+
+/* ---------- 右侧计数 1/4 ---------- */
+.moment-carousel-count {
+  position: absolute;
+  right: .6rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--sec-text-color, #718096);
+  font-size: .72rem;
+  line-height: 1;
+  letter-spacing: .02em;
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
+}
+
+/* ---------- 移动端 ---------- */
+@media (max-width: 767px) {
+  .moment-carousel-track { height: 260px; }
+  .moment-slide { padding: .35rem; }
+  /* 触屏没有 hover，箭头常驻但缩小 */
+  .moment-carousel-btn {
+    opacity: 1;
+    width: 1.9rem;
+    height: 1.9rem;
+    font-size: 1.2rem;
+    background: rgba(20, 24, 32, .42);
+  }
+  .moment-carousel-btn.prev { left: .35rem; }
+  .moment-carousel-btn.next { right: .35rem; }
+}
+
+/* ---------- 点击放大：全屏灯箱 ---------- */
+.moment-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: none;
+  padding: 3rem 1rem 2rem;
+  background: rgba(8, 10, 14, .94);
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.moment-lightbox.is-open {
+  display: block;
+}
+
+.moment-lightbox img {
+  display: block;
+  margin: 0 auto;
+  /* 长截图按宽度铺开、纵向可滚动，才能看清里面的小字 */
+  max-width: min(1100px, 96vw);
+  width: auto;
+  height: auto;
+  border-radius: .35rem;
+  background: #fff;
+}
+
+.moment-lightbox-close {
+  position: fixed;
+  top: .8rem;
+  right: .8rem;
+  width: 2.4rem;
+  height: 2.4rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .14);
+  color: #fff;
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.moment-lightbox-close:hover {
+  background: rgba(255, 255, 255, .26);
+}
+
+.moment-lightbox-close:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+/* 灯箱打开时禁掉背景滚动 */
+body.moment-lightbox-open {
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .moment-carousel-btn,
+  .moment-carousel-dot {
+    transition: none;
+  }
+}
+

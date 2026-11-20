@@ -12,7 +12,7 @@
   border-radius: 16px;
   cursor: pointer;
   transition:
-    transform 320ms var(--motion-spring),
+    transform 160ms var(--motion-spring),
     box-shadow 260ms var(--motion-smooth),
     background-color 220ms ease;
   will-change: transform;
@@ -30,7 +30,7 @@
 
 .home-post-list .index-img img {
   transition:
-    transform 520ms var(--motion-smooth),
+    transform 260ms var(--motion-smooth),
     filter 260ms ease,
     box-shadow 260ms ease;
   will-change: transform;
@@ -44,7 +44,7 @@
 .home-taxonomy-list a,
 .home-recent-list a {
   transition:
-    transform 280ms var(--motion-spring),
+    transform 140ms var(--motion-spring),
     box-shadow 240ms var(--motion-smooth),
     background-color 200ms ease,
     border-color 200ms ease;
@@ -87,7 +87,7 @@
 }
 
 .links .link-avatar img {
-  transition: transform 420ms var(--motion-spring);
+  transition: transform 210ms var(--motion-spring);
 }
 
 /* 代码块使用滚轮横向浏览长行。具体滚动逻辑位于 site-interactions.js。 */
@@ -122,6 +122,33 @@
   }
 }
 
+/* 文章页右侧目录：整栏吸顶 + 独立滚动，作为唯一滚动容器。
+   原来 .toc-body 自己套一层 max-height:75vh 的滚动框，卡片只能停在「75vh 小框」的 1/3，
+   换算到屏幕约 41%，且首尾章滚到边界到不了 1/3，观感很别扭。
+   现在整栏铺满视口、自己滚，卡片停在「你能看到的侧栏」1/3（JS 里算）。
+   注意 box-sizing:border-box——主题的 .sidebar 有 padding:3rem 0，
+   content-box 下 max-height 只限内容高，加上 padding 会超出视口。 */
+@media (min-width: 992px) {
+  aside.sidebar {
+    box-sizing: border-box;
+    max-height: calc(100vh - 2rem - 1rem);
+    overflow-y: auto;
+    overscroll-behavior-y: auto; /* 滚到边界仍能把滚轮交给页面，不“吃掉”滚轮 */
+    scrollbar-width: thin;
+    scrollbar-color: rgba(128, 128, 128, .35) transparent;
+  }
+
+  aside.sidebar::-webkit-scrollbar { width: 6px; }
+  aside.sidebar::-webkit-scrollbar-thumb { background: rgba(128, 128, 128, .35); border-radius: 3px; }
+  aside.sidebar::-webkit-scrollbar-track { background: transparent; }
+
+  /* 目录列表不再自己滚，交给整栏 */
+  aside.sidebar .toc-body {
+    max-height: none;
+    overflow: visible;
+  }
+}
+
 /* 文章目录中的标题都是页内跳转链接。 */
 .tocbot-link {
   display: block;
@@ -130,9 +157,37 @@
   border-radius: 7px;
   transform-origin: left center;
   transition:
-    transform 240ms var(--motion-spring),
+    transform 120ms var(--motion-spring),
     color 180ms ease,
     background-color 180ms ease;
+}
+
+/* 右侧目录「当前阅读位置」= 淡蓝卡片 + 蓝字，不浮起。
+   用 #toc-body 抬高精度，压过后面 @media(hover) 里 .tocbot-link.is-hovered 的
+   translateX / 背景色；transform:none !important 同时压掉 :active 的位移。 */
+#toc-body .tocbot-link.tocbot-active-link {
+  color: var(--link-hover-color);
+  background-color: rgba(48, 169, 222, .14);
+  font-weight: 700;
+  transform: none !important;
+  box-shadow: inset 0 0 0 1px rgba(48, 169, 222, .22);
+}
+
+:root[data-user-color-scheme="dark"] #toc-body .tocbot-link.tocbot-active-link {
+  background-color: rgba(48, 169, 222, .22);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-user-color-scheme]) #toc-body .tocbot-link.tocbot-active-link {
+    background-color: rgba(48, 169, 222, .22);
+  }
+}
+
+/* 主题原本的 is-active-li 左侧小竖条：实测 tocbot 4.20.1 并未给 active 的 li 加该类，
+   竖条本来就 visibility:hidden 不显示；这里保留 display:none 作兜底，
+   防止将来版本加上类后与卡片重复。 */
+#toc-body .toc-list-item.is-active-li::before {
+  display: none !important;
 }
 
 /* 由站内搜索跳转到文章时，突出显示首次命中的关键词。 */
@@ -172,69 +227,79 @@ button,
 .scroll-down-bar,
 #scroll-top-button {
   transition:
-    transform 240ms var(--motion-spring),
+    transform 120ms var(--motion-spring),
     color 180ms ease,
     background-color 180ms ease,
     box-shadow 220ms var(--motion-smooth),
     opacity 180ms ease;
 }
 
+/* 悬停位移：鼠标走 JS hover-intent.js 的 .is-hovered（带进入/离开延迟 + 边缘滞后容差，
+   根治卡片在边缘反复上浮下沉的反馈环）；键盘 focus 仍走 :focus-visible 直接生效。
+   两套选择器并存，缺一不可：去掉 .is-hovered 会没有鼠标反馈，去掉 :focus-visible 会破坏键盘可达。 */
 @media (hover: hover) and (pointer: fine) {
-  .home-post-list .index-card:hover,
+  .home-post-list .index-card.is-hovered,
   .home-post-list .index-card:focus-within {
-    transform: translateY(-7px) scale(1.008);
+    transform: translateY(-3.5px) scale(1.004);
     background-color: var(--board-bg-color);
     box-shadow: var(--motion-shadow-strong);
   }
 
-  .home-post-list .index-card:hover .index-img img,
+  .home-post-list .index-card.is-hovered .index-img img,
   .home-post-list .index-card:focus-within .index-img img {
-    transform: scale(1.055);
-    filter: saturate(1.06) brightness(1.03);
+    transform: scale(1.0275);
+    filter: saturate(1.03) brightness(1.015);
     box-shadow: none;
   }
 
-  .list-group-item:not(.category-item):not(.category-subitem):hover,
+  .list-group-item:not(.category-item):not(.category-subitem).is-hovered,
   .list-group-item:not(.category-item):not(.category-subitem):focus-visible,
-  .category-heading-row:hover,
+  .category-heading-row.is-hovered,
   .category-heading-row:focus-within,
-  .links .card:hover,
+  .links .card.is-hovered,
   .links .card:focus-within {
-    transform: translateY(-5px) scale(1.01);
+    transform: translateY(-2.5px) scale(1.005);
     box-shadow: var(--motion-shadow);
     z-index: 2;
   }
 
-  .links .card:hover .link-avatar img,
+  .links .card.is-hovered .link-avatar img,
   .links .card:focus-within .link-avatar img {
-    transform: scale(1.08) rotate(2deg);
+    transform: scale(1.04) rotate(1deg);
   }
 
-  .home-social-links a:hover,
+  .home-social-links a.is-hovered,
   .home-social-links a:focus-visible,
-  .about-icons a:hover,
+  .about-icons a.is-hovered,
   .about-icons a:focus-visible,
-  .pagination a:hover,
+  .pagination a.is-hovered,
   .pagination a:focus-visible,
-  .btn:hover,
+  .btn.is-hovered,
   .btn:focus-visible,
-  button:hover,
+  button.is-hovered,
   button:focus-visible,
-  .scroll-down-bar:hover,
-  #scroll-top-button:hover {
-    transform: translateY(-3px) scale(1.06);
+  .scroll-down-bar.is-hovered,
+  #scroll-top-button.is-hovered {
+    transform: translateY(-1.5px) scale(1.03);
   }
 
-  .home-taxonomy-list a:hover,
+  /* 轮播箭头靠 transform 之外的方式居中（margin-top），且自身有 is-hovered 背景反馈；
+     排除全局按钮位移，避免覆盖后产生下沉跳变。 */
+  .moment-carousel-btn.is-hovered,
+  .moment-carousel-btn:focus-visible {
+    transform: none;
+  }
+
+  .home-taxonomy-list a.is-hovered,
   .home-taxonomy-list a:focus-visible,
-  .home-recent-list a:hover,
+  .home-recent-list a.is-hovered,
   .home-recent-list a:focus-visible,
-  .tocbot-link:hover,
+  .tocbot-link.is-hovered,
   .tocbot-link:focus-visible {
-    transform: translateX(5px);
+    transform: translateX(2.5px);
   }
 
-  .tocbot-link:hover,
+  .tocbot-link.is-hovered,
   .tocbot-link:focus-visible {
     color: var(--link-hover-color);
     background-color: var(--link-hover-bg-color);
@@ -264,7 +329,7 @@ button,
 .pagination a:active,
 .btn:active,
 button:active {
-  transform: translateY(1px) scale(.98);
+  transform: translateY(.5px) scale(.99);
   transition-duration: 90ms;
 }
 
@@ -288,7 +353,7 @@ button:active {
   .home-post-list .index-card:active,
   .list-group-item:active,
   .links .card:active {
-    transform: scale(.985);
+    transform: scale(.9925);
   }
 }
 
@@ -318,13 +383,13 @@ button:active {
   color: #e0913b;
   background: var(--board-bg-color, #fff);
   box-shadow: 0 1px 4px rgba(0, 0, 0, .18);
-  transition: color 180ms ease, transform 220ms var(--motion-spring), box-shadow 220ms var(--motion-smooth);
+  transition: color 180ms ease, transform 110ms var(--motion-spring), box-shadow 220ms var(--motion-smooth);
 }
 
-.links .card .link-rss:hover,
+.links .card .link-rss.is-hovered,
 .links .card .link-rss:focus-visible {
   color: #c9701a;
-  transform: translateY(-2px) scale(1.08);
+  transform: translateY(-1px) scale(1.04);
   box-shadow: var(--motion-shadow);
 }
 
@@ -332,7 +397,7 @@ button:active {
   .links .card .link-rss {
     color: #f0a857;
   }
-  .links .card .link-rss:hover,
+  .links .card .link-rss.is-hovered,
   .links .card .link-rss:focus-visible {
     color: #ffbf73;
   }
@@ -391,15 +456,15 @@ button:active {
   text-decoration: none;
   box-shadow: 0 2px 10px rgba(38, 51, 65, .07);
   transition:
-    transform 240ms var(--motion-spring),
+    transform 120ms var(--motion-spring),
     box-shadow 220ms var(--motion-smooth),
     border-color 200ms ease;
   will-change: transform;
 }
 
-.feed-card:hover,
+.feed-card.is-hovered,
 .feed-card:focus-visible {
-  transform: translateY(-4px);
+  transform: translateY(-2px);
   box-shadow: var(--motion-shadow);
   border-color: var(--link-hover-color, #30a9de);
   color: var(--text-color, #2c3e50);
@@ -465,24 +530,24 @@ button:active {
   cursor: pointer;
   box-shadow: 0 2px 8px rgba(38, 51, 65, .06);
   transition:
-    transform 220ms var(--motion-spring),
+    transform 110ms var(--motion-spring),
     box-shadow 220ms var(--motion-smooth),
     color 180ms ease,
     border-color 200ms ease,
     background-color 200ms ease;
 }
 
-.circle-feed-toggle:hover,
+.circle-feed-toggle.is-hovered,
 .circle-feed-toggle:focus-visible {
   color: var(--link-hover-color, #1c7fb0);
   border-color: var(--link-hover-color, #30a9de);
-  transform: translateY(-2px);
+  transform: translateY(-1px);
   box-shadow: var(--motion-shadow);
   outline: none;
 }
 
 .circle-feed-toggle:active {
-  transform: translateY(1px) scale(.98);
+  transform: translateY(.5px) scale(.99);
   transition-duration: 90ms;
 }
 
