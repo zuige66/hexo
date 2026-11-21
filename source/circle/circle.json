@@ -1,7 +1,15 @@
 {
-  "generated": "2026-11-20T15:15:38.584536+00:00",
-  "total_archived": 154,
+  "generated": "2026-11-21T05:24:48.544663+00:00",
+  "total_archived": 155,
   "posts": [
+    {
+      "title": "博客聊天室上线了，顺便聊聊踩坑记录",
+      "url": "https://lengxiqwq.com/posts/%E5%8D%9A%E5%AE%A2%E8%81%8A%E5%A4%A9%E5%AE%A4%E4%B8%8A%E7%BA%BF%E4%BA%86%E9%A1%BA%E4%BE%BF%E8%81%8A%E8%81%8A%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95/",
+      "date": "2026-11-20T20:30:00+00:00",
+      "name": "冷汐的杂货铺",
+      "link": "https://lengxiqwq.com",
+      "avatar": "https://weavatar.com/avatar/52f243e67ccc2293d68c6f33db3f4083?s=640"
+    },
     {
       "title": "Claude Code 团队怎么考虑验证",
       "url": "https://pureskyblog.dpdns.org/posts/claude-code-verification/",
@@ -470,14 +478,6 @@
       "title": "稀疏矩阵的压缩与运算优化（其一）：稀疏矩阵转置",
       "url": "https://pureskyblog.dpdns.org/posts/post-20261018/",
       "date": "2026-10-18T00:00:00+00:00",
-      "name": "puresky-blog",
-      "link": "https://pureskyblog.dpdns.org",
-      "avatar": "https://avatars.githubusercontent.com/u/232055116?v=4"
-    },
-    {
-      "title": "从零搭一个GitHub个人主页README",
-      "url": "https://pureskyblog.dpdns.org/posts/profile-readme-field-guide/",
-      "date": "2026-10-17T00:00:00+00:00",
       "name": "puresky-blog",
       "link": "https://pureskyblog.dpdns.org",
       "avatar": "https://avatars.githubusercontent.com/u/232055116?v=4"
