@@ -1,0 +1,22 @@
+name = "zuige-comments"
+main = "src/index.js"
+compatibility_date = "2026-11-24"
+
+# D1 数据库：部署前把 database_id 换成你自己的
+# 创建命令：npx wrangler d1 create zuige-comments
+[[d1_databases]]
+binding = "DB"
+database_name = "zuige-comments"
+database_id = "REPLACE_WITH_YOUR_D1_DATABASE_ID"
+
+[vars]
+# 允许跨域的来源（你的博客域名）。多个用英文逗号分隔，不要写尾部斜杠。
+ALLOWED_ORIGINS = "https://blog.zuiges.com"
+# 每 10 分钟同一 IP 最多提交几条评论
+RATE_LIMIT = "5"
+# 单条评论最大字数
+MAX_CONTENT_LENGTH = "2000"
+
+# 敏感信息不要写在这里，用命令设置：
+#   npx wrangler secret put TURNSTILE_SECRET   （Cloudflare Turnstile 密钥）
+#   npx wrangler secret put MODERATION_TOKEN   （可选：管理端令牌，用于删除/过滤评论）

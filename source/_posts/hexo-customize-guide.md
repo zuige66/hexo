@@ -839,6 +839,22 @@ EOF
 - **移动端例外**：`mobile` 段单独覆盖了点击动作（单击切控制条、双击 zoom），上面的改动不影响触屏行为。
 - **作用范围**：全局，所有文章图片统一生效；缩略图打开看图模式仍走单击，改的是进入看图模式之后的点击。
 
+## 二十二、自建评论区（Cloudflare Workers + D1）
+
+　　评论区已从 Giscus 迁到自建后端：**访客不用登录 GitHub，填昵称（邮箱选填）就能留言**，由 Cloudflare Turnstile 挡机器人。完整部署步骤见仓库 `cf-worker/README.md`，这里只记站点侧的接法。
+
+- **后端**：`cf-worker/` 下的 Worker（D1 表 `comments`），接口 `GET/POST /api/comments`；管理端 `PATCH/DELETE /api/admin/:id` 需 Bearer token。
+- **前端**：`source/js/cf-comments.js` + `source/css/cf-comments.css`，已登记到 `_config.fluid.yml` 的 `custom_js` / `custom_css`。
+- **主题接入点**：`themes/fluid/layout/_partials/comments/cf_comments.ejs`，读 `theme.cf_comments` 的 `api` / `site_key` / `page_size`。三处评论入口（文章、`source/guestbook/index.md` 的 `comment:`、`links.comments.type`）都设为 `cf_comments`。
+- **软导航兼容**：JS 监听 `softnav:loaded` 事件重新初始化，软导航进友链/留言页时评论区不会出现空白。
+- **历史留言**：已把 Giscus 的 6 条评论用 `tools/import_giscus.py` 转成 SQL 导入 D1，带「历史留言」标记和原 GitHub 头像。
+
+**红线**：
+
+- Worker 端 `TURNSTILE_SECRET` 一旦设置，前端 `site_key` 必须配且域名要对得上，否则所有留言都会被 403。本地测试可以两边都留空跳过校验。
+- `_config.fluid.yml` 的 `cf_comments.api` 是完整 Worker 域名（含 `https://`），改完必须全量 `rm -f db.json && npx hexo generate`，增量生成不跟踪主题配置。
+- 回退 Giscus：`post.comments.type`、`links.comments.type`、留言页 `comment:` 三处一起改回 `giscus`。
+
 ## 总结
 
 　　核心就两个文件：

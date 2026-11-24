@@ -242,6 +242,7 @@ custom_js:
   - /js/soft-nav.js?v=7
   - /js/moments.js?v=2
   - /js/hover-intent.js?v=1
+  - /js/cf-comments.js?v=1
 
 # 指定自定义 .css 文件路径，用法和 custom_js 相同
 # The usage is the same as custom_js
@@ -249,6 +250,7 @@ custom_css:
   - /css/home-sidebar.css?v=7
   - /css/site-motion.css?v=19
   - /css/moments.css?v=3
+  - /css/cf-comments.css?v=1
 
 # 网页访问统计
 # Analysis of website visitors
@@ -792,8 +794,8 @@ post:
     enable: true
     # 指定的插件，需要同时设置对应插件的必要参数
     # The specified plugin needs to set the necessary parameters at the same time
-    # Options: utterances | disqus | gitalk | valine | waline | changyan | livere | remark42 | twikoo | cusdis | giscus | discuss
-    type: giscus
+    # Options: utterances | disqus | gitalk | valine | waline | changyan | livere | remark42 | twikoo | cusdis | giscus | discuss | cf_comments
+    type: cf_comments
 
 
 #---------------------------
@@ -951,6 +953,13 @@ giscus:
   emit-metadata: 0
   input-position: top
   lang: zh-CN
+
+# 自建评论区（Cloudflare Workers + D1）
+# 部署说明见 cf-worker/README.md；api 填 Worker 域名，site_key 填 Turnstile 站点密钥
+cf_comments:
+  api: https://zuige-comments.workers.dev
+  site_key: ""
+  page_size: 20
 
 # Discuss
 # 多平台、多数据库、自托管、免费开源评论系统
@@ -1187,8 +1196,8 @@ links:
     enable: true
     # 指定的插件，需要同时设置对应插件的必要参数
     # The specified plugin needs to set the necessary parameters at the same time
-    # Options: utterances | disqus | gitalk | valine | waline | changyan | livere | remark42 | twikoo | cusdis | giscus | discuss
-    type: giscus
+    # Options: utterances | disqus | gitalk | valine | waline | changyan | livere | remark42 | twikoo | cusdis | giscus | discuss | cf_comments
+    type: cf_comments
 
 
 #---------------------------

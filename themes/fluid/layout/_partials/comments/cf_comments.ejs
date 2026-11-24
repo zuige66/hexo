@@ -1,0 +1,10 @@
+<%
+  var cc = theme.cf_comments || {};
+  var apiBase = cc.api || '';
+  var siteKey = cc.site_key || '';
+  var pageSize = cc.page_size || 20;
+%>
+<div id="cf-comments"
+     data-api="<%= url_for(apiBase) %>"
+     data-sitekey="<%= siteKey %>"
+     data-page-size="<%= pageSize %>"></div>

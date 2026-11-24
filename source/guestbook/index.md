@@ -2,7 +2,7 @@
 title: 留言
 layout: guestbook
 comments: true
-comment: giscus
+comment: cf_comments
 ---
 
 欢迎在这里留言。
