@@ -9,7 +9,9 @@
  * 而 Hexo 增量生成只按源文件 hash 判重渲染，改主题配置后部分页面甚至不会重新生成。
  *
  * 做法：注册 after_render:html filter（模板渲染完、写盘前的最后一步），
- *   把站内 /css/、/js/ 资源引用里的 `?v=任意值` 统一替换成 `?v=<文件内容 hash>`。
+ *   把站内 /css/、/js/ 资源引用统一改为 `?v=<文件内容 hash>`——原来带 `?v=N`
+ *   占位符的照常替换，主题自带的无版本号资源（如 /js/plugins.js）也会自动补上。
+ *   hash 同时查站点 source/ 和当前主题的 source/，所以主题自带 JS 改内容后 URL 也会变。
  *
  * 为什么挂这个点（踩过的坑，别改回 after_generate）：
  *   Hexo 8 的 generate 顺序是 load() → _generate()（其中触发 before/after_generate）
@@ -36,7 +38,8 @@ const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 
-const ATTR_RE = /((?:href|src)\s*=\s*["'])([^"']+\.(?:css|js))\?v=([^"']*)(["'])/gi;
+// 查询串可选：既兼容原有 `?v=N` 占位符，也给主题自带的无版本号资源（如 /js/plugins.js）自动加 hash。
+const ATTR_RE = /((?:href|src)\s*=\s*["'])([^"'?]+\.(?:css|js))(?:\?v=([^"']*))?(["'])/gi;
 const LOCAL_PREFIX = ['/css/', '/js/'];
 const hashCache = Object.create(null);
 let logged = false;
@@ -44,13 +47,17 @@ let logged = false;
 function versionOf(rel) {
   if (hashCache[rel] !== undefined) return hashCache[rel];
   let hash = null;
-  try {
-    hash = crypto.createHash('md5')
-      .update(fs.readFileSync(path.join(hexo.source_dir, rel)))
-      .digest('hex')
-      .slice(0, 10);
-  } catch (e) {
-    hash = null;   // 主题自带资源等：源文件不在 source/ 下，保持原样
+  // 先找站点 source/；找不到再找当前主题的 source/（如 /js/plugins.js 是主题自带资源）。
+  const candidates = [path.join(hexo.source_dir, rel)];
+  if (hexo.theme_dir) candidates.push(path.join(hexo.theme_dir, 'source', rel));
+  for (const file of candidates) {
+    try {
+      hash = crypto.createHash('md5')
+        .update(fs.readFileSync(file))
+        .digest('hex')
+        .slice(0, 10);
+      break;
+    } catch (e) { /* 继续找下一个候选路径 */ }
   }
   hashCache[rel] = hash;
   return hash;
@@ -65,7 +72,7 @@ hexo.extend.filter.register('after_render:html', function (html) {
     const rel = url.replace(/^\//, '');
     const hash = versionOf(rel);
     if (!hash) return all;
-    const tail = query.match(/\.(css|js)$/i);
+    const tail = query ? query.match(/\.(css|js)$/i) : null;
     const replacement = pre + url + '?v=' + hash + (tail ? tail[0] : '') + quote;
     if (replacement !== all) touched = true;
     return replacement;

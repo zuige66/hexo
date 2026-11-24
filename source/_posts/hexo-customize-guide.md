@@ -838,6 +838,8 @@ EOF
 - **红线**：`clickContent` 不能留默认的 `"zoom"`。否则单击图片放大后，再单击变成 `zoom` 的还原而不是关闭，退不出看图模式。
 - **移动端例外**：`mobile` 段单独覆盖了点击动作（单击切控制条、双击 zoom），上面的改动不影响触屏行为。
 - **作用范围**：全局，所有文章图片统一生效；缩略图打开看图模式仍走单击，改的是进入看图模式之后的点击。
+- **【踩坑】改了主题 JS 线上不生效**：`plugins.js` 这类主题自带脚本原本引用是 `src="/js/plugins.js"`，没有 `?v=`，而 CDN 缓存头 `max-age=14400`（4 小时强缓存），浏览器在这期间不发请求，一直用旧副本，表现为「代码改了单击还是放大」。已在 `scripts/asset-version.js` 根治：`ATTR_RE` 的 `?v=` 改为可选，所有站内 `/js/`、`/css/` 引用（含主题自带的无版本号资源）都自动注入内容 hash；`versionOf()` 在站点 `source/` 找不到时回退到当前主题 `source/`。外链 CDN 因不以 `/js/`、`/css/` 开头不受影响。现在改任何主题脚本，URL 都会随内容变化，无需手动 bump。
+- **验收**：浏览器确认 `/js/plugins.js?v=<hash>` 带版本号；看图内单击图片关闭（`fancybox-is-open` 消失、容器数归 0），双击放大（容器类从 `fancybox-can-swipe` 变 `fancybox-can-pan`）。
 
 ## 二十二、自建评论区（Cloudflare Workers + D1）
 
