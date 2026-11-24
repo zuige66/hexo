@@ -69,8 +69,14 @@ Fluid.plugins = {
     });
 
     jQuery.fancybox.defaults.hash = false;
+    // 看图内单击图片内容关闭、双击放大。fancybox 3 默认单击是 zoom，
+    // 且单击/双击动作不同时会延迟 500ms 等待第二次点击，无需自己写定时器。
+    jQuery.fancybox.defaults.clickContent = 'close';
+    jQuery.fancybox.defaults.dblclickContent = 'zoom';
     jQuery('.fancybox').fancybox({
-      loop   : true,
+      loop            : true,
+      clickContent    : 'close',
+      dblclickContent : 'zoom',
       helpers: {
         overlay: {
           locked: false
