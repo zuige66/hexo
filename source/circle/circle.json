@@ -1,9 +1,121 @@
 {
-  "generated": "2026-11-21T05:24:48.544663+00:00",
-  "total_archived": 155,
+  "generated": "2026-11-24T09:33:33.716434+00:00",
+  "total_archived": 169,
   "posts": [
     {
-      "title": "博客聊天室上线了，顺便聊聊踩坑记录",
+      "title": "茶室点歌台：在博客里一起听歌是怎样实现的",
+      "url": "https://lengxiqwq.com/posts/%E8%8C%B6%E5%AE%A4%E7%82%B9%E6%AD%8C%E5%8F%B0%E5%9C%A8%E5%8D%9A%E5%AE%A2%E9%87%8C%E4%B8%80%E8%B5%B7%E5%90%AC%E6%AD%8C%E6%98%AF%E6%80%8E%E6%A0%B7%E5%AE%9E%E7%8E%B0%E7%9A%84/",
+      "date": "2026-11-23T23:00:00+00:00",
+      "name": "冷汐的杂货铺",
+      "link": "https://lengxiqwq.com",
+      "avatar": "https://weavatar.com/avatar/52f243e67ccc2293d68c6f33db3f4083?s=640"
+    },
+    {
+      "title": "智能体记忆由什么组成：笔记，表示，注入，以及做梦",
+      "url": "https://pureskyblog.dpdns.org/posts/components-of-agent-memory/",
+      "date": "2026-11-23T00:00:00+00:00",
+      "name": "puresky-blog",
+      "link": "https://pureskyblog.dpdns.org",
+      "avatar": "https://avatars.githubusercontent.com/u/232055116?v=4"
+    },
+    {
+      "title": "人格向量：监测与控制语言模型中的性格特质",
+      "url": "https://pureskyblog.dpdns.org/posts/persona-vectors/",
+      "date": "2026-11-23T00:00:00+00:00",
+      "name": "puresky-blog",
+      "link": "https://pureskyblog.dpdns.org",
+      "avatar": "https://avatars.githubusercontent.com/u/232055116?v=4"
+    },
+    {
+      "title": "力扣解题笔记：根据已知序列构建二叉树（前中序和中后序）",
+      "url": "https://pureskyblog.dpdns.org/posts/post-20261123/",
+      "date": "2026-11-23T00:00:00+00:00",
+      "name": "puresky-blog",
+      "link": "https://pureskyblog.dpdns.org",
+      "avatar": "https://avatars.githubusercontent.com/u/232055116?v=4"
+    },
+    {
+      "title": "鳗鱼饭：一尾鱼的刀法，蒸气与百年老卤",
+      "url": "https://pureskyblog.dpdns.org/posts/unagi-blade-and-smoke/",
+      "date": "2026-11-23T00:00:00+00:00",
+      "name": "puresky-blog",
+      "link": "https://pureskyblog.dpdns.org",
+      "avatar": "https://avatars.githubusercontent.com/u/232055116?v=4"
+    },
+    {
+      "title": "力扣解题笔记：构造最大二叉树",
+      "url": "https://pureskyblog.dpdns.org/posts/post-20261122/",
+      "date": "2026-11-22T00:00:00+00:00",
+      "name": "puresky-blog",
+      "link": "https://pureskyblog.dpdns.org",
+      "avatar": "https://avatars.githubusercontent.com/u/232055116?v=4"
+    },
+    {
+      "title": "SVG可不只能用来画傻鸟骑车",
+      "url": "https://pureskyblog.dpdns.org/posts/svg-fundamentals/",
+      "date": "2026-11-22T00:00:00+00:00",
+      "name": "puresky-blog",
+      "link": "https://pureskyblog.dpdns.org",
+      "avatar": "https://avatars.githubusercontent.com/u/232055116?v=4"
+    },
+    {
+      "title": "永恒的互补关系",
+      "url": "https://pureskyblog.dpdns.org/posts/the-eternal-complement/",
+      "date": "2026-11-22T00:00:00+00:00",
+      "name": "puresky-blog",
+      "link": "https://pureskyblog.dpdns.org",
+      "avatar": "https://avatars.githubusercontent.com/u/232055116?v=4"
+    },
+    {
+      "title": "烧鸟：炭火与一整只鸡的拆解",
+      "url": "https://pureskyblog.dpdns.org/posts/yakitori-charcoal-and-tare/",
+      "date": "2026-11-22T00:00:00+00:00",
+      "name": "puresky-blog",
+      "link": "https://pureskyblog.dpdns.org",
+      "avatar": "https://avatars.githubusercontent.com/u/232055116?v=4"
+    },
+    {
+      "title": "TTS 音色资源合集：五个能直接试听与下载的中文语音合成音色库",
+      "url": "https://blog.fqzlr.top/posts/tech/tts-voice-libraries/",
+      "date": "2026-11-22T00:00:00+00:00",
+      "name": "番茄主理人",
+      "link": "https://blog.fqzlr.top",
+      "avatar": "https://q1.qlogo.cn/g?b=qq&nk=20447289&s=640"
+    },
+    {
+      "title": "对抗蒸馏：OpenAI 如何守住模型的推理轨迹",
+      "url": "https://pureskyblog.dpdns.org/posts/adversarial-distillation/",
+      "date": "2026-11-21T00:00:00+00:00",
+      "name": "puresky-blog",
+      "link": "https://pureskyblog.dpdns.org",
+      "avatar": "https://avatars.githubusercontent.com/u/232055116?v=4"
+    },
+    {
+      "title": "Codex 沙箱内部：一条命令怎样被关进操作系统的限制",
+      "url": "https://pureskyblog.dpdns.org/posts/inside-the-codex-sandbox/",
+      "date": "2026-11-21T00:00:00+00:00",
+      "name": "puresky-blog",
+      "link": "https://pureskyblog.dpdns.org",
+      "avatar": "https://avatars.githubusercontent.com/u/232055116?v=4"
+    },
+    {
+      "title": "力扣解题笔记：N叉树层序遍历在解题中的运用",
+      "url": "https://pureskyblog.dpdns.org/posts/post-20261121/",
+      "date": "2026-11-21T00:00:00+00:00",
+      "name": "puresky-blog",
+      "link": "https://pureskyblog.dpdns.org",
+      "avatar": "https://avatars.githubusercontent.com/u/232055116?v=4"
+    },
+    {
+      "title": "天妇罗：水与油的四百年",
+      "url": "https://pureskyblog.dpdns.org/posts/tempura-water-and-oil/",
+      "date": "2026-11-21T00:00:00+00:00",
+      "name": "puresky-blog",
+      "link": "https://pureskyblog.dpdns.org",
+      "avatar": "https://avatars.githubusercontent.com/u/232055116?v=4"
+    },
+    {
+      "title": "博客聊天室终于上线啦！聊聊折磨记录",
       "url": "https://lengxiqwq.com/posts/%E5%8D%9A%E5%AE%A2%E8%81%8A%E5%A4%A9%E5%AE%A4%E4%B8%8A%E7%BA%BF%E4%BA%86%E9%A1%BA%E4%BE%BF%E8%81%8A%E8%81%8A%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95/",
       "date": "2026-11-20T20:30:00+00:00",
       "name": "冷汐的杂货铺",
@@ -369,118 +481,6 @@
       "name": "番茄主理人",
       "link": "https://blog.fqzlr.top",
       "avatar": "https://q1.qlogo.cn/g?b=qq&nk=20447289&s=640"
-    },
-    {
-      "title": "Apple Music Windows 真是拉了坨大的",
-      "url": "https://lengxiqwq.com/posts/apple-music-windows-%E7%9C%9F%E6%98%AF%E6%8B%89%E4%BA%86%E5%9D%A8%E5%A4%A7%E7%9A%84/",
-      "date": "2026-10-30T01:00:00+00:00",
-      "name": "冷汐的杂货铺",
-      "link": "https://lengxiqwq.com",
-      "avatar": "https://weavatar.com/avatar/52f243e67ccc2293d68c6f33db3f4083?s=640"
-    },
-    {
-      "title": "这套全新的博客风格：纸底、墨线、一种黄",
-      "url": "https://blog.amamo.top/posts/2026-10-30-%E8%BF%99%E5%A5%97%E5%85%A8%E6%96%B0%E7%9A%84%E5%8D%9A%E5%AE%A2%E9%A3%8E%E6%A0%BC/",
-      "date": "2026-10-30T00:00:00+00:00",
-      "name": "年华",
-      "link": "https://blog.amamo.top",
-      "avatar": "https://q1.qlogo.cn/g?b=qq&nk=1323860289&s=640"
-    },
-    {
-      "title": "x1shang-10月份月报",
-      "url": "https://x1shang.top/articles/october-report/",
-      "date": "2026-10-29T16:00:00+00:00",
-      "name": "x1shang-山与回响",
-      "link": "https://www.x1shang.top",
-      "avatar": "https://x1shang.top/assets/img/x1shang-avatar.webp"
-    },
-    {
-      "title": "给软件换个图标，怎么比写软件还难？",
-      "url": "https://lengxiqwq.com/posts/%E7%BB%99%E8%BD%AF%E4%BB%B6%E6%8D%A2%E4%B8%AA%E5%9B%BE%E6%A0%87%E6%80%8E%E4%B9%88%E6%AF%94%E5%86%99%E8%BD%AF%E4%BB%B6%E8%BF%98%E9%9A%BE/",
-      "date": "2026-10-26T09:32:00+00:00",
-      "name": "冷汐的杂货铺",
-      "link": "https://lengxiqwq.com",
-      "avatar": "https://weavatar.com/avatar/52f243e67ccc2293d68c6f33db3f4083?s=640"
-    },
-    {
-      "title": "评论系统 Twikoo 好多 bug！被迫换成了 Waline",
-      "url": "https://lengxiqwq.com/posts/%E8%AF%84%E8%AE%BA%E7%B3%BB%E7%BB%9F-twikoo-%E5%A5%BD%E5%A4%9A-bug%E8%A2%AB%E8%BF%AB%E6%8D%A2%E6%88%90%E4%BA%86-waline/",
-      "date": "2026-10-22T18:55:00+00:00",
-      "name": "冷汐的杂货铺",
-      "link": "https://lengxiqwq.com",
-      "avatar": "https://weavatar.com/avatar/52f243e67ccc2293d68c6f33db3f4083?s=640"
-    },
-    {
-      "title": "Windows 又逼我重装系统了",
-      "url": "https://lengxiqwq.com/posts/windows-%E5%8F%88%E9%80%BC%E6%88%91%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F%E4%BA%86/",
-      "date": "2026-10-22T07:22:00+00:00",
-      "name": "冷汐的杂货铺",
-      "link": "https://lengxiqwq.com",
-      "avatar": "https://weavatar.com/avatar/52f243e67ccc2293d68c6f33db3f4083?s=640"
-    },
-    {
-      "title": "本站 MDX 组件介绍与使用方法",
-      "url": "https://tblog.mmzhiku.xyz/posts/others-blog-mdx-components/",
-      "date": "2026-10-22T00:00:00+00:00",
-      "name": "MmzMing的知识库",
-      "link": "https://tblog.mmzhiku.xyz",
-      "avatar": "https://i.stardots.io/784774835/StarDots-2026052116374135506.jpg"
-    },
-    {
-      "title": "关掉博客的 3D 音乐可视化",
-      "url": "https://tblog.mmzhiku.xyz/posts/why-remove-3d-music-visualization/",
-      "date": "2026-10-22T00:00:00+00:00",
-      "name": "MmzMing的知识库",
-      "link": "https://tblog.mmzhiku.xyz",
-      "avatar": "https://i.stardots.io/784774835/StarDots-2026052116374135506.jpg"
-    },
-    {
-      "title": "2026 大肥鱼 QQ 机器人部署方案：LLBot + AstrBot 与 DSH 双路线",
-      "url": "https://tblog.mmzhiku.xyz/posts/ai-dafeiyu-qqbot-deployment-2026/",
-      "date": "2026-10-21T00:00:00+00:00",
-      "name": "MmzMing的知识库",
-      "link": "https://tblog.mmzhiku.xyz",
-      "avatar": "https://i.stardots.io/784774835/StarDots-2026052116374135506.jpg"
-    },
-    {
-      "title": "“第三次AI寒冬没有来，取而代之的是AI全球变暖。”（李飞飞）",
-      "url": "https://x1shang.top/assertions/warmingai/",
-      "date": "2026-10-20T16:00:00+00:00",
-      "name": "x1shang-山与回响",
-      "link": "https://www.x1shang.top",
-      "avatar": "https://x1shang.top/assets/img/x1shang-avatar.webp"
-    },
-    {
-      "title": "稀疏矩阵的压缩与运算优化（其二）：行单链表、十字链表",
-      "url": "https://pureskyblog.dpdns.org/posts/post-20261019/",
-      "date": "2026-10-19T00:00:00+00:00",
-      "name": "puresky-blog",
-      "link": "https://pureskyblog.dpdns.org",
-      "avatar": "https://avatars.githubusercontent.com/u/232055116?v=4"
-    },
-    {
-      "title": "全新文档站已上线！",
-      "url": "https://www.nanzhiy.cn/archives/7LHLVEEp",
-      "date": "2026-10-18T15:14:06+00:00",
-      "name": "楠枝小笺",
-      "link": "https://www.nanzhiy.cn",
-      "avatar": "https://www.nanzhiy.cn/upload/IMG_20260412_164454.ico"
-    },
-    {
-      "title": "我原本真的只想导出一个歌单",
-      "url": "https://lengxiqwq.com/posts/%E6%88%91%E5%8E%9F%E6%9C%AC%E7%9C%9F%E7%9A%84%E5%8F%AA%E6%83%B3%E5%AF%BC%E5%87%BA%E4%B8%80%E4%B8%AA%E6%AD%8C%E5%8D%95/",
-      "date": "2026-10-18T09:28:00+00:00",
-      "name": "冷汐的杂货铺",
-      "link": "https://lengxiqwq.com",
-      "avatar": "https://weavatar.com/avatar/52f243e67ccc2293d68c6f33db3f4083?s=640"
-    },
-    {
-      "title": "稀疏矩阵的压缩与运算优化（其一）：稀疏矩阵转置",
-      "url": "https://pureskyblog.dpdns.org/posts/post-20261018/",
-      "date": "2026-10-18T00:00:00+00:00",
-      "name": "puresky-blog",
-      "link": "https://pureskyblog.dpdns.org",
-      "avatar": "https://avatars.githubusercontent.com/u/232055116?v=4"
     }
   ]
 }

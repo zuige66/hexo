@@ -92,7 +92,12 @@
     "rss": "https://lengxiqwq.com/rss.xml",
     "posts": [
       {
-        "title": "博客聊天室上线了，顺便聊聊踩坑记录",
+        "title": "茶室点歌台：在博客里一起听歌是怎样实现的",
+        "url": "https://lengxiqwq.com/posts/%E8%8C%B6%E5%AE%A4%E7%82%B9%E6%AD%8C%E5%8F%B0%E5%9C%A8%E5%8D%9A%E5%AE%A2%E9%87%8C%E4%B8%80%E8%B5%B7%E5%90%AC%E6%AD%8C%E6%98%AF%E6%80%8E%E6%A0%B7%E5%AE%9E%E7%8E%B0%E7%9A%84/",
+        "date": "2026-11-23T23:00:00+00:00"
+      },
+      {
+        "title": "博客聊天室终于上线啦！聊聊折磨记录",
         "url": "https://lengxiqwq.com/posts/%E5%8D%9A%E5%AE%A2%E8%81%8A%E5%A4%A9%E5%AE%A4%E4%B8%8A%E7%BA%BF%E4%BA%86%E9%A1%BA%E4%BE%BF%E8%81%8A%E8%81%8A%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95/",
         "date": "2026-11-20T20:30:00+00:00"
       },
@@ -143,6 +148,66 @@
     "avatar": "https://avatars.githubusercontent.com/u/232055116?v=4",
     "rss": "https://pureskyblog.dpdns.org/rss.xml",
     "posts": [
+      {
+        "title": "智能体记忆由什么组成：笔记，表示，注入，以及做梦",
+        "url": "https://pureskyblog.dpdns.org/posts/components-of-agent-memory/",
+        "date": "2026-11-23T00:00:00+00:00"
+      },
+      {
+        "title": "人格向量：监测与控制语言模型中的性格特质",
+        "url": "https://pureskyblog.dpdns.org/posts/persona-vectors/",
+        "date": "2026-11-23T00:00:00+00:00"
+      },
+      {
+        "title": "力扣解题笔记：根据已知序列构建二叉树（前中序和中后序）",
+        "url": "https://pureskyblog.dpdns.org/posts/post-20261123/",
+        "date": "2026-11-23T00:00:00+00:00"
+      },
+      {
+        "title": "鳗鱼饭：一尾鱼的刀法，蒸气与百年老卤",
+        "url": "https://pureskyblog.dpdns.org/posts/unagi-blade-and-smoke/",
+        "date": "2026-11-23T00:00:00+00:00"
+      },
+      {
+        "title": "力扣解题笔记：构造最大二叉树",
+        "url": "https://pureskyblog.dpdns.org/posts/post-20261122/",
+        "date": "2026-11-22T00:00:00+00:00"
+      },
+      {
+        "title": "SVG可不只能用来画傻鸟骑车",
+        "url": "https://pureskyblog.dpdns.org/posts/svg-fundamentals/",
+        "date": "2026-11-22T00:00:00+00:00"
+      },
+      {
+        "title": "永恒的互补关系",
+        "url": "https://pureskyblog.dpdns.org/posts/the-eternal-complement/",
+        "date": "2026-11-22T00:00:00+00:00"
+      },
+      {
+        "title": "烧鸟：炭火与一整只鸡的拆解",
+        "url": "https://pureskyblog.dpdns.org/posts/yakitori-charcoal-and-tare/",
+        "date": "2026-11-22T00:00:00+00:00"
+      },
+      {
+        "title": "对抗蒸馏：OpenAI 如何守住模型的推理轨迹",
+        "url": "https://pureskyblog.dpdns.org/posts/adversarial-distillation/",
+        "date": "2026-11-21T00:00:00+00:00"
+      },
+      {
+        "title": "Codex 沙箱内部：一条命令怎样被关进操作系统的限制",
+        "url": "https://pureskyblog.dpdns.org/posts/inside-the-codex-sandbox/",
+        "date": "2026-11-21T00:00:00+00:00"
+      },
+      {
+        "title": "力扣解题笔记：N叉树层序遍历在解题中的运用",
+        "url": "https://pureskyblog.dpdns.org/posts/post-20261121/",
+        "date": "2026-11-21T00:00:00+00:00"
+      },
+      {
+        "title": "天妇罗：水与油的四百年",
+        "url": "https://pureskyblog.dpdns.org/posts/tempura-water-and-oil/",
+        "date": "2026-11-21T00:00:00+00:00"
+      },
       {
         "title": "Claude Code 团队怎么考虑验证",
         "url": "https://pureskyblog.dpdns.org/posts/claude-code-verification/",
@@ -457,6 +522,11 @@
     "avatar": "https://q1.qlogo.cn/g?b=qq&nk=20447289&s=640",
     "rss": "https://blog.fqzlr.top/rss.xml",
     "posts": [
+      {
+        "title": "TTS 音色资源合集：五个能直接试听与下载的中文语音合成音色库",
+        "url": "https://blog.fqzlr.top/posts/tech/tts-voice-libraries/",
+        "date": "2026-11-22T00:00:00+00:00"
+      },
       {
         "title": "拼图纹理、角色喵声与默认皮肤：这轮站点打磨的零额外负担做法",
         "url": "https://blog.fqzlr.top/posts/tech/texture-character-default-theme/",
