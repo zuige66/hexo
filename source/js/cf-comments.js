@@ -210,14 +210,11 @@
     var content = document.getElementById('cfc-content').value.trim();
     if (!author || !content) { setMsg('请填写昵称和内容', true); return; }
 
-    var token = turnstileToken;
-    if (SITEKEY && window.turnstile && turnstileWidget !== null) {
-      // getResponse 在验证未完成时返回空串，优先用 callback 缓存的 token
-      token = window.turnstile.getResponse(turnstileWidget) || turnstileToken || '';
-    }
     btn.disabled = true;
     btn.textContent = '提交中…';
     try {
+      // invisible 模式：提交时才触发验证，拿不到 token 不让提交
+      var token = SITEKEY ? await requestToken() : '';
       await api('/api/comments', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
@@ -283,11 +280,44 @@
     turnstileWidget = window.turnstile.render(box, {
       sitekey: SITEKEY,
       theme: document.documentElement.getAttribute('data-user-color-scheme') === 'dark' ? 'dark' : 'light',
-      // 只在需要用户交互时才显示组件；正常验证通过时不渲染那个「成功」白框
-      appearance: 'interaction-only',
-      callback: function (t) { turnstileToken = t || ''; },
-      'error-callback': function () { turnstileToken = ''; },
+      // 组件在 CF 后台已设为 invisible：不渲染任何界面，提交时再 execute
+      execution: 'execute',
+      callback: function (t) {
+        turnstileToken = t || '';
+        if (pendingToken && pendingToken.ok) pendingToken.ok(turnstileToken);
+        pendingToken = null;
+      },
+      'error-callback': function () {
+        turnstileToken = '';
+        if (pendingToken && pendingToken.fail) pendingToken.fail(new Error('人机验证失败，请刷新页面重试'));
+        pendingToken = null;
+      },
       'expired-callback': function () { turnstileToken = ''; }
+    });
+  }
+
+  // 提交时触发不可见验证并等待 token（invisible 模式必须显式 execute）
+  var pendingToken = null;
+  function requestToken(timeoutMs) {
+    if (turnstileToken) return Promise.resolve(turnstileToken);
+    if (!window.turnstile || turnstileWidget === null) return Promise.resolve('');
+    return new Promise(function (resolve, reject) {
+      var done = false;
+      var timer = setTimeout(function () {
+        if (done) return;
+        done = true;
+        pendingToken = null;
+        reject(new Error('人机验证超时，请重试'));
+      }, timeoutMs || 15000);
+      pendingToken = {
+        ok: function (t) { if (done) return; done = true; clearTimeout(timer); resolve(t); },
+        fail: function (e) { if (done) return; done = true; clearTimeout(timer); reject(e); }
+      };
+      try {
+        window.turnstile.execute(turnstileWidget);
+      } catch (err) {
+        if (!done) { done = true; clearTimeout(timer); pendingToken = null; reject(err); }
+      }
     });
   }
 
