@@ -12,6 +12,7 @@
   var PAGE_SIZE = 20;
   var loaded = {};
   var turnstileWidget = null;
+  var turnstileToken = '';
   var turnstileReady = false;
   var replyTo = 0;
   var replyName = '';
@@ -76,14 +77,16 @@
           '正在回复 <b id="cfc-reply-name"></b> ' +
           '<a href="javascript:void(0)" id="cfc-cancel-reply">取消</a>' +
         '</div>' +
-        '<textarea id="cfc-content" name="content" maxlength="2000" rows="4" ' +
-          'placeholder="说点什么吧…（支持 **粗体**、`代码`、[链接](https://…)）" required></textarea>' +
+        '<div class="cfc-editor">' +
+          '<textarea id="cfc-content" name="content" maxlength="2000" rows="4" ' +
+            'placeholder="说点什么吧…（支持 **粗体**、`代码`、[链接](https://…)）" required></textarea>' +
+          '<div class="cfc-editor-bar">' +
+            '<span class="cfc-msg" id="cfc-msg"></span>' +
+            '<button type="submit" id="cfc-submit">发表评论</button>' +
+          '</div>' +
+        '</div>' +
         '<div class="cfc-hidden"><label>网站（请留空）<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>' +
         (SITEKEY ? '<div class="cfc-turnstile" id="cfc-turnstile"></div>' : '') +
-        '<div class="cfc-actions">' +
-          '<button type="submit" id="cfc-submit">发表评论</button>' +
-          '<span class="cfc-msg" id="cfc-msg"></span>' +
-        '</div>' +
       '</form>' +
       '<div class="cfc-list" id="cfc-list"></div>' +
       '<div class="cfc-more-wrap"><button class="cfc-more" id="cfc-more" hidden>加载更多</button></div>';
@@ -207,9 +210,10 @@
     var content = document.getElementById('cfc-content').value.trim();
     if (!author || !content) { setMsg('请填写昵称和内容', true); return; }
 
-    var token = '';
+    var token = turnstileToken;
     if (SITEKEY && window.turnstile && turnstileWidget !== null) {
-      token = window.turnstile.getResponse(turnstileWidget) || '';
+      // getResponse 在验证未完成时返回空串，优先用 callback 缓存的 token
+      token = window.turnstile.getResponse(turnstileWidget) || turnstileToken || '';
     }
     btn.disabled = true;
     btn.textContent = '提交中…';
@@ -229,7 +233,10 @@
       });
       document.getElementById('cfc-content').value = '';
       cancelReply();
-      if (window.turnstile && turnstileWidget !== null) window.turnstile.reset(turnstileWidget);
+      if (window.turnstile && turnstileWidget !== null) {
+        turnstileToken = '';
+        window.turnstile.reset(turnstileWidget);
+      }
       setMsg('评论已发表，感谢！', false);
       // 重新拉取第一页，保证新评论可见（含回复层级）
       loaded[pathNow()] = false;
@@ -272,10 +279,15 @@
     var box = document.getElementById('cfc-turnstile');
     if (!box || !window.turnstile) return;
     box.innerHTML = '';
+    turnstileToken = '';
     turnstileWidget = window.turnstile.render(box, {
       sitekey: SITEKEY,
       theme: document.documentElement.getAttribute('data-user-color-scheme') === 'dark' ? 'dark' : 'light',
-      callback: function () {}
+      // 只在需要用户交互时才显示组件；正常验证通过时不渲染那个「成功」白框
+      appearance: 'interaction-only',
+      callback: function (t) { turnstileToken = t || ''; },
+      'error-callback': function () { turnstileToken = ''; },
+      'expired-callback': function () { turnstileToken = ''; }
     });
   }
 

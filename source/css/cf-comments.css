@@ -36,7 +36,33 @@
 }
 #cf-comments input:focus,
 #cf-comments textarea:focus { border-color: var(--link-hover-color, #30a9de); }
-#cf-comments textarea { resize: vertical; min-height: 90px; }
+#cf-comments textarea { resize: none; min-height: 90px; }
+
+/* 内容框 + 右下角悬浮按钮 */
+#cf-comments .cfc-editor { position: relative; }
+#cf-comments .cfc-editor textarea {
+  padding-bottom: 3.2rem;   /* 给右下角按钮留出空间，文字不会压在按钮下 */
+  padding-right: 1rem;
+}
+#cf-comments .cfc-editor-bar {
+  position: absolute;
+  right: .65rem;
+  bottom: .65rem;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  max-width: calc(100% - 1.3rem);
+  pointer-events: none;     /* 让空白处点击仍落到 textarea 上 */
+}
+#cf-comments .cfc-editor-bar > * { pointer-events: auto; }
+#cf-comments .cfc-editor-bar .cfc-msg {
+  font-size: .85rem;
+  color: var(--sec-text-color, #888);
+  max-width: 18em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 
 #cf-comments .cfc-hidden {
   position: absolute !important;
@@ -51,20 +77,21 @@
 }
 #cf-comments .cfc-reply-hint a { color: var(--post-link-color, #1685bd); }
 
-#cf-comments .cfc-actions { display: flex; align-items: center; gap: .8rem; flex-wrap: wrap; }
 /* 注意：Fluid 的 --button-bg-color 是 transparent，不能直接拿来做主按钮底色，
    否则按钮白字透明底 = 看不见（用户反馈「没有发送按钮」）。这里写死不透明色。 */
-#cf-comments .cfc-actions button[type="submit"] {
-  padding: .45rem 1.2rem;
+#cf-comments .cfc-editor-bar button[type="submit"] {
+  padding: .35rem 1rem;
   border: 1px solid transparent;
   border-radius: 4px;
   background: #167bb3;
   color: #fff;
   cursor: pointer;
   font: inherit;
+  font-size: .9rem;
+  line-height: 1.4;
   transition: background .2s, opacity .2s;
 }
-#cf-comments .cfc-actions button[type="submit"]:hover:not(:disabled) { background: #0f6696; }
+#cf-comments .cfc-editor-bar button[type="submit"]:hover:not(:disabled) { background: #0f6696; }
 #cf-comments .cfc-more {
   padding: .45rem 1.2rem;
   border: none;
@@ -79,7 +106,10 @@
 #cf-comments .cfc-msg { font-size: .9rem; color: var(--sec-text-color, #888); }
 #cf-comments .cfc-msg-error { color: #e05252; }
 
-#cf-comments .cfc-turnstile { margin: .4rem 0 .8rem; min-height: 65px; }
+/* Turnstile 用 appearance:'interaction-only'，无需交互时不显示，因此容器不占位。
+   （旧版 min-height:65px 会在表单里留一块空白，已移除） */
+#cf-comments .cfc-turnstile { margin: 0; min-height: 0; }
+#cf-comments .cfc-turnstile:empty { display: none; }
 
 #cf-comments .cfc-list { margin-top: 1.5rem; }
 #cf-comments .cfc-loading,
@@ -158,4 +188,6 @@
 
 @media (max-width: 576px) {
   #cf-comments .cfc-replies { margin-left: .8rem; }
+  #cf-comments .cfc-editor-bar { right: .5rem; bottom: .5rem; }
+  #cf-comments .cfc-editor-bar .cfc-msg { display: none; } /* 小屏只留按钮，避免挤压 */
 }
