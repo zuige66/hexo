@@ -32,13 +32,15 @@ Cloudflare Worker（zuige-comments）
 | 管理令牌 | 已写入 Worker（`MODERATION_TOKEN`，值见你的密码管理，忘记就 `wrangler secret put` 重设） |
 | 历史评论 | 6 条已导入（含旧路径修正），带「历史留言」标记 |
 
-> ⚠️ **上线前唯一待办：加一条 DNS 记录**（OAuth token 无 DNS 权限，无法代加）。在 CF 后台 → `zuiges.com` → DNS → 添加记录：
-
-| 类型 | 名称 | 值 | 代理状态 |
-|------|------|-----|----------|
-| CNAME | `comments` | `zuige-comments.liruisen0413.workers.dev` | **Proxied（橙色云）** |
-
-DNS 生效后访问 `https://comments.zuiges.com/api/health` 应返回 `{"ok":true,...}`。
+> ✅ **DNS 记录已添加**（2026-11-25 用户手动完成）：CNAME `comments` → `zuige-comments.liruisen0413.workers.dev`，**Proxied（橙色云）**。
+>
+> 服务端已验证：`https://comments.zuiges.com/api/health` 返回 `{"ok":true,"service":"zuige-comments"}`，`/api/comments?path=/guestbook/` 能读到历史留言。
+>
+> **排查提示**：教育网 DNS（如 `dns3.gdut.edu.cn`）同步新记录可能滞后数小时，本机暂时解析不到属正常现象，不影响线上访客。验证时可强制指定 IP：
+> ```bash
+> curl --noproxy '*' --resolve comments.zuiges.com:443:172.67.146.198 \
+>   https://comments.zuiges.com/api/health
+> ```
 
 > 为什么不用 `*.workers.dev`：国内访问 workers.dev 经常超时（实测 DNS 解析正常但连接被拦）。绑定自有域名走 CF 国内可达线路即可解决。
 
@@ -187,6 +189,18 @@ curl -X PATCH https://zuige-comments.<账号>.workers.dev/api/admin/ID \
 - **XSS**：前端渲染先 HTML 转义，再白名单 Markdown（代码块 / 粗体 / 斜体 / 链接）
 - **邮箱不公开**：接口从不返回 `email` 字段
 - **CORS**：`ALLOWED_ORIGINS` 白名单，只允许博客域名调用
+
+## 用 AI 直接操作 Cloudflare（MCP）
+
+已在 `~/.workbuddy/mcp.json` 加了官方 Cloudflare API MCP：
+
+```json
+"cloudflare-api": { "url": "https://mcp.cloudflare.com/mcp" }
+```
+
+- 新 MCP 需在 WorkBuddy 左下「+」→ 连接器管理 → 信任后才生效（ OAuth 会在浏览器弹授权页，勾选需要的最小权限）。
+- 它用 Code Mode：`search()` 找 API、`execute()` 调 API、`docs()` 查文档，覆盖 DNS / Workers / D1 / R2 全部接口。以后可以直接让 AI 查评论、删垃圾、改 DNS。
+- 安全提醒：`execute()` 无内置确认步骤，生产变更（删 Worker、改 DNS）务必人工确认。
 
 ## 回退方案
 
