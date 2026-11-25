@@ -957,7 +957,8 @@ giscus:
 # 自建评论区（Cloudflare Workers + D1）
 # 部署说明见 cf-worker/README.md；api 填 Worker 域名，site_key 填 Turnstile 站点密钥
 cf_comments:
-  api: https://comments.zuiges.com
+  # 同域相对路径：走 blog.zuiges.com/api/* 的 Worker route，避开新子域 DNS 滞后与 CORS
+  api: /api
   site_key: "0x4AAAAAAGR2lGXqAiTKCegi"
   page_size: 20
 

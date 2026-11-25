@@ -22,6 +22,12 @@ MAX_CONTENT_LENGTH = "2000"
 #   npx wrangler secret put MODERATION_TOKEN   （可选：管理端令牌，用于删除/过滤评论）
 
 # 国内 workers.dev 不可达：绑定自定义域名走 CF 国内可达线路
+# 主 route：同域 /api/*，前端用相对路径，彻底避开新子域 DNS 滞后与 CORS 问题
+[[routes]]
+pattern = "blog.zuiges.com/api/*"
+zone_name = "zuiges.com"
+
+# 备用 route：独立子域（部分场景可能仍需要，保留无害）
 [[routes]]
 pattern = "comments.zuiges.com/*"
 zone_name = "zuiges.com"

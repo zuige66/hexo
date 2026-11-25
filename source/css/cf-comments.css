@@ -52,7 +52,19 @@
 #cf-comments .cfc-reply-hint a { color: var(--post-link-color, #1685bd); }
 
 #cf-comments .cfc-actions { display: flex; align-items: center; gap: .8rem; flex-wrap: wrap; }
-#cf-comments .cfc-actions button[type="submit"],
+/* 注意：Fluid 的 --button-bg-color 是 transparent，不能直接拿来做主按钮底色，
+   否则按钮白字透明底 = 看不见（用户反馈「没有发送按钮」）。这里写死不透明色。 */
+#cf-comments .cfc-actions button[type="submit"] {
+  padding: .45rem 1.2rem;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background: #167bb3;
+  color: #fff;
+  cursor: pointer;
+  font: inherit;
+  transition: background .2s, opacity .2s;
+}
+#cf-comments .cfc-actions button[type="submit"]:hover:not(:disabled) { background: #0f6696; }
 #cf-comments .cfc-more {
   padding: .45rem 1.2rem;
   border: none;
@@ -63,8 +75,6 @@
   font: inherit;
   transition: background .2s, opacity .2s;
 }
-#cf-comments .cfc-actions button:hover:not(:disabled),
-#cf-comments .cfc-more:hover:not(:disabled) { background: var(--button-hover-bg-color, #0f6696); }
 #cf-comments button:disabled { opacity: .6; cursor: not-allowed; }
 #cf-comments .cfc-msg { font-size: .9rem; color: var(--sec-text-color, #888); }
 #cf-comments .cfc-msg-error { color: #e05252; }

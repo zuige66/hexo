@@ -94,8 +94,17 @@
     if (SITEKEY) loadTurnstile();
   }
 
+  // API 是 base（如 https://x.workers.dev 或 /api），path 统一以 /api/ 开头。
+  // 当 base 本身已含 /api（同域相对路径方案）时去掉重复前缀，避免 /api/api/comments。
+  function apiUrl(path) {
+    if (/\/api$/.test(API) && path.indexOf('/api/') === 0) {
+      return API + path.slice(4); // '/api/comments...' -> '/comments...'
+    }
+    return API + path;
+  }
+
   async function api(path, options) {
-    var res = await fetch(API + path, options);
+    var res = await fetch(apiUrl(path), options);
     var data;
     try { data = await res.json(); } catch (_) { throw new Error('服务返回异常'); }
     if (!res.ok) throw new Error(data.error || ('请求失败 ' + res.status));
