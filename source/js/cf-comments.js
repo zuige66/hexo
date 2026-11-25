@@ -68,9 +68,11 @@
         '<span class="cfc-title">评论</span>' +
         '<span class="cfc-count" id="cfc-count"></span>' +
       '</div>' +
-      '<form class="cfc-form" id="cfc-form" autocomplete="on">' +
+      // novalidate：禁用浏览器原生气泡（文案是「请填写此字段。」这类通用话术，
+      // 且样式是系统 UI，与主题完全不是一套）。校验全部在 submit() 里自己做。
+      '<form class="cfc-form" id="cfc-form" autocomplete="on" novalidate>' +
         '<div class="cfc-row">' +
-          '<input type="text" id="cfc-author" name="author" maxlength="40" placeholder="昵称 *" required>' +
+          '<input type="text" id="cfc-author" name="author" maxlength="40" placeholder="昵称 *">' +
           '<input type="email" id="cfc-email" name="email" maxlength="120" placeholder="邮箱（选填，不公开）">' +
         '</div>' +
         '<div class="cfc-reply-hint" id="cfc-reply-hint" hidden>' +
@@ -79,7 +81,7 @@
         '</div>' +
         '<div class="cfc-editor">' +
           '<textarea id="cfc-content" name="content" maxlength="2000" rows="4" ' +
-            'placeholder="说点什么吧…（支持 **粗体**、`代码`、[链接](https://…)）" required></textarea>' +
+            'placeholder="说点什么吧…（支持 **粗体**、`代码`、[链接](https://…)）"></textarea>' +
           '<div class="cfc-editor-bar">' +
             '<span class="cfc-msg" id="cfc-msg"></span>' +
             '<button type="submit" id="cfc-submit">发表评论</button>' +
@@ -92,6 +94,14 @@
       '<div class="cfc-more-wrap"><button class="cfc-more" id="cfc-more" hidden>加载更多</button></div>';
 
     document.getElementById('cfc-form').addEventListener('submit', submit);
+    // 一开始输入就把红框和错误提示撤掉，不等到下次提交
+    document.getElementById('cfc-form').addEventListener('input', function (e) {
+      var t = e.target;
+      if (t && t.classList && t.classList.contains('cfc-invalid')) {
+        t.classList.remove('cfc-invalid');
+      }
+      if (!document.querySelector('#cf-comments .cfc-invalid')) setMsg('', false);
+    });
     document.getElementById('cfc-cancel-reply').addEventListener('click', cancelReply);
     load();
     if (SITEKEY) loadTurnstile();
@@ -205,10 +215,18 @@
   async function submit(e) {
     e.preventDefault();
     var btn = document.getElementById('cfc-submit');
-    var author = document.getElementById('cfc-author').value.trim();
-    var email = document.getElementById('cfc-email').value.trim();
-    var content = document.getElementById('cfc-content').value.trim();
-    if (!author || !content) { setMsg('请填写昵称和内容', true); return; }
+    var authorEl = document.getElementById('cfc-author');
+    var emailEl = document.getElementById('cfc-email');
+    var contentEl = document.getElementById('cfc-content');
+    var author = authorEl.value.trim();
+    var email = emailEl.value.trim();
+    var content = contentEl.value.trim();
+
+    // 自建校验：按字段顺序逐项检查，提示直接说清是哪个字段（不用「此字段」）
+    clearInvalid();
+    if (!author) { markInvalid(authorEl, '请填写昵称'); return; }
+    if (email && !isEmail(email)) { markInvalid(emailEl, '邮箱格式好像不对'); return; }
+    if (!content) { markInvalid(contentEl, '请填写评论内容'); return; }
 
     btn.disabled = true;
     btn.textContent = '提交中…';
@@ -251,6 +269,24 @@
     if (!msg) return;
     msg.textContent = text;
     msg.className = 'cfc-msg' + (isError ? ' cfc-msg-error' : '');
+  }
+
+  // 出错字段描红 + 聚焦，同时清掉其它字段的红框
+  function clearInvalid() {
+    var els = document.querySelectorAll('#cf-comments .cfc-invalid');
+    for (var i = 0; i < els.length; i++) els[i].classList.remove('cfc-invalid');
+  }
+  function markInvalid(input, msg) {
+    clearInvalid();
+    if (input) {
+      input.classList.add('cfc-invalid');
+      try { input.focus({ preventScroll: false }); } catch (_) { input.focus(); }
+    }
+    setMsg(msg, true);
+  }
+
+  function isEmail(s) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s);
   }
 
   function cancelReply() {

@@ -38,6 +38,13 @@
 #cf-comments textarea:focus { border-color: var(--link-hover-color, #30a9de); }
 #cf-comments textarea { resize: none; min-height: 90px; }
 
+/* 自建校验态：替代浏览器原生气泡（原生提示是系统 UI，文案不可定制，跟主题不搭） */
+#cf-comments .cfc-invalid,
+#cf-comments .cfc-invalid:focus {
+  border-color: #e05252;
+  box-shadow: 0 0 0 3px rgba(224, 82, 82, .12);
+}
+
 /* 内容框 + 右下角悬浮按钮 */
 #cf-comments .cfc-editor { position: relative; }
 #cf-comments .cfc-editor textarea {
@@ -63,6 +70,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+#cf-comments .cfc-editor-bar .cfc-msg:empty { display: none; } /* 空提示不占位，按钮贴右 */
 
 #cf-comments .cfc-hidden {
   position: absolute !important;
@@ -188,6 +196,16 @@
 
 @media (max-width: 576px) {
   #cf-comments .cfc-replies { margin-left: .8rem; }
-  #cf-comments .cfc-editor-bar { right: .5rem; bottom: .5rem; }
-  #cf-comments .cfc-editor-bar .cfc-msg { display: none; } /* 小屏只留按钮，避免挤压 */
+  #cf-comments .cfc-editor-bar { right: .5rem; bottom: .5rem; gap: .35rem; }
+  /* 不要把提示整条藏掉：错误文案只在按钮左侧显示，藏了小屏就完全看不到校验原因。
+     改成缩窄 + 缩字，短句（请填写昵称）仍然完整可读。 */
+  #cf-comments .cfc-editor-bar .cfc-msg { max-width: 7.5em; font-size: .78rem; }
 }
+
+/* 暗色下提亮红色，否则 #e05252 在深底上发闷、辨识度低 */
+html[data-user-color-scheme="dark"] #cf-comments .cfc-invalid,
+html[data-user-color-scheme="dark"] #cf-comments .cfc-invalid:focus {
+  border-color: #ff7b7b;
+  box-shadow: 0 0 0 3px rgba(255, 123, 123, .16);
+}
+html[data-user-color-scheme="dark"] #cf-comments .cfc-msg-error { color: #ff7b7b; }

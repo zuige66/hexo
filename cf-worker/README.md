@@ -48,6 +48,10 @@ Cloudflare Worker（zuige-comments）
 
 > **踩坑：「发表评论」按钮看不见** —— Fluid 把 `--button-bg-color` 设成 `transparent`，原 CSS 拿它做主按钮底色，白字透明底等于隐形。已在 `cf-comments.css` 写死 `background: #167bb3`。
 
+> **踩坑：不要用浏览器原生表单校验** —— 输入框带 `required` / `type="email"` 时，浏览器会在提交瞬间弹自己的气泡（「请填写此字段。」），文案不可定制、样式是系统 UI，和主题完全不是一套，也没法说清是哪个字段。现在 `<form>` 带 `novalidate`、输入框全部去掉 `required`，校验在 `submit()` 里按顺序做，出错给输入框加 `.cfc-invalid` 描红 + `focus()`，文案写进按钮左侧的 `.cfc-msg`（`请填写昵称` / `邮箱格式好像不对` / `请填写评论内容`）。输入一个字符就自动撤掉红框和提示。
+>
+> 配套注意：`.cfc-msg` 在小屏**不能 `display: none`**——错误文案只在这里显示，藏掉等于移动端看不到校验原因；小屏方案是缩字号缩宽（`max-width: 7.5em`）。`.cfc-invalid` 的红色在暗色模式下要提亮成 `#ff7b7b`，`#e05252` 在深底上发闷。
+
 > 为什么不用 `*.workers.dev`：国内访问 workers.dev 经常超时（实测 DNS 解析正常但连接被拦）。绑定自有域名走 CF 国内可达线路即可解决。
 
 ## 第一步：创建 D1 数据库
