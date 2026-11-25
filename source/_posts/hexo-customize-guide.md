@@ -850,10 +850,12 @@ EOF
 - **主题接入点**：`themes/fluid/layout/_partials/comments/cf_comments.ejs`，读 `theme.cf_comments` 的 `api` / `site_key` / `page_size`。三处评论入口（文章、`source/guestbook/index.md` 的 `comment:`、`links.comments.type`）都设为 `cf_comments`。
 - **软导航兼容**：JS 监听 `softnav:loaded` 事件重新初始化，软导航进友链/留言页时评论区不会出现空白。
 - **历史留言**：已把 Giscus 的 6 条评论用 `tools/import_giscus.py` 转成 SQL 导入 D1，带「历史留言」标记和原 GitHub 头像。
+- **API 走同域**：`cf_comments.api` 设 `/api` 相对路径，Worker 绑了 `blog.zuiges.com/api/*` route。不要用 `comments.zuiges.com` 子域——教育网 DNS 同步新 CNAME 会滞后，浏览器报 `Failed to fetch`（服务端其实是好的）。`apiUrl()` 函数会去掉 `/api` + `/api/comments` 的重复前缀。
 
 **红线**：
 
 - Worker 端 `TURNSTILE_SECRET` 一旦设置，前端 `site_key` 必须配且域名要对得上，否则所有留言都会被 403。本地测试可以两边都留空跳过校验。
+- **按钮颜色不能引用主题变量**：Fluid 的 `--button-bg-color` 是 `transparent`，主按钮用它当底色会白字透明底=隐形。`cf-comments.css` 里 `button[type="submit"]` 必须写死 `background: #167bb3`。
 - `_config.fluid.yml` 的 `cf_comments.api` 是完整 Worker 域名（含 `https://`），改完必须全量 `rm -f db.json && npx hexo generate`，增量生成不跟踪主题配置。
 - 回退 Giscus：`post.comments.type`、`links.comments.type`、留言页 `comment:` 三处一起改回 `giscus`。
 

@@ -26,21 +26,27 @@ Cloudflare Worker（zuige-comments）
 |------|-----|
 | CF 账号 | liruisen0413@gmail.com（account id `7f31d5b3e495c48523c034f0aee831d9`） |
 | D1 数据库 | `zuige-comments`，database_id `4be87c1e-e54f-42c0-a71f-92601283690f`，region WNAM |
-| Worker | `zuige-comments`，route `comments.zuiges.com/*` |
-| 自定义域名 | `https://comments.zuiges.com`（**DNS 待加，见下方**） |
+| Worker | `zuige-comments`，双 route：`blog.zuiges.com/api/*`（主）+ `comments.zuiges.com/*`（备用） |
+| API 地址 | 前端用**同域相对路径 `/api`**（走 `blog.zuiges.com/api/*`），不用 `comments` 子域 |
 | Turnstile | widget `zuige-blog-comments`，mode `non-interactive`，site key `0x4AAAAAAGR2lGXqAiTKCegi`；secret 已写入 Worker |
 | 管理令牌 | 已写入 Worker（`MODERATION_TOKEN`，值见你的密码管理，忘记就 `wrangler secret put` 重设） |
 | 历史评论 | 6 条已导入（含旧路径修正），带「历史留言」标记 |
 
 > ✅ **DNS 记录已添加**（2026-11-25 用户手动完成）：CNAME `comments` → `zuige-comments.liruisen0413.workers.dev`，**Proxied（橙色云）**。
 >
-> 服务端已验证：`https://comments.zuiges.com/api/health` 返回 `{"ok":true,"service":"zuige-comments"}`，`/api/comments?path=/guestbook/` 能读到历史留言。
+> **⚠️ 但实际用的是同域 API，不是 `comments` 子域**：教育网 DNS 同步新 CNAME 严重滞后，浏览器访问 `comments.zuiges.com` 报 `Failed to fetch`（服务端本身正常）。最终方案是 Worker 绑 `blog.zuiges.com/api/*` route，前端 `cf_comments.api` 设 **`/api` 相对路径** → 请求走 `blog.zuiges.com/api/comments`，无 DNS 滞后、无 CORS。`comments` 子域保留作备用。
 >
-> **排查提示**：教育网 DNS（如 `dns3.gdut.edu.cn`）同步新记录可能滞后数小时，本机暂时解析不到属正常现象，不影响线上访客。验证时可强制指定 IP：
+> `cf-comments.js` 的 `apiUrl()` 负责去重：`/api` + `/api/comments` → `/api/comments`（否则会变成 `/api/api/comments`）。
+>
+> 验证：`https://blog.zuiges.com/api/health` 返回 `{"ok":true,"service":"zuige-comments"}`；线上留言页显示「评论 (1)」即数据加载成功。
+>
+> **排查手法**：DNS 滞后时用 `--resolve` 强制指定 IP 验证服务端是否真的正常：
 > ```bash
 > curl --noproxy '*' --resolve comments.zuiges.com:443:172.67.146.198 \
 >   https://comments.zuiges.com/api/health
 > ```
+
+> **踩坑：「发表评论」按钮看不见** —— Fluid 把 `--button-bg-color` 设成 `transparent`，原 CSS 拿它做主按钮底色，白字透明底等于隐形。已在 `cf-comments.css` 写死 `background: #167bb3`。
 
 > 为什么不用 `*.workers.dev`：国内访问 workers.dev 经常超时（实测 DNS 解析正常但连接被拦）。绑定自有域名走 CF 国内可达线路即可解决。
 
