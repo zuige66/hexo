@@ -92,7 +92,7 @@
     "rss": "https://lengxiqwq.com/rss.xml",
     "posts": [
       {
-        "title": "茶室点歌台：在博客里一起听歌是怎样实现的",
+        "title": "茶室点歌台：在博客里一起听歌是怎样实现的？",
         "url": "https://lengxiqwq.com/posts/%E8%8C%B6%E5%AE%A4%E7%82%B9%E6%AD%8C%E5%8F%B0%E5%9C%A8%E5%8D%9A%E5%AE%A2%E9%87%8C%E4%B8%80%E8%B5%B7%E5%90%AC%E6%AD%8C%E6%98%AF%E6%80%8E%E6%A0%B7%E5%AE%9E%E7%8E%B0%E7%9A%84/",
         "date": "2026-11-23T23:00:00+00:00"
       },
@@ -186,6 +186,11 @@
       {
         "title": "烧鸟：炭火与一整只鸡的拆解",
         "url": "https://pureskyblog.dpdns.org/posts/yakitori-charcoal-and-tare/",
+        "date": "2026-11-22T00:00:00+00:00"
+      },
+      {
+        "title": "消失的椎名町",
+        "url": "https://pureskyblog.dpdns.org/posts/toshima-without-shiinamachi/",
         "date": "2026-11-22T00:00:00+00:00"
       },
       {
