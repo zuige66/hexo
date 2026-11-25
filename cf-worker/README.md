@@ -20,6 +20,28 @@ Cloudflare Worker（zuige-comments）
 - 主题接入：`themes/fluid/layout/_partials/comments/cf_comments.ejs`
 - 配置项：`_config.fluid.yml` 的 `cf_comments` 段
 
+## 当前线上状态（2026-11-25 已部署）
+
+| 项目 | 值 |
+|------|-----|
+| CF 账号 | liruisen0413@gmail.com（account id `7f31d5b3e495c48523c034f0aee831d9`） |
+| D1 数据库 | `zuige-comments`，database_id `4be87c1e-e54f-42c0-a71f-92601283690f`，region WNAM |
+| Worker | `zuige-comments`，route `comments.zuiges.com/*` |
+| 自定义域名 | `https://comments.zuiges.com`（**DNS 待加，见下方**） |
+| Turnstile | widget `zuige-blog-comments`，mode `non-interactive`，site key `0x4AAAAAAGR2lGXqAiTKCegi`；secret 已写入 Worker |
+| 管理令牌 | 已写入 Worker（`MODERATION_TOKEN`，值见你的密码管理，忘记就 `wrangler secret put` 重设） |
+| 历史评论 | 6 条已导入（含旧路径修正），带「历史留言」标记 |
+
+> ⚠️ **上线前唯一待办：加一条 DNS 记录**（OAuth token 无 DNS 权限，无法代加）。在 CF 后台 → `zuiges.com` → DNS → 添加记录：
+
+| 类型 | 名称 | 值 | 代理状态 |
+|------|------|-----|----------|
+| CNAME | `comments` | `zuige-comments.liruisen0413.workers.dev` | **Proxied（橙色云）** |
+
+DNS 生效后访问 `https://comments.zuiges.com/api/health` 应返回 `{"ok":true,...}`。
+
+> 为什么不用 `*.workers.dev`：国内访问 workers.dev 经常超时（实测 DNS 解析正常但连接被拦）。绑定自有域名走 CF 国内可达线路即可解决。
+
 ## 第一步：创建 D1 数据库
 
 需要本机装 Node.js 和 npm（或用 npx）：
@@ -30,7 +52,7 @@ npx wrangler login
 npx wrangler d1 create zuige-comments
 ```
 
-命令会输出一个 `database_id`，把它填进 `wrangler.toml` 里 `database_id = "REPLACE_WITH_YOUR_D1_DATABASE_ID"` 的位置。
+命令会输出一个 `database_id`，把它填进 `wrangler.toml` 里 `database_id` 的位置。
 
 然后建表：
 

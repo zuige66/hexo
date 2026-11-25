@@ -7,7 +7,7 @@ compatibility_date = "2026-11-24"
 [[d1_databases]]
 binding = "DB"
 database_name = "zuige-comments"
-database_id = "REPLACE_WITH_YOUR_D1_DATABASE_ID"
+database_id = "4be87c1e-e54f-42c0-a71f-92601283690f"
 
 [vars]
 # 允许跨域的来源（你的博客域名）。多个用英文逗号分隔，不要写尾部斜杠。
@@ -20,3 +20,8 @@ MAX_CONTENT_LENGTH = "2000"
 # 敏感信息不要写在这里，用命令设置：
 #   npx wrangler secret put TURNSTILE_SECRET   （Cloudflare Turnstile 密钥）
 #   npx wrangler secret put MODERATION_TOKEN   （可选：管理端令牌，用于删除/过滤评论）
+
+# 国内 workers.dev 不可达：绑定自定义域名走 CF 国内可达线路
+[[routes]]
+pattern = "comments.zuiges.com/*"
+zone_name = "zuiges.com"
