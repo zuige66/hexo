@@ -1,0 +1,845 @@
+:root {
+  --motion-spring: cubic-bezier(.34, 1.56, .64, 1);
+  --motion-smooth: cubic-bezier(.22, 1, .36, 1);
+  --motion-shadow: 0 14px 32px rgba(38, 51, 65, .16);
+  --motion-shadow-strong: 0 18px 42px rgba(38, 51, 65, .22);
+}
+
+/* 首页文章：整张卡片浮起，封面在卡片内部轻微放大。 */
+.home-post-list .index-card {
+  position: relative;
+  padding: 1rem;
+  border-radius: 16px;
+  cursor: pointer;
+  transition:
+    transform 160ms var(--motion-spring),
+    box-shadow 260ms var(--motion-smooth),
+    background-color 220ms ease;
+  will-change: transform;
+}
+
+.home-post-list .index-card:focus-visible {
+  outline: 2px solid var(--link-hover-color);
+  outline-offset: 4px;
+}
+
+.home-post-list .index-img {
+  overflow: hidden;
+  border-radius: .5rem;
+}
+
+.home-post-list .index-img img {
+  transition:
+    transform 260ms var(--motion-smooth),
+    filter 260ms ease,
+    box-shadow 260ms ease;
+  will-change: transform;
+}
+
+/* 归档、分类和友链中的独立条目。 */
+.list-group-item,
+.category-heading-row,
+.links .card,
+.home-social-links a,
+.home-taxonomy-list a,
+.home-recent-list a {
+  transition:
+    transform 140ms var(--motion-spring),
+    box-shadow 240ms var(--motion-smooth),
+    background-color 200ms ease,
+    border-color 200ms ease;
+}
+
+.links .card {
+  position: relative;
+  border-radius: 14px;
+}
+
+.category-heading-row {
+  position: relative;
+  width: 100%;
+  border-radius: 10px;
+}
+
+.category-heading-row .category-item,
+.category-heading-row .category-subitem,
+.category-heading-row .category-count {
+  transition: color 180ms ease, background-color 180ms ease;
+}
+
+.category-heading-row:hover,
+.category-heading-row:focus-within {
+  background-color: var(--link-hover-bg-color);
+}
+
+.category-heading-row:hover > a,
+.category-heading-row:focus-within > a {
+  color: var(--link-hover-color);
+  background-color: transparent;
+}
+
+.category-heading-row > a:first-child {
+  border-radius: 10px 0 0 10px;
+}
+
+.category-heading-row > a:last-child {
+  border-radius: 0 10px 10px 0;
+}
+
+.links .link-avatar img {
+  transition: transform 210ms var(--motion-spring);
+}
+
+/* 代码块使用滚轮横向浏览长行。具体滚动逻辑位于 site-interactions.js。 */
+.markdown-body figure.highlight,
+.markdown-body .code-wrapper pre,
+.markdown-body > pre {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+}
+
+/* 正文图片默认缩小展示，点击后通过 Fluid 的图片查看器查看大图。 */
+.markdown-body p > img,
+.markdown-body p > a > img,
+.markdown-body figure > img,
+.markdown-body figure > a > img {
+  max-width: 72%;
+  max-height: 72vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  cursor: zoom-in;
+}
+
+/* 小屏幕保留足够的阅读宽度。 */
+@media (max-width: 767px) {
+  .markdown-body p > img,
+  .markdown-body p > a > img,
+  .markdown-body figure > img,
+  .markdown-body figure > a > img {
+    max-width: 100%;
+    max-height: none;
+  }
+}
+
+/* 文章页右侧目录：整栏吸顶 + 独立滚动，作为唯一滚动容器。
+   原来 .toc-body 自己套一层 max-height:75vh 的滚动框，卡片只能停在「75vh 小框」的 1/3，
+   换算到屏幕约 41%，且首尾章滚到边界到不了 1/3，观感很别扭。
+   现在整栏铺满视口、自己滚，卡片停在「你能看到的侧栏」1/3（JS 里算）。
+   注意 box-sizing:border-box——主题的 .sidebar 有 padding:3rem 0，
+   content-box 下 max-height 只限内容高，加上 padding 会超出视口。 */
+@media (min-width: 992px) {
+  aside.sidebar {
+    box-sizing: border-box;
+    max-height: calc(100vh - 2rem - 1rem);
+    overflow-y: auto;
+    overscroll-behavior-y: auto; /* 滚到边界仍能把滚轮交给页面，不“吃掉”滚轮 */
+    scrollbar-width: thin;
+    scrollbar-color: rgba(128, 128, 128, .35) transparent;
+  }
+
+  aside.sidebar::-webkit-scrollbar { width: 6px; }
+  aside.sidebar::-webkit-scrollbar-thumb { background: rgba(128, 128, 128, .35); border-radius: 3px; }
+  aside.sidebar::-webkit-scrollbar-track { background: transparent; }
+
+  /* 目录列表不再自己滚，交给整栏 */
+  aside.sidebar .toc-body {
+    max-height: none;
+    overflow: visible;
+  }
+}
+
+/* 文章目录中的标题都是页内跳转链接。 */
+.tocbot-link {
+  display: block;
+  margin: .06rem 0;
+  padding: .14rem .35rem;
+  border-radius: 7px;
+  transform-origin: left center;
+  transition:
+    transform 120ms var(--motion-spring),
+    color 180ms ease,
+    background-color 180ms ease;
+}
+
+/* 右侧目录「当前阅读位置」= 淡蓝卡片 + 蓝字，不浮起。
+   用 #toc-body 抬高精度，压过后面 @media(hover) 里 .tocbot-link.is-hovered 的
+   translateX / 背景色；transform:none !important 同时压掉 :active 的位移。 */
+#toc-body .tocbot-link.tocbot-active-link {
+  color: var(--link-hover-color);
+  background-color: rgba(48, 169, 222, .14);
+  font-weight: 700;
+  transform: none !important;
+  box-shadow: inset 0 0 0 1px rgba(48, 169, 222, .22);
+}
+
+:root[data-user-color-scheme="dark"] #toc-body .tocbot-link.tocbot-active-link {
+  background-color: rgba(48, 169, 222, .22);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-user-color-scheme]) #toc-body .tocbot-link.tocbot-active-link {
+    background-color: rgba(48, 169, 222, .22);
+  }
+}
+
+/* 主题原本的 is-active-li 左侧小竖条：实测 tocbot 4.20.1 并未给 active 的 li 加该类，
+   竖条本来就 visibility:hidden 不显示；这里保留 display:none 作兜底，
+   防止将来版本加上类后与卡片重复。 */
+#toc-body .toc-list-item.is-active-li::before {
+  display: none !important;
+}
+
+/* 由站内搜索跳转到文章时，突出显示首次命中的关键词。 */
+.search-hit {
+  color: inherit;
+  background: transparent;
+  border-radius: 4px;
+  box-shadow: none;
+  padding: 0 .12em;
+  animation: search-hit-flash 680ms ease-in-out 3;
+}
+
+@keyframes search-hit-flash {
+  0%, 100% { color: inherit; background: transparent; box-shadow: none; }
+  45% { color: #30a9de; background: rgba(48, 169, 222, .16); box-shadow: 0 0 0 2px rgba(48, 169, 222, .2); }
+}
+
+/* expand_all 模式下子列表不一定带 collapsible 类，收起时仍需彻底裁掉内容。 */
+#toc-body ol.tocbot-is-collapsed {
+  display: none !important;
+  max-height: 0 !important;
+  overflow: hidden !important;
+  opacity: 0;
+  pointer-events: none;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+/* 小型交互元素只做轻量位移，避免页面显得晃。 */
+.home-social-links a,
+.home-taxonomy-list a,
+.home-recent-list a,
+.about-icons a,
+.pagination a,
+.btn,
+button,
+.scroll-down-bar,
+#scroll-top-button {
+  transition:
+    transform 120ms var(--motion-spring),
+    color 180ms ease,
+    background-color 180ms ease,
+    box-shadow 220ms var(--motion-smooth),
+    opacity 180ms ease;
+}
+
+/* 悬停位移：鼠标走 JS hover-intent.js 的 .is-hovered（带进入/离开延迟 + 边缘滞后容差，
+   根治卡片在边缘反复上浮下沉的反馈环）；键盘 focus 仍走 :focus-visible 直接生效。
+   两套选择器并存，缺一不可：去掉 .is-hovered 会没有鼠标反馈，去掉 :focus-visible 会破坏键盘可达。 */
+@media (hover: hover) and (pointer: fine) {
+  .home-post-list .index-card.is-hovered,
+  .home-post-list .index-card:focus-within {
+    transform: translateY(-3.5px) scale(1.004);
+    background-color: var(--board-bg-color);
+    box-shadow: var(--motion-shadow-strong);
+  }
+
+  .home-post-list .index-card.is-hovered .index-img img,
+  .home-post-list .index-card:focus-within .index-img img {
+    transform: scale(1.0275);
+    filter: saturate(1.03) brightness(1.015);
+    box-shadow: none;
+  }
+
+  .list-group-item:not(.category-item):not(.category-subitem).is-hovered,
+  .list-group-item:not(.category-item):not(.category-subitem):focus-visible,
+  .category-heading-row.is-hovered,
+  .category-heading-row:focus-within,
+  .links .card.is-hovered,
+  .links .card:focus-within {
+    transform: translateY(-2.5px) scale(1.005);
+    box-shadow: var(--motion-shadow);
+    z-index: 2;
+  }
+
+  .links .card.is-hovered .link-avatar img,
+  .links .card:focus-within .link-avatar img {
+    transform: scale(1.04) rotate(1deg);
+  }
+
+  .home-social-links a.is-hovered,
+  .home-social-links a:focus-visible,
+  .about-icons a.is-hovered,
+  .about-icons a:focus-visible,
+  .pagination a.is-hovered,
+  .pagination a:focus-visible,
+  .btn.is-hovered,
+  .btn:focus-visible,
+  button.is-hovered,
+  button:focus-visible,
+  .scroll-down-bar.is-hovered,
+  #scroll-top-button.is-hovered {
+    transform: translateY(-1.5px) scale(1.03);
+  }
+
+  /* 轮播箭头靠 transform 之外的方式居中（margin-top），且自身有 is-hovered 背景反馈；
+     排除全局按钮位移，避免覆盖后产生下沉跳变。 */
+  .moment-carousel-btn.is-hovered,
+  .moment-carousel-btn:focus-visible {
+    transform: none;
+  }
+
+  .home-taxonomy-list a.is-hovered,
+  .home-taxonomy-list a:focus-visible,
+  .home-recent-list a.is-hovered,
+  .home-recent-list a:focus-visible,
+  .tocbot-link.is-hovered,
+  .tocbot-link:focus-visible {
+    transform: translateX(2.5px);
+  }
+
+  .tocbot-link.is-hovered,
+  .tocbot-link:focus-visible {
+    color: var(--link-hover-color);
+    background-color: var(--link-hover-bg-color);
+  }
+}
+
+/* 导航栏以颜色反馈当前与悬停状态，避免与页面滚动产生位移感。 */
+.navbar .nav-link:hover,
+.navbar .nav-link:focus-visible,
+.navbar .nav-link:active,
+.navbar .nav-link.active,
+.navbar-brand:hover,
+.navbar-brand:focus-visible,
+.navbar-brand:active {
+  color: var(--link-hover-color);
+  transform: none;
+}
+
+/* 点击时快速回弹，触屏设备也能得到清晰反馈。 */
+.home-post-list .index-card:active,
+.list-group-item:not(.category-item):not(.category-subitem):active,
+.category-heading-row:active,
+.links .card:active,
+.home-social-links a:active,
+.about-icons a:active,
+.tocbot-link:active,
+.pagination a:active,
+.btn:active,
+button:active {
+  transform: translateY(.5px) scale(.99);
+  transition-duration: 90ms;
+}
+
+:root[data-user-color-scheme="dark"] {
+  --motion-shadow: 0 14px 34px rgba(0, 0, 0, .34);
+  --motion-shadow-strong: 0 20px 48px rgba(0, 0, 0, .46);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-user-color-scheme]) {
+    --motion-shadow: 0 14px 34px rgba(0, 0, 0, .34);
+    --motion-shadow-strong: 0 20px 48px rgba(0, 0, 0, .46);
+  }
+}
+
+@media (max-width: 767px) {
+  .home-post-list .index-card {
+    padding: .75rem;
+  }
+
+  .home-post-list .index-card:active,
+  .list-group-item:active,
+  .links .card:active {
+    transform: scale(.9925);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
+
+/* 友链卡片右上角的 RSS 订阅图标，仅在该友链项配置了 rss 字段时出现。 */
+.links .card .link-rss {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  color: #e0913b;
+  background: var(--board-bg-color, #fff);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, .18);
+  transition: color 180ms ease, transform 110ms var(--motion-spring), box-shadow 220ms var(--motion-smooth);
+}
+
+.links .card .link-rss.is-hovered,
+.links .card .link-rss:focus-visible {
+  color: #c9701a;
+  transform: translateY(-1px) scale(1.04);
+  box-shadow: var(--motion-shadow);
+}
+
+@media (prefers-color-scheme: dark) {
+  .links .card .link-rss {
+    color: #f0a857;
+  }
+  .links .card .link-rss.is-hovered,
+  .links .card .link-rss:focus-visible {
+    color: #ffbf73;
+  }
+}
+
+/* 友链最新动态：一篇文章一张小卡片，CSS Grid 排布避免浮动错位/重叠。 */
+#circle-feed {
+  margin-top: 0;
+  margin-left: 0;
+  margin-right: 0;
+  max-width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: .9rem;
+}
+
+/* 收起态：仅展示前 9 张（桌面/平板三行三列正好九宫格）。默认收起。 */
+#circle-feed.is-collapsed .feed-card:nth-child(n+10) {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  #circle-feed {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 朋友圈可见标题（2026-10-19 新增，此前仅有 aria-label 易被忽略） */
+.circle-feed-title {
+  margin: 2.5rem 0 .9rem;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text-color, #3c4858);
+  display: flex;
+  align-items: baseline;
+  gap: .5rem;
+}
+
+.circle-feed-title .circle-feed-sub {
+  font-size: .82rem;
+  font-weight: 400;
+  color: var(--text-color-secondary, #6b7785);
+}
+
+.feed-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 96px;
+  min-width: 0;
+  padding: .85rem .95rem;
+  border: 1px solid var(--border-color, rgba(0, 0, 0, .08));
+  border-radius: 14px;
+  background: var(--board-bg-color, #fff);
+  color: var(--text-color, #2c3e50);
+  text-decoration: none;
+  box-shadow: 0 2px 10px rgba(38, 51, 65, .07);
+  transition:
+    transform 120ms var(--motion-spring),
+    box-shadow 220ms var(--motion-smooth),
+    border-color 200ms ease;
+  will-change: transform;
+}
+
+.feed-card.is-hovered,
+.feed-card:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: var(--motion-shadow);
+  border-color: var(--link-hover-color, #30a9de);
+  color: var(--text-color, #2c3e50);
+  text-decoration: none;
+}
+
+.feed-title {
+  font-size: .92rem;
+  font-weight: 600;
+  line-height: 1.45;
+  color: var(--text-color, #2c3e50);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.feed-foot {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  margin-top: .7rem;
+  min-width: 0;
+}
+
+.feed-avatar {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex: none;
+  border: 1px solid var(--border-color, rgba(0, 0, 0, .12));
+  background: var(--board-bg-color, #fff);
+}
+
+.feed-name {
+  font-size: .78rem;
+  color: var(--text-color-secondary, #6b7785);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+.feed-date {
+  margin-left: auto;
+  flex: none;
+  font-size: .72rem;
+  color: var(--text-color-secondary, #9aa0a6);
+}
+
+/* 朋友圈展开/收起按钮：默认收起，仅多于 9 篇时出现。 */
+.circle-feed-toggle {
+  display: block;
+  margin: 1.1rem auto 0;
+  padding: .5rem 1.5rem;
+  border: 1px solid var(--border-color, rgba(0, 0, 0, .12));
+  border-radius: 999px;
+  background: var(--board-bg-color, #fff);
+  color: var(--link-color, #30a9de);
+  font-size: .85rem;
+  line-height: 1.4;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(38, 51, 65, .06);
+  transition:
+    transform 110ms var(--motion-spring),
+    box-shadow 220ms var(--motion-smooth),
+    color 180ms ease,
+    border-color 200ms ease,
+    background-color 200ms ease;
+}
+
+.circle-feed-toggle.is-hovered,
+.circle-feed-toggle:focus-visible {
+  color: var(--link-hover-color, #1c7fb0);
+  border-color: var(--link-hover-color, #30a9de);
+  transform: translateY(-1px);
+  box-shadow: var(--motion-shadow);
+  outline: none;
+}
+
+.circle-feed-toggle:active {
+  transform: translateY(.5px) scale(.99);
+  transition-duration: 90ms;
+}
+
+@media (prefers-color-scheme: dark) {
+  .circle-feed-toggle {
+    border-color: rgba(255, 255, 255, .14);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .feed-card {
+    border-color: rgba(255, 255, 255, .1);
+  }
+  .feed-avatar {
+    border-color: rgba(255, 255, 255, .14);
+  }
+}
+
+/* 留言菜单图标：实心对话气泡。当前 iconfont 套无填充气泡，改用内联 SVG + currentColor，
+   颜色跟随导航文字色（dark 模式自动协调）；桌面导航与移动端网格菜单共用此类。 */
+.nav-icon-guestbook {
+  display: inline-block;
+  width: 1.1em;
+  height: 1.1em;
+  vertical-align: -0.2em;
+  background-color: currentColor;
+  -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='black' d='M4 3h16a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2h-9l-5 4v-4H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z'/></svg>") center / contain no-repeat;
+  mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='black' d='M4 3h16a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2h-9l-5 4v-4H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z'/></svg>") center / contain no-repeat;
+}
+
+/* ------------------------------------------------------------------
+   Banner 标题文字阴影
+   亮色场景（蓝天白云）下 banner_mask_alpha 已降到 0.12，
+   标题的白色文字改用文字阴影保证可读性，不再依赖厚重的黑色蒙版。
+   ------------------------------------------------------------------ */
+.banner-text-shadow .h2,
+.banner-text-shadow #subtitle,
+.banner-text-shadow .typed-cursor {
+  text-shadow:
+    0 1px 2px rgba(12, 26, 48, .55),
+    0 2px 10px rgba(12, 26, 48, .45),
+    0 0 28px rgba(12, 26, 48, .30);
+}
+
+.banner-text-shadow .scroll-down-bar,
+.banner-text-shadow .scroll-down-bar i {
+  text-shadow: 0 1px 3px rgba(12, 26, 48, .6);
+  filter: drop-shadow(0 1px 4px rgba(12, 26, 48, .55));
+}
+/* ------------------------------------------------------------------
+   友链页底部：本站友链信息 / 申请友链
+   原来这两段是 _config.fluid.yml 里的一坨 <h3>+<ul> 纯正文，
+   和上面的卡片流割裂、且信息要手抄。现改为两张并排卡片：
+   左卡是「键值行 + 复制全部」，右卡是「勾选条件 + 等宽模板 + 复制模板」。
+   内容在 themes/fluid/layout/_partials/links-custom.ejs。
+   ------------------------------------------------------------------ */
+.links-panels {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  align-items: start;
+  margin: 2.6rem 0 .5rem;
+}
+
+.links-panel {
+  min-width: 0;
+  padding: 1.3rem 1.4rem 1.35rem;
+  border: 1px solid var(--border-color, rgba(0, 0, 0, .08));
+  border-radius: 16px;
+  background: var(--board-bg-color, #fff);
+  box-shadow: 0 2px 10px rgba(38, 51, 65, .06);
+}
+
+/* 标题行：左标题右复制按钮。卡片不做等高拉伸，
+   「复制全部」放在标题行右侧，左卡内容结束即收尾，底部不留一大截空白。 */
+.links-panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+  margin-bottom: .5rem;
+}
+
+.links-panel-head .links-panel-title {
+  margin: 0;
+}
+
+.links-panel-title {
+  margin: 0 0 .5rem;
+  font-size: 1.12rem;
+  font-weight: 700;
+  letter-spacing: .01em;
+  color: var(--text-color, #2c3e50);
+}
+
+.links-panel-desc {
+  margin: 0 0 .85rem;
+  font-size: .86rem;
+  line-height: 1.65;
+  color: var(--text-color-secondary, #6b7785);
+}
+
+/* 左卡：本站信息键值行。值用等宽字体，长 URL 允许折断，不再撑破卡片。 */
+.links-info {
+  margin: 0 0 1rem;
+  border-top: 1px dashed var(--border-color, rgba(0, 0, 0, .1));
+}
+
+.links-info-row {
+  display: grid;
+  grid-template-columns: 4.1em minmax(0, 1fr);
+  gap: .65rem;
+  padding: .5rem 0;
+  border-bottom: 1px dashed var(--border-color, rgba(0, 0, 0, .1));
+  line-height: 1.5;
+}
+
+/* 末行不画收尾虚线，否则像列表被截断。 */
+.links-info-row.is-last {
+  border-bottom: 0;
+}
+
+.links-info-key {
+  font-size: .8rem;
+  color: var(--text-color-secondary, #6b7785);
+}
+
+.links-info-value {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  font-size: .8rem;
+  word-break: break-all;
+  color: var(--text-color, #2c3e50);
+}
+
+/* 博客名是中文，等宽字体会显得松散，保持正文字体。 */
+.links-info-row:first-child .links-info-value {
+  font-family: inherit;
+  font-size: .84rem;
+}
+
+/* 复制按钮：胶囊描边，点击后短暂填充为主题色。 */
+.links-copy {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  padding: .4rem .85rem;
+  font-size: .79rem;
+  line-height: 1;
+  color: var(--link-hover-color, #30a9de);
+  border: 1px solid var(--link-hover-color, #30a9de);
+  border-radius: 999px;
+  background: transparent;
+  cursor: pointer;
+  transition: background-color .18s ease, color .18s ease, border-color .18s ease,
+    transform .12s var(--motion-spring);
+}
+
+.links-copy:hover {
+  background: rgba(48, 169, 222, .1);
+}
+
+.links-copy:active {
+  transform: translateY(.5px) scale(.99);
+}
+
+.links-copy.is-copied {
+  color: #fff;
+  background: var(--link-hover-color, #30a9de);
+  border-color: var(--link-hover-color, #30a9de);
+}
+
+.links-copy span {
+  white-space: nowrap;
+}
+
+/* 右卡：申请条件清单。圆形底 + 镂空勾（mask 让勾透出卡片底色）。 */
+.links-rules {
+  display: grid;
+  gap: .5rem;
+  margin: 0 0 1rem;
+  padding: 0;
+  list-style: none;
+}
+
+.links-rules li {
+  position: relative;
+  padding-left: 1.55rem;
+  font-size: .86rem;
+  line-height: 1.6;
+  color: var(--text-color, #2c3e50);
+}
+
+.links-rules li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: .3em;
+  width: 1rem;
+  height: 1rem;
+  background-color: var(--link-hover-color, #30a9de);
+  -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='black' d='M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm4.7 7.7-5.4 5.4a1 1 0 0 1-1.4 0l-2.6-2.6a1 1 0 0 1 1.4-1.4l1.9 1.9 4.7-4.7a1 1 0 0 1 1.4 1.4z'/></svg>") center / contain no-repeat;
+  mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='black' d='M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm4.7 7.7-5.4 5.4a1 1 0 0 1-1.4 0l-2.6-2.6a1 1 0 0 1 1.4-1.4l1.9 1.9 4.7-4.7a1 1 0 0 1 1.4 1.4z'/></svg>") center / contain no-repeat;
+}
+
+/* 右卡：留言模板代码块。等宽 + 可横向滚动，明确"照这个格式抄"。 */
+.links-tpl {
+  margin: 0;
+  padding: .85rem 1rem;
+  border: 1px solid var(--border-color, rgba(0, 0, 0, .08));
+  border-radius: 12px;
+  background: rgba(0, 0, 0, .028);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  font-size: .79rem;
+  line-height: 1.9;
+  color: var(--text-color, #2c3e50);
+  white-space: pre;
+  overflow-x: auto;
+}
+
+.links-tpl code {
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: inherit;
+}
+
+.links-tpl-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: .55rem;
+}
+
+.links-copy.is-ghost {
+  padding: .32rem .7rem;
+  font-size: .74rem;
+  color: var(--text-color-secondary, #6b7785);
+  border-color: var(--border-color, rgba(0, 0, 0, .14));
+}
+
+.links-copy.is-ghost:hover {
+  color: var(--link-hover-color, #30a9de);
+  border-color: var(--link-hover-color, #30a9de);
+  background: rgba(48, 169, 222, .08);
+}
+
+.links-copy.is-ghost.is-copied {
+  color: #fff;
+  border-color: var(--link-hover-color, #30a9de);
+  background: var(--link-hover-color, #30a9de);
+}
+
+.links-panel-foot {
+  margin: .9rem 0 0;
+  font-size: .8rem;
+  color: var(--text-color-secondary, #6b7785);
+}
+
+@media (max-width: 991px) {
+  .links-panels {
+    grid-template-columns: 1fr;
+    gap: .9rem;
+    margin-top: 2rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .links-panel {
+    padding: 1.05rem 1.1rem 1.1rem;
+    border-radius: 14px;
+  }
+}
+
+:root[data-user-color-scheme="dark"] .links-tpl {
+  background: rgba(255, 255, 255, .05);
+}
+
+:root[data-user-color-scheme="dark"] .links-panel {
+  border-color: rgba(255, 255, 255, .1);
+  /* 叠一层极淡白提亮，让卡片从深色底上浮起来（不覆盖主题 board 底色）。 */
+  background-image: linear-gradient(rgba(255, 255, 255, .035), rgba(255, 255, 255, .035));
+  box-shadow: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-user-color-scheme]) .links-tpl {
+    background: rgba(255, 255, 255, .05);
+  }
+
+  :root:not([data-user-color-scheme]) .links-panel {
+    border-color: rgba(255, 255, 255, .1);
+    background-image: linear-gradient(rgba(255, 255, 255, .035), rgba(255, 255, 255, .035));
+    box-shadow: none;
+  }
+}
