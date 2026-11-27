@@ -64,7 +64,10 @@ function versionOf(rel) {
 }
 
 hexo.extend.filter.register('after_render:html', function (html) {
-  if (typeof html !== 'string' || html.indexOf('?v=') === -1) return html;
+  // 短路条件按「页面里有没有站内 css/js 引用」判断。
+  // 不能再用 indexOf('?v=') —— ATTR_RE 的查询串已可选，无 ?v= 的主题脚本也要注入 hash。
+  if (typeof html !== 'string') return html;
+  if (html.indexOf('/js/') === -1 && html.indexOf('/css/') === -1) return html;
 
   let touched = false;
   const next = html.replace(ATTR_RE, function (all, pre, url, query, quote) {

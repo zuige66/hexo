@@ -43,11 +43,16 @@ page.comment = theme.links.comments.type
 <div class="row links" id="circle-feed" aria-label="友链最新动态"></div>
 <script src="<%= url_for('/js/circle-feed.js') %>?v=6"></script>
 
-<% if(theme.links.custom && theme.links.custom.enable && theme.links.custom.content) { %>
-  <!-- Custom -->
+<% if(theme.links.custom && theme.links.custom.enable) { %>
+  <!-- 本站友链信息 + 申请友链：内容在 _partials/links-custom.ejs，改文案改那里 -->
+  <%- partial('_partials/links-custom') %>
+
+  <% if(theme.links.custom.content) { %>
+  <!-- Custom（yml 里额外的自定义 HTML 片段，留空即不渲染） -->
   <div class="custom mx-auto">
     <%- theme.links.custom.content %>
   </div>
+  <% } %>
 <% } %>
 
 <%- inject_point('linksComments') %>

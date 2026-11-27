@@ -1,0 +1,78 @@
+<%
+/* 友链页底部：本站友链信息 + 申请友链。
+   内容从 _config.fluid.yml 的 custom.content 单行字符串移到这里，方便维护；
+   yml 里的 custom.enable 只作总开关。
+
+   改文案改这个文件即可：确认改完执行 rm -f db.json && npx hexo generate。 */
+const siteRoot = (config.url || '').replace(/\/+$/, '');
+const selfInfo = [
+  ['博客名', "zuige's blog"],
+  ['简介', '软件开发 · 玩机折腾 · 技术随手记'],
+  ['链接', siteRoot],
+  ['头像', siteRoot + '/img/avatar.jpg'],
+  ['订阅', siteRoot + '/atom.xml'],
+];
+const applyRules = [
+  '站点为原创博客，内容健康、持续更新',
+  '已在本站添加了本站的链接（互相友链）',
+  '站点可正常访问，非纯商业推广',
+];
+%>
+
+<div class="links-panels">
+<section class="links-panel" aria-label="友链信息">
+  <div class="links-panel-head">
+    <h2 class="links-panel-title">我的友链信息</h2>
+    <button type="button" class="links-copy" data-copy="self" aria-label="复制本站友链信息">
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="12" height="12" rx="2"></rect>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+      </svg>
+      <span>复制全部</span>
+    </button>
+  </div>
+  <p class="links-panel-desc">想和我交换友链？把下面这段信息加到你自己的友链页就行。</p>
+
+  <div class="links-info">
+    <% selfInfo.forEach(function (row, i) { %>
+    <div class="links-info-row<%= i === selfInfo.length - 1 ? ' is-last' : '' %>">
+      <span class="links-info-key"><%= row[0] %></span>
+      <span class="links-info-value"><%= row[1] %></span>
+    </div>
+    <% }); %>
+  </div>
+</section>
+
+<section class="links-panel" aria-label="申请友链">
+  <h2 class="links-panel-title">申请友链</h2>
+  <p class="links-panel-desc">欢迎交换。申请前请先确认以下三点：</p>
+
+  <ul class="links-rules">
+    <% applyRules.forEach(function (rule) { %>
+    <li><%= rule %></li>
+    <% }); %>
+  </ul>
+
+  <p class="links-panel-desc">确认后，请在下方留言，按这个格式填：</p>
+
+  <div class="links-tpl-wrap">
+    <pre class="links-tpl"><code>博客名：你的博客名称
+简介：一句话介绍你的博客
+链接：https://your-blog.com
+头像：https://your-blog.com/favicon.ico</code></pre>
+    <div class="links-tpl-actions">
+      <button type="button" class="links-copy is-ghost" data-copy="tpl" aria-label="复制申请模板">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="9" y="9" width="12" height="12" rx="2"></rect>
+          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+        </svg>
+        <span>复制模板</span>
+      </button>
+    </div>
+  </div>
+
+  <p class="links-panel-foot">我看到后会尽快添加，感谢！</p>
+</section>
+</div>
+
+<script src="<%= url_for('/js/links-copy.js') %>"></script>

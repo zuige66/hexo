@@ -1185,11 +1185,13 @@ links:
   # When the member avatar fails to load, replace the specified image
   onerror_avatar: /img/avatar.png
 
-  # 友链下方自定义区域，支持 HTML，可插入例如申请友链的文字
-  # Custom content at the bottom of the links
+  # 友链下方自定义区域
+  # 本站信息 + 申请友链的排版内容已移到 themes/fluid/layout/_partials/links-custom.ejs，
+  # 改文案请改那个文件（改完记得 rm -f db.json 再 generate）。
+  # 这里只保留总开关；content 留空即可，如需额外插一段 HTML 再填。
   custom:
     enable: true
-    content: "<hr><h3>我的友链信息</h3><p>如果你想和我交换友链，可复制以下信息添加到你的网站：</p><ul><li>博客名：zuige's blog</li><li>简介：软件开发 · 玩机折腾 · 技术随手记</li><li>链接：https://blog.zuiges.com</li><li>头像：https://blog.zuiges.com/img/avatar.jpg</li><li>订阅：https://blog.zuiges.com/atom.xml</li></ul><h3>申请友链</h3><p>欢迎交换友链。申请前请先确认以下几点：</p><ul><li>站点为原创博客，内容健康、持续更新</li><li>已在本站添加了本站的链接（互相友链）</li><li>站点可正常访问，非纯商业推广</li></ul><p>确认后，请在下方留言并按如下格式提供信息：</p><ul><li>博客名：你的博客名称</li><li>简介：一句话介绍你的博客</li><li>链接：https://your-blog.com</li><li>头像：https://your-blog.com/favicon.ico</li></ul><p>我看到后会尽快添加，感谢！</p>"
+    content: ""
 
   # 评论插件
   # Comment plugin
