@@ -46,8 +46,14 @@
 }
 
 /* 内容框 + 右下角悬浮按钮 */
-#cf-comments .cfc-editor { position: relative; }
+/* 注意：textarea 自带的 margin-bottom 必须挪到 .cfc-editor 上。
+   否则 .cfc-editor 比 textarea 高 9.6px，而按钮是按 .cfc-editor 的 bottom 定位的，
+   结果按钮会从 textarea 底边框下方漏出来（实测溢出 5px）。 */
+#cf-comments .cfc-editor { position: relative; margin-bottom: .6rem; }
 #cf-comments .cfc-editor textarea {
+  display: block;           /* textarea 默认 inline-block，底部会多出行盒的下沿空隙（~5px），
+                               让 .cfc-editor 高度失真、按钮贴边 */
+  margin-bottom: 0;
   padding-bottom: 3.2rem;   /* 给右下角按钮留出空间，文字不会压在按钮下 */
   padding-right: 1rem;
 }
@@ -142,6 +148,8 @@
   object-fit: cover;
   background: var(--inlinecode-bg-color, #f0f0f0);
 }
+/* 头像拉取失败时 JS 会把它换成 .cfc-avatar-letter 的字母块，尺寸要跟 img 一致，
+   字母块自带 flex 居中，img 走不到这些规则（display:flex 对 img 无影响）。 */
 #cf-comments .cfc-avatar-letter {
   display: flex;
   align-items: center;
@@ -173,6 +181,9 @@
   overflow-x: auto;
   border-radius: 4px;
   background: var(--highlight-bg-color, #f6f6f6);
+  /* 主题里 bootstrap 的 reset 给 pre 写死了 color:#212529，暗色模式下就是
+     「近黑文字压深灰底」，几乎看不清。这里强制跟随正文色。 */
+  color: var(--text-color, #333);
 }
 #cf-comments .cfc-text code {
   padding: 1px 4px;
@@ -181,18 +192,29 @@
   font-size: .9em;
 }
 #cf-comments .cfc-text pre code { padding: 0; background: transparent; }
+/* 「回复」是 <button> 不是 <a href="javascript:void(0)">，要自己清掉按钮外观 */
 #cf-comments .cfc-reply {
   display: inline-block;
   margin-top: .35rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
   font-size: .82rem;
   color: var(--sec-text-color, #999);
+  cursor: pointer;
 }
 #cf-comments .cfc-reply:hover { color: var(--link-hover-color, #30a9de); }
 #cf-comments .cfc-replies { margin-left: 2rem; }
 #cf-comments .cfc-item-reply .cfc-avatar { flex-basis: 28px; width: 28px; height: 28px; }
 #cf-comments .cfc-more-wrap { text-align: center; margin: 1.2rem 0; }
 #cf-comments .cfc-more { background: transparent; color: var(--link-hover-color, #30a9de); border: 1px solid currentColor; }
-#cf-comments .cfc-more:hover:not(:disabled) { background: var(--link-hover-bg-color, transparent); color: #fff; }
+/* hover 时文字必须继续用链接色：原先配 color:#fff，而 --link-hover-bg-color 在浅色主题是
+   #f8f9fa，白字贴白底 = 按钮悬停直接消失（和「发表评论」隐形是同一个坑）。 */
+#cf-comments .cfc-more:hover:not(:disabled) {
+  background: var(--link-hover-bg-color, transparent);
+  color: var(--link-hover-color, #30a9de);
+}
 
 @media (max-width: 576px) {
   #cf-comments .cfc-replies { margin-left: .8rem; }

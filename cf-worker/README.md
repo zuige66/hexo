@@ -52,6 +52,14 @@ Cloudflare Worker（zuige-comments）
 >
 > 配套注意：`.cfc-msg` 在小屏**不能 `display: none`**——错误文案只在这里显示，藏掉等于移动端看不到校验原因；小屏方案是缩字号缩宽（`max-width: 7.5em`）。`.cfc-invalid` 的红色在暗色模式下要提亮成 `#ff7b7b`，`#e05252` 在深底上发闷。
 
+> **踩坑：右下角悬浮按钮会从内容框底边漏出去** —— 按钮用 `position: absolute` 挂在 `.cfc-editor` 上，`.cfc-editor` 高度必须严格等于 textarea。两个细节：① textarea 默认带 `margin-bottom: .6rem`，要让父容器比它高 9.6px，按钮就跑到边框外面（实测溢出 5px）；② textarea 是 `inline-block`，底部还有约 5px 的行盒下沿空隙。修法：margin 挪到 `.cfc-editor` 上 + textarea `display: block`。验收看 `button.bottom - textarea.bottom ≈ -10`。
+
+> **踩坑：悬停「加载更多」按钮消失** —— `--link-hover-bg-color` 在浅色主题是 `#f8f9fa`，hover 配 `color: #fff` 就是白字贴白底。悬停保持链接色，别配白字。
+
+> **踩坑：暗色模式下代码块看不清** —— 主题里的 bootstrap reset 给 `pre` 写死了 `color: #212529`，暗色模式下变成「近黑字压深灰底」。`.cfc-text pre` 要显式 `color: var(--text-color)`。
+
+> **软导航换页必须清态** —— `replyTo` 是模块级变量，`init()` 里不重置的话，在 A 文章的「回复」点了之后软导航到 B 文章发评论，新评论会挂到 A 那条评论下面。同时 `turnstile.remove()` 掉旧 widget 再重建。头像 `<img>` 也要带 `data-initial` 并监听 `error`（含 `img.complete && naturalWidth === 0` 的缓存失败态），换成字母色块——Giscus 头像在 `avatars.githubusercontent.com`，国内经常拉不到。
+
 > 为什么不用 `*.workers.dev`：国内访问 workers.dev 经常超时（实测 DNS 解析正常但连接被拦）。绑定自有域名走 CF 国内可达线路即可解决。
 
 ## 第一步：创建 D1 数据库

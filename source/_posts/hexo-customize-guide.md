@@ -350,6 +350,20 @@ links:
 
 `rss` 字段非空时，友链卡片右上角出现 RSS 图标，点击跳转到对方订阅源。图标渲染依赖两处改动：`themes/fluid/layout/links.ejs`（卡片内增加 RSS 链接）与 `source/css/site-motion.css`（`.link-rss` 定位样式）。主题升级后需重新应用这两处。友链页本体位于 `source/links/index.md`，一般无需改动。
 
+### 13.1 页尾「我的友链信息 / 申请友链」
+
+友链页最下方那两块（本站信息、申请规则与留言模板）原本是 `_config.fluid.yml` 里 `links.custom.content` 的一整行 HTML，纯 `h3` + `ul`，和上面的卡片流割裂，四个字段还重复出现两遍；想换友链的人得手动抄 URL。
+
+2026-11-27 起改为**两张卡片**：
+
+- 内容：`themes/fluid/layout/_partials/links-custom.ejs`（`links.ejs` 用 `partial()` 引入）。改文案改这个文件，**不要**再往 yml 里塞长 HTML。
+- 开关：`_config.fluid.yml` 的 `links.custom.enable`；`links.custom.content` 已清空，只作「额外追加一段 HTML」的备用位，留空不渲染。
+- 左卡「我的友链信息」：本站五项（博客名/简介/链接/头像/订阅）做成键值行，值用等宽字体、`word-break: break-all` 防长 URL 撑破；标题行右侧「复制全部」一键拼成 `键：值` 五行文本。
+- 右卡「申请友链」：三条准入条件换成圆形勾选清单；留言模板用 `<pre>` 代码块（等宽 + 横向滚动），下方「复制模板」。
+- 脚本：`source/js/links-copy.js`，只在友链页由 partial 自己引入（不进 `custom_js`，避免全站加载）。取文本靠 DOM（`data-copy="self"` 读 `.links-info-row`，`data-copy="tpl"` 读 `.links-tpl`），所以改文案不用同步改 JS。**软导航换页会重建 `<script>` 重跑，防重复绑定用的是元素级 `data-links-copy-bound` 标记，不是全局变量**——写成全局 flag 会导致第二次软导航进友链页按钮失效。
+- 样式：`source/css/site-motion.css` 的 `.links-panels` / `.links-panel` 段。桌面两列（991px 以下单列），卡片**不做等高拉伸**，「复制全部」放在标题行右侧，左卡内容结束即收尾，避免底部留一大截空白。
+
+
 ## 十四、友链朋友圈（动态聚合）
 
 　　友链页 `/links/` 在友链头像与简介**下方**、「我的友链信息」**上方**，把每位友链的最新文章以卡片形式聚合展示，无需自建后端。原理：定时抓取各友链的 RSS，生成一份静态 JSON，友链页的脚本拉取该 JSON 渲染卡片。
@@ -619,7 +633,12 @@ categories:
 
 > **为什么增量生成也不用删 `db.json`**：`writeFile()` 用渲染结果的 sha1 和 Cache 里的旧 hash 比较。CSS 内容一变，每个页面渲染出的 HTML 里 `?v=` 都跟着变 → hash 不同 → **所有页面自动重写**，因此绕开了「主题配置变化不触发重渲染」的老坑，也不需要 `hexo clean`。
 
-　　边界：只处理 `href` / `src` 属性里以 `/css/`、`/js/` 开头的站内 `.css` / `.js`；CDN 外链、图片 `?v=2`、APK 直链 `?v=48`、头像 `?v=4`、`circle.json` 的按小时破坏符都原样保留；并保留 Hexo `js()` / `css()` helper 生成的 `?v=19.css` 查询串后缀。**新增自定义 CSS / JS 仍需登记进 `custom_css` / `custom_js`**，否则页面不会引用它。
+> **但实测有例外（2026-11-27）**：只改 CSS、不改任何模板/Markdown 时，`npx hexo generate` 可能输出 **`0 files generated`** —— Hexo 判定源码没变，直接复用 Cache 里的 route 数据，`after_render:html` 根本没被调用，页面自然不会重写（此时哈希注入日志仍会打一行，别被误导）。**判断方法**：跑完 `grep -o 'site-motion.css?v=[a-z0-9]*' public/index.html`，版本号没变就是没生效，`rm -f db.json` 重新全量生成即可。改 `_config.fluid.yml` / 模板时则必须全量。
+
+　　边界：只处理 `href` / `src` 属性里以 `/css/`、`/js/` 开头的站内 `.css` / `.js`；CDN 外链、图片 `?v=2`、APK 直链 `?v=48`、头像 `?v=4`、`circle.json` 的按小时破坏符都原样保留；并保留 Hexo `js()` / `css()` helper 生成的 `?v=19.css` 查询串后缀。**新增自定义 CSS / JS 仍需登记进 `custom_css` / `custom_js`**，否则页面不会引用它——唯一定制页可选的做法是像 `links-custom.ejs` 那样在 partial 里自带 `<script src="/js/xxx.js">`（无 `?v=` 也会被注入 hash），这样只在那一页加载。
+
+　　另一个易错点：filter 入口的短路条件是 `html.indexOf('/js/') === -1 && html.indexOf('/css/') === -1`，**不能写回 `indexOf('?v=') === -1`**。`?v=` 现在对 `ATTR_RE` 是可选的，用 `?v=` 做短路会让「整页没有任何 `?v=`」的页面跳过替换，恰好漏掉那些无版本号的主题脚本。
+
 
 　　验证：
 
@@ -852,15 +871,21 @@ EOF
 - **历史留言**：已把 Giscus 的 6 条评论用 `tools/import_giscus.py` 转成 SQL 导入 D1，带「历史留言」标记和原 GitHub 头像。
 - **API 走同域**：`cf_comments.api` 设 `/api` 相对路径，Worker 绑了 `blog.zuiges.com/api/*` route。不要用 `comments.zuiges.com` 子域——教育网 DNS 同步新 CNAME 会滞后，浏览器报 `Failed to fetch`（服务端其实是好的）。`apiUrl()` 函数会去掉 `/api` + `/api/comments` 的重复前缀。
 - **校验提示自己画**：表单加了 `novalidate`、输入框**不能带 `required`**，校验全部在 `submit()` 里按字段顺序做（昵称 → 邮箱 → 内容），出错时给输入框加 `.cfc-invalid` 描红并聚焦，文案写进按钮左侧的 `.cfc-msg`。浏览器原生校验气泡是系统 UI，文案固定成「请填写此字段。」，既改不了也说不出是哪个字段，和主题不搭。
+- **右下角悬浮按钮的定位前提**：按钮用 `position: absolute` 挂在 `.cfc-editor` 上，所以 `.cfc-editor` 的高度必须**严格等于** textarea 的高度。两处坑都要治：① textarea 自带的 `margin-bottom: .6rem` 要挪到 `.cfc-editor` 上，否则父容器比 textarea 高 9.6px，按钮会从底边框漏出去（实测溢出 5px）；② textarea 默认是 `inline-block`，底部会多出行盒下沿的空隙（约 5px），必须 `display: block`。改完用 `getBoundingClientRect()` 核对按钮与 textarea 的 `bottom`/`right` 差值应约等于 `-.65rem`。
+- **头像失败要有兜底**：Giscus 迁移过来的头像是 `avatars.githubusercontent.com`，国内经常拉不到。`itemHTML` 给 `<img>` 带 `data-initial`，渲染后 `bindAvatarFallback()` 监听 `error`（并判 `img.complete && naturalWidth === 0` 处理缓存里已失败的图）替换成字母色块，别让用户看破图。
+- **软导航必须清态**：`replyTo` / `replyName` / `turnstileToken` 是模块级变量，`init()` 里不重置的话，在 A 文章的「回复」点了之后软导航到 B 文章发评论，新评论会被挂到 A 那条评论下面。同时要 `turnstile.remove()` 掉旧 widget 再重建。
 
 **红线**：
 
 - Worker 端 `TURNSTILE_SECRET` 一旦设置，前端 `site_key` 必须配且域名要对得上，否则所有留言都会被 403。本地测试可以两边都留空跳过校验。
 - **按钮颜色不能引用主题变量**：Fluid 的 `--button-bg-color` 是 `transparent`，主按钮用它当底色会白字透明底=隐形。`cf-comments.css` 里 `button[type="submit"]` 必须写死 `background: #167bb3`。
+- **悬停态也不能配白字**：`--link-hover-bg-color` 在浅色主题是 `#f8f9fa`，「加载更多」hover 配 `color: #fff` 就是白字贴白底，按钮直接消失。悬停保持链接色即可。
+- **代码块文字要显式覆盖颜色**：主题里的 bootstrap reset 给 `pre` 写死了 `color: #212529`，暗色模式下变成「近黑字压深灰底」，代码内容基本看不清。`.cfc-text pre` 必须 `color: var(--text-color)`。
 - **别给表单加回 `required` / 别删 `novalidate`**：一加原生校验就会抢在 JS 前面弹系统气泡。另外 `.cfc-msg` 在小屏**不能 `display: none`**——错误文案只显示在这里，藏掉等于小屏完全看不到校验原因（方案是缩字缩宽）。
 - `_config.fluid.yml` 的 `cf_comments.api` 是相对路径 `/api`（配合 `blog.zuiges.com/api/*` route）；改 `cf_comments` 或主题配置后必须全量 `rm -f db.json && npx hexo generate`，增量生成不跟踪主题配置。只改 `cf-comments.js` / `cf-comments.css` 不用删 `db.json`，`scripts/asset-version.js` 会自动换 `?v=` 让全站重写。
 - 回退 Giscus：`post.comments.type`、`links.comments.type`、留言页 `comment:` 三处一起改回 `giscus`。
 - 验证前端改动**必须带 `?v=<hash>` 请求线上文件**，不带 `?v=` 会命中 Cloudflare 边缘 4 小时缓存，看到的是旧版，容易误判「改了没生效」。
+- **调试手法**：这个页面 WebGL 太吃资源，Playwright 反复崩。改用「无头 Chrome + 自驱动测试页」——把 `cf-comments.js`/`css` 拷到临时目录，写一个只含 `<div id="cf-comments" data-api="" data-sitekey="">` 的页面，脚本里 stub `window.fetch` 返回假评论、点提交、把断言写进 `<pre>`，再 `chrome --headless=new --dump-dom` 抓结果。要看真实主题样式就在 `public/` 起个静态服务器，把 `guestbook/index.html` 复制一份注入 stub（注意无头 Chrome 最小窗宽约 500px，测 375px 用 `<iframe width="375">` 套一层）。
 
 ## 总结
 

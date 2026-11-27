@@ -24,18 +24,28 @@
   }
 
   // 轻量 Markdown：先转义，再处理白名单格式，杜绝 XSS
+  // 代码段先抽成占位符，否则代码里的 ** 和 [x](y) 会被当成格式渲染掉
   function renderMD(text) {
     var s = esc(text);
+    var codes = [];
+    var hold = function (html) {
+      codes.push(html);
+      return '\u0000' + (codes.length - 1) + '\u0000';
+    };
     s = s.replace(/```([\s\S]*?)```/g, function (_, code) {
-      return '<pre><code>' + code.replace(/^\n/, '') + '</code></pre>';
+      return hold('<pre><code>' + code.replace(/^\n/, '') + '</code></pre>');
     });
-    s = s.replace(/`([^`\n]+)`/g, '<code>$1</code>');
+    s = s.replace(/`([^`\n]+)`/g, function (_, code) {
+      return hold('<code>' + code + '</code>');
+    });
     s = s.replace(/\*\*([^*\n]+)\*\*/g, '<strong>$1</strong>');
     s = s.replace(/(^|\s)\*([^*\n]+)\*/g, '$1<em>$2</em>');
     s = s.replace(/\[([^\]\n]+)\]\((https?:\/\/[^\s)]+)\)/g,
       '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
     s = s.replace(/\n/g, '<br>');
-    return s;
+    return s.replace(/\u0000(\d+)\u0000/g, function (_, i) {
+      return codes[+i] != null ? codes[+i] : '';
+    });
   }
 
   function timeStr(iso) {
@@ -63,6 +73,17 @@
     PAGE_SIZE = parseInt(el.dataset.pageSize, 10) || 20;
     loaded[pathNow()] = false;
 
+    // 软导航换页必须清掉上一页的状态：否则 replyTo 还指向上一个页面的评论 id，
+    // 在新页面发的评论会被挂到错误的父级下；Turnstile 的旧 widget 也要移除再重建。
+    replyTo = 0;
+    replyName = '';
+    turnstileToken = '';
+    pendingToken = null;
+    if (turnstileWidget !== null && window.turnstile) {
+      try { window.turnstile.remove(turnstileWidget); } catch (_) {}
+    }
+    turnstileWidget = null;
+
     el.innerHTML =
       '<div class="cfc-head">' +
         '<span class="cfc-title">评论</span>' +
@@ -72,8 +93,10 @@
       // 且样式是系统 UI，与主题完全不是一套）。校验全部在 submit() 里自己做。
       '<form class="cfc-form" id="cfc-form" autocomplete="on" novalidate>' +
         '<div class="cfc-row">' +
-          '<input type="text" id="cfc-author" name="author" maxlength="40" placeholder="昵称 *">' +
-          '<input type="email" id="cfc-email" name="email" maxlength="120" placeholder="邮箱（选填，不公开）">' +
+          '<input type="text" id="cfc-author" name="author" maxlength="40" ' +
+            'placeholder="昵称 *" aria-label="昵称（必填）">' +
+          '<input type="email" id="cfc-email" name="email" maxlength="120" ' +
+            'placeholder="邮箱（选填，不公开）" aria-label="邮箱（选填，不公开）">' +
         '</div>' +
         '<div class="cfc-reply-hint" id="cfc-reply-hint" hidden>' +
           '正在回复 <b id="cfc-reply-name"></b> ' +
@@ -81,9 +104,10 @@
         '</div>' +
         '<div class="cfc-editor">' +
           '<textarea id="cfc-content" name="content" maxlength="2000" rows="4" ' +
+            'aria-label="评论内容（必填）" ' +
             'placeholder="说点什么吧…（支持 **粗体**、`代码`、[链接](https://…)）"></textarea>' +
           '<div class="cfc-editor-bar">' +
-            '<span class="cfc-msg" id="cfc-msg"></span>' +
+            '<span class="cfc-msg" id="cfc-msg" role="status" aria-live="polite"></span>' +
             '<button type="submit" id="cfc-submit">发表评论</button>' +
           '</div>' +
         '</div>' +
@@ -91,7 +115,9 @@
         (SITEKEY ? '<div class="cfc-turnstile" id="cfc-turnstile"></div>' : '') +
       '</form>' +
       '<div class="cfc-list" id="cfc-list"></div>' +
-      '<div class="cfc-more-wrap"><button class="cfc-more" id="cfc-more" hidden>加载更多</button></div>';
+      '<div class="cfc-more-wrap" id="cfc-more-wrap" hidden>' +
+        '<button class="cfc-more" id="cfc-more">加载更多</button>' +
+      '</div>';
 
     document.getElementById('cfc-form').addEventListener('submit', submit);
     // 一开始输入就把红框和错误提示撤掉，不等到下次提交
@@ -137,11 +163,11 @@
       renderList(data.comments || []);
       var count = document.getElementById('cfc-count');
       if (count) count.textContent = data.total ? '(' + data.total + ')' : '';
+      // 连外层 wrapper 一起藏，否则按钮没了下面还留着 1.2rem 空白
+      var wrap = document.getElementById('cfc-more-wrap');
       var more = document.getElementById('cfc-more');
-      if (more) {
-        more.hidden = data.page >= data.pages;
-        more.onclick = function () { loadMore(path, data.page + 1, data.pages); };
-      }
+      if (wrap) wrap.hidden = data.page >= data.pages;
+      if (more) more.onclick = function () { loadMore(path, data.page + 1, data.pages); };
     } catch (err) {
       list.innerHTML = '<div class="cfc-error">评论加载失败：' + esc(err.message) + '</div>';
     }
@@ -158,8 +184,10 @@
       var list = document.getElementById('cfc-list');
       var box = document.createElement('div');
       box.innerHTML = renderItems(data.comments || []);
+      bindAvatarFallback(box);
       while (box.firstChild) list.appendChild(box.firstChild);
-      btn.hidden = page >= pages;
+      var wrap = document.getElementById('cfc-more-wrap');
+      if (wrap) wrap.hidden = page >= pages;
       btn.onclick = function () { loadMore(path, page + 1, pages); };
     } catch (err) {
       setMsg(err.message, true);
@@ -183,6 +211,26 @@
       if (c.parentId) (children[c.parentId] = children[c.parentId] || []).push(c);
     });
     list.innerHTML = renderItems(roots, children);
+    bindAvatarFallback(list);
+  }
+
+  // 头像挂了（giscus 的头像在 avatars.githubusercontent.com，国内经常拉不到）
+  // 就换成字母色块，别给用户看一张破图。
+  function bindAvatarFallback(scope) {
+    var imgs = scope.querySelectorAll('img.cfc-avatar');
+    var swap = function (img) {
+      var span = document.createElement('span');
+      span.className = 'cfc-avatar cfc-avatar-letter';
+      span.textContent = img.dataset.initial || '?';
+      if (img.parentNode) img.parentNode.replaceChild(span, img);
+    };
+    for (var i = 0; i < imgs.length; i++) {
+      (function (img) {
+        img.addEventListener('error', function () { swap(img); });
+        // 缓存里已经是失败状态的图不会再触发 error，直接判掉
+        if (img.complete && img.naturalWidth === 0) swap(img);
+      })(imgs[i]);
+    }
   }
 
   function renderItems(items, children) {
@@ -199,7 +247,7 @@
     var initial = esc((c.author || '?').slice(0, 1).toUpperCase());
     var badge = c.source === 'giscus' ? '<span class="cfc-badge">历史留言</span>' : '';
     var avatar = c.avatar
-      ? '<img class="cfc-avatar" src="' + esc(c.avatar) + '" alt="">'
+      ? '<img class="cfc-avatar" src="' + esc(c.avatar) + '" alt="" data-initial="' + initial + '">'
       : '<span class="cfc-avatar cfc-avatar-letter">' + initial + '</span>';
     return '<article class="cfc-item' + (isReply ? ' cfc-item-reply' : '') + '" data-id="' + c.id + '">' +
       avatar +
@@ -207,7 +255,7 @@
         '<div class="cfc-meta"><b>' + esc(c.author) + '</b>' + badge +
           '<time datetime="' + esc(c.createdAt) + '">' + timeStr(c.createdAt) + '</time></div>' +
         '<div class="cfc-text">' + renderMD(c.content) + '</div>' +
-        '<a class="cfc-reply" href="javascript:void(0)" data-id="' + c.id + '" data-name="' + esc(c.author) + '">回复</a>' +
+        '<button type="button" class="cfc-reply" data-id="' + c.id + '" data-name="' + esc(c.author) + '">回复</button>' +
       '</div>' +
     '</article>';
   }
@@ -303,8 +351,12 @@
     s.async = true;
     s.onload = function () {
       turnstileReady = true;
+      turnstileFailed = false;
       renderWidget();
     };
+    // challenges.cloudflare.com 在国内可能被拦或超时：记下来，提交时给一句人话，
+    // 而不是让后端 403 冒出一句「人机验证未通过」
+    s.onerror = function () { turnstileFailed = true; };
     document.head.appendChild(s);
   }
 
@@ -334,9 +386,16 @@
 
   // 提交时触发不可见验证并等待 token（invisible 模式必须显式 execute）
   var pendingToken = null;
+  var turnstileFailed = false;
   function requestToken(timeoutMs) {
     if (turnstileToken) return Promise.resolve(turnstileToken);
-    if (!window.turnstile || turnstileWidget === null) return Promise.resolve('');
+    // 分三种失败说清楚，别都甩给用户一句「人机验证未通过」
+    if (turnstileFailed) {
+      return Promise.reject(new Error('人机验证组件没加载出来（可能被网络拦截），刷新页面或换个网络再试'));
+    }
+    if (!window.turnstile || turnstileWidget === null) {
+      return Promise.reject(new Error('人机验证还没准备好，稍等一下再点'));
+    }
     return new Promise(function (resolve, reject) {
       var done = false;
       var timer = setTimeout(function () {
