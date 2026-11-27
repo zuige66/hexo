@@ -1,7 +1,15 @@
 {
-  "generated": "2026-11-25T15:15:53.396380+00:00",
-  "total_archived": 170,
+  "generated": "2026-11-27T09:02:40.603492+00:00",
+  "total_archived": 171,
   "posts": [
+    {
+      "title": "一次移动端可用性排查：从点不动的底栏到 Swup 静默失败",
+      "url": "https://blog.amamo.top/posts/firefly-mobile-sidebar-swup-fixes/",
+      "date": "2026-11-26T00:00:00+00:00",
+      "name": "年华",
+      "link": "https://blog.amamo.top",
+      "avatar": "https://q1.qlogo.cn/g?b=qq&nk=1323860289&s=640"
+    },
     {
       "title": "茶室点歌台：在博客里一起听歌是怎样实现的？",
       "url": "https://lengxiqwq.com/posts/%E8%8C%B6%E5%AE%A4%E7%82%B9%E6%AD%8C%E5%8F%B0%E5%9C%A8%E5%8D%9A%E5%AE%A2%E9%87%8C%E4%B8%80%E8%B5%B7%E5%90%AC%E6%AD%8C%E6%98%AF%E6%80%8E%E6%A0%B7%E5%AE%9E%E7%8E%B0%E7%9A%84/",
@@ -473,14 +481,6 @@
       "name": "x1shang-山与回响",
       "link": "https://www.x1shang.top",
       "avatar": "https://x1shang.top/assets/img/x1shang-avatar.webp"
-    },
-    {
-      "title": "拼图纹理、角色喵声与默认皮肤：这轮站点打磨的零额外负担做法",
-      "url": "https://blog.fqzlr.top/posts/tech/texture-character-default-theme/",
-      "date": "2026-11-01T02:50:00+00:00",
-      "name": "番茄主理人",
-      "link": "https://blog.fqzlr.top",
-      "avatar": "https://q1.qlogo.cn/g?b=qq&nk=20447289&s=640"
     }
   ]
 }

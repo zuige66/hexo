@@ -5,6 +5,11 @@
     "rss": "https://blog.amamo.top/rss.xml",
     "posts": [
       {
+        "title": "一次移动端可用性排查：从点不动的底栏到 Swup 静默失败",
+        "url": "https://blog.amamo.top/posts/firefly-mobile-sidebar-swup-fixes/",
+        "date": "2026-11-26T00:00:00+00:00"
+      },
+      {
         "title": "koffi 在 Alpine 上直接 abort：一次 musl 预编译排查",
         "url": "https://blog.amamo.top/posts/koffi-musl-alpine-abort/",
         "date": "2026-11-15T00:00:00+00:00"
